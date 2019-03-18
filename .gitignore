@@ -1,0 +1,10 @@
+*.out
+*~
+*.aux
+*.bbl
+*.log
+*.blg
+*.synctex.gz
+*.nav
+*.snm
+*.toc
