@@ -5,6 +5,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{centernot}
+\usepackage{cleveref}
 \usepackage[export]{adjustbox}
 
 \usepackage{subcaption} 
@@ -28,15 +29,12 @@
 
 \begin{document} 
 
-
-
-\begin{titlepage}
-\centering
 \maketitle
 
-Quantum computers are continually coming closer to becoming a reality, but the question of what we can do with them is still a mystery. In this work we look at graph isomorphism as it pertains to quantum computers. Graph isomorphism itself is a well known concept, but when looking at two graphs being isomorphic on a quantum computer, a new phenomenon occurs, which we define as quantum graph isomorphism. To see how this works, we introduce a two player game that redefines graph isomorphism, and then use quantum resources to paint the picture of quantum graph isomorphism. 
 
-\end{titlepage}
+\begin{abstract}
+Quantum computers are continually coming closer to becoming a reality, but the question of what we can do with them is still a mystery. In this work we look at graph isomorphism as it pertains to quantum computers. Graph isomorphism itself is a well known concept, but when looking at two graphs being isomorphic on a quantum computer, a new phenomenon occurs, which we define as quantum graph isomorphism. To see how this works, we introduce a two player game that redefines graph isomorphism, and then use quantum resources to paint the picture of quantum graph isomorphism. 
+\end{abstract}
 
 \newpage
 \section{Preliminaries}
@@ -312,6 +310,7 @@ Now we can look at how quantum and classical graph isomorphisms are related.
 
 
 \begin{proposition}{First Isomorphic Relation}
+\label{prop:isoimpliesqiso}
 $G \cong H$ $\implies$ $G \cong_q H$
 \end{proposition}
 To see this, observe that every classical isomorphism case can be described by the quantum game in the following way: Take two isomorphic graphs, $G$ and $H$, so that there is some classical winning strategy $f$. Let all POVM elements be the zero matrix except for one, which will be the identity. Choose the POVM element that will be identity matrix to be $A_{x_Ay_A} = 
@@ -371,13 +370,13 @@ Let $\mathcal{F}$ be a linear BCS. Then $\mathcal{F}$ is quantum satisfiable iff
 
 \begin{figure}
   \begin{subfigure}[b]{0.4\textwidth}
-    \includegraphics[width=\textwidth]{"GF quantum iso".PNG}
+    \includegraphics[width=\textwidth]{"GF_quantum_iso".PNG}
     \caption{Graph for $G_{\mathcal{F}}$}
     \label{fig:Gf}
   \end{subfigure}
   %
   \begin{subfigure}[b]{0.4\textwidth}
-    \includegraphics[width=\textwidth]{"GF0 quantum iso".PNG}
+    \includegraphics[width=\textwidth]{"GF0_quantum_iso".PNG}
     \caption{Graph for $G_{\mathcal{F}_0}$ - homogenization of BCS}
     \label{fig:Gf0}
   \end{subfigure}
@@ -388,12 +387,29 @@ This plot displays two graphs that are quantum isomorphic but not isomorphic. Th
 Now, together with a few results from other papers, we can establish a family of graphs for which classical and quantum graph isomorphism are equivalent relations.
 
 \begin{Theorem}
-Let $G$ and $H$ be trees. Then $G \cong H$ $\Rightarrow$ $G \cong_q H$.
+Let $G$ and $H$ be trees. Then $G \cong H$ $\Leftrightarrow$ $G \cong_q H$.
 \end{Theorem}
 \begin{proof}
-If two trees $G$ and $H$ are classically isomorphic, then they are also fractionally isomorphic. But since fractional isomorphism implies quantum isomorphism, it follows that $G$ and $H$ must also be quantum isomorphic.
+By \cref{prop:isoimpliesqiso} we know that if $G$ and $H$ are classically isomorphic then they are also quantum isomorphic. Conversely, if $G$ and $H$ are quantum isomorphic then they are fractionally isomorphic. But fractionally isomorphic trees are classically isomorphic so $G$ and $H$ are classically isomorphic.
 \end{proof}
 
+\section{Graphs for which classical and quantum isomorphism coincide}
+
+\subsection{Non-signalling and fractional graph isomorphism}
+
+\subsection{Graph families}
+
+\begin{itemize}
+\item Trees
+\item Cycles
+\item Chordal graphs
+\item Bipartite graphs and complete bipartite graphs
+\item Complete graphs 
+\item unicyclic graphs
+\item circulant graphs (see Well-covered circulant graphs by Brown and Hoshino)
+\end{itemize}
+
+It might be useful to use the fact that graphs are fractionally isomorphic if and only if they are indistinguishable by color refinement.
 
 \newpage
 
