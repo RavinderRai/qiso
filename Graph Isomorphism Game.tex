@@ -5,23 +5,24 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{centernot}
-\usepackage{cleveref}
 \usepackage[export]{adjustbox}
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
 
 \usepackage{subcaption} 
 
-\newtheorem{Theorem}{Theorem}
 
-
-\theoremstyle{definition}
-\newtheorem{defn}{Definition}[section]
-
-\theoremstyle{proposition}
-\newtheorem{proposition}{Proposition}[section]
-
-\theoremstyle{lemma}
-\newtheorem{lem}{Lemma}[section]
-
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{proposition}[thm]{Proposition}
+\newtheorem{defn}[thm]{Definition}
 
 \title{\textbf{Classical and Quantum Graph Isomorphisms}}
 \author{Ravinder Rai}
@@ -46,6 +47,8 @@ The path between any two vertices $x$ and $y$ in a graph is a sequence of edges 
 Now we define a permutation matrix. A permutation is simply a rearrangement of some number of objects. Using a given permutation, one can construct a permutation matrix, which is constructed as follows: Given a permutation, $\pi$, of size n, (for simplicity, let the objects being permuted be the natural numbers, i.e. $1, 2, ...., n$), the permutation matrix will be an $n \times n$ matrix, where each column will be a standard basis vector. The standard basis vector in each column will be given by $e_{\pi(i)}$ where $i$ is the $i'th$ row, and there will be a $1$ in the $j'th$ column if and only if $\pi(i) = j$. Note that $P^T = P^{-1}$ and $PP^T = I$. 
 
 Another important definition is the adjacency matrix of a graph. Consider some graph G, then $A_G$ is the adjacency matrix of G, and is constructed as follows: the $i'th$ rows and $j'th$ columns both represent the vertices and the element $A_{G_{i, j}}$ is a one if the $i'th$ vertex shares and edge with the $j'th$ vertex, and zero otherwise. Note that adjacency matrices only apply to finite graphs.
+
+The next matrix definition is the \hypertarget{stochastic}{doubly stochastic matrix}, which is a matrix whose elements are non-negative real numbers, and whose rows and columns sum to $1$.
 
 Now, a constraint satisfaction problem (csp) is a something that computers can solve, and is modelled by a three element vector, $(X, D, C)$. In a csp, $X$ is defined to be a finite set of indeterminate variables, and in the case for graphs, it is the set of in determinates associated with the set of vertices. $D$ is a set of domains, such that the elements in $D$ would be domains like the natural numbers, complex numbers, and others. $C$ is the constraint, which is usually some relation defined between the variables in $X$, so naturally in the case of graph theory, this constraint/relation could be whether there is an edge or not between any two vertices in $X$. A csp is said to have a solution is there exists a function that takes a subset of $X$ and maps it to some domain in $D$ such that no constraints in $C$ are violated, and all variables in $X$ are included.
 
@@ -79,7 +82,7 @@ $, which is called a superposition. We obtain information from a quantum system 
 \end{bmatrix}$. Moreover, a Positive Operator-Valued Measure (POVM) $\mathcal{M}$ is a family of Hermitian psd matrices $\{ M_i \in \mathcal{H}^d_+; 1 \leq i \leq m \}$ such that $\sum_{i=1}M_i = I$ (where m is some integer), and given some state $\psi$, the probability of outcome $i$ occurring is $\psi^\dag M_i \psi$. Finally, we will call $\mathcal{M}$ projective if all of its elements are projectors.
 
 
-\section{Classical Graph Isomorphism}
+\section{Classical Graph Isomorphism} \label{classical}
 Graph isomorphism is said to occur when two graphs are the essentially the same, aside from labels and manipulations, like rotations or rearrangements of vertices. Intuitively, this means that if two graphs are isomorphic, but perhaps it does not immediately seem obvious, then one will be able to manipulate one of the graphs via rotations or rearrangements of vertices so that it is identical to the other one (again, aside from the vertices' labels). There are multiple formal definitions of graph isomorphism, presented below.
 
 
@@ -91,9 +94,10 @@ Two graphs G and H are said to be \textit{isomorphic} if there exists a bijectio
 
 The second definition of isomorphism follows from the shortest paths of a graph. This definition says that if we have a bijective function from one graph to another, then they are isomorphic if the shortest path of any two vertices of the domain of the function is equal to the shortest paths of their image vertices in the co-domain. In the following theorem, we state this definition of isomorphism and prove its equivalence to the first definition. The proof comes from \cite{shortest}.
 
-\begin{Theorem}[Graph Isomorphism Equivalence - Shortest Paths]
+\begin{thm}[Graph Isomorphism Equivalence - Shortest Paths]
+\label{shortest}
 Let G and H be graphs. Then $G \cong H$ iff there exists a bijection $f:V(G) \to V(H)$ such that for any $x, y \in V(G)$, $\delta(x, y) = \delta(f(x), f(y))$.
-\end{Theorem}
+\end{thm}
 
 \begin{proof}
 Since both definitions have a bijective function, $f:V(G) \to V(H)$, it is sufficient to only show that the edge-preserving property is equivalent to the shortest path property. So, consider two isomorphic graphs, G and H.
@@ -105,9 +109,10 @@ $\Leftarrow$) If $x_1 \sim x_2$ in G, then $\delta(x_1, x_2) = 1$. But by our as
 
 The third definition of isomorphism revolves around permutations, and says that two graphs are isomorphic if their adjacency matrices can be written as $PA_GP = A_H$, where A and B are adjacency matrices for some isomorphic graphs. The following theorem states the definition and proves its equivalence to the first definition.
 
-\begin{Theorem}[Graph Isomorphism - Permutation Matrix]
+\begin{thm}[Graph Isomorphism - Permutation Matrix]
+\label{permutation}
 Let G and H be two finite graphs. Then $G \cong H$ iff there exists a permutation matrix $P$ such that $PA_GP^T = A_H$.
-\end{Theorem}
+\end{thm}
 
 \begin{proof}
 Let G and H be two isomorphic graphs, and $A_G$ and $A_H$ be their adjacency matrices respectively. Also, let the vertices be labelled by the natural numbers, i.e. 1, 2, ..., n.
@@ -132,9 +137,9 @@ x_{gh}x_{g'h'} = 0 \text{ if } rel(g, g') \neq rel(h, h')
 \end{subequations}
 One can see how this IQP is equivalent to a csp by taking the variables $x_{gh}$ as the set $X$ of indeterminate variables, $D$ will be a set of domains (in the proof below the natural numbers will suffice), and the above conditions are the constraints. The following theorem will again show the equivalence of this isomorphism definition to the first.
 
-\begin{Theorem}[Graph Isomorphism - Constraint Satisfaction Problem]
+\begin{thm}[Graph Isomorphism - Constraint Satisfaction Problem]
 Let G and H be graphs. Then $G \cong H$ iff there exists a solution to the IQP above.
-\end{Theorem}
+\end{thm}
 
 \begin{proof}
 $\Rightarrow$) If $G \cong H$, then we have an edge-preserving bijective function, say $f:V(G) \to V(H)$. Now, denote indeterminate variables $x_{gh}$ for each $g \in V(G)$, $h \in V(H)$. Define a new function: $F:x_{gh} \to \mathbb{R}$ such that 
@@ -163,9 +168,10 @@ Consider some fixed $h \in V(H)$. Then since $\sum_{g' \in V(G)} x_{g'h} = 1$, a
 
 The final isomorphism definition revolves around the game from above, and is particularly important for our following discussions. The graphs are said to be isomorphic if there is a winning strategy for Alice and Bob, and the equivalence of this definition to the the first isomorphism definition is below.
 
-\begin{Theorem}[Graph Isomorphism - Game]
+\begin{thm}[Graph Isomorphism - Game]
+\label{game}
 Let G and H be two graphs. Then $G \cong H$ iff there exists a winning strategy for the G-H game.
-\end{Theorem}
+\end{thm}
 
 \begin{proof}
 $\Rightarrow$) Assume G and H are isomorphic such that there is an edge preserving bijection $f: x \in V(G) \to y \in V(H)$. Then there must exist a winning strategy for the graph isomorphism game. 
@@ -212,31 +218,49 @@ p(y_A, y_B|x_A, x_B) = \psi^\dag(A_{x_Ay_A}\otimes B_{x_By_B})\psi
 If this quantum correlation is zero whenever conditions 1 or 2 fail, then this is a winning strategy.
 
 \begin{defn}[Quantum Graph Isomorphism]
+\label{qgame}
 If there exists a perfect quantum strategy for the above game, then the graphs $G$ and $H$ are quantum isomorphic, denoted by $G \cong_q H$.
 \end{defn}
 
-\begin{Theorem}
+This is the first definition of quantum isomorphism, and it is the quantum analogue of the game definition provided in section \ref{classical}. There are a few definitions of quantum isomorphism already known, but finding quantum analogue definitions to the more well-known classical definitions in section \ref{classical} is of particular interest as it is still an open problem. Defining graph isomorphism using adjacency and permutation matrices is one of these well-known classical definitions, which we now present using projective permutation matrices instead.
+
+\begin{defn}
+A projective permutation matrix (ppm) $\mathcal{P} \in \mathbb{M}_n(d)$ is a unitary block matrix of size $d$ whose elements are projectors.
+\end{defn}
+
+\begin{lem}
+A matrix $\mathcal{P} = [[E_{ij}]] \in \mathbb{M}_n(d)$ is a projective permutation matrix (ppm) if and only if its elements, $E_{ij}$ are projectors $\forall 1 \leq i, j \leq n$ and:
+\begin{enumerate}
+\item $\sum_{i=1}^n E_{ij} = I$ $ $ $1 \leq j \leq n$
+\item $\sum_{j=1}^n E_{ij} = I$ $ $ $1 \leq i \leq n$
+\end{enumerate}
+\end{lem}
+\begin{proof}
+$\Rightarrow$ Suppose we have $\mathcal{P} = [[E_{ij}]] \in \mathbb{M}_n(d)$ that is unitary and all $E_{ij}$ are projectors. Then $\mathcal{P} \mathcal{P}^{\dag} = I$. It follows that $I = (\mathcal{P} \mathcal{P}^{\dag})_{i, i} = \sum_j E_{ij}^2 = \sum_j E_{ij}$. Similarly: $I = (\mathcal{P}^{\dag} \mathcal{P})_{i, i} = \sum_i E_{ij}^2 = \sum_i E_{ij}$. Thus conditions 1 and 2 hold.
+$\Leftarrow$ Conversely, suppose conditions 1 and 2 hold. Use these projectors to construct a projective permutation matrix $\mathcal{P} = [[E_{ij}]]$. Since $E_{ij}$ are projectors, we have that $E_{ik}E_{jk} = 0$ for all $i \neq j$. Then take the product: 
+\[ (\mathcal{P}\mathcal{P}^{\dag})_{i,j} = \sum_k E_{ik}E_{jk} = \begin{cases} 
+\sum_k E_{ik}^2 = I, & \text{ if } i = j \\
+0, & \text{ if } i \neq j  \end{cases}
+\]
+It follows that $\mathcal{P}\mathcal{P}^{\dag} = I$, and similarly $\mathcal{P}^{\dag} \mathcal{P} = I$. Therefore, $\mathcal{P}$ is unitary.
+\end{proof}
+
+Before we can use ppm's to define quantum graph isomorphism, we show a different, but related, way to define graph isomorphism. Using this theorem, it will be easier to prove the next theorem which is the quantum analogue of theorem \ref{permutation}.
+\begin{thm}
 Two graphs $G$ and $H$ are quantum isomorphic if and only if there exists projectors $E_{gh}$ for $g \in V(G)$ and $h \in V(H)$ such that:
 \begin{itemize}
 \item $\sum_{h \in V(H)} E_{gh} = I$  $\forall g \in V(G)$
 \item $\sum_{g \in V(G)} E_{gh} = I$  $\forall h \in V(G)$
 \item $E_{gh}E_{g'h'} = 0$, if $rel(g, g') \neq rel(h, h')$
 \end{itemize}
-\end{Theorem}
+\end{thm}
+\begin{proof}
 
+\end{proof}
 
-\begin{lem}
-A matrix $\mathcal{P} = [[E_{gh}]] \in \mathbb{M}_n(d)$ is a projective permutation matrix (ppm) if and only if its elements, $E_{ij}$ are projectors $\forall 1 \leq i, j \leq n$ and:
-\begin{itemize}
-\item $\sum_{i=1}^n E_{ij} = I$ $ $ $1 \leq j \leq n$
-\item $\sum_{j=1}^n E_{ij} = I$ $ $ $1 \leq i \leq n$
-\end{itemize}
-
-\end{lem}
-
-\begin{Theorem}
+\begin{thm}
 For any two graphs $G$ and $H$, $G \cong_q H$ if and only if there exists a projective permutation matrix $\mathcal{P}$ such that: $(A_G \otimes I_d)\mathcal{P} = \mathcal{P} (A_H \otimes I_d)$
-\end{Theorem}
+\end{thm}
 \begin{proof}
 Let $\mathcal{P} = [[E_{gh}]]$ for $g \in V(G)H$ and $h \in V(H)$.
 \end{proof}
@@ -248,8 +272,11 @@ Projective permutation matrices form a group under multiplication.
 \end{lem}
 \begin{proof}
 Identity: There exists an identity ppm, which is just a ppm with identity matrices in all of the diagonal elements.
+
 Associativity: Since ppm's are still essentially matrices, associativity holds as it would for any family of matrices.
-Invertibility:
+
+Invertibility: Projective permutations matrices are unitary, so take the conjugate transpose of any element to get its inverse.
+
 Closure: Consider two ppm's, $P = \begin{bmatrix}
 E_{11} & \dots & E_{1k} \\
 \vdots  & \ddots \\
@@ -281,9 +308,9 @@ E_{k1}F_{k1} + ... + E_{kk}F_{kk} & \dots
 $
 \end{proof}
 
-\begin{Theorem}
+\begin{thm}
 Quantum Graph Isomorphism forms an equivalence relation between graphs on $n$ vertices.
-\end{Theorem}
+\end{thm}
 \begin{proof}
 Reflexivity: Let $\mathcal{P}$ be the identity ppm. Then $\cong_q$ is reflexive.
 
@@ -308,7 +335,6 @@ Since ppms are closed under multiplication, $\mathcal{P} \mathcal{P}'$ is a ppm,
 \section{Comparing Various Definitions}
 Now we can look at how quantum and classical graph isomorphisms are related.
 
-
 \begin{proposition}{First Isomorphic Relation}
 \label{prop:isoimpliesqiso}
 $G \cong H$ $\implies$ $G \cong_q H$
@@ -327,6 +353,7 @@ To see this, we must introduce a new concept to show an important aspect of quan
 A linear binary constraint system (BCS) $\mathcal{F}$ is a family of binary variables, with a family of constraints. The following is an example that we will refer to later.
 
 \begin{equation*}
+\label{bcs}
 \openup\jot % make lines a little more far apart
 \begin{aligned}[t]
 x_1 + x_2 + x_3 &= 0 \\
@@ -354,21 +381,24 @@ Now, given any linear BCS, $\mathcal{F}$ with m constraints, we can associate a 
 \begin{defn}
 The homogenization of $\mathcal{F}$, denoted $\mathcal{F}_0$, is a linear BCS where the right hand side of all constraints in $\mathcal{F}$ are changed to zero.
 \end{defn}
-We can then construct another graph using the homogenization of the original BCS.
+We can then construct another graph using the homogenization of the original BCS. The next two theorems bring us back to quantum isomorphism.
 
 
-\begin{Theorem}
+\begin{thm}
+\label{classicalBCS}
 Let $\mathcal{F}$ be a linear BCS. Then $\mathcal{F}$ is satisfiable iff $G_{\mathcal{F}}$ is isomorphic to $G_{\mathcal{F}_0}$
-\end{Theorem}
+\end{thm}
 
-\begin{Theorem}
+\begin{thm}
+\label{quantumBCS}
 Let $\mathcal{F}$ be a linear BCS. Then $\mathcal{F}$ is quantum satisfiable iff $G_{\mathcal{F}}$ is quantum isomorphic to $G_{\mathcal{F}_0}$
-\end{Theorem}
+\end{thm}
 
-
-
+Using the linear BCS from \ref{bcs}, we can construct two graphs $G_{\mathcal{F}}$ and $G_{\mathcal{F}_0}$ using the methods described. We know that this linear BCS is not classically satisfiable, so theorem \ref{classicalBCS} tells us that the corresponding graphs will not be classically isomorphic. However, this linear BCS is a well known linear BCS and was constructed to specifically be quantum satisfiable, and hence the graphs constructed will be quantum isomorphic. So we finally have two graphs that are quantum isomorphic but not classically isomorphic. The graphs are in Figure \ref{qisoNOTiso}.
 
 \begin{figure}
+\label{qisoNOTiso}
+\centering
   \begin{subfigure}[b]{0.4\textwidth}
     \includegraphics[width=\textwidth]{"GF_quantum_iso".PNG}
     \caption{Graph for $G_{\mathcal{F}}$}
@@ -377,28 +407,39 @@ Let $\mathcal{F}$ be a linear BCS. Then $\mathcal{F}$ is quantum satisfiable iff
   %
   \begin{subfigure}[b]{0.4\textwidth}
     \includegraphics[width=\textwidth]{"GF0_quantum_iso".PNG}
-    \caption{Graph for $G_{\mathcal{F}_0}$ - homogenization of BCS}
+    \caption{Graph for $G_{\mathcal{F}_0}$}
     \label{fig:Gf0}
   \end{subfigure}
 \end{figure}
 
-This plot displays two graphs that are quantum isomorphic but not isomorphic. They were built upon the linear BCS from above, using the methods described. 
 
-Now, together with a few results from other papers, we can establish a family of graphs for which classical and quantum graph isomorphism are equivalent relations.
-
-\begin{Theorem}
-Let $G$ and $H$ be trees. Then $G \cong H$ $\Leftrightarrow$ $G \cong_q H$.
-\end{Theorem}
-\begin{proof}
-By \cref{prop:isoimpliesqiso} we know that if $G$ and $H$ are classically isomorphic then they are also quantum isomorphic. Conversely, if $G$ and $H$ are quantum isomorphic then they are fractionally isomorphic. But fractionally isomorphic trees are classically isomorphic so $G$ and $H$ are classically isomorphic.
-\end{proof}
 
 \section{Graphs for which classical and quantum isomorphism coincide}
-
 \subsection{Non-signalling and fractional graph isomorphism}
+In this section, we briefly introduce two new types of isomorphism, namely fractional isomorphism and non-signalling isomorphism. Fractional isomorphism is a well studied type of isomorphism, and certain results may be of use in finding relations between quantum isomorphism and classical isomorphism. The significance of fractional isomorphism comes from non-signalling isomorphism, as non-signalling isomorphism is related to quantum isomorphism, and more importantly it implies fractional isomorphism. First we state the formal definitions.
+
+\begin{defn} Let $G$ and $H$ be graphs, and $A_G$, $A_H$ be there adjacency matrices respectively. Then $G$ is fractionally isomorphic to $H$ if there exists a \hyperlink{stochastic}{doubly stochastic matrix} $S$, such that $A_GS = SA_H$. We denote fractional isomorphism by $G \cong_f H$.
+\end{defn}
+
+Recall the definition of quantum isomorphism (definition \ref{qgame}), and the description provided above it. The definition follows similarly to the game with quantum resources: suppose Alice and Bob are playing the nonlocal game with and they have a quantum strategy. If Alice is given input $x_A$, and Bob is given input $x_B$, the probability that Alice obtains outcome $y_A$ when she performs measurement $\mathcal{A}_{x_A}$ is given by: $\sum_{y_B}p(y_A, y_B | x_A, x_B) = \sum_{y_B}\psi^\dag(A_{x_Ay_A}\otimes B_{x_By_B})\psi = \psi^\dag(A_{x_Ay_A}\otimes I)\psi$. This essentially says that Bob's output vertex is not dependent on Alice's measurement. Similarly, Bob's measurement is not dependent on Alice's output vertex, and so the formal definition follows.
+
+\begin{defn}
+A correlation $p(y_A, y_B | x_A, x_B)$ is non-signalling if 
+\begin{itemize}
+\item $\sum_{y_B}p(y_A, y_B | x_A, x_B) = \sum_{y_B}p(y_A, y_B | x_A, x_B')$ for all $x_A, y_A, x_B, x_B'$
+\item $\sum_{y_A}p(y_A, y_B | x_A, x_B) = \sum_{y_B}p(y_A, y_B | x_A', x_B)$ for all $x_B, y_A, x_A, x_A'$
+\end{itemize}
+If all vertices come from two graphs $G$ and $H$, then they are non-signalling isomorphic, denoted by $\cong_{ns}$.
+\end{defn}
+
+Non-signalling isomorphism corresponds to the restriction of Alice and Bob are not allowed to communicate at all (where normally when the game is played, they are allowed to communicate before the game starts). Since nothing can travel faster than the speed of light, any correlation with two parties at a sufficient distance away from each other will be a non-signalling correlation. For this reason, non-signalling isomorphism is an interesting topic to study, however its interest here comes from its implication. It is known that if $G \cong_q H$, then $G \cong_{ns}H$, but we now prove a theorem shows a relation between quantum isomorphism and fractional isomorphism.
+
+\begin{thm}
+Let $G$ and $H$ be graphs. Then $G \cong_{ns} H$ if and only if $G \cong_f H$.
+\end{thm}
 
 \subsection{Graph families}
-
+An interesting open question about graph isomorphism is what types of graphs might have quantum isomorphism always implying classical isomorphism. Below is a list of graphs that might be of particular interest.
 \begin{itemize}
 \item Trees
 \item Cycles
@@ -408,6 +449,15 @@ By \cref{prop:isoimpliesqiso} we know that if $G$ and $H$ are classically isomor
 \item unicyclic graphs
 \item circulant graphs (see Well-covered circulant graphs by Brown and Hoshino)
 \end{itemize}
+Now, together with a few results from other papers, we can establish a family of graphs for which classical and quantum graph isomorphism are equivalent relations.
+
+\begin{thm}
+Let $G$ and $H$ be trees. Then $G \cong H$ $\Leftrightarrow$ $G \cong_q H$.
+\end{thm}
+\begin{proof}
+By \cref{prop:isoimpliesqiso} we know that if $G$ and $H$ are classically isomorphic then they are also quantum isomorphic. Conversely, if $G$ and $H$ are quantum isomorphic then they are fractionally isomorphic. But fractionally isomorphic trees are classically isomorphic so $G$ and $H$ are classically isomorphic.
+\end{proof}
+
 
 It might be useful to use the fact that graphs are fractionally isomorphic if and only if they are indistinguishable by color refinement.
 
