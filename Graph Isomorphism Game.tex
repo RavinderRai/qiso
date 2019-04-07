@@ -38,8 +38,9 @@ Quantum computers are continually coming closer to becoming a reality, but the q
 \end{abstract}
 
 \newpage
-\section{Preliminaries}
-Important basic concepts are presented here. First, a graph is defined as a collection of nodes, with line-connections between them. These nodes are called vertices, and connections are called edges. A bijection is a function that maps vertices from one graph to another, that is one-to-one and onto.
+\section{Preliminaries} \label{prelim}
+Some important basic concepts are presented here. First, a graph is defined as a collection of nodes, with line-connections between them. These nodes are called vertices, and connections are called edges. A bijection is a function that maps vertices from one graph to another, that is one-to-one and onto.
+
 
 The path between any two vertices $x$ and $y$ in a graph is a sequence of edges which connect a list of vertices starting with either $x$ or $y$ and ending with the other. The edges in a graph may be associated with weights, and the sum of the weights of the edges in a path is called the distance of that path. The graphs that we consider here have no specific weights, so we say the weight of each edge is $1$, so distance of a path would give a positive integer equal to the number of edges in the path. The shortest path between two vertices in a graph is a path with the least amount of edges possible between those two vertices, and so we denote the shortest distance, $\delta$, as the distance of the shortest path. 
 
@@ -79,7 +80,9 @@ $, which is called a superposition. We obtain information from a quantum system 
 \end{bmatrix}$ and $|\beta|^2$ of measuring the state $\begin{bmatrix}
 0 \\
 1 
-\end{bmatrix}$. Moreover, a Positive Operator-Valued Measure (POVM) $\mathcal{M}$ is a family of Hermitian psd matrices $\{ M_i \in \mathcal{H}^d_+; 1 \leq i \leq m \}$ such that $\sum_{i=1}M_i = I$ (where m is some integer), and given some state $\psi$, the probability of outcome $i$ occurring is $\psi^\dag M_i \psi$. Finally, we will call $\mathcal{M}$ projective if all of its elements are projectors.
+\end{bmatrix}$. Moreover, any quantum state can be written as a Schmidt decomposition: $\psi = \sum_{i=1}^d \lambda_i \alpha_i \otimes \beta_i$, where $\lambda_i \geq 0$ for all $1 \leq i \leq d$, and the $\{\alpha_i| 1 \leq i \leq d\}$ and $\{\beta_i| 1 \leq i \leq d\}$ are orthonormal bases of $\mathbb{C}^d$. We call these bases the Schmidt bases of $\psi$ and the $\lambda_i$ are called the Schmidt coefficients. We say that $\psi$ has full Schmidt rank if its Schmidt coefficients are all positive. Now, we call a state maximally entangled if all of its Schmidt coefficients are the same, and the canonical maximally entangled state is $\psi_d = \frac{1}{\sqrt{d}} \sum_{i=1}^d e_i \otimes e_i$, where $e_i$ is the $i^{th}$ standard basis vector. Also, an important fact which will be used later is that $\psi^{\dag}_d (A \otimes B) \psi_d = \frac{1}{d} Tr(AB^T)$ for all $A, B \in \mathbb{C}^{dxd}$.
+
+Furthermore, a Positive Operator-Valued Measure (POVM) $\mathcal{M}$ is a family of Hermitian psd matrices $\{ M_i \in \mathcal{H}^d_+; 1 \leq i \leq m \}$ such that $\sum_{i=1}M_i = I$ (where m is some integer), and given some state $\psi$, the probability of outcome $i$ occurring is $\psi^\dag M_i \psi$. Finally, we will call $\mathcal{M}$ projective if all of its elements are projectors.
 
 
 \section{Classical Graph Isomorphism} \label{classical}
@@ -222,47 +225,124 @@ If this quantum correlation is zero whenever conditions 1 or 2 fail, then this i
 If there exists a perfect quantum strategy for the above game, then the graphs $G$ and $H$ are quantum isomorphic, denoted by $G \cong_q H$.
 \end{defn}
 
-This is the first definition of quantum isomorphism, and it is the quantum analogue of the game definition provided in section \ref{classical}. There are a few definitions of quantum isomorphism already known, but finding quantum analogue definitions to the more well-known classical definitions in section \ref{classical} is of particular interest as it is still an open problem. Defining graph isomorphism using adjacency and permutation matrices is one of these well-known classical definitions, which we now present using projective permutation matrices instead.
+It is well known that $\psi$ can be assumed to be of full Schmidt rank. A useful mathematical tool that will be used later on is the map $vec: \mathbb{C}^{d_1 x d_2} \longrightarrow \mathbb{C}^{d_1} \otimes \mathbb{C}^{d_2}$, which takes the matrix $uv^{\dag}$ to $u\otimes \bar{v}$. Also, define the inverse as $mat: \mathbb{C}^{d_1} \otimes \mathbb{C}^{d_2} \longrightarrow \mathbb{C}^{d_1 x d_2}$. This map is an isometry, which means that $vec(A)^{\dag}vec(B) = Tr(A^{\dag}B)$, and if we set $\rho = mat(\psi)$, we can show that: 
+\begin{equation}
+\label{isometry}
+\psi^{\dag} (A \otimes B) \psi = vec(\rho)^{\dag} (A \otimes B) vec(\rho) = vec(\rho)^{\dag} vec(A \rho B^T) = Tr(\rho^{\dag} A\rho B^T)
+\end{equation}
+where we used the identity $vec(AXB^T) = (A \otimes B)vec(X)$.
+
+This is the first definition of quantum isomorphism, and it is the quantum analogue of the game definition provided in section \ref{classical}. There are a few definitions of quantum isomorphism already known, but finding quantum analogue definitions to the more well-known classical definitions in section \ref{classical} is of particular interest as it is still an open problem. However, we now give a special name to the non-local games that we deal with in this paper.
+
+\begin{defn}
+A non-local game is called synchronous if the question set $X$ and answer set $Y$ are the same for all players, and also: $V(y, y'|x, x) = 0$ for all $x \in X$ and $y \neq y' \in Y$.
+\end{defn}
+
+It follows that the graph isomorphism game is synchronous since both Alive and Bob have the same question and answer set, namely $V(G) \cup V(H)$, and $p(y, y'|x, x) = 0$ whenever $y \neq y'$ (meaning that if Alice and Bob receive the same vertex, but respond with two different vertices, then they always lose). The following lemma shows some given facts about synchronous games, which will help in proving later theorems.
+
+\begin{lem}
+\label{synclem}
+Let $\psi \in \mathbb{C}^d \otimes \mathbb{C}^d$, $\mathcal{A}_x = \{A_{xy}: y \in Y\}$ and $\mathcal{B}_x = \{B_{xy}: y \in Y\}$ for all $x \in X$ be a perfect quantum strategy for a synchronous game. If $\psi$ and the operators $A_{xy}, B_{xy}$ are expressed in the Schmidt basis of $\psi$ and $\rho = mat(\psi)$, then:
+\begin{itemize}
+\item $A_{xy} = B_{xy}^T$ for all $x \in X$, $y \in Y$
+\item $A_{xy}$ and $B_{xy}$ are projectors for all $x \in X$, $y \in Y$
+\item $A_{xy} \rho = \rho A_{xy}$ and $B_{xy} \rho = \rho B_{xy}$ for all $x \in X$, $y \in Y$
+\item $p(y, y'|x, x') = \psi^{\dag} (A_{xy} \otimes B_{x'y'}) \psi = 0$ if and only if $A_{xy}A_{x'y'} = 0$
+\end{itemize}
+\end{lem}
+
+Now, since the graph isomorphism game is synchronous, we can restate these above conditions in regards to quantum strategies, and introduce some other facts related to lemma \ref{synclem}.
+
+\begin{thm}
+\label{syncthm}
+Consider two graphs $G$ and $H$. Let $\psi \in \mathbb{C}^d \otimes \mathbb{C}^d$, $\mathcal{A}_x = \{A_{xy}: y \in V(G) \cup V(H)\}$ and $\mathcal{B}_x = \{B_{xy}: y \in V(G) \cup V(H)\}$ for all $x \in V(G) \cup V(H)$ be a perfect quantum strategy. If $\psi$ and the operators $A_{xy}, B_{xy}$ are expressed in the Schmidt basis of $\psi$ and $\rho = mat(\psi)$, then:
+\begin{itemize}
+\item $A_{xy} = B_{xy}^T$ for all $x, y \in V(G) \cup V(H)$
+\item $A_{xy}$ and $B_{xy}$ are projectors for all $x, y \in V(G) \cup V(H)$
+\item $A_{xy} \rho = \rho A_{xy}$ and $B_{xy} \rho = \rho B_{xy}$ for all $x, y \in V(G) \cup V(H)$
+\item $p(y, y'|x, x') = \psi^{\dag} (A_{xy} \otimes B_{x'y'}) \psi = 0$ if and only if $A_{xy}A_{x'y'} = 0$
+\item $A_{xy} = 0$ if $x, y \in V(G)$ or $x, y \in V(H)$
+\item $A_{xy} = A_{yx}$ for all $x, y \in V(G) \cup V(H)$
+\end{itemize}
+\end{thm}
+\begin{proof}
+The first four conditions are simply the same conditions from lemma \ref{synclem} but restated in terms of a perfect quantum strategy, rather than just a synchronous game. For the fifth condition, consider two vertices, $g, g' \in V(G)$, and - using equation \ref{isometry} - observe that \begin{equation}
+0 = \sum_{y \in V(G) \cup V(H)} p(g', y|g, x) = \sum_{y \in V(G) \cup V(H)} \psi^{\dag}(A_{gg'} \otimes B_{xy})\psi = \psi^{\dag}(A_{gg'} \otimes I)\psi = Tr(\rho \rho^{\dag} A_{gg'})
+\end{equation}
+Recall that $\psi$ is of Schmidt basis, so the matrix $\rho$ has positive diagonal entries only, and thus $\rho \rho^{\dag}$ has full rank. Therefore $A_{gg}' = 0$, and similarly, $B_{gg}' = 0$.
+
+For sixth condition, recall that by the rules of the graph isomorphism game, if $x \neq x'$, then $p(y, x'|y, x) = 0$. So by the fourth condition $A_{xy}A_{yx'} = 0$ $\forall x \neq x'$. Hence: 
+\begin{eqnarray}
+A_{xy} = A_{xy} \sum_{x'} A_{yx'} = A_{xy}A_{yx} \\
+A_{yx} = \sum_{y'} A_{xy'} A_{yx}= A_{xy}A_{yx}
+\end{eqnarray}
+
+Therefore, we can combine the two equations to get $A_{xy} = A_{yx}$
+\end{proof}
+
+
+Defining graph isomorphism using adjacency and permutation matrices is one of the well-known classical definitions, but we are now well-equipped to present a quantum analogue definition using projective permutation matrices instead.
 
 \begin{defn}
 A projective permutation matrix (ppm) $\mathcal{P} \in \mathbb{M}_n(d)$ is a unitary block matrix of size $d$ whose elements are projectors.
 \end{defn}
 
-\begin{lem}
-A matrix $\mathcal{P} = [[E_{ij}]] \in \mathbb{M}_n(d)$ is a projective permutation matrix (ppm) if and only if its elements, $E_{ij}$ are projectors $\forall 1 \leq i, j \leq n$ and:
+\begin{lem} \label{ppm}
+A matrix $\mathcal{P} = [[A_{ij}]] \in \mathbb{M}_n(d)$ is a projective permutation matrix (ppm) if and only if its elements, $A_{ij}$ are projectors $\forall 1 \leq i, j \leq n$ and:
 \begin{enumerate}
-\item $\sum_{i=1}^n E_{ij} = I$ $ $ $1 \leq j \leq n$
-\item $\sum_{j=1}^n E_{ij} = I$ $ $ $1 \leq i \leq n$
+\item $\sum_{i=1}^n A_{ij} = I$ $ $ $1 \leq j \leq n$
+\item $\sum_{j=1}^n A_{ij} = I$ $ $ $1 \leq i \leq n$
 \end{enumerate}
 \end{lem}
 \begin{proof}
-$\Rightarrow$ Suppose we have $\mathcal{P} = [[E_{ij}]] \in \mathbb{M}_n(d)$ that is unitary and all $E_{ij}$ are projectors. Then $\mathcal{P} \mathcal{P}^{\dag} = I$. It follows that $I = (\mathcal{P} \mathcal{P}^{\dag})_{i, i} = \sum_j E_{ij}^2 = \sum_j E_{ij}$. Similarly: $I = (\mathcal{P}^{\dag} \mathcal{P})_{i, i} = \sum_i E_{ij}^2 = \sum_i E_{ij}$. Thus conditions 1 and 2 hold.
-$\Leftarrow$ Conversely, suppose conditions 1 and 2 hold. Use these projectors to construct a projective permutation matrix $\mathcal{P} = [[E_{ij}]]$. Since $E_{ij}$ are projectors, we have that $E_{ik}E_{jk} = 0$ for all $i \neq j$. Then take the product: 
-\[ (\mathcal{P}\mathcal{P}^{\dag})_{i,j} = \sum_k E_{ik}E_{jk} = \begin{cases} 
-\sum_k E_{ik}^2 = I, & \text{ if } i = j \\
+$\Rightarrow$ Suppose we have $\mathcal{P} = [[A_{ij}]] \in \mathbb{M}_n(d)$ that is unitary and all $A_{ij}$ are projectors. Then $\mathcal{P} \mathcal{P}^{\dag} = I$. It follows that $I = (\mathcal{P} \mathcal{P}^{\dag})_{i, i} = \sum_j A_{ij}^2 = \sum_j A_{ij}$. Similarly: $I = (\mathcal{P}^{\dag} \mathcal{P})_{i, i} = \sum_i A_{ij}^2 = \sum_i A_{ij}$. Thus conditions 1 and 2 hold.
+$\Leftarrow$ Conversely, suppose conditions 1 and 2 hold. Use these projectors to construct a projective permutation matrix $\mathcal{P} = [[A_{ij}]]$. Since $A_{ij}$ are projectors, we have that $A_{ik}A_{jk} = 0$ for all $i \neq j$. Then take the product: 
+\[ (\mathcal{P}\mathcal{P}^{\dag})_{i,j} = \sum_k A_{ik}A_{jk} = \begin{cases} 
+\sum_k A_{ik}^2 = I, & \text{ if } i = j \\
 0, & \text{ if } i \neq j  \end{cases}
 \]
 It follows that $\mathcal{P}\mathcal{P}^{\dag} = I$, and similarly $\mathcal{P}^{\dag} \mathcal{P} = I$. Therefore, $\mathcal{P}$ is unitary.
 \end{proof}
 
 Before we can use ppm's to define quantum graph isomorphism, we show a different, but related, way to define graph isomorphism. Using this theorem, it will be easier to prove the next theorem which is the quantum analogue of theorem \ref{permutation}.
-\begin{thm}
-Two graphs $G$ and $H$ are quantum isomorphic if and only if there exists projectors $E_{gh}$ for $g \in V(G)$ and $h \in V(H)$ such that:
-\begin{itemize}
-\item $\sum_{h \in V(H)} E_{gh} = I$  $\forall g \in V(G)$
-\item $\sum_{g \in V(G)} E_{gh} = I$  $\forall h \in V(G)$
-\item $E_{gh}E_{g'h'} = 0$, if $rel(g, g') \neq rel(h, h')$
-\end{itemize}
+
+\begin{thm} \label{projqiso}
+Two graphs $G$ and $H$ are quantum isomorphic if and only if there exists projectors $A_{gh}$ for $g \in V(G)$ and $h \in V(H)$ such that:
+\begin{enumerate}
+\item $\sum_{h \in V(H)} A_{gh} = I$  $\forall g \in V(G)$
+\item $\sum_{g \in V(G)} A_{gh} = I$  $\forall h \in V(G)$
+\item $A_{gh}A_{g'h'} = 0$, if $rel(g, g') \neq rel(h, h')$
+\end{enumerate}
 \end{thm}
 \begin{proof}
+$\Rightarrow$) If the graphs $G$ and $H$ are quantum isomorphic, then we can say there exists a quantum strategy as in Theorem \ref{syncthm}. Then by the second condition in Theorem \ref{syncthm}, and by definition of families of projectors (see section \ref{prelim}), conditions 1 and 2 are satisfied. By the rules of the game $rel(g, g') \neq rel(h, h')$, then $\psi^{\dag} (A_{xy} \otimes B_{x'y'}) \psi = 0$ holds necessarily, and so condition 3 follows.
 
+$\Leftarrow$) On the other hand, define $A_{gh} = A_{hg}$, and $A_{gg'} = A_{hh'} = 0$ $\forall g, g' \in V(G)$ and $\forall h, h' \in V(H)$. Now suppose that these $A_{gh}$ satisfy the above conditions. Moreover, let $B_{xy} = A_{xy}^T$. Then $\mathcal{A}_x = \{A_{xy}: y \in V(G) \cup V(H)\}$ and $\mathcal{B}_x = \{B_{xy}: y \in V(G) \cup V(H)\}$ are both valid measurements for all $x \in V(G) \cup V(H)$. Now consider the quantum strategy where Alice and Bob uses these measurements on a shared maximally entangled state $\psi_d = \frac{1}{\sqrt{2}} \sum_{i=1}^d e_i \otimes e_i$. Then $p(y, y'|x, x') = \psi^{\dag}_d (A_{xy} \otimes B_{x'y'}) \psi_d= \frac{1}{d}Tr(A_{xy}A_{x'y'})$ $\forall x, x', y, y' \in V(G) \cup V(H)$. It follows that this correlation combined with condition 3 satisfies the rules of the game, and hence there exists a perfect quantum strategy.
 \end{proof}
+
+Finally, we are well-equipped to introduce and prove the quantum analogue of Theorem \ref{permutation}.
 
 \begin{thm}
 For any two graphs $G$ and $H$, $G \cong_q H$ if and only if there exists a projective permutation matrix $\mathcal{P}$ such that: $(A_G \otimes I_d)\mathcal{P} = \mathcal{P} (A_H \otimes I_d)$
 \end{thm}
 \begin{proof}
-Let $\mathcal{P} = [[E_{gh}]]$ for $g \in V(G)H$ and $h \in V(H)$.
+$\Rightarrow$) Let $\mathcal{P} = [[A_{gh}]]$ for $g \in V(G)H$ and $h \in V(H)$. By Lemma \ref{ppm}, the elements are projectors and satisfy conditions 1 and 2 from Theorem \ref{projqiso}. Then to prove $(A_G \otimes I_d)\mathcal{P} = \mathcal{P} (A_H \otimes I_d)$, we can just show that it is equivalent to condition 3 from Theorem \ref{projqiso}. Observe that conditions 1 and 2 from Theorem \ref{projqiso} already tells us that $A_{gh}A_{g'h'} = 0$ whenever $g = g'$ and $h \neq h'$ or vice versa, and so we only need to show the orthogonality aspect. 
+
+The (g, g')-block of $A_G \otimes I_d$ is equal to $I_d$ if $g \sim g'$ but zero otherwise, and similarly for $A_H \otimes I_d$. Moreover, observe that for $g \in V(G)$ and $h \in V(H)$:
+\begin{equation}
+\label{ppmelement}
+((A_G \otimes I_d)\mathcal{P})_{g,h} = \sum_{g':g' \sim g} A_{g'h} \textit{  and  } ((A_H \otimes I_d)\mathcal{P})_{g,h} = \sum_{h':h' \sim h} A_{g'h}
+\end{equation} 
+So if condition 3 of Theorem \ref{projqiso}, we get that:
+\begin{equation}
+\sum_{g' \sim g} A_{g'h} = \sum_{g' \sim g} A_{g'h} \sum_{h'} A_{gh'} = \sum_{g' \sim g} A_{g'h} \sum_{h' \sim h} A_{gh'} = \sum_{g'} A_{g'h} \sum_{h' \sim h} A_{gh'} = \sum_{h' \sim h} A_{gh'}
+\end{equation}
+And so by equation (\ref{ppmelement}), $(A_G \otimes I_d)\mathcal{P} = \mathcal{P} (A_H \otimes I_d)$.
+
+$\Leftarrow$) Conversely, if $(A_G \otimes I_d)\mathcal{P} = \mathcal{P} (A_H \otimes I_d)$, equation (\ref{ppmelement}) says that, $\forall g \in V(G), h \in V(H)$ :
+\begin{equation}
+\sum_{g':g' \sim g} A_{g'h} = \sum_{h':h' \sim h} A_{gh'} 
+\end{equation}
 \end{proof}
 
 Before we move on to the next theorem, a useful lemma is provided to help prove the next theorem with ease. This lemma proves that ppm's indeed form a group, and more importantly, are closed under multiplication.
