@@ -8,6 +8,7 @@
 \usepackage[export]{adjustbox}
 \usepackage{hyperref}
 \usepackage{cleveref}
+\usepackage{comment}
 
 \hypersetup{
     colorlinks=true,
@@ -32,7 +33,6 @@
 
 \maketitle
 
-
 \begin{abstract}
 Quantum computers are continually coming closer to becoming a reality, but the question of what we can do with them is still a mystery. In this work we look at graph isomorphism as it pertains to quantum computers. Graph isomorphism itself is a well known concept, but when looking at two graphs being isomorphic on a quantum computer, a new phenomenon occurs, which we define as quantum graph isomorphism. To see how this works, we introduce a two player game that redefines graph isomorphism, and then use quantum resources to paint the picture of quantum graph isomorphism. 
 \end{abstract}
@@ -40,7 +40,6 @@ Quantum computers are continually coming closer to becoming a reality, but the q
 \newpage
 \section{Preliminaries} \label{prelim}
 Important basic concepts are presented here. First, a graph is defined as a collection of nodes, with line-connections between them. These nodes are called vertices, and connections are called edges. A bijection is a function that maps vertices from one graph to another, that is one-to-one and onto.
-
 
 The path between any two vertices $x$ and $y$ in a graph is a sequence of edges which connect a list of vertices starting with either $x$ or $y$ and ending with the other. The edges in a graph may be associated with weights, and the sum of the weights of the edges in a path is called the distance of that path. The graphs that we consider here have no specific weights, so we say the weight of each edge is $1$, so distance of a path would give a positive integer equal to the number of edges in the path. The shortest path between two vertices in a graph is a path with the least amount of edges possible between those two vertices, and so we denote the shortest distance, $\delta$, as the distance of the shortest path. 
 
@@ -210,7 +209,7 @@ Now, let $x_1, x_2 \in V(G)$ and $x_1 \sim x_2$. Then $f(x_1), f(x_2) \in V(H)$,
 \end{proof}
 
 \section{Quantum Graph Isomorphism}
-We now define quantum graph isomorphism. 
+We now define quantum graph isomorphism, in an analogous way to Theorem \ref{game}. 
 
 Given two graphs G and H, there are POVM's, $\mathcal{A}_x = \{A_{xy}: y \in V(G) \cup V(H)\}$ and $\mathcal{B}_x = \{B_{xy}: y \in V(G) \cup V(H)\}$ for each $x \in V(G) \cup V(H)$ associated with Alice and Bob, respectively.
 Alice will again receive some $x_A \in V(G) \cup V(H)$ and will perform a measurement $\mathcal{A}_{x_A}$ to get an outcome $y_A \in V(G) \cup V(H)$.
@@ -281,7 +280,7 @@ Therefore, we can combine the two equations to get $A_{xy} = A_{yx}$
 \end{proof}
 
 
-Defining graph isomorphism using adjacency and permutation matrices is one of the well-known classical definitions, but we are now well-equipped to present a quantum analogue definition using projective permutation matrices instead.
+Defining graph isomorphism using adjacency and permutation matrices is one of the well-known classical definitions, but before we present a quantum analogue definition, we must introduce special types of matrices, called projective permutation matrices.
 
 \begin{defn}
 A projective permutation matrix (ppm) $\mathcal{P} \in \mathbb{M}_n(d)$ is a unitary block matrix of size $d$ whose elements are projectors.
@@ -326,9 +325,9 @@ Finally, we are well-equipped to introduce and prove the quantum analogue of The
 For any two graphs $G$ and $H$, $G \cong_q H$ if and only if there exists a projective permutation matrix $\mathcal{P}$ such that: $(A_G \otimes I_d)\mathcal{P} = \mathcal{P} (A_H \otimes I_d)$
 \end{thm}
 \begin{proof}
-$\Rightarrow$) Let $\mathcal{P} = [[A_{gh}]]$ for $g \in V(G)H$ and $h \in V(H)$. By Lemma \ref{ppm}, the elements are projectors and satisfy conditions 1 and 2 from Theorem \ref{projqiso}. Then to prove $(A_G \otimes I_d)\mathcal{P} = \mathcal{P} (A_H \otimes I_d)$, we can just show that it is equivalent to condition 3 from Theorem \ref{projqiso}. Observe that conditions 1 and 2 from Theorem \ref{projqiso} already tells us that $A_{gh}A_{g'h'} = 0$ whenever $g = g'$ and $h \neq h'$ or vice versa, and so we only need to show the orthogonality aspect. 
+Let $\mathcal{P} = [[A_{gh}]]$ for $g \in V(G)H$ and $h \in V(H)$. By Lemma \ref{ppm}, the elements are projectors and satisfy conditions 1 and 2 from Theorem \ref{projqiso}. Then to prove $(A_G \otimes I_d)\mathcal{P} = \mathcal{P} (A_H \otimes I_d)$, we can just show that it is equivalent to condition 3 from Theorem \ref{projqiso}. Observe that conditions 1 and 2 from Theorem \ref{projqiso} already tells us that $A_{gh}A_{g'h'} = 0$ whenever $g = g'$ and $h \neq h'$ or vice versa, and so we only need to show that the orthogonality aspect (condition 3) is equivalent to $(A_G \otimes I_d)\mathcal{P} = \mathcal{P} (A_H \otimes I_d)$. 
 
-The (g, g')-block of $A_G \otimes I_d$ is equal to $I_d$ if $g \sim g'$ but zero otherwise, and similarly for $A_H \otimes I_d$. Moreover, observe that for $g \in V(G)$ and $h \in V(H)$:
+$\Rightarrow$) The (g, g')-block of $A_G \otimes I_d$ is equal to $I_d$ if $g \sim g'$ but zero otherwise, and similarly for $A_H \otimes I_d$. Moreover, observe that for $g \in V(G)$ and $h \in V(H)$:
 \begin{equation}
 \label{ppmelement}
 ((A_G \otimes I_d)\mathcal{P})_{g,h} = \sum_{g':g' \sim g} A_{g'h} \textit{  and  } ((A_H \otimes I_d)\mathcal{P})_{g,h} = \sum_{h':h' \sim h} A_{g'h}
@@ -343,55 +342,28 @@ $\Leftarrow$) Conversely, if $(A_G \otimes I_d)\mathcal{P} = \mathcal{P} (A_H \o
 \begin{equation}
 \sum_{g':g' \sim g} A_{g'h} = \sum_{h':h' \sim h} A_{gh'} 
 \end{equation}
+Also, given a fixed $h$, projectors become mutually orthogonal in the following way: $A_{g'h}A_{gh}=0$ if $g \neq g'$. It follows that 
+\begin{equation}
+(\sum_{g':g' \sim g} A_{g'h})^2 = \sum_{g':g' \sim g} A_{g'h}
+\end{equation}
+Then we can say:
+\begin{equation}
+\sum_{g' \sim g} A_{g'h} \sum_{h' \sim h} A_{gh'} = \sum_{g' \sim g} A_{g'h}= \sum_{g' \sim g} A_{g'h} \sum_{h'} A_{gh'}
+\end{equation}
+From this, we must have that $\sum_{g' \sim g} A_{g'h} \sum_{h' \nsim h} A_{gh'} = 0$. Now if we consider the trace, we have that it must be zero, i.e.
+\begin{equation} \label{traceproof}
+\sum_{g':g' \sim g, h':h' \nsim h} Tr(A_{g'h}A_{gh'}) = 0
+\end{equation}
+But recall that the projectors here are positive semi-definite, which means that all elements are non-negative. Then equation \ref{traceproof} implies that $A_{g'h}A_{gh'} = 0$ when $g \sim g'$ and $h \nsim h'$, and analogously,it is true also if $g \nsim g'$ and $h \sim h'$. This shows that if $rel(g,g') \neq rel(h,h')$ because one of the relations is adjacency and the other is not, then condition 3 from Theorem \ref{projqiso} holds. If one of these relations is equality, and the other is not, then from conditions 1 and 2 from Theorem \ref{projqiso}, we know condition 3 must hold (as stated above already). Finally, if one of the relations is non-adjacency and not equal, and the other is not, then the other relation must either be equality or adjacency, and so we can just use the previous arguments to get condition 3. Then all the different types of relations inequalities give condition 3, and so we have that $G \cong_q H$. 
 \end{proof}
 
-Before we move on to the next theorem, a useful lemma is provided to help prove the next theorem with ease. This lemma proves that ppm's indeed form a group, and more importantly, are closed under multiplication.
-
-\begin{lem}
-Projective permutation matrices form a group under multiplication.
-\end{lem}
-\begin{proof}
-Identity: There exists an identity ppm, which is just a ppm with identity matrices in all of the diagonal elements.
-
-Associativity: Since ppm's are still essentially matrices, associativity holds as it would for any family of matrices.
-
-Invertibility: Projective permutations matrices are unitary, so take the conjugate transpose of any element to get its inverse.
-
-Closure: Consider two ppm's, $P = \begin{bmatrix}
-E_{11} & \dots & E_{1k} \\
-\vdots  & \ddots \\
-E_{k1} &        & E_{kk}
-\end{bmatrix}$ and $Q = \begin{bmatrix}
-F_{11} & \dots & F_{1k} \\
-\vdots  & \ddots \\
-F_{k1} &        & F{kk}
-\end{bmatrix}$. 
-
-Need to check if PQ is a ppm:
-$PQ = \begin{bmatrix}
-E_{11} & \dots & E_{1k} \\
-\vdots  & \ddots \\
-E_{k1} &        & E_{kk}
-\end{bmatrix}
-\times
-\begin{bmatrix}
-F_{11} & \dots & F_{1k} \\
-\vdots  & \ddots \\
-F_{k1} &        & F_{kk}
-\end{bmatrix}
-= 
-\begin{bmatrix}
-E_{11}F_{11} + ... + E_{1k}F_{k1} & \dots  \\
-\vdots  & \ddots \\
-E_{k1}F_{k1} + ... + E_{kk}F_{kk} & \dots
-\end{bmatrix}
-$
-\end{proof}
+Now that we have shown a quantum graph isomorphism definition that is an analogue to one of the classical graph isomorphism definitions, we can use it to prove the next theorem. Naturally, one would expect any new type of isomorphism to form an equivalence, and this next theorem shows just that for quantum isomorphism. 
 
 \begin{thm}
 Quantum Graph Isomorphism forms an equivalence relation between graphs on $n$ vertices.
 \end{thm}
 \begin{proof}
+
 Reflexivity: Let $\mathcal{P}$ be the identity ppm. Then $\cong_q$ is reflexive.
 
 Symmetry: If $G \cong_q H$, then $(A_G \otimes I_d)\mathcal{P} = \mathcal{P} (A_H \otimes I_d)$
@@ -402,18 +374,45 @@ $\Rightarrow$ $(A_H \otimes I_d) \mathcal{P}^\dag = \mathcal{P}^\dag (A_G \otime
 Thus, $\cong_q$ is symmetric.
 
 
-Transitivity: Suppose there exists $\mathcal{P}, \mathcal{P}'$, such that $(A_G \otimes I_d)\mathcal{P} = \mathcal{P} (A_H \otimes I_d)$ and $(A_H \otimes I_{d'}) \mathcal{P} = \mathcal{P}' (A_K \otimes I_{d'})$ for some graphs $G$, $H$, and $K$. Now let $D = max(d, d')$. Then we still have $(A_G \otimes I_D)\mathcal{P} = \mathcal{P} (A_H \otimes I_D)$ and $(A_H \otimes I_{D}) \mathcal{P}^\dag = \mathcal{P}'^\dag (A_K \otimes I_{D})$. So, $\mathcal{P}^\dag (A_G \otimes I_D)\mathcal{P} = (A_H \otimes I_D)$, and $(A_H \otimes I_D) = \mathcal{P}' (A_K \otimes I_{D}) \mathcal{P}'^\dag$. 
+Transitivity: Suppose for graphs $G, H, K$, we have that $G \cong_q H$ and $H \cong_q K$. Then by Theorem \ref{projqiso}, we have two sets of projectors that satisfy the three conditions given in the theorem, where we will use $\{P_{gh} \textit{ } | \textit{ } g \in V(G), h \in V(H) \}$ which corresponds to $G \cong_q H$, and $\{Q_{gh} \textit{ } | \textit{ } h \in V(H), k \in V(K) \}$ which corresponds to $H \cong_q K$. Now define the following set of matrices: $\{R_{gk} \textit{ } | \textit{ } g \in V(G), k \in V(K) \}$, where 
+\begin{equation}
+R_{gk} = \sum_{h \in V(H)} P_{gh} \otimes Q_{hk}
+\end{equation} 
+Then if $R_{gk}$ is a projector and satisfies the three conditions from Theorem \ref{projqiso}, we will have that $G \cong_q K$.
 
-$\Rightarrow$ $\mathcal{P}^\dag (A_G \otimes I_D)\mathcal{P} = \mathcal{P}' (A_K \otimes I_{D}) \mathcal{P}'^\dag$
+Suppose there are $n$ vertices in $H$. Observe that $R_{gk}^{\dag} = (P_{gh_1} \otimes Q_{h_1k} + P_{gh_2} \otimes Q_{h_2k} + \dots + P_{gh_n} \otimes Q_{h_nk})^{\dag} = (P_{gh_1} \otimes Q_{h_1k})^{\dag} + (P_{gh_2} \otimes Q_{h_2k})^{\dag} + \dots + (P_{gh_n} \otimes Q_{h_nk})^{\dag} = P_{gh_1}^{\dag} \otimes Q_{h_1k}^{\dag} + P_{gh_2}^{\dag} \otimes Q_{h_2k}^{\dag} + \dots + P_{gh_n}^{\dag} \otimes Q_{h_nk}^{\dag} = R_{gk}$. 
 
-$\Rightarrow$ $(A_G \otimes I_D)\mathcal{P} \mathcal{P}' = \mathcal{P} \mathcal{P}' (A_K \otimes I_{D})$
+Also, see that 
+\begin{equation} \label{Rsquared}
+R_{gk}^2 = (P_{gh_1} \otimes Q_{h_1k} + P_{gh_2} \otimes Q_{h_2k} + \dots + P_{gh_n} \otimes Q_{h_nk}) \sum_{h \in V(H)} P_{gh} \otimes Q_{hk}
+\end{equation}
+Given that $(A \otimes B)(C \otimes D) = AC \otimes BD$, if we expand the product in equation \ref{Rsquared}, we can use condition 3 from Theorem \ref{projqiso} to get $(P_{gh_1}P_{gh_1} \otimes Q_{h_1k}Q_{h_1k} + P_{gh_1}P_{gh_2} \otimes Q_{h_1k}Q_{h_2k} + \dots + P_{gh_1}P_{gh_n} \otimes Q_{h_1k}Q_{h_nk}) = P_{gh_1}^2 \otimes Q_{h_1k}^2 = P_{gh_1} \otimes Q_{h_1k}$, since $P_{gh}$ and $Q_{hk}$ are projectors. Repeating this for every term in the product of equation \ref{Rsquared}, we get that $R_{gk}^2 = R_{gk}$. So now we have that the $R_{gk}$ elements are projectors.
 
-Since ppms are closed under multiplication, $\mathcal{P} \mathcal{P}'$ is a ppm, which means $G \cong_q K$. Hence $\cong_q$ is transitive.
+Now,  we can show that conditions 1 and 2 from Theorem \ref{projqiso} hold for $R_{gk}$, as follows: 
+\begin{equation}
+\sum_{g \in V(G)} R_{gk} = \sum_{g \in V(G)} \sum_{h \in V(H)} P_{gh} \otimes Q_{hk} = \sum_{h \in V(H)} (\sum_{g \in V(G)} P_{gh}) \otimes Q_{hk}
+\end{equation} 
+But since these conditions hold the projectors $P_{gh}$ and $Q_{hk}$, we get that
+\begin{equation}
+\sum_{h \in V(H)} (\sum_{g \in V(G)} P_{gh}) \otimes Q_{hk} = \sum_{h \in V(H)} I_d \otimes Q_{hk} = I_d \otimes (\sum_{h \in V(H)} Q_{hk}) = I_d \otimes I_d' = I_{dd'}
+\end{equation}
+So condition 1 holds, and condition 2 can be shown similarly.
+
+For condition 3, we must consider $R_{gk}R_{g'k'} =(\sum_{h \in V(H)} P_{gh} \otimes Q_{hk})(\sum_{h \in V(H)} P_{g'h} \otimes Q_{hk'})$. But we can also write this as:
+\begin{equation}
+R_{gk}R_{g'k'} = \sum_{a, b \in V(H)} P_{ga}P_{g'b} \otimes Q_{ak}Q_{bk'}
+\end{equation}
+Then, if $rel(g, g')$ is equality, and $rel(k, k')$ is not, either $a=b$, for which $Q_{ak}Q_{bk'} = 0$, or $a \neq b$, for which $P_{ga}P_{g'b} = 0$. In either case, $R_{gk}R_{g'k'} = 0$.
+If $rel(g, g')$ is adjacency (with $g \neq g'$), and $rel(k, k')$ is not adjacency, then we have four cases. First we consider when $a \nsim b$, which gives the two cases, where either $k = k'$, or $k neq k'$ and $k \nsim k'$. But in either of these cases, $P_{ga}P_{g'b} = 0$, and so $R_{gk}R_{g'k'} = 0$. Now, if $a \sim b$, then again either $k = k'$, or $k neq k'$ and $k \nsim k'$, but still we have for both of these cases that $Q_{ak}Q_{bk'} = 0$, and so $R_{gk}R_{g'k'} = 0$.
+Finally, if $rel(g, g')$ is non-adjacency (with $g \neq g'$), then the other relation will either be equality or adjacency (with $k \neq k'$). Then we can just use the preceding arguments again on $rel(k, k')$ and we will get that $R_{gk}R_{g'k'} = 0$. 
+It follows that $R_{gk}R_{g'k'} = 0$ if $rel(g, g') \neq rel(k, k')$, and so condition 3 holds.
+Therefore, $G \cong_q K$, and so $\cong_q$ is transitive.
 \end{proof}
 
+This concludes this section regarding the core ideas of quantum graph isomorphism, namely having an analogue definition of quantum graph isomorphism to a well-known definition of classical graph isomorphism, and having an equivalence relation. These two results perhaps may give a more intuitive understanding of quantum graph isomorphism, as they are results closely related to well-known and well-studied definitions, but in the next section we compare quantum graph isomorphism to its' classical counterpart.
 
 \section{Comparing Various Definitions}
-Now we can look at how quantum and classical graph isomorphisms are related.
+Normally when a new quantum idea comes about, one can model the classical version of the idea using the quantum methodologies. This usually ends up overcomplicating the idea, but it still works. However, the opposite is not true, which we now explore by looking at how quantum and classical graph isomorphisms are related. The first relation is as follows.
 
 \begin{proposition}{First Isomorphic Relation}
 \label{prop:isoimpliesqiso}
@@ -424,7 +423,7 @@ To see this, observe that every classical isomorphism case can be described by t
 1 & 0 \\
 0 & 1
 \end{bmatrix}$, such that $y_A = f(x_A)$, and similarly for $B_{x_By_B}$. Then $\psi^\dag(A_{x_Ay_A} \otimes B_{x_By_B})\psi = 0$ whenever conditions 1 or 2 fail, thus, this is a winning quantum strategy.
-
+The second relation is the converse, and naturally it is not true.
 \begin{proposition}{Second Isomorphic Relation}
 $G \cong_q H$ $\centernot\implies$ $G \cong H$
 \end{proposition}
@@ -474,21 +473,19 @@ Let $\mathcal{F}$ be a linear BCS. Then $\mathcal{F}$ is satisfiable iff $G_{\ma
 Let $\mathcal{F}$ be a linear BCS. Then $\mathcal{F}$ is quantum satisfiable iff $G_{\mathcal{F}}$ is quantum isomorphic to $G_{\mathcal{F}_0}$
 \end{thm}
 
-Using the linear BCS from \ref{bcs}, we can construct two graphs $G_{\mathcal{F}}$ and $G_{\mathcal{F}_0}$ using the methods described. We know that this linear BCS is not classically satisfiable, so theorem \ref{classicalBCS} tells us that the corresponding graphs will not be classically isomorphic. However, this linear BCS is a well known linear BCS and was constructed to specifically be quantum satisfiable, and hence the graphs constructed will be quantum isomorphic. So we finally have two graphs that are quantum isomorphic but not classically isomorphic. The graphs are in Figure \ref{qisoNOTiso}.
+Using the linear BCS from \ref{bcs}, we can construct two graphs $G_{\mathcal{F}}$ and $G_{\mathcal{F}_0}$ using the methods described. We know that this linear BCS is not classically satisfiable, so theorem \ref{classicalBCS} tells us that the corresponding graphs will not be classically isomorphic. However, this linear BCS is a well known linear BCS and was constructed to specifically be quantum satisfiable, and hence the graphs constructed will be quantum isomorphic. So we finally have two graphs that are quantum isomorphic but not classically isomorphic. The graphs are in Figure \ref{fig:qisoNOTiso}. 
 
 \begin{figure}
-\label{qisoNOTiso}
+\label{fig:qisoNOTiso}
 \centering
   \begin{subfigure}[b]{0.4\textwidth}
     \includegraphics[width=\textwidth]{"GF_quantum_iso".PNG}
     \caption{Graph for $G_{\mathcal{F}}$}
-    \label{fig:Gf}
   \end{subfigure}
   %
   \begin{subfigure}[b]{0.4\textwidth}
     \includegraphics[width=\textwidth]{"GF0_quantum_iso".PNG}
     \caption{Graph for $G_{\mathcal{F}_0}$}
-    \label{fig:Gf0}
   \end{subfigure}
 \end{figure}
 
@@ -496,7 +493,7 @@ Using the linear BCS from \ref{bcs}, we can construct two graphs $G_{\mathcal{F}
 
 \section{Graphs for which classical and quantum isomorphism coincide}
 \subsection{Non-signalling and fractional graph isomorphism}
-In this section, we briefly introduce two new types of isomorphism, namely fractional isomorphism and non-signalling isomorphism. Fractional isomorphism is a well studied type of isomorphism, and certain results may be of use in finding relations between quantum isomorphism and classical isomorphism. The significance of fractional isomorphism comes from non-signalling isomorphism, as non-signalling isomorphism is related to quantum isomorphism, and more importantly it implies fractional isomorphism. First we state the formal definitions.
+In this section, we seek to show that there may be certain types of graphs for which classical and quantum graph isomorphism are equivalent definitions. To do this, we briefly introduce two new types of isomorphism, namely fractional isomorphism and non-signalling isomorphism. Fractional isomorphism is a well studied type of isomorphism, and certain results may be of use in finding relations between quantum isomorphism and classical isomorphism. The significance of fractional isomorphism comes from non-signalling isomorphism, as non-signalling isomorphism is related to quantum isomorphism, and more importantly it is equivalent to fractional isomorphism. First we state the formal definitions.
 
 \begin{defn} Let $G$ and $H$ be graphs, and $A_G$, $A_H$ be there adjacency matrices respectively. Then $G$ is fractionally isomorphic to $H$ if there exists a \hyperlink{stochastic}{doubly stochastic matrix} $S$, such that $A_GS = SA_H$. We denote fractional isomorphism by $G \cong_f H$.
 \end{defn}
@@ -512,7 +509,7 @@ A correlation $p(y_A, y_B | x_A, x_B)$ is non-signalling if
 If all vertices come from two graphs $G$ and $H$, then they are non-signalling isomorphic, denoted by $\cong_{ns}$.
 \end{defn}
 
-Non-signalling isomorphism corresponds to the restriction of Alice and Bob are not allowed to communicate at all (where normally when the game is played, they are allowed to communicate before the game starts). Since nothing can travel faster than the speed of light, any correlation with two parties at a sufficient distance away from each other will be a non-signalling correlation. For this reason, non-signalling isomorphism is an interesting topic to study, however its interest here comes from its implication. It is known that if $G \cong_q H$, then $G \cong_{ns}H$, but we now prove a theorem shows a relation between quantum isomorphism and fractional isomorphism.
+Non-signalling isomorphism corresponds to the restriction of Alice and Bob are not allowed to communicate at all (where normally when the game is played, they are allowed to communicate before the game starts). Since nothing can travel faster than the speed of light, any correlation with two parties at a sufficient distance away from each other will be a non-signalling correlation. For this reason, non-signalling isomorphism is an interesting topic to study, however its interest here comes from its implication. It is known that if $G \cong_q H$, then $G \cong_{ns}H$, but the following theorem shows a relation between non-signalling isomorphism and fractional isomorphism, which will be important for Theorem \ref{Trees}.
 
 \begin{thm}
 Let $G$ and $H$ be graphs. Then $G \cong_{ns} H$ if and only if $G \cong_f H$.
@@ -532,14 +529,14 @@ An interesting open question about graph isomorphism is what types of graphs mig
 Now, together with a few results from other papers, we can establish a family of graphs for which classical and quantum graph isomorphism are equivalent relations.
 
 \begin{thm}
+\label{Trees}
 Let $G$ and $H$ be trees. Then $G \cong H$ $\Leftrightarrow$ $G \cong_q H$.
 \end{thm}
 \begin{proof}
-By \cref{prop:isoimpliesqiso} we know that if $G$ and $H$ are classically isomorphic then they are also quantum isomorphic. Conversely, if $G$ and $H$ are quantum isomorphic then they are fractionally isomorphic. But fractionally isomorphic trees are classically isomorphic so $G$ and $H$ are classically isomorphic.
+By \cref{prop:isoimpliesqiso} we know that if $G$ and $H$ are classically isomorphic then they are also quantum isomorphic. Conversely, if $G$ and $H$ are quantum isomorphic then they are fractionally isomorphic. But fractionally isomorphic trees are classically isomorphic, and so $G$ and $H$ are classically isomorphic.
 \end{proof}
 
-
-It might be useful to use the fact that graphs are fractionally isomorphic if and only if they are indistinguishable by color refinement.
+For further study, it might be useful to use the fact that graphs are fractionally isomorphic if and only if they are indistinguishable by color refinement. This may provide insight into graphs that are cycles or chordals, and the are closely related to indistinguishable color refinement.
 
 \newpage
 
