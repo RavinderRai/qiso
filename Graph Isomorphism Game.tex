@@ -37,7 +37,11 @@
 Quantum computers are continually coming closer to becoming a reality, but the question of what we can do with them is still a mystery. In this work we look at graph isomorphism as it pertains to quantum computers. Graph isomorphism itself is a well known concept, but when looking at two graphs being isomorphic on a quantum computer, a new phenomenon occurs, which we define as quantum graph isomorphism. To see how this works, we introduce a two player game that redefines graph isomorphism, and then use quantum resources to paint the picture of quantum graph isomorphism. 
 \end{abstract}
 
-\newpage
+\section{Introduction}
+\label{sec:intro}
+
+We use the following references: \cite{shortest}, \cite{laura}, \cite{comb}, \cite{musto2018}, \cite{QuanPerm}, \cite{GraphHom}, \cite{QuanMonad}, \cite{QuantumMagic}, \cite{Binary}
+
 \section{Preliminaries} \label{prelim}
 Important basic concepts are presented here. First, a graph is defined as a collection of nodes, with line-connections between them. These nodes are called vertices, and connections are called edges. A bijection is a function that maps vertices from one graph to another, that is one-to-one and onto.
 
@@ -476,7 +480,6 @@ Let $\mathcal{F}$ be a linear BCS. Then $\mathcal{F}$ is quantum satisfiable iff
 Using the linear BCS from \ref{bcs}, we can construct two graphs $G_{\mathcal{F}}$ and $G_{\mathcal{F}_0}$ using the methods described. We know that this linear BCS is not classically satisfiable, so theorem \ref{classicalBCS} tells us that the corresponding graphs will not be classically isomorphic. However, this linear BCS is a well known linear BCS and was constructed to specifically be quantum satisfiable, and hence the graphs constructed will be quantum isomorphic. So we finally have two graphs that are quantum isomorphic but not classically isomorphic. The graphs are in Figure \ref{fig:qisoNOTiso}. 
 
 \begin{figure}
-\label{fig:qisoNOTiso}
 \centering
   \begin{subfigure}[b]{0.4\textwidth}
     \includegraphics[width=\textwidth]{"GF_quantum_iso".PNG}
@@ -487,6 +490,8 @@ Using the linear BCS from \ref{bcs}, we can construct two graphs $G_{\mathcal{F}
     \includegraphics[width=\textwidth]{"GF0_quantum_iso".PNG}
     \caption{Graph for $G_{\mathcal{F}_0}$}
   \end{subfigure}
+\caption{Counterexample.}
+\label{fig:qisoNOTiso}
 \end{figure}
 
 
