@@ -41,11 +41,11 @@
   quantum graph isomorphism. Two graphs G and H are said to be quantum
   isomorphic if and only if two players sharing entangled particles
   can win the $(G,H)$-isomorphism game. This new notion of isomorphism
-  is a relaxation of the usual, classical, notion: if two graphs $G$
-  and $H$ are classically isomorphic then they are quantum isomorphic
-  but the converse is not true. This paper introduces the relation of
-  quantum graph isomorphism, reviews existing results, and discusses
-  open problems.
+  is a relaxation of the classical notion: if two graphs $G$ and $H$
+  are classically isomorphic then they are quantum isomorphic but the
+  converse is not true. This paper introduces the relation of quantum
+  graph isomorphism, reviews existing results, and discusses open
+  problems.
 \end{abstract}
 
 % --------------------------------------------------------------------
@@ -55,35 +55,37 @@
 In this paper, we focus on the notion \emph{quantum graph
   isomorphism}, a new relation between graphs which was recently
 studied in the context of quantum information theory \cite{amrssv2016,
-  mrv2018, lmr2017, rm2012, assz2017}. We provide an
-introduction to this new relation, following \cite{amrssv2016}. The
-relation of quantum graph isomorphism stems from the realization that
-the usual, classical, notion of graph isomorphism can be rephrased in
+  mrv2018, lmr2017, rm2012, assz2017}. We provide an introduction to
+this new relation, following \cite{amrssv2016}.
+
+The relation of quantum graph isomorphism stems from the realization
+that the classical notion of graph isomorphism can be rephrased in
 terms of some two-player cooperative game. Given two graphs $G$ and
-$G$, the game is played by two players who must produce are given
-vertices of the graphs and must produce In this game, two players use
-graphs $G$ and $H$ to answerverticeswho act as functions that take
-vertices as inputs and outputs some other vertices, while trying to
-meet certain conditions given by a referee. We say that two graphs G
-and H are isomorphic if and only if two players can win this
-(G,H)-isomorphism game with certainty. This game gives rise to the
-idea of quantum graph isomorphism, where it is defined similarly to
-the (G,H)-isomorphism game, but the players are allowed to share
-entangled particles. We can then say that two graphs G and H are
-quantum isomorphic if and only if two players sharing entangled
-particles can win the (G,H)-isomorphism game. Naturally, like most
-quantum phenomenon, while G and H being isomorphic implies that G and
-H are quantum isomorphic, the converse is not true. In this paper, we
-first introduce some of the basic background necessary to understand
-these topics, before explaining various definitions of classical
-isomorphism, and showing that they are all equivalent. Then, we do the
-same for quantum isomorphism, where some of its definitions are
-quantum analogues to certain classical definitions, and some are
-not. Moreover, the natural expectation that graphs can be quantum
-isomorphic but not classically isomorphic is explained with a counter
-example. And finally, we briefly discuss another type of isomorphism
-called non-signalling isomorphism, and show some interesting relations
-it has to a certain type of graph.
+$H$, the game is played by two players who, when given input vertices
+from $G$ or $H$, must produce output vertices. The players win the
+game if their outputs satisfy certain conditions given by a
+referee. It can be shown that the graphs $G$ and $H$ are isomorphic if
+and only if the players can win the associated $(G,H)$-isomorphism
+game with certainty.
+
+It is well-known that players who share certain quantum resources,
+such as entangled particles, sometimes have an advantage over players
+sharing only classical resources. This quantum advantage can be used
+to define an new notion of isomorphism: two graphs $G$ and $H$ are
+\emph{quantum isomorphic} if and only if two players sharing quantum
+resources can win the $(G,H)$-isomorphism game with certainty. While
+classical isomorphic graphs are also quantum isomorphic, the converse
+is not true: there are pairs of graphs that are quantum isomorphic
+without being classically isomorphic.
+
+In this paper, we provide an introduction to the relation of quantum
+isomorphism. We start by introducing the required preliminaries in
+Section~\ref{sec:prelim}. We then discuss the classical relation of
+isomorphism in Section~\ref{sec:ciso}. We define the relation of
+quantum isomorphism in Section~\ref{sec:qiso} and provide an example
+of a pair of graphs that are quantum isomorphic without being
+classically isomorphic in Section~\ref{sec:compare}. Finally, we
+conclude and discuss open problems in Section~\ref{sec:conc}.
 
 % --------------------------------------------------------------------
 \section{Preliminaries}
@@ -238,7 +240,7 @@ relations.
   isomorphic.
 \end{defn}
 
-The bijection in \cref{def:ciso} is sometimes said to be
+The bijection in Definition~\ref{def:ciso} is sometimes said to be
 \emph{edge-preserving}.
 
 \begin{thm}
@@ -392,13 +394,14 @@ bijection between graphs G and H.
 \end{proof}
 
 Before we introduce the final theorem of this section, there is an
-important game to introduce that is discussed in \cite{amrssv2016}, and it
-relates to two graphs $G$ and $H$. This (G,H)-isomorphism game works
-as follows: consider two players, Alice and Bob, and two graphs G and
-H with the same number of vertices. Now consider a referee who gives
-Alice and Bob a vertex from the two different graphs G and H. Then
-Alice and Bob both respond with another vertex from either of the two
-graphs, and are said to win if they meet the following conditions:
+important game to introduce that is discussed in \cite{amrssv2016},
+and it relates to two graphs $G$ and $H$. This (G,H)-isomorphism game
+works as follows: consider two players, Alice and Bob, and two graphs
+G and H with the same number of vertices. Now consider a referee who
+gives Alice and Bob a vertex from the two different graphs G and
+H. Then Alice and Bob both respond with another vertex from either of
+the two graphs, and are said to win if they meet the following
+conditions:
 \begin{description}
   \item[$\bullet$] $x_A \in V(G) \Leftrightarrow y_A \in V(H)$ and
     $x_B \in V(G)\Leftrightarrow y_B \in V(H), $ where $x_A, x_B, y_A,
@@ -658,7 +661,7 @@ unitary.
 Before we can use ppm's to define quantum graph isomorphism, we show a
 different, but related, way to define graph isomorphism. Using this
 theorem, it will be easier to prove the next theorem which is the
-quantum analogue of \cref{thm:permutation}.
+quantum analogue of Theorem~\ref{thm:permutation}.
 
 \begin{thm}
   \label{projqiso}
@@ -731,8 +734,8 @@ V(H)$:
 \end{equation} 
 So if condition 3 of Theorem \ref{projqiso}, we get that:
 \begin{align*}
-\sum_{g' \sim g} A_{g'h} &= \sum_{g' \sim g} A_{g'h} \sum_{h'} A_{gh'} \\
-&= \sum_{g' \sim g} A_{g'h} \sum_{h' \sim h} A_{gh'}\\ &= \sum_{g'}
+\sum_{g' \sim g} A_{g'h} &= \sum_{g' \sim g} A_{g'h} \sum_{h'} A_{gh'}
+\\ &= \sum_{g' \sim g} A_{g'h} \sum_{h' \sim h} A_{gh'}\\ &= \sum_{g'}
 A_{g'h} \sum_{h' \sim h} A_{gh'} = \sum_{h' \sim h} A_{gh'}
 \end{align*}
 And so by equation (\ref{ppmelement}), $(A_G \otimes I_d)\mathcal{P} =
@@ -904,7 +907,7 @@ definitions, but in the next section we compare quantum graph
 isomorphism to its' classical counterpart.
 
 % --------------------------------------------------------------------
-\section{Comparing Various Definitions}
+\section{Comparing Classical and Quantum Isomorphism}
 \label{sec:compare}
 
 Normally when a new quantum idea comes about, one can model the
@@ -1048,15 +1051,16 @@ square game, and is explained in more detail in \cite{a2012}.
 \end{figure}
 
 % --------------------------------------------------------------------
-\section{Graphs for which classical and quantum isomorphism coincide}
-
-% --------------------------------------------------------------------
 \subsection{Non-signalling and fractional graph isomorphism}
 
-In this section, we seek to show that there may be certain types of
-graphs for which classical and quantum graph isomorphism are
-equivalent definitions. To do this, we briefly introduce two new types
-of isomorphism, namely fractional isomorphism and non-signalling
+The graphs given in Figure~\ref{fig:qisoNOTiso} are quantum isomorphic
+without being classically isomorphic so that classical isomorphism
+does not imply quantum isomorphism in general. It could still be the
+case, however, that the implication holds in certain restricted
+setting settings. We now briefly explain why this is true for trees.
+
+To this end, we briefly introduce two new (equivalent) types of
+isomorphism: fractional isomorphism and non-signalling
 isomorphism. Fractional isomorphism is a well studied type of
 isomorphism, and certain results may be of use in finding relations
 between quantum isomorphism and classical isomorphism. The
@@ -1116,25 +1120,8 @@ proof), which will be important for Theorem \ref{Trees}.
   \cong_f H$.
 \end{thm}
 
-% --------------------------------------------------------------------
-\subsection{Graph Families and Discussion}
-
-An interesting open question about graph isomorphism is what types of
-graphs might have quantum isomorphism always implying classical
-isomorphism. Below is a list of graphs that might be of particular
-interest.
-\begin{itemize}
-\item Trees
-\item Cycles
-\item Chordal graphs
-\item Bipartite graphs and complete bipartite graphs
-\item Complete graphs 
-\item unicyclic graphs
-\item circulant graphs (see \cite{bh2011})
-\end{itemize}
-Now, together with a few results from other papers, we can establish a
-family of graphs for which classical and quantum graph isomorphism are
-equivalent relations.
+We can now show that classical and quantum isomorphism coincide for
+trees.
 
 \begin{thm}
   \label{Trees}
@@ -1143,15 +1130,26 @@ equivalent relations.
 \end{thm}
 
 \begin{proof}
-By \cref{prop:isoimpliesqiso} we know that if $G$ and $H$ are
-classically isomorphic then they are also quantum
+By Proposition~\ref{prop:isoimpliesqiso} we know that if $G$ and $H$
+are classically isomorphic then they are also quantum
 isomorphic. Conversely, if $G$ and $H$ are quantum isomorphic then
-they are fractionally isomorphic. But by Lemma 2.4 in
-\cite{rsu1994}, fractionally isomorphic trees are classically
-isomorphic, and so $G$ and $H$ are classically isomorphic.
+they are fractionally isomorphic. But by Lemma 2.4 in \cite{rsu1994},
+fractionally isomorphic trees are classically isomorphic, and so $G$
+and $H$ are classically isomorphic.
 \end{proof}
 
-For further study, it might be useful to use the fact that graphs are
+% --------------------------------------------------------------------
+\section{Conclusion}
+\label{sec:conc}
+
+While the relation of graph isomorphism has been thoroughly studied,
+the relation of quantum isomorphism remains poorly understood. In
+particular, it would be interesting to better understand the types of
+graphs for which classical and quantum isomorphism coincide. Types of
+graphs that might be of interest in this context include, chordal
+graphs, bipartite graphs, complete bipartite graphs, complete graphs,
+unicyclic graphs, and circulant graphs (see \cite{bh2011}). For
+further study, it might be useful to use the fact that graphs are
 fractionally isomorphic if and only if they are indistinguishable by
 color refinement. This may provide insight into graphs that are cycles
 or chordals, as the are closely related to indistinguishable color
@@ -1160,16 +1158,16 @@ how quantum isomorphism relates to other types of isomorphism, like
 semi-isomorphism. Semi-isomorphism may be particularly useful to look
 at for bipartite graphs, since two bipartite graphs are
 semi-isomorphic if and only if they are classically isomorphic
-(\cite{rsu1994}).  Also, since we now know that quantum isomorphism
-is an equivalence relation, it might be interesting to use similar
+(\cite{rsu1994}).  Also, since we now know that quantum isomorphism is
+an equivalence relation, it might be interesting to use similar
 methods like the Polya enumeration theorem from \cite{b2009}, to count
-the number of non-quantum isomorphic graphs given $n$
-vertices. Finally, not every definition of classical isomorphism has a
-quantum analogue, so it would be interesting to find such analogues.
+the number of non-quantum isomorphic graphs on $n$ vertices. Finally,
+not every definition of classical isomorphism has a quantum analogue,
+so it would be interesting to find such analogues.
 
 % --------------------------------------------------------------------
 \bibliographystyle{unsrt}
 \addcontentsline{toc}{section}{Bibliography}
-\bibliography{Bibliography}
+\bibliography{qiso}
 
 \end{document}
