@@ -54,9 +54,9 @@
 
 In this paper, we focus on the notion \emph{quantum graph
   isomorphism}, a new relation between graphs which was recently
-studied in the context of quantum information theory \cite{laura,
-  musto2018, QuanPerm, GraphHom, QuanMonad}. We provide an
-introduction to this new relation, following \cite{laura}. The
+studied in the context of quantum information theory \cite{amrssv2016,
+  mrv2018, lmr2017, rm2012, assz2017}. We provide an
+introduction to this new relation, following \cite{amrssv2016}. The
 relation of quantum graph isomorphism stems from the realization that
 the usual, classical, notion of graph isomorphism can be rephrased in
 terms of some two-player cooperative game. Given two graphs $G$ and
@@ -225,80 +225,60 @@ projective if all of its elements are projectors.
 \section{Classical Graph Isomorphism}
 \label{sec:ciso}
 
-Graph isomorphism is said to occur when two graphs are the essentially
-the same, aside from labels and manipulations, like rotations or
-rearrangements of vertices. Intuitively, this means that if two graphs
-are isomorphic, but perhaps it does not immediately seem obvious, then
-one will be able to manipulate one of the graphs via rotations or
-rearrangements of vertices so that it is identical to the other one
-(again, aside from the vertices' labels). There are multiple formal
-definitions of graph isomorphism, presented below.
-
-The first and most well known definition of graph isomorphism is
-defined by a function that maps vertices in one graph to the other,
-while preserving the edge connections. This function is an
-edge-preserving bijective function, and so we call this definition the
-edge-preserving bijection definition of graph isomorphism, but we look
-at it as the primary definition in the paper.
+The relation of graph \emph{isomorphism} is meant to relate graphs
+whose differences are inessential. In this section, we introduce the
+relation of graph isomorphism and review several well-known equivalent
+relations.
 
 \begin{defn}[Graph Isomorphism]
   \label{def:ciso}
-  Two graphs $G$ and $H$ are said to be isomorphic if there exists a
+  Two graphs $G$ and $H$ are \emph{isomorphic} if there exists a
   bijection $f:V(G) \to V(H)$ such that for any $x, y \in V(G)$, $x
-  \sim y$ iff $f(x) \sim f(y)$. If G and H are isomorphic, then we
-  write $G \cong H$.
+  \sim y$ iff $f(x) \sim f(y)$. We write $G\cong H$ if G and H are
+  isomorphic.
 \end{defn}
 
-The second definition of isomorphism follows from the shortest paths
-of a graph. This definition says that if we have a bijective function
-from one graph to another, then they are isomorphic if the shortest
-path of any two vertices of the domain of the function is equal to the
-shortest paths of their image vertices in the co-domain. In the
-following theorem, we state this definition of isomorphism and prove
-its equivalence to the first definition. The proof comes from
-\cite{shortest}.
+The bijection in \cref{def:ciso} is sometimes said to be
+\emph{edge-preserving}.
 
-\begin{thm}[Graph Isomorphism Equivalence - Shortest Paths]
-  \label{shortest}
+\begin{thm}
+  \label{thm:shortest}
   Let G and H be graphs. Then $G \cong H$ iff there exists a bijection
   $f:V(G) \to V(H)$ such that for any $x, y \in V(G)$, $\delta(x, y) =
   \delta(f(x), f(y))$.
 \end{thm}
 
 \begin{proof}
-Since both definitions have a bijective function, $f:V(G) \to V(H)$,
-it is sufficient to only show that the edge-preserving property is
-equivalent to the shortest path property. So, consider two isomorphic
-graphs, G and H.
+(Adapted from \cite{ss2014}.) Since both definitions involve a
+  bijective function, $f:V(G) \to V(H)$, it is sufficient to show that
+  the edge-preservation property is equivalent to the shortest path
+  property. 
 
 $\Rightarrow$) If $x_1 \sim x_2$ in G, then $f(x_1) \sim f(x_2)$ in H
-(and vice versa). So $(x_1, x_2, ..., x_n)$ is a path in G iff
+and vice versa. Hence $(x_1, x_2, ..., x_n)$ is a path in G iff
 $(f(x_1), f(x_2), ..., f(x_n))$ is a path in H. It follows that $(x_1,
 x_2, ..., x_n)$ is the shortest path in G iff $(f(x_1), f(x_2), ...,
 f(x_n))$ is the shortest path in H.
 
-$\Leftarrow$) If $x_1 \sim x_2$ in G, then $\delta(x_1, x_2) = 1$. But
-by our assumption, $\delta(x_1, x_2) = \delta(f(x_1), f(x_2)) = 1$, so
-$f(x_1) \sim f(x_2)$. Hence, if $x_1 \sim x_2$, then $f(x_1) \sim
-f(x_2)$ (and vice versa).
+$\Leftarrow$) Suppose that $x_1 \sim x_2$ in G. Then $\delta(x_1, x_2)
+= 1$. Hence 
+\[
+\delta (f(x_1),f(x_2)) = \delta (x_1,x_2)=1. 
+\]
+Thus
+$f(x_1) \sim f(x_2)$. The converse implication follows similarly.
 \end{proof}
 
-The third definition of isomorphism revolves around permutations, and
-says that two graphs are isomorphic if their adjacency matrices can be
-written as $PA_GP = A_H$, where A and B are adjacency matrices for
-some isomorphic graphs. The following theorem states the definition
-and proves its equivalence to the first definition.
-
-\begin{thm}[Graph Isomorphism - Permutation Matrix]
-  \label{permutation}
+\begin{thm}
+  \label{thm:permutation}
   Let G and H be two finite graphs. Then $G \cong H$ iff there exists
   a permutation matrix $P$ such that $PA_GP^T = A_H$.
 \end{thm}
 
 \begin{proof}
-Let G and H be two isomorphic graphs, and $A_G$ and $A_H$ be their
-adjacency matrices respectively. Also, let the vertices be labeled by
-the natural numbers, i.e. 1, 2, ..., n.
+Let G and H be two finite graphs and assume without loss of generality
+that $V(G)=V(H)=\{1,\ldots,n\}$. Let $A_G$ and $A_H$ be the adjacency
+matrices of $G$ and $H$, respectively.
 
 $\Rightarrow$) Given an edge-preserving bijective function, $f:V(G)
 \to V(H)$, construct a matrix $P = [e_{f(1)}, e_{f(2)}, ...,
@@ -357,7 +337,7 @@ suffice), and the above conditions are the constraints. The following
 theorem will again show the equivalence of this isomorphism definition
 to the first.
 
-\begin{thm}[Graph Isomorphism - Constraint Satisfaction Problem]
+\begin{thm}
   Let G and H be graphs. Then $G \cong H$ iff there exists a solution
   to the IQP above.
 \end{thm}
@@ -412,7 +392,7 @@ bijection between graphs G and H.
 \end{proof}
 
 Before we introduce the final theorem of this section, there is an
-important game to introduce that is discussed in \cite{laura}, and it
+important game to introduce that is discussed in \cite{amrssv2016}, and it
 relates to two graphs $G$ and $H$. This (G,H)-isomorphism game works
 as follows: consider two players, Alice and Bob, and two graphs G and
 H with the same number of vertices. Now consider a referee who gives
@@ -678,7 +658,7 @@ unitary.
 Before we can use ppm's to define quantum graph isomorphism, we show a
 different, but related, way to define graph isomorphism. Using this
 theorem, it will be easier to prove the next theorem which is the
-quantum analogue of theorem \ref{permutation}.
+quantum analogue of \cref{thm:permutation}.
 
 \begin{thm}
   \label{projqiso}
@@ -719,7 +699,7 @@ $\Leftarrow$) On the other hand, define $A_{gh} = A_{hg}$, and
 \end{proof}
 
 Finally, we are well-equipped to introduce and prove the quantum
-analogue of Theorem \ref{permutation}.
+analogue of Theorem \ref{thm:permutation}.
 
 \begin{thm}
   For any two graphs $G$ and $H$, $G \cong_q H$ if and only if there
@@ -828,7 +808,7 @@ where we will use $\{P_{gh} \textit{ } | \textit{ } g \in V(G), h \in
 V(H) \}$ which corresponds to $G \cong_q H$, and $\{Q_{gh} \textit{ }
 | \textit{ } h \in V(H), k \in V(K) \}$ which corresponds to $H
 \cong_q K$. Now define the following set of matrices, as in Lemma 2.5
-from \cite{GraphHom}: $\{R_{gk} \textit{ } | \textit{ } g \in V(G), k
+from \cite{rm2012}: $\{R_{gk} \textit{ } | \textit{ } g \in V(G), k
 \in V(K) \}$, where
 \begin{equation}
 R_{gk} = \sum_{h \in V(H)} P_{gh} \otimes Q_{hk}
@@ -964,7 +944,7 @@ graphs that are quantum graph isomorphic but not isomorphic. This new
 concept is a linear binary constraint system (BCS) $\mathcal{F}$,
 which is a family of binary variables, with a family of
 constraints. The following is an example that we will refer to later,
-and can be found in \cite{Binary}.
+and can be found in \cite{cm2014}.
 
 \begin{equation*}
 \label{bcs}
@@ -1050,7 +1030,7 @@ will be quantum isomorphic. So now we finally have two graphs that are
 quantum isomorphic but not classically isomorphic. The graphs are in
 Figure \ref{fig:qisoNOTiso}. Also note that in general, the idea of
 constructing graphs in this manner comes from the Mermin-Peres magic
-square game, and is explained in more detail in \cite{QuantumMagic}.
+square game, and is explained in more detail in \cite{a2012}.
 
 \begin{figure}
 \centering
@@ -1128,7 +1108,7 @@ correlation. For this reason, non-signalling isomorphism is an
 interesting topic to study, however its interest here comes from its
 implication. It is known that if $G \cong_q H$, then $G \cong_{ns}H$,
 but the following theorem shows a relation between non-signalling
-isomorphism and fractional isomorphism (see \cite{laura} for the
+isomorphism and fractional isomorphism (see \cite{amrssv2016} for the
 proof), which will be important for Theorem \ref{Trees}.
 
 \begin{thm}
@@ -1150,7 +1130,7 @@ interest.
 \item Bipartite graphs and complete bipartite graphs
 \item Complete graphs 
 \item unicyclic graphs
-\item circulant graphs (see \cite{circulant})
+\item circulant graphs (see \cite{bh2011})
 \end{itemize}
 Now, together with a few results from other papers, we can establish a
 family of graphs for which classical and quantum graph isomorphism are
@@ -1167,7 +1147,7 @@ By \cref{prop:isoimpliesqiso} we know that if $G$ and $H$ are
 classically isomorphic then they are also quantum
 isomorphic. Conversely, if $G$ and $H$ are quantum isomorphic then
 they are fractionally isomorphic. But by Lemma 2.4 in
-\cite{fractional}, fractionally isomorphic trees are classically
+\cite{rsu1994}, fractionally isomorphic trees are classically
 isomorphic, and so $G$ and $H$ are classically isomorphic.
 \end{proof}
 
@@ -1180,9 +1160,9 @@ how quantum isomorphism relates to other types of isomorphism, like
 semi-isomorphism. Semi-isomorphism may be particularly useful to look
 at for bipartite graphs, since two bipartite graphs are
 semi-isomorphic if and only if they are classically isomorphic
-(\cite{fractional}).  Also, since we now know that quantum isomorphism
+(\cite{rsu1994}).  Also, since we now know that quantum isomorphism
 is an equivalence relation, it might be interesting to use similar
-methods like the Polya enumeration theorem from \cite{comb}, to count
+methods like the Polya enumeration theorem from \cite{b2009}, to count
 the number of non-quantum isomorphic graphs given $n$
 vertices. Finally, not every definition of classical isomorphism has a
 quantum analogue, so it would be interesting to find such analogues.
