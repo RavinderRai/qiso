@@ -9,23 +9,21 @@
 \usepackage{hyperref}
 \usepackage{cleveref}
 \usepackage{comment}
-
 \hypersetup{
     colorlinks=true,
     linkcolor=blue,
     filecolor=magenta,      
     urlcolor=cyan,
 }
-
 \usepackage{subcaption} 
-
 
 \newtheorem{thm}{Theorem}[section]
 \newtheorem{lem}[thm]{Lemma}
 \newtheorem{proposition}[thm]{Proposition}
 \newtheorem{defn}[thm]{Definition}
 
-\title{\textbf{Classical and Quantum Graph Isomorphisms}}
+% --------------------------------------------------------------------
+\title{\textbf{Classical and Quantum \\ Graph Isomorphisms}}
 \author{Ravinder Rai}
 \date{\today}
 
@@ -33,36 +31,157 @@
 
 \maketitle
 
+% --------------------------------------------------------------------
 \begin{abstract}
-The existence of an isomorphism between two graphs G and H is equivalent to the existence of a winning strategy for some two-player cooperative game. Two graphs G and H are isomorphic if and only if the two players can win the (G,H)-isomorphism game. Recently, Asterias and others considered the relation between graphs that arises when the players are allowed to share entangled particles. This gives rise to the relation of quantum graph isomorphism: two graphs G and H are quantum isomorphic if two players sharing entangled particles can win the (G,H)-isomorphism game. Naturally, while G and H being isomorphic implies that G and H are quantum isomorphic, the converse is not true. This paper introduces the relation of quantum graph isomorphism, reviews existing results, and discusses open problems. 
+  It can be shown that two graphs $G$ and $H$ are isomorphic if and
+  only if two players can win a cooperative game known at the
+  $(G,H)$-isomorphism game. Recently, Asterias and others considered
+  the relation between graphs that arises when the players are allowed
+  to share entangled particles. This gives rise to the relation of
+  quantum graph isomorphism. Two graphs G and H are said to be quantum
+  isomorphic if and only if two players sharing entangled particles
+  can win the $(G,H)$-isomorphism game. This new notion of isomorphism
+  is a relaxation of the usual, classical, notion: if two graphs $G$
+  and $H$ are classically isomorphic then they are quantum isomorphic
+  but the converse is not true. This paper introduces the relation of
+  quantum graph isomorphism, reviews existing results, and discusses
+  open problems.
 \end{abstract}
 
-\newpage
+% --------------------------------------------------------------------
 \section{Introduction}
 \label{sec:intro}
-In the subject of quantum information theroy, a new definition of garph isomorphism is now being studied, namely quantum graph isomorphism. All of \cite{laura, musto2018, QuanPerm, GraphHom, QuanMonad} have already explored quantum graph isomorphism, and even related definitions like homomorphisms or quantum group permutations. However, we mainly follow \cite{laura} in this paper, where the existence of a winning strategy for some two-player cooperative game is shown to be equivalent to the existence of an isomorphism between two graphs G and H. We call this game the (G,H)-isomorphism game, and it involves two players who act as functions that take vertices as inputs and outputs some other vertices, while trying to meet certain conditions given by a referee. We say that two graphs G and H are isomorphic if and only if two players can win this (G,H)-isomorphism game with certainty. This game gives rise to the idea of quantum graph isomorphism, where it is defined similarly to the (G,H)-isomorphism game, but the players are allowed to share entangled particles. We can then say that two graphs G and H are quantum isomorphic if and only if two players sharing entangled particles can win the (G,H)-isomorphism game. Naturally, like most quantum phenomenon, while G and H being isomorphic implies that G and H are quantum isomorphic, the converse is not true. In this paper, we first introduce some of the basic background necessary to understand these topics, before explaining various definitions of classical isomorphism, and showing that they are all equivalent. Then, we do the same for quantum isomorphism, where some of its definitions are quantum analogues to certain classical definitions, and some are not. Moreover, the natural expectation that graphs can be quantum isomorphic but not classically isomorphic is explained with a counter example. And finally, we briefly discuss another type of isomorphism called non-signalling isomorphism, and show some interesting relations it has to a certain type of graph.
 
+In this paper, we focus on the notion \emph{quantum graph
+  isomorphism}, a new relation between graphs which was recently
+studied in the context of quantum information theory \cite{laura,
+  musto2018, QuanPerm, GraphHom, QuanMonad}. We provide an
+introduction to this new relation, following \cite{laura}. The
+relation of quantum graph isomorphism stems from the realization that
+the usual, classical, notion of graph isomorphism can be rephrased in
+terms of some two-player cooperative game. Given two graphs $G$ and
+$G$, the game is played by two players who must produce are given
+vertices of the graphs and must produce In this game, two players use
+graphs $G$ and $H$ to answerverticeswho act as functions that take
+vertices as inputs and outputs some other vertices, while trying to
+meet certain conditions given by a referee. We say that two graphs G
+and H are isomorphic if and only if two players can win this
+(G,H)-isomorphism game with certainty. This game gives rise to the
+idea of quantum graph isomorphism, where it is defined similarly to
+the (G,H)-isomorphism game, but the players are allowed to share
+entangled particles. We can then say that two graphs G and H are
+quantum isomorphic if and only if two players sharing entangled
+particles can win the (G,H)-isomorphism game. Naturally, like most
+quantum phenomenon, while G and H being isomorphic implies that G and
+H are quantum isomorphic, the converse is not true. In this paper, we
+first introduce some of the basic background necessary to understand
+these topics, before explaining various definitions of classical
+isomorphism, and showing that they are all equivalent. Then, we do the
+same for quantum isomorphism, where some of its definitions are
+quantum analogues to certain classical definitions, and some are
+not. Moreover, the natural expectation that graphs can be quantum
+isomorphic but not classically isomorphic is explained with a counter
+example. And finally, we briefly discuss another type of isomorphism
+called non-signalling isomorphism, and show some interesting relations
+it has to a certain type of graph.
 
-\section{Preliminaries} \label{prelim}
+% --------------------------------------------------------------------
+\section{Preliminaries}
+\label{sec:prelim}
+
+% --------------------------------------------------------------------
 \subsection{Graph Theory}
-Important basic concepts are presented here. First, a graph is defined as a collection of nodes, with line-connections between them. These nodes are called vertices, and connections are called edges. A bijection is a function that maps vertices from one graph to another, that is one-to-one and onto.
+\label{ssec:graphtheory}
 
-The path between any two vertices $x$ and $y$ in a graph is a sequence of edges which connect a list of vertices starting with either $x$ or $y$ and ending with the other. The edges in a graph may be associated with weights, and the sum of the weights of the edges in a path is called the distance of that path. The graphs that we consider here have no specific weights, so we say the weight of each edge is $1$, so distance of a path would give a positive integer equal to the number of edges in the path. The shortest path between two vertices in a graph is a path with the least amount of edges possible between those two vertices, and so we denote the shortest distance, $\delta$, as the distance of the shortest path. 
+Important basic concepts are presented here. First, a graph is defined
+as a collection of nodes, with line-connections between them. These
+nodes are called vertices, and connections are called edges. A
+bijection is a function that maps vertices from one graph to another,
+that is one-to-one and onto.
 
+The path between any two vertices $x$ and $y$ in a graph is a sequence
+of edges which connect a list of vertices starting with either $x$ or
+$y$ and ending with the other. The edges in a graph may be associated
+with weights, and the sum of the weights of the edges in a path is
+called the distance of that path. The graphs that we consider here
+have no specific weights, so we say the weight of each edge is $1$, so
+distance of a path would give a positive integer equal to the number
+of edges in the path. The shortest path between two vertices in a
+graph is a path with the least amount of edges possible between those
+two vertices, and so we denote the shortest distance, $\delta$, as the
+distance of the shortest path.
 
-Now we define a permutation matrix. A permutation is simply a rearrangement of some number of objects. Using a given permutation, one can construct a permutation matrix, which is constructed as follows: Given a permutation, $\pi$, of size n, (for simplicity, let the objects being permuted be the natural numbers, i.e. $1, 2, ...., n$), the permutation matrix will be an $n \times n$ matrix, where each column will be a standard basis vector. The standard basis vector in each column will be given by $e_{\pi(i)}$ where $i$ is the $i'th$ row, and there will be a $1$ in the $j'th$ column if and only if $\pi(i) = j$. Note that $P^T = P^{-1}$ and $PP^T = I$. 
+Now we define a permutation matrix. A permutation is simply a
+rearrangement of some number of objects. Using a given permutation,
+one can construct a permutation matrix, which is constructed as
+follows: Given a permutation, $\pi$, of size n, (for simplicity, let
+the objects being permuted be the natural numbers, i.e. $1, 2, ....,
+n$), the permutation matrix will be an $n \times n$ matrix, where each
+column will be a standard basis vector. The standard basis vector in
+each column will be given by $e_{\pi(i)}$ where $i$ is the $i'th$ row,
+and there will be a $1$ in the $j'th$ column if and only if $\pi(i) =
+j$. Note that $P^T = P^{-1}$ and $PP^T = I$.
 
-Another important definition is the adjacency matrix of a graph. Consider some graph G, then $A_G$ is the adjacency matrix of G, and is constructed as follows: the $i'th$ rows and $j'th$ columns both represent the vertices and the element $A_{G_{i, j}}$ is a one if the $i'th$ vertex shares and edge with the $j'th$ vertex, and zero otherwise. Note that adjacency matrices only apply to finite graphs.
+Another important definition is the adjacency matrix of a
+graph. Consider some graph G, then $A_G$ is the adjacency matrix of G,
+and is constructed as follows: the $i'th$ rows and $j'th$ columns both
+represent the vertices and the element $A_{G_{i, j}}$ is a one if the
+$i'th$ vertex shares and edge with the $j'th$ vertex, and zero
+otherwise. Note that adjacency matrices only apply to finite graphs.
 
-The next matrix definition is the \hypertarget{stochastic}{doubly stochastic matrix}, which is a matrix whose elements are non-negative real numbers, and whose rows and columns sum to $1$.
+The next matrix definition is the \hypertarget{stochastic}{doubly
+  stochastic matrix}, which is a matrix whose elements are
+non-negative real numbers, and whose rows and columns sum to $1$.
 
+% --------------------------------------------------------------------
 \subsection{Constraint Satisfaction Problems}
-Now, a constraint satisfaction problem (csp) is a something that computers can solve, and is modelled by a three element vector, $(X, D, C)$. In a csp, $X$ is defined to be a finite set of indeterminate variables, and in the case for graphs, it is the set of indeterminates associated with the set of vertices. $D$ is a set of domains, such that the elements in $D$ would be domains like the natural numbers, complex numbers, and others. $C$ is the constraint, which is usually some relation defined between the variables in $X$, so naturally in the case of graph theory, this constraint/relation could be whether there is an edge or not between any two vertices in $X$. A csp is said to have a solution is there exists a function that takes a subset of $X$ and maps it to some domain in $D$ such that no constraints in $C$ are violated, and all variables in $X$ are included.
+\label{ssec:csp}
 
+Now, a constraint satisfaction problem (csp) is a something that
+computers can solve, and is modeled by a three element vector, $(X,
+D, C)$. In a csp, $X$ is defined to be a finite set of indeterminate
+variables, and in the case for graphs, it is the set of indeterminates
+associated with the set of vertices. $D$ is a set of domains, such
+that the elements in $D$ would be domains like the natural numbers,
+complex numbers, and others. $C$ is the constraint, which is usually
+some relation defined between the variables in $X$, so naturally in
+the case of graph theory, this constraint/relation could be whether
+there is an edge or not between any two vertices in $X$. A csp is said
+to have a solution is there exists a function that takes a subset of
+$X$ and maps it to some domain in $D$ such that no constraints in $C$
+are violated, and all variables in $X$ are included.
+
+% --------------------------------------------------------------------
 \subsection{Quantum Information Theory}
-Next, some basic quantum theory is presented to ensure understanding of the definition of quantum strategies. A matrix $M \in \mathbb{C}^{d \times d}$ has a conjugate transpose denoted by $M^\dag$. An operator $H$ is Hermitian if $H = {H^{\dag}}$, and the set of these $d \times d$ Hermitian operators is denoted by $\mathcal{H}^d$. A Matrix $M \in \mathcal{H}^d$ is called a positive semidefinite (psd) if $\psi^\dag M \psi \geq 0$ $\forall \psi \in \mathbb{C}^d$ and the set of psd matrices is $\mathcal{H}^d_+$. For two matrices $M, N \in \mathcal{H}^d_+$, the inner product is defined as $\langle M, N\rangle = Tr(M^\dag N)$ and orthogonality then follows: $MN = 0$ iff $\langle M, N \rangle = 0$. If a matrix E satisfies $E = E^2 = E^\dag$, then we call it a projector. Note that if a family of projectors $\{E_i\}_i$ satisfies $\sum_iE_i = 1$, then $E_iE_j = 0$ $\forall i \neq j$. Let $\mathbb{M}_n(d)$ be a set of $n \times n$ block matrices with elements in $\mathcal{H}^d$. The $(i, j)$-block/element of a block matrix $\mathcal{P} \in \mathbb{M}_n(d)$ is denoted $\mathcal{P}_{i, j}$.
+\label{ssec:qit}
 
-Finally, we introduce the basic formalisms of quantum states. Normally, Hilbert spaces are used to describe quantum systems, and a quantum state is just a vector, usually denoted by $\psi$. The joint system of two state spaces $\mathbb{C}^{d_1}$, $\mathbb{C}^{d_2}$ is given by the tensor product $\mathbb{C}^{d_1} \otimes \mathbb{C}^{d_2}$. If a state $\psi$ of $\mathbb{C}^{d_1} \otimes \mathbb{C}^{d_2}$ can be written as $\psi = \psi_1 \otimes \psi_2$, then we say $\psi$ is separable, otherwise it is known as an entangled state.
+Next, some basic quantum theory is presented to ensure understanding
+of the definition of quantum strategies. A matrix $M \in \mathbb{C}^{d
+  \times d}$ has a conjugate transpose denoted by $M^\dag$. An
+operator $H$ is Hermitian if $H = {H^{\dag}}$, and the set of these $d
+\times d$ Hermitian operators is denoted by $\mathcal{H}^d$. A Matrix
+$M \in \mathcal{H}^d$ is called a positive semidefinite (psd) if
+$\psi^\dag M \psi \geq 0$ $\forall \psi \in \mathbb{C}^d$ and the set
+of psd matrices is $\mathcal{H}^d_+$. For two matrices $M, N \in
+\mathcal{H}^d_+$, the inner product is defined as $\langle M, N\rangle
+= Tr(M^\dag N)$ and orthogonality then follows: $MN = 0$ iff $\langle
+M, N \rangle = 0$. If a matrix E satisfies $E = E^2 = E^\dag$, then we
+call it a projector. Note that if a family of projectors $\{E_i\}_i$
+satisfies $\sum_iE_i = 1$, then $E_iE_j = 0$ $\forall i \neq j$. Let
+$\mathbb{M}_n(d)$ be a set of $n \times n$ block matrices with
+elements in $\mathcal{H}^d$. The $(i, j)$-block/element of a block
+matrix $\mathcal{P} \in \mathbb{M}_n(d)$ is denoted $\mathcal{P}_{i,
+  j}$.
+
+Finally, we introduce the basic formalisms of quantum
+states. Normally, Hilbert spaces are used to describe quantum systems,
+and a quantum state is just a vector, usually denoted by $\psi$. The
+joint system of two state spaces $\mathbb{C}^{d_1}$,
+$\mathbb{C}^{d_2}$ is given by the tensor product $\mathbb{C}^{d_1}
+\otimes \mathbb{C}^{d_2}$. If a state $\psi$ of $\mathbb{C}^{d_1}
+\otimes \mathbb{C}^{d_2}$ can be written as $\psi = \psi_1 \otimes
+\psi_2$, then we say $\psi$ is separable, otherwise it is known as an
+entangled state.
 
 The normal form of a quantum state is $\psi = \alpha \begin{bmatrix}
 1 \\
@@ -73,382 +192,779 @@ The normal form of a quantum state is $\psi = \alpha \begin{bmatrix}
 0 \\
 1
 \end{bmatrix}
-$, which is called a superposition. We obtain information from a quantum system by measuring it, specifically, if we were to measure $\psi$ as above, we would have a probability of $|\alpha|^2$ of measuring the state $\begin{bmatrix}
-1 \\
-0 
+$, which is called a superposition. We obtain information from a
+quantum system by measuring it, specifically, if we were to measure
+$\psi$ as above, we would have a probability of $|\alpha|^2$ of
+measuring the state $\begin{bmatrix} 1 \\ 0
 \end{bmatrix}$ and $|\beta|^2$ of measuring the state $\begin{bmatrix}
 0 \\
 1 
-\end{bmatrix}$. Moreover, any quantum state can be written as a Schmidt decomposition: $\psi = \sum_{i=1}^d \lambda_i \alpha_i \otimes \beta_i$, where $\lambda_i \geq 0$ for all $1 \leq i \leq d$, and the $\{\alpha_i| 1 \leq i \leq d\}$ and $\{\beta_i| 1 \leq i \leq d\}$ are orthonormal bases of $\mathbb{C}^d$. We call these bases the Schmidt bases of $\psi$ and the $\lambda_i$ are called the Schmidt coefficients. We say that $\psi$ has full Schmidt rank if its Schmidt coefficients are all positive. Now, we call a state maximally entangled if all of its Schmidt coefficients are the same, and the canonical maximally entangled state is $\psi_d = \frac{1}{\sqrt{d}} \sum_{i=1}^d e_i \otimes e_i$, where $e_i$ is the $i^{th}$ standard basis vector. Also, an important fact which will be used later is that $\psi^{\dag}_d (A \otimes B) \psi_d = \frac{1}{d} Tr(AB^T)$ for all $A, B \in \mathbb{C}^{d \times d}$.
+\end{bmatrix}$. Moreover, any quantum state can be written as a
+Schmidt decomposition: $\psi = \sum_{i=1}^d \lambda_i \alpha_i \otimes
+\beta_i$, where $\lambda_i \geq 0$ for all $1 \leq i \leq d$, and the
+$\{\alpha_i| 1 \leq i \leq d\}$ and $\{\beta_i| 1 \leq i \leq d\}$ are
+orthonormal bases of $\mathbb{C}^d$. We call these bases the Schmidt
+bases of $\psi$ and the $\lambda_i$ are called the Schmidt
+coefficients. We say that $\psi$ has full Schmidt rank if its Schmidt
+coefficients are all positive. Now, we call a state maximally
+entangled if all of its Schmidt coefficients are the same, and the
+canonical maximally entangled state is $\psi_d = \frac{1}{\sqrt{d}}
+\sum_{i=1}^d e_i \otimes e_i$, where $e_i$ is the $i^{th}$ standard
+basis vector. Also, an important fact which will be used later is that
+$\psi^{\dag}_d (A \otimes B) \psi_d = \frac{1}{d} Tr(AB^T)$ for all
+$A, B \in \mathbb{C}^{d \times d}$.
 
-Furthermore, a Positive Operator-Valued Measure (POVM) $\mathcal{M}$ is a family of Hermitian psd matrices $\{ M_i \in \mathcal{H}^d_+; 1 \leq i \leq m \}$ such that $\sum_{i=1}M_i = I$ (where m is some integer), and given some state $\psi$, the probability of outcome $i$ occurring is $\psi^\dag M_i \psi$. Finally, we will call $\mathcal{M}$ projective if all of its elements are projectors.
+Furthermore, a Positive Operator-Valued Measure (POVM) $\mathcal{M}$
+is a family of Hermitian psd matrices $\{ M_i \in \mathcal{H}^d_+; 1
+\leq i \leq m \}$ such that $\sum_{i=1}M_i = I$ (where m is some
+integer), and given some state $\psi$, the probability of outcome $i$
+occurring is $\psi^\dag M_i \psi$. Finally, we will call $\mathcal{M}$
+projective if all of its elements are projectors.
 
+% --------------------------------------------------------------------
+\section{Classical Graph Isomorphism}
+\label{sec:ciso}
 
-\section{Classical Graph Isomorphism} \label{classical}
-Graph isomorphism is said to occur when two graphs are the essentially the same, aside from labels and manipulations, like rotations or rearrangements of vertices. Intuitively, this means that if two graphs are isomorphic, but perhaps it does not immediately seem obvious, then one will be able to manipulate one of the graphs via rotations or rearrangements of vertices so that it is identical to the other one (again, aside from the vertices' labels). There are multiple formal definitions of graph isomorphism, presented below.
+Graph isomorphism is said to occur when two graphs are the essentially
+the same, aside from labels and manipulations, like rotations or
+rearrangements of vertices. Intuitively, this means that if two graphs
+are isomorphic, but perhaps it does not immediately seem obvious, then
+one will be able to manipulate one of the graphs via rotations or
+rearrangements of vertices so that it is identical to the other one
+(again, aside from the vertices' labels). There are multiple formal
+definitions of graph isomorphism, presented below.
 
+The first and most well known definition of graph isomorphism is
+defined by a function that maps vertices in one graph to the other,
+while preserving the edge connections. This function is an
+edge-preserving bijective function, and so we call this definition the
+edge-preserving bijection definition of graph isomorphism, but we look
+at it as the primary definition in the paper.
 
-The first and most well known definition of graph isomorphism is defined by a function that maps vertices in one graph to the other, while preserving the edge connections. This function is an edge-preserving bijective function, and so we call this definition the edge-preserving bijection definition of graph isomorphism, but we look at it as the primary definition in the paper.
 \begin{defn}[Graph Isomorphism]
-Two graphs $G$ and $H$ are said to be isomorphic if there exists a bijection $f:V(G) \to V(H)$ such that for any $x, y \in V(G)$, $x \sim y$ iff $f(x) \sim f(y)$. If G and H are isomorphic, then we write $G \cong H$.
+  \label{def:ciso}
+  Two graphs $G$ and $H$ are said to be isomorphic if there exists a
+  bijection $f:V(G) \to V(H)$ such that for any $x, y \in V(G)$, $x
+  \sim y$ iff $f(x) \sim f(y)$. If G and H are isomorphic, then we
+  write $G \cong H$.
 \end{defn}
 
-The second definition of isomorphism follows from the shortest paths of a graph. This definition says that if we have a bijective function from one graph to another, then they are isomorphic if the shortest path of any two vertices of the domain of the function is equal to the shortest paths of their image vertices in the co-domain. In the following theorem, we state this definition of isomorphism and prove its equivalence to the first definition. The proof comes from \cite{shortest}.
+The second definition of isomorphism follows from the shortest paths
+of a graph. This definition says that if we have a bijective function
+from one graph to another, then they are isomorphic if the shortest
+path of any two vertices of the domain of the function is equal to the
+shortest paths of their image vertices in the co-domain. In the
+following theorem, we state this definition of isomorphism and prove
+its equivalence to the first definition. The proof comes from
+\cite{shortest}.
 
 \begin{thm}[Graph Isomorphism Equivalence - Shortest Paths]
-\label{shortest}
-Let G and H be graphs. Then $G \cong H$ iff there exists a bijection $f:V(G) \to V(H)$ such that for any $x, y \in V(G)$, $\delta(x, y) = \delta(f(x), f(y))$.
+  \label{shortest}
+  Let G and H be graphs. Then $G \cong H$ iff there exists a bijection
+  $f:V(G) \to V(H)$ such that for any $x, y \in V(G)$, $\delta(x, y) =
+  \delta(f(x), f(y))$.
 \end{thm}
 
 \begin{proof}
-Since both definitions have a bijective function, $f:V(G) \to V(H)$, it is sufficient to only show that the edge-preserving property is equivalent to the shortest path property. So, consider two isomorphic graphs, G and H.
+Since both definitions have a bijective function, $f:V(G) \to V(H)$,
+it is sufficient to only show that the edge-preserving property is
+equivalent to the shortest path property. So, consider two isomorphic
+graphs, G and H.
 
-$\Rightarrow$) If $x_1 \sim x_2$ in G, then $f(x_1) \sim f(x_2)$ in H (and vice versa). So $(x_1, x_2, ..., x_n)$ is a path in G iff $(f(x_1), f(x_2), ..., f(x_n))$ is a path in H. It follows that $(x_1, x_2, ..., x_n)$ is the shortest path in G iff $(f(x_1), f(x_2), ..., f(x_n))$ is the shortest path in H.
+$\Rightarrow$) If $x_1 \sim x_2$ in G, then $f(x_1) \sim f(x_2)$ in H
+(and vice versa). So $(x_1, x_2, ..., x_n)$ is a path in G iff
+$(f(x_1), f(x_2), ..., f(x_n))$ is a path in H. It follows that $(x_1,
+x_2, ..., x_n)$ is the shortest path in G iff $(f(x_1), f(x_2), ...,
+f(x_n))$ is the shortest path in H.
 
-$\Leftarrow$) If $x_1 \sim x_2$ in G, then $\delta(x_1, x_2) = 1$. But by our assumption, $\delta(x_1, x_2) = \delta(f(x_1), f(x_2)) = 1$, so $f(x_1) \sim f(x_2)$. Hence, if $x_1 \sim x_2$, then $f(x_1) \sim f(x_2)$ (and vice versa).
+$\Leftarrow$) If $x_1 \sim x_2$ in G, then $\delta(x_1, x_2) = 1$. But
+by our assumption, $\delta(x_1, x_2) = \delta(f(x_1), f(x_2)) = 1$, so
+$f(x_1) \sim f(x_2)$. Hence, if $x_1 \sim x_2$, then $f(x_1) \sim
+f(x_2)$ (and vice versa).
 \end{proof}
 
-The third definition of isomorphism revolves around permutations, and says that two graphs are isomorphic if their adjacency matrices can be written as $PA_GP = A_H$, where A and B are adjacency matrices for some isomorphic graphs. The following theorem states the definition and proves its equivalence to the first definition.
+The third definition of isomorphism revolves around permutations, and
+says that two graphs are isomorphic if their adjacency matrices can be
+written as $PA_GP = A_H$, where A and B are adjacency matrices for
+some isomorphic graphs. The following theorem states the definition
+and proves its equivalence to the first definition.
 
 \begin{thm}[Graph Isomorphism - Permutation Matrix]
-\label{permutation}
-Let G and H be two finite graphs. Then $G \cong H$ iff there exists a permutation matrix $P$ such that $PA_GP^T = A_H$.
+  \label{permutation}
+  Let G and H be two finite graphs. Then $G \cong H$ iff there exists
+  a permutation matrix $P$ such that $PA_GP^T = A_H$.
 \end{thm}
 
 \begin{proof}
-Let G and H be two isomorphic graphs, and $A_G$ and $A_H$ be their adjacency matrices respectively. Also, let the vertices be labelled by the natural numbers, i.e. 1, 2, ..., n.
+Let G and H be two isomorphic graphs, and $A_G$ and $A_H$ be their
+adjacency matrices respectively. Also, let the vertices be labeled by
+the natural numbers, i.e. 1, 2, ..., n.
 
-$\Rightarrow$) Given an edge-preserving bijective function, $f:V(G) \to V(H)$, construct a matrix $P = [e_{f(1)}, e_{f(2)}, ..., e_{f(n)}]$, where $e_{f(i)}$ is a basis vector with 1 in the $f(i)^{th}$ spot. Now, observe that the $i^{th}$ row in $A_G$ is the $f(i)^{th}$ in $PA_G$ and the $j^{th}$ column in $A_G$ is the $f(j)^{th}$ column in $A_GP^{\dag}$. It follows that $PA_{G_{i, j}}P^{\dag} = A_{G_{f(i), j}}P^{\dag} = A_{G_{f(i), f(j)}}$. Since $f(i), f(j) \in V(H)$ and $A_{G_{i, j}} = 1$ if and only if $i \sim j$, then $A_{G_{f(i), f(j)}} = 1$ if and only if $f(i) \sim f(j)$. Let $i' = f(i)$ and $j' = f(j) \in H$. Since we know if $i \sim j \in G \Leftrightarrow i' \sim j' \in H$, then $A_{G_{f(i), f(j)}} = A{H_{i', j'}}$ $\forall i, j \in 1, 2, ..., n$. Thus $PA_GP^{\dag} = H$.
+$\Rightarrow$) Given an edge-preserving bijective function, $f:V(G)
+\to V(H)$, construct a matrix $P = [e_{f(1)}, e_{f(2)}, ...,
+  e_{f(n)}]$, where $e_{f(i)}$ is a basis vector with 1 in the
+$f(i)^{th}$ spot. Now, observe that the $i^{th}$ row in $A_G$ is the
+$f(i)^{th}$ in $PA_G$ and the $j^{th}$ column in $A_G$ is the
+$f(j)^{th}$ column in $A_GP^{\dag}$. It follows that $PA_{G_{i,
+    j}}P^{\dag} = A_{G_{f(i), j}}P^{\dag} = A_{G_{f(i), f(j)}}$. Since
+$f(i), f(j) \in V(H)$ and $A_{G_{i, j}} = 1$ if and only if $i \sim
+j$, then $A_{G_{f(i), f(j)}} = 1$ if and only if $f(i) \sim f(j)$. Let
+$i' = f(i)$ and $j' = f(j) \in H$. Since we know if $i \sim j \in G
+\Leftrightarrow i' \sim j' \in H$, then $A_{G_{f(i), f(j)}} = A{H_{i',
+    j'}}$ $\forall i, j \in 1, 2, ..., n$. Thus $PA_GP^{\dag} = H$.
 
-$\Leftarrow$) Let $j \in 1, 2, ..., n$ and let $e_i$ be a column basis vector with a 1 in the $j^{th}$ row. By our assumption, we have $PA_GP^{\dag} = H$, so then $Pe_j = e_k$, for some $1 \leq k \leq n$. Now construct a function: $f(j) = k$. Observe that if $f(j) = f(j')$, then this implies that $Pe_j = Pe_{j'} \Rightarrow P^{\dag}Pe_j = P^{\dag}Pe_{j'} \Rightarrow e_j = e_{j'}$. Thus $f$ is injective. Let $k \in 1, 2, ..., n$. Then $j \in 1, 2, ..., n$ such that $f(j) = k$ which implies that $Pe_j = e_k$. Now, for some $l$, compute $P^{\dag}e_k = e_l$. Let $j = l$, then $Pe_j = Pe_l \Rightarrow Pe_j = PP^{\dag}e_k = e_k$. Thus $f$ is surjective. Now let $j, k \in 1, 2, ..., n$ with $j \sim k$ and $j' = f(j), k' = f(k)$. Now, recall that the $i^{th}$ row in $A_G$ is the $f(i)^{th}$ in $PA_G$ and the $j^{th}$ column in $A_G$ is the $f(j)^{th}$ column in $A_GP^{\dag}$. Then $PA_{G_{j, k}}P^{\dag} = A_{G_{f(j), f(k)}} = 1$, so $A_{G_{f(j), f(k)}} = A_{H_{j', k'}} = 1 \Rightarrow f(j) \sim f(k)$. Therefore, $f$ is an edge-preserving bijective function.
-
+$\Leftarrow$) Let $j \in 1, 2, ..., n$ and let $e_i$ be a column basis
+vector with a 1 in the $j^{th}$ row. By our assumption, we have
+$PA_GP^{\dag} = H$, so then $Pe_j = e_k$, for some $1 \leq k \leq
+n$. Now construct a function: $f(j) = k$. Observe that if $f(j) =
+f(j')$, then this implies that $Pe_j = Pe_{j'} \Rightarrow
+P^{\dag}Pe_j = P^{\dag}Pe_{j'} \Rightarrow e_j = e_{j'}$. Thus $f$ is
+injective. Let $k \in 1, 2, ..., n$. Then $j \in 1, 2, ..., n$ such
+that $f(j) = k$ which implies that $Pe_j = e_k$. Now, for some $l$,
+compute $P^{\dag}e_k = e_l$. Let $j = l$, then $Pe_j = Pe_l
+\Rightarrow Pe_j = PP^{\dag}e_k = e_k$. Thus $f$ is surjective. Now
+let $j, k \in 1, 2, ..., n$ with $j \sim k$ and $j' = f(j), k' =
+f(k)$. Now, recall that the $i^{th}$ row in $A_G$ is the $f(i)^{th}$
+in $PA_G$ and the $j^{th}$ column in $A_G$ is the $f(j)^{th}$ column
+in $A_GP^{\dag}$. Then $PA_{G_{j, k}}P^{\dag} = A_{G_{f(j), f(k)}} =
+1$, so $A_{G_{f(j), f(k)}} = A_{H_{j', k'}} = 1 \Rightarrow f(j) \sim
+f(k)$. Therefore, $f$ is an edge-preserving bijective function.
 \end{proof}
 
-The fourth form of graph isomorphism comes from defining a constraint satisfaction problem (csp) as above. A csp can take the form of what is called an Integer Quadratic Programming (IQP) problem. In the case of graph isomorphism, we can formulate this IQP problem in the following way: Given two graphs G and H, there exists real scalar variables $x_{gh}$ for each $g \in V(G)$ and $h \in V(H)$ such that the below conditions are satisfied, in which case G and H would be isomorphic. 
+The fourth form of graph isomorphism comes from defining a constraint
+satisfaction problem (csp) as above. A csp can take the form of what
+is called an Integer Quadratic Programming (IQP) problem. In the case
+of graph isomorphism, we can formulate this IQP problem in the
+following way: Given two graphs G and H, there exists real scalar
+variables $x_{gh}$ for each $g \in V(G)$ and $h \in V(H)$ such that
+the below conditions are satisfied, in which case G and H would be
+isomorphic.
 
 \begin{subequations}
 \label{IQP}
 \begin{align}
-x_{gh}^2 = x_{gh} \text{  } \forall g \in V(G), h \in V(H)
-\\
-\sum_{h' \in V(H)} x_{gh'} = \sum_{g' \in V(G)} x_{g'h} = 1 \text{  } \forall g \in V(G), \text{  } h \in V(H)
-\\
-x_{gh}x_{g'h'} = 0 \text{ if } rel(g, g') \neq rel(h, h')
+x_{gh}^2 = x_{gh} \text{ } \forall g \in V(G), h \in V(H) \\ \sum_{h'
+  \in V(H)} x_{gh'} = \sum_{g' \in V(G)} x_{g'h} = 1 \text{ } \forall
+g \in V(G), \text{ } h \in V(H) \\ x_{gh}x_{g'h'} = 0 \text{ if }
+rel(g, g') \neq rel(h, h')
 \end{align}
 \end{subequations}
-One can see how this IQP is equivalent to a csp by taking the variables $x_{gh}$ as the set $X$ of indeterminate variables, $D$ will be a set of domains (in the proof below the natural numbers will suffice), and the above conditions are the constraints. The following theorem will again show the equivalence of this isomorphism definition to the first.
+
+One can see how this IQP is equivalent to a csp by taking the
+variables $x_{gh}$ as the set $X$ of indeterminate variables, $D$ will
+be a set of domains (in the proof below the natural numbers will
+suffice), and the above conditions are the constraints. The following
+theorem will again show the equivalence of this isomorphism definition
+to the first.
 
 \begin{thm}[Graph Isomorphism - Constraint Satisfaction Problem]
-Let G and H be graphs. Then $G \cong H$ iff there exists a solution to the IQP above.
+  Let G and H be graphs. Then $G \cong H$ iff there exists a solution
+  to the IQP above.
 \end{thm}
 
 \begin{proof}
-$\Rightarrow$) If $G \cong H$, then we have an edge-preserving bijective function, say $f:V(G) \to V(H)$. Now, denote indeterminate variables $x_{gh}$ for each $g \in V(G)$, $h \in V(H)$. Define a new function: $F:x_{gh} \to \mathbb{R}$ such that 
-\centerline{
-$F(x_{gh}) = \begin{cases}
-1 \text{ } if \text{ } f(g) \text{ } = \text{ } h\\
-0 \text{ } if \text{ } f(g) \text{ } \neq \text{ } h
+$\Rightarrow$) If $G \cong H$, then we have an edge-preserving
+  bijective function, say $f:V(G) \to V(H)$. Now, denote indeterminate
+  variables $x_{gh}$ for each $g \in V(G)$, $h \in V(H)$. Define a new
+  function: $F:x_{gh} \to \mathbb{R}$ such that \centerline{
+    $F(x_{gh}) = \begin{cases} 1 \text{ } if \text{ } f(g) \text{ } =
+      \text{ } h\\ 0 \text{ } if \text{ } f(g) \text{ } \neq \text{ }
+      h
 \end{cases}$}
-Now consider $g, g' \in V(G)$, $h, h' \in V(H)$. Suppose $h = f(g)$ and $h' = f(g')$ such that $rel(g, g') \neq rel(h, h')$. Then $x_{gh} = 1$ and $x_{g'h'} = 1$, which implies that $x_{gh}x_{g'h'} = 1$. If $g \sim g'$, then $f(g) = h \nsim h' = f(g')$, but this contradicts the edge-preserving bijection, which says that $g \sim g'$ iff $f(g) \sim f(g')$, so either $x_{gh} = 0$ such that $f(g) \neq h$ or $x_{g'h'} = 0$ such that $f(g') \neq h'$, which implies that $x_{gh}x_{g'h'} = 0$ (and similar argument shows the same thing if $g \nsim g'$). If instead $g = g'$, then $f(g) = h \neq h' = f(g')$, but this contradicts the fact $f$ is a one-to-one function, so again either $x_{gh} = 0$ such that $f(g) \neq h$ or $x_{g'h'} = 0$ such that $f(g') \neq    h'$, which implies that $x_{gh}x_{g'h'} = 0$. Hence condition 1c is satisfied.
+Now consider $g, g' \in V(G)$, $h, h' \in V(H)$. Suppose $h = f(g)$
+and $h' = f(g')$ such that $rel(g, g') \neq rel(h, h')$. Then $x_{gh}
+= 1$ and $x_{g'h'} = 1$, which implies that $x_{gh}x_{g'h'} = 1$. If
+$g \sim g'$, then $f(g) = h \nsim h' = f(g')$, but this contradicts
+the edge-preserving bijection, which says that $g \sim g'$ iff $f(g)
+\sim f(g')$, so either $x_{gh} = 0$ such that $f(g) \neq h$ or
+$x_{g'h'} = 0$ such that $f(g') \neq h'$, which implies that
+$x_{gh}x_{g'h'} = 0$ (and similar argument shows the same thing if $g
+\nsim g'$). If instead $g = g'$, then $f(g) = h \neq h' = f(g')$, but
+this contradicts the fact $f$ is a one-to-one function, so again
+either $x_{gh} = 0$ such that $f(g) \neq h$ or $x_{g'h'} = 0$ such
+that $f(g') \neq h'$, which implies that $x_{gh}x_{g'h'} = 0$. Hence
+condition 1c is satisfied.
 
-Since $x_{gh}$ is only ever $0$, or $1$, this automatically satisfies conditions 1a. Since $f$ is a bijective function, for a fixed $g \in V(G)$, $x_{gh} = 1$ for only one $h \in V(H)$, so $\sum_{h' \in V(H)} x_{gh'} = 1$, and similarly for $\sum_{g' \in V(G)} x_{g'h}$. Thus condition 1b is satisfied,  which means there is a solution to the IQP problem and therefore csp.
+Since $x_{gh}$ is only ever $0$, or $1$, this automatically satisfies
+conditions 1a. Since $f$ is a bijective function, for a fixed $g \in
+V(G)$, $x_{gh} = 1$ for only one $h \in V(H)$, so $\sum_{h' \in V(H)}
+x_{gh'} = 1$, and similarly for $\sum_{g' \in V(G)} x_{g'h}$. Thus
+condition 1b is satisfied, which means there is a solution to the IQP
+problem and therefore csp.
 
+$\Leftarrow$) Define $f:V(G) \to V(H)$ such that
 
-$\Leftarrow$) Define $f:V(G) \to V(H)$ such that 
-
-\centerline{
-$x_{gh} = \begin{cases}
-1 \text{ } if \text{ } f(g) \text{ } = \text{ } h
-\\
-0 \text{ } if \text{ } f(g) \text{ } \neq \text{ } h
+\centerline{ $x_{gh} = \begin{cases} 1 \text{ } if \text{ } f(g)
+    \text{ } = \text{ } h \\ 0 \text{ } if \text{ } f(g) \text{ } \neq
+    \text{ } h
 \end{cases}$}
 
-Consider some fixed $h \in V(H)$. Then since $\sum_{g' \in V(G)} x_{g'h} = 1$, and all terms are either $1$ or $0$, exactly one $g' \in V(G)$ must exist such that $h = f(g')$, and thus $f$ is bijective. If $g \sim g'$, then $\exists h, h' \in V(H)$ such that $x_{gh}x_{g'h'} = 1$, which implies that $rel(g, g') = rel(h, h')$, and so $f(g) \sim f(g')$. And if $h \sim h'$, then $\exists g, g' \in V(G)$ such that $f(g) = h$, $f(g') = h'$, and so $x_{gh}x_{g'h'} = 1$, which implies that $rel(g, g') = rel(h, h')$. It follows that $g \sim g'$. Hence, $g \sim g'$ iff $f(g) \sim f(g')$. Therefore there is an edge-preserving bijection between graphs G and H.
+Consider some fixed $h \in V(H)$. Then since $\sum_{g' \in V(G)}
+x_{g'h} = 1$, and all terms are either $1$ or $0$, exactly one $g' \in
+V(G)$ must exist such that $h = f(g')$, and thus $f$ is bijective. If
+$g \sim g'$, then $\exists h, h' \in V(H)$ such that $x_{gh}x_{g'h'} =
+1$, which implies that $rel(g, g') = rel(h, h')$, and so $f(g) \sim
+f(g')$. And if $h \sim h'$, then $\exists g, g' \in V(G)$ such that
+$f(g) = h$, $f(g') = h'$, and so $x_{gh}x_{g'h'} = 1$, which implies
+that $rel(g, g') = rel(h, h')$. It follows that $g \sim g'$. Hence, $g
+\sim g'$ iff $f(g) \sim f(g')$. Therefore there is an edge-preserving
+bijection between graphs G and H.
 \end{proof}
 
-Before we introduce the final theorem of this section, there is an important game to introduce that is discussed in \cite{laura}, and it relates to two graphs $G$ and $H$. This (G,H)-isomorphism game works as follows: consider two players, Alice and Bob, and two graphs G and H with the same number of vertices. Now consider a referee who gives Alice and Bob a vertex from the two different graphs G and H. Then Alice and Bob both respond with another vertex from either of the two graphs, and are said to win if they meet the following conditions:
+Before we introduce the final theorem of this section, there is an
+important game to introduce that is discussed in \cite{laura}, and it
+relates to two graphs $G$ and $H$. This (G,H)-isomorphism game works
+as follows: consider two players, Alice and Bob, and two graphs G and
+H with the same number of vertices. Now consider a referee who gives
+Alice and Bob a vertex from the two different graphs G and H. Then
+Alice and Bob both respond with another vertex from either of the two
+graphs, and are said to win if they meet the following conditions:
 \begin{description}
-  \item[$\bullet$] $x_A \in V(G) \Leftrightarrow y_A \in V(H)$ and  $x_B \in V(G)\Leftrightarrow y_B \in V(H), $ where $x_A, x_B, y_A, y_B \in V(G) \cup V(H)$
+  \item[$\bullet$] $x_A \in V(G) \Leftrightarrow y_A \in V(H)$ and
+    $x_B \in V(G)\Leftrightarrow y_B \in V(H), $ where $x_A, x_B, y_A,
+    y_B \in V(G) \cup V(H)$
   \item[$\bullet$] $rel(g_A, g_B) = rel(h_A, h_B)$
 \end{description}
-Vertices $g_A$ and $g_B$ are the vertices among $x_A, x_B, y_A, y_B$ that belong to graph G, and similarly for $h_A$, and $h_B$.
-If there is a strategy to this game such that Alice and Bob always win, then the graphs are said to be isomorphic, and the strategy is a winning or perfect strategy.
-The final isomorphism definition revolves around the game from above, and is particularly important for our following discussions. 
+Vertices $g_A$ and $g_B$ are the vertices among $x_A, x_B, y_A, y_B$
+that belong to graph G, and similarly for $h_A$, and $h_B$.  If there
+is a strategy to this game such that Alice and Bob always win, then
+the graphs are said to be isomorphic, and the strategy is a winning or
+perfect strategy.  The final isomorphism definition revolves around
+the game from above, and is particularly important for our following
+discussions.
 
 \begin{thm}[Graph Isomorphism - Game]
-\label{game}
-Let G and H be two graphs. Then $G \cong H$ iff there exists a winning strategy for the (G,H)-isomorphism game.
+  \label{game}
+  Let G and H be two graphs. Then $G \cong H$ iff there exists a
+  winning strategy for the (G,H)-isomorphism game.
 \end{thm}
 
 \begin{proof}
-$\Rightarrow$) Assume G and H are isomorphic such that there is an edge preserving bijection $f: x \in V(G) \to y \in V(H)$. Then there must exist a winning strategy for the graph isomorphism game. 
+$\Rightarrow$) Assume G and H are isomorphic such that there is an
+  edge preserving bijection $f: x \in V(G) \to y \in V(H)$. Then there
+  must exist a winning strategy for the graph isomorphism game.
 
-First show that the first condition holds: Let $x \in V(G)$, then $\phi(x) = y$, for some $y \in V(H)$. Similarly, let $x \in V(H)$, then $f(x) = y$, for some $y \in V(G)$
+First show that the first condition holds: Let $x \in V(G)$, then
+$\phi(x) = y$, for some $y \in V(H)$. Similarly, let $x \in V(H)$,
+then $f(x) = y$, for some $y \in V(G)$
 
-Next to show the second condition holds. Let $x_1, x_2 \in V(G)$ such that $x_1 \neq x_2$ and $x_1 \sim x_2$. Then since $f$ is an edge preserving bijection, 
+Next to show the second condition holds. Let $x_1, x_2 \in V(G)$ such
+that $x_1 \neq x_2$ and $x_1 \sim x_2$. Then since $f$ is an edge
+preserving bijection,
 \begin{equation}
 rel(x_1, x_2) = rel(f(x_1), f(x_2)) = rel(y_1, y_2)
 \end{equation}
-for $y_1, y_2 \in V(H)$. If $x_1 = x_2$, then 
+for $y_1, y_2 \in V(H)$. If $x_1 = x_2$, then
 \begin{equation}
 rel(x_1, x_1) = rel(f(x_1), f(x_1)) = rel(y_1, y_1)
 \end{equation}
-Similarly, if $x_1, x_2 \in V(H)$ such that $x_1 \neq x_2$ and $x_1 \sim x_2$, then  
+Similarly, if $x_1, x_2 \in V(H)$ such that $x_1 \neq x_2$ and $x_1
+\sim x_2$, then
 \begin{equation}
 rel(x_1, x_2) = rel(f(x_1), f(x_2)) = rel(y_1, y_2)
 \end{equation}
-for $y_1, y_2 \in V(G)$. And if $x_1 = x_2$, then 
+for $y_1, y_2 \in V(G)$. And if $x_1 = x_2$, then
 \begin{equation}
 rel(x_1, x_1) = rel(f(x_1), f(x_1)) = rel(y_1, y_1)
 \end{equation}
 Thus the winning conditions hold, so phi is a winning strategy.
 
-$\Leftarrow$) Conversely, assume that there is a winning strategy, $f: y \in V(G)\cup V(H) \to x \in V(G) \cup V(H)$, that satisfies the above conditions. 
+$\Leftarrow$) Conversely, assume that there is a winning strategy, $f:
+y \in V(G)\cup V(H) \to x \in V(G) \cup V(H)$, that satisfies the
+above conditions.
 
-Let $x_A, x_B \in V(G)$, then $y_A, y_B \in V(H)$ from the first winning condition above, where $f(x_A) = y_A$ and $f(x_B) = y_B$. Note that also $rel(f(x_A), f(x_B)) = rel(x_A, x_B)$. If $y_A = y_B$, then $f(x_A) = f(x_B)$, so that $rel(f(x_A), f(x_A)) = rel(x_A, x_B)$, which means that $x_A = x_B$. So $f$ is injective. 
+Let $x_A, x_B \in V(G)$, then $y_A, y_B \in V(H)$ from the first
+winning condition above, where $f(x_A) = y_A$ and $f(x_B) = y_B$. Note
+that also 
+\[
+rel(f(x_A), f(x_B)) = rel(x_A, x_B).
+\] 
+If $y_A = y_B$, then
+$f(x_A) = f(x_B)$, so that $rel(f(x_A), f(x_A)) = rel(x_A, x_B)$,
+which means that $x_A = x_B$. So $f$ is injective.
 
-If $y_A \in V(H)$, then $f(y_A) = x_A$, and $f(x_A) = y_A'$. But $rel(v, v) = rel(y_A, y_A')$, thus $y_A = y_A'$, and so $f$ is surjective. 
+If $y_A \in V(H)$, then $f(y_A) = x_A$, and $f(x_A) = y_A'$. But
+$rel(v, v) = rel(y_A, y_A')$, thus $y_A = y_A'$, and so $f$ is
+surjective.
 
-Now, let $x_1, x_2 \in V(G)$ and $x_1 \sim x_2$. Then $f(x_1), f(x_2) \in V(H)$, but $rel(x_1, x_2) = rel(f(x_1), f(x_2)$. So $f$ is a  graph homomorphism, and thus this winning strategy function, $f$, is an isomorphism.
-
+Now, let $x_1, x_2 \in V(G)$ and $x_1 \sim x_2$. Then $f(x_1), f(x_2)
+\in V(H)$, but $rel(x_1, x_2) = rel(f(x_1), f(x_2)$. So $f$ is a graph
+homomorphism, and thus this winning strategy function, $f$, is an
+isomorphism.
 \end{proof}
 
+% --------------------------------------------------------------------
 \section{Quantum Graph Isomorphism}
-We now define quantum graph isomorphism, in an analogous way to Theorem \ref{game}. 
+\label{sec:qiso}
 
-Given two graphs G and H, there are POVM's, $\mathcal{A}_x = \{A_{xy}: y \in V(G) \cup V(H)\}$ and $\mathcal{B}_x = \{B_{xy}: y \in V(G) \cup V(H)\}$ for each $x \in V(G) \cup V(H)$ associated with Alice and Bob, respectively.
-Alice will again receive some $x_A \in V(G) \cup V(H)$ and will perform a measurement $\mathcal{A}_{x_A}$ to get an outcome $y_A \in V(G) \cup V(H)$.
-The measurement is performed with some state $\psi$, and the probability of Alice and Bob responding with $y_A$ and $y_B$ given $x_A$ and $x_B$ is called a quantum correlation: 
+We now define quantum graph isomorphism, in an analogous way to
+Theorem \ref{game}.
+
+Given two graphs G and H, there are POVM's, $\mathcal{A}_x = \{A_{xy}:
+y \in V(G) \cup V(H)\}$ and $\mathcal{B}_x = \{B_{xy}: y \in V(G) \cup
+V(H)\}$ for each $x \in V(G) \cup V(H)$ associated with Alice and Bob,
+respectively.  Alice will again receive some $x_A \in V(G) \cup V(H)$
+and will perform a measurement $\mathcal{A}_{x_A}$ to get an outcome
+$y_A \in V(G) \cup V(H)$.  The measurement is performed with some
+state $\psi$, and the probability of Alice and Bob responding with
+$y_A$ and $y_B$ given $x_A$ and $x_B$ is called a quantum correlation:
 \begin{equation}
 p(y_A, y_B|x_A, x_B) = \psi^\dag(A_{x_Ay_A}\otimes B_{x_By_B})\psi
 \end{equation}
-If this quantum correlation is zero whenever conditions 1 or 2 fail, then this is a winning strategy.
+If this quantum correlation is zero whenever conditions 1 or 2 fail,
+then this is a winning strategy.
 
 \begin{defn}[Quantum Graph Isomorphism]
-\label{qgame}
-If there exists a perfect quantum strategy for the above game, then the graphs $G$ and $H$ are quantum isomorphic, denoted by $G \cong_q H$.
+  \label{qgame}
+  If there exists a perfect quantum strategy for the above game, then
+  the graphs $G$ and $H$ are quantum isomorphic, denoted by $G \cong_q
+  H$.
 \end{defn}
 
-It is well known that $\psi$ can be assumed to be of full Schmidt rank. A useful mathematical tool that will be used later on is the map $vec: \mathbb{C}^{d_1 x d_2} \longrightarrow \mathbb{C}^{d_1} \otimes \mathbb{C}^{d_2}$, which takes the matrix $uv^{\dag}$ to $u\otimes \bar{v}$. Also, define the inverse as $mat: \mathbb{C}^{d_1} \otimes \mathbb{C}^{d_2} \longrightarrow \mathbb{C}^{d_1 x d_2}$. This map is an isometry, which means that $vec(A)^{\dag}vec(B) = Tr(A^{\dag}B)$, and if we set $\rho = mat(\psi)$, we can show that: 
+It is well known that $\psi$ can be assumed to be of full Schmidt
+rank. A useful mathematical tool that will be used later on is the map
+$vec: \mathbb{C}^{d_1 x d_2} \longrightarrow \mathbb{C}^{d_1} \otimes
+\mathbb{C}^{d_2}$, which takes the matrix $uv^{\dag}$ to $u\otimes
+\bar{v}$. Also, define the inverse as $mat: \mathbb{C}^{d_1} \otimes
+\mathbb{C}^{d_2} \longrightarrow \mathbb{C}^{d_1 x d_2}$. This map is
+an isometry, which means that $vec(A)^{\dag}vec(B) = Tr(A^{\dag}B)$,
+and if we set $\rho = mat(\psi)$, we can show that:
 \begin{equation}
 \label{isometry}
-\psi^{\dag} (A \otimes B) \psi = vec(\rho)^{\dag} (A \otimes B) vec(\rho) = vec(\rho)^{\dag} vec(A \rho B^T) = Tr(\rho^{\dag} A\rho B^T)
+\psi^{\dag} (A \otimes B) \psi = vec(\rho)^{\dag} (A \otimes B)
+vec(\rho) = vec(\rho)^{\dag} vec(A \rho B^T) = Tr(\rho^{\dag} A\rho
+B^T)
 \end{equation}
 where we used the identity $vec(AXB^T) = (A \otimes B)vec(X)$.
 
-This is the first definition of quantum isomorphism, and it is the quantum analogue of the game definition provided in section \ref{classical}. There are a few definitions of quantum isomorphism already known, but finding quantum analogue definitions to the more well-known classical definitions in section \ref{classical} is of particular interest as it is still an open problem. However, we now give a special name to the non-local games that we deal with in this paper.
+This is the first definition of quantum isomorphism, and it is the
+quantum analogue of the game definition provided in section
+\ref{sec:ciso}. There are a few definitions of quantum isomorphism
+already known, but finding quantum analogue definitions to the more
+well-known classical definitions in section \ref{sec:ciso} is of
+particular interest as it is still an open problem. However, we now
+give a special name to the non-local games that we deal with in this
+paper.
 
 \begin{defn}
-A non-local game is called synchronous if the question set $X$ and answer set $Y$ are the same for all players, and also: $V(y, y'|x, x) = 0$ for all $x \in X$ and $y \neq y' \in Y$.
+  A non-local game is called synchronous if the question set $X$ and
+  answer set $Y$ are the same for all players, and also: $V(y, y'|x,
+  x) = 0$ for all $x \in X$ and $y \neq y' \in Y$.
 \end{defn}
 
-It follows that the graph isomorphism game is synchronous since both Alive and Bob have the same question and answer set, namely $V(G) \cup V(H)$, and $p(y, y'|x, x) = 0$ whenever $y \neq y'$ (meaning that if Alice and Bob receive the same vertex, but respond with two different vertices, then they always lose). The following lemma shows some given facts about synchronous games, which will help in proving later theorems.
+It follows that the graph isomorphism game is synchronous since both
+Alive and Bob have the same question and answer set, namely $V(G) \cup
+V(H)$, and $p(y, y'|x, x) = 0$ whenever $y \neq y'$ (meaning that if
+Alice and Bob receive the same vertex, but respond with two different
+vertices, then they always lose). The following lemma shows some given
+facts about synchronous games, which will help in proving later
+theorems.
 
 \begin{lem}
-\label{synclem}
-Let $\psi \in \mathbb{C}^d \otimes \mathbb{C}^d$, $\mathcal{A}_x = \{A_{xy}: y \in Y\}$ and $\mathcal{B}_x = \{B_{xy}: y \in Y\}$ for all $x \in X$ be a perfect quantum strategy for a synchronous game. If $\psi$ and the operators $A_{xy}, B_{xy}$ are expressed in the Schmidt basis of $\psi$ and $\rho = mat(\psi)$, then:
-\begin{itemize}
-\item $A_{xy} = B_{xy}^T$ for all $x \in X$, $y \in Y$
-\item $A_{xy}$ and $B_{xy}$ are projectors for all $x \in X$, $y \in Y$
-\item $A_{xy} \rho = \rho A_{xy}$ and $B_{xy} \rho = \rho B_{xy}$ for all $x \in X$, $y \in Y$
-\item $p(y, y'|x, x') = \psi^{\dag} (A_{xy} \otimes B_{x'y'}) \psi = 0$ if and only if $A_{xy}A_{x'y'} = 0$
-\end{itemize}
+  \label{synclem}
+  Let $\psi \in \mathbb{C}^d \otimes \mathbb{C}^d$, $\mathcal{A}_x =
+  \{A_{xy}: y \in Y\}$ and $\mathcal{B}_x = \{B_{xy}: y \in Y\}$ for
+  all $x \in X$ be a perfect quantum strategy for a synchronous
+  game. If $\psi$ and the operators $A_{xy}, B_{xy}$ are expressed in
+  the Schmidt basis of $\psi$ and $\rho = mat(\psi)$, then:
+  \begin{itemize}
+  \item $A_{xy} = B_{xy}^T$ for all $x \in X$, $y \in Y$
+  \item $A_{xy}$ and $B_{xy}$ are projectors for all $x \in X$, $y \in
+    Y$
+  \item $A_{xy} \rho = \rho A_{xy}$ and $B_{xy} \rho = \rho B_{xy}$
+    for all $x \in X$, $y \in Y$
+  \item $p(y, y'|x, x') = \psi^{\dag} (A_{xy} \otimes B_{x'y'}) \psi =
+    0$ if and only if $A_{xy}A_{x'y'} = 0$
+  \end{itemize}
 \end{lem}
 
-Now, since the graph isomorphism game is synchronous, we can restate these above conditions in regards to quantum strategies, and introduce some other facts related to lemma \ref{synclem}.
+Now, since the graph isomorphism game is synchronous, we can restate
+these above conditions in regards to quantum strategies, and introduce
+some other facts related to lemma \ref{synclem}.
 
 \begin{thm}
-\label{syncthm}
-Consider two graphs $G$ and $H$. Let $\psi \in \mathbb{C}^d \otimes \mathbb{C}^d$, $\mathcal{A}_x = \{A_{xy}: y \in V(G) \cup V(H)\}$ and $\mathcal{B}_x = \{B_{xy}: y \in V(G) \cup V(H)\}$ for all $x \in V(G) \cup V(H)$ be a perfect quantum strategy. If $\psi$ and the operators $A_{xy}, B_{xy}$ are expressed in the Schmidt basis of $\psi$ and $\rho = mat(\psi)$, then:
-\begin{itemize}
-\item $A_{xy} = B_{xy}^T$ for all $x, y \in V(G) \cup V(H)$
-\item $A_{xy}$ and $B_{xy}$ are projectors for all $x, y \in V(G) \cup V(H)$
-\item $A_{xy} \rho = \rho A_{xy}$ and $B_{xy} \rho = \rho B_{xy}$ for all $x, y \in V(G) \cup V(H)$
-\item $p(y, y'|x, x') = \psi^{\dag} (A_{xy} \otimes B_{x'y'}) \psi = 0$ if and only if $A_{xy}A_{x'y'} = 0$
-\item $A_{xy} = 0$ if $x, y \in V(G)$ or $x, y \in V(H)$
-\item $A_{xy} = A_{yx}$ for all $x, y \in V(G) \cup V(H)$
-\end{itemize}
+  \label{syncthm}
+  Consider two graphs $G$ and $H$. Let $\psi \in \mathbb{C}^d \otimes
+  \mathbb{C}^d$, $\mathcal{A}_x = \{A_{xy}: y \in V(G) \cup V(H)\}$
+  and $\mathcal{B}_x = \{B_{xy}: y \in V(G) \cup V(H)\}$ for all $x
+  \in V(G) \cup V(H)$ be a perfect quantum strategy. If $\psi$ and the
+  operators $A_{xy}, B_{xy}$ are expressed in the Schmidt basis of
+  $\psi$ and $\rho = mat(\psi)$, then:
+  \begin{itemize}
+  \item $A_{xy} = B_{xy}^T$ for all $x, y \in V(G) \cup V(H)$
+  \item $A_{xy}$ and $B_{xy}$ are projectors for all $x, y \in V(G)
+    \cup V(H)$
+  \item $A_{xy} \rho = \rho A_{xy}$ and $B_{xy} \rho = \rho B_{xy}$
+    for all $x, y \in V(G) \cup V(H)$
+  \item $p(y, y'|x, x') = \psi^{\dag} (A_{xy} \otimes B_{x'y'}) \psi =
+    0$ if and only if $A_{xy}A_{x'y'} = 0$
+  \item $A_{xy} = 0$ if $x, y \in V(G)$ or $x, y \in V(H)$
+  \item $A_{xy} = A_{yx}$ for all $x, y \in V(G) \cup V(H)$
+  \end{itemize}
 \end{thm}
+
 \begin{proof}
-The first four conditions are simply the same conditions from lemma \ref{synclem} but restated in terms of a perfect quantum strategy, rather than just a synchronous game. For the fifth condition, consider two vertices, $g, g' \in V(G)$, and - using equation \ref{isometry} - observe that 
+The first four conditions are simply the same conditions from lemma
+\ref{synclem} but restated in terms of a perfect quantum strategy,
+rather than just a synchronous game. For the fifth condition, consider
+two vertices, $g, g' \in V(G)$, and - using equation \ref{isometry} -
+observe that
 \begin{align}
 \begin{split}
-0 &= \sum_{y \in V(G) \cup V(H)} p(g', y|g, x) \\
-  &= \sum_{y \in V(G) \cup V(H)} \psi^{\dag}(A_{gg'} \otimes B_{xy})\psi \\
-  &= \psi^{\dag}(A_{gg'} \otimes I)\psi = Tr(\rho \rho^{\dag} A_{gg'})
+0 &= \sum_{y \in V(G) \cup V(H)} p(g', y|g, x) \\ &= \sum_{y \in V(G)
+  \cup V(H)} \psi^{\dag}(A_{gg'} \otimes B_{xy})\psi \\ &=
+\psi^{\dag}(A_{gg'} \otimes I)\psi = Tr(\rho \rho^{\dag} A_{gg'})
 \end{split}
 \end{align}
 
-Recall that $\psi$ is of Schmidt basis, so the matrix $\rho$ has positive diagonal entries only, and thus $\rho \rho^{\dag}$ has full rank. Therefore $A_{gg}' = 0$, and similarly, $B_{gg}' = 0$.
+Recall that $\psi$ is of Schmidt basis, so the matrix $\rho$ has
+positive diagonal entries only, and thus $\rho \rho^{\dag}$ has full
+rank. Therefore $A_{gg}' = 0$, and similarly, $B_{gg}' = 0$.
 
-For sixth condition, recall that by the rules of the graph isomorphism game, if $x \neq x'$, then $p(y, x'|y, x) = 0$. So by the fourth condition $A_{xy}A_{yx'} = 0$ $\forall x \neq x'$. Hence: 
+For sixth condition, recall that by the rules of the graph isomorphism
+game, if $x \neq x'$, then $p(y, x'|y, x) = 0$. So by the fourth
+condition $A_{xy}A_{yx'} = 0$ $\forall x \neq x'$. Hence:
 \begin{eqnarray}
-A_{xy} = A_{xy} \sum_{x'} A_{yx'} = A_{xy}A_{yx} \\
-A_{yx} = \sum_{y'} A_{xy'} A_{yx}= A_{xy}A_{yx}
+A_{xy} = A_{xy} \sum_{x'} A_{yx'} = A_{xy}A_{yx} \\ A_{yx} = \sum_{y'}
+A_{xy'} A_{yx}= A_{xy}A_{yx}
 \end{eqnarray}
-
 Therefore, we can combine the two equations to get $A_{xy} = A_{yx}$
 \end{proof}
 
-
-Defining graph isomorphism using adjacency and permutation matrices is one of the well-known classical definitions, but before we present a quantum analogue definition, we must introduce special types of matrices, called projective permutation matrices.
+Defining graph isomorphism using adjacency and permutation matrices is
+one of the well-known classical definitions, but before we present a
+quantum analogue definition, we must introduce special types of
+matrices, called projective permutation matrices.
 
 \begin{defn}
-A projective permutation matrix (ppm) $\mathcal{P} \in \mathbb{M}_n(d)$ is a unitary block matrix of size $d$ whose elements are projectors.
+  A projective permutation matrix (ppm) $\mathcal{P} \in
+  \mathbb{M}_n(d)$ is a unitary block matrix of size $d$ whose
+  elements are projectors.
 \end{defn}
 
-\begin{lem} \label{ppm}
-A matrix $\mathcal{P} = [[A_{ij}]] \in \mathbb{M}_n(d)$ is a projective permutation matrix (ppm) if and only if its elements, $A_{ij}$ are projectors $\forall 1 \leq i, j \leq n$ and:
-\begin{enumerate}
-\item $\sum_{i=1}^n A_{ij} = I$ $ $ $1 \leq j \leq n$
-\item $\sum_{j=1}^n A_{ij} = I$ $ $ $1 \leq i \leq n$
-\end{enumerate}
+\begin{lem}
+  \label{ppm}
+  A matrix $\mathcal{P} = [[A_{ij}]] \in \mathbb{M}_n(d)$ is a
+  projective permutation matrix (ppm) if and only if its elements,
+  $A_{ij}$ are projectors $\forall 1 \leq i, j \leq n$ and:
+  \begin{enumerate}
+  \item $\sum_{i=1}^n A_{ij} = I$ $ $ $1 \leq j \leq n$
+  \item $\sum_{j=1}^n A_{ij} = I$ $ $ $1 \leq i \leq n$
+  \end{enumerate}
 \end{lem}
-\begin{proof}
-$\Rightarrow$) Suppose we have $\mathcal{P} = [[A_{ij}]] \in \mathbb{M}_n(d)$ that is unitary and all $A_{ij}$ are projectors. Then $\mathcal{P} \mathcal{P}^{\dag} = I$. It follows that $I = (\mathcal{P} \mathcal{P}^{\dag})_{i, i} = \sum_j A_{ij}^2 = \sum_j A_{ij}$. Similarly: $I = (\mathcal{P}^{\dag} \mathcal{P})_{i, i} = \sum_i A_{ij}^2 = \sum_i A_{ij}$. Thus conditions 1 and 2 hold.
 
-$\Leftarrow$) Conversely, suppose conditions 1 and 2 hold. Use these projectors to construct a projective permutation matrix $\mathcal{P} = [[A_{ij}]]$. Since $A_{ij}$ are projectors, we have that $A_{ik}A_{jk} = 0$ for all $i \neq j$. Then take the product: 
+\begin{proof}
+$\Rightarrow$) Suppose we have $\mathcal{P} = [[A_{ij}]] \in
+  \mathbb{M}_n(d)$ that is unitary and all $A_{ij}$ are
+  projectors. Then $\mathcal{P} \mathcal{P}^{\dag} = I$. It follows
+  that $I = (\mathcal{P} \mathcal{P}^{\dag})_{i, i} = \sum_j A_{ij}^2
+  = \sum_j A_{ij}$. Similarly: $I = (\mathcal{P}^{\dag}
+  \mathcal{P})_{i, i} = \sum_i A_{ij}^2 = \sum_i A_{ij}$. Thus
+  conditions 1 and 2 hold.
+
+$\Leftarrow$) Conversely, suppose conditions 1 and 2 hold. Use these
+  projectors to construct a projective permutation matrix $\mathcal{P}
+  = [[A_{ij}]]$. Since $A_{ij}$ are projectors, we have that
+  $A_{ik}A_{jk} = 0$ for all $i \neq j$. Then take the product:
 \[ (\mathcal{P}\mathcal{P}^{\dag})_{i,j} = \sum_k A_{ik}A_{jk} = \begin{cases} 
-\sum_k A_{ik}^2 = I, & \text{ if } i = j \\
-0, & \text{ if } i \neq j  \end{cases}
+\sum_k A_{ik}^2 = I, & \text{ if } i = j \\ 0, & \text{ if } i \neq
+j \end{cases}
 \]
-It follows that $\mathcal{P}\mathcal{P}^{\dag} = I$, and similarly $\mathcal{P}^{\dag} \mathcal{P} = I$. Therefore, $\mathcal{P}$ is unitary.
+It follows that $\mathcal{P}\mathcal{P}^{\dag} = I$, and similarly
+$\mathcal{P}^{\dag} \mathcal{P} = I$. Therefore, $\mathcal{P}$ is
+unitary.
 \end{proof}
 
-Before we can use ppm's to define quantum graph isomorphism, we show a different, but related, way to define graph isomorphism. Using this theorem, it will be easier to prove the next theorem which is the quantum analogue of theorem \ref{permutation}.
-
-\begin{thm} \label{projqiso}
-Two graphs $G$ and $H$ are quantum isomorphic if and only if there exists projectors $A_{gh}$ for $g \in V(G)$ and $h \in V(H)$ such that:
-\begin{enumerate}
-\item $\sum_{h \in V(H)} A_{gh} = I$  $\forall g \in V(G)$
-\item $\sum_{g \in V(G)} A_{gh} = I$  $\forall h \in V(G)$
-\item $A_{gh}A_{g'h'} = 0$, if $rel(g, g') \neq rel(h, h')$
-\end{enumerate}
-\end{thm}
-\begin{proof}
-$\Rightarrow$) If the graphs $G$ and $H$ are quantum isomorphic, then we can say there exists a quantum strategy as in Theorem \ref{syncthm}. Then by the second condition in Theorem \ref{syncthm}, and by definition of families of projectors (see section \ref{prelim}), conditions 1 and 2 are satisfied. By the rules of the game $rel(g, g') \neq rel(h, h')$, then $\psi^{\dag} (A_{xy} \otimes B_{x'y'}) \psi = 0$ holds necessarily, and so condition 3 follows.
-
-$\Leftarrow$) On the other hand, define $A_{gh} = A_{hg}$, and $A_{gg'} = A_{hh'} = 0$ $\forall g, g' \in V(G)$ and $\forall h, h' \in V(H)$. Now suppose that these $A_{gh}$ satisfy the above conditions. Moreover, let $B_{xy} = A_{xy}^T$. Then $\mathcal{A}_x = \{A_{xy}: y \in V(G) \cup V(H)\}$ and $\mathcal{B}_x = \{B_{xy}: y \in V(G) \cup V(H)\}$ are both valid measurements for all $x \in V(G) \cup V(H)$. Now consider the quantum strategy where Alice and Bob uses these measurements on a shared maximally entangled state $\psi_d = \frac{1}{\sqrt{2}} \sum_{i=1}^d e_i \otimes e_i$. Then $p(y, y'|x, x') = \psi^{\dag}_d (A_{xy} \otimes B_{x'y'}) \psi_d= \frac{1}{d}Tr(A_{xy}A_{x'y'})$ $\forall x, x', y, y' \in V(G) \cup V(H)$. It follows that this correlation combined with condition 3 satisfies the rules of the game, and hence there exists a perfect quantum strategy.
-\end{proof}
-
-Finally, we are well-equipped to introduce and prove the quantum analogue of Theorem \ref{permutation}.
+Before we can use ppm's to define quantum graph isomorphism, we show a
+different, but related, way to define graph isomorphism. Using this
+theorem, it will be easier to prove the next theorem which is the
+quantum analogue of theorem \ref{permutation}.
 
 \begin{thm}
-For any two graphs $G$ and $H$, $G \cong_q H$ if and only if there exists a projective permutation matrix $\mathcal{P}$ such that: $(A_G \otimes I_d)\mathcal{P} = \mathcal{P} (A_H \otimes I_d)$
+  \label{projqiso}
+  Two graphs $G$ and $H$ are quantum isomorphic if and only if there
+  exists projectors $A_{gh}$ for $g \in V(G)$ and $h \in V(H)$ such
+  that:
+  \begin{enumerate}
+  \item $\sum_{h \in V(H)} A_{gh} = I$ $\forall g \in V(G)$
+  \item $\sum_{g \in V(G)} A_{gh} = I$ $\forall h \in V(G)$
+  \item $A_{gh}A_{g'h'} = 0$, if $rel(g, g') \neq rel(h, h')$
+  \end{enumerate}
 \end{thm}
-\begin{proof}
-Let $\mathcal{P} = [[A_{gh}]]$ for $g \in V(G)H$ and $h \in V(H)$. By Lemma \ref{ppm}, the elements are projectors and satisfy conditions 1 and 2 from Theorem \ref{projqiso}. Then to prove $(A_G \otimes I_d)\mathcal{P} = \mathcal{P} (A_H \otimes I_d)$, we can just show that it is equivalent to condition 3 from Theorem \ref{projqiso}. Observe that conditions 1 and 2 from Theorem \ref{projqiso} already tells us that $A_{gh}A_{g'h'} = 0$ whenever $g = g'$ and $h \neq h'$ or vice versa, and so we only need to show that the orthogonality aspect (condition 3) is equivalent to $(A_G \otimes I_d)\mathcal{P} = \mathcal{P} (A_H \otimes I_d)$. 
 
-$\Rightarrow$) The (g, g')-block of $A_G \otimes I_d$ is equal to $I_d$ if $g \sim g'$ but zero otherwise, and similarly for $A_H \otimes I_d$. Moreover, observe that for $g \in V(G)$ and $h \in V(H)$:
+\begin{proof}
+$\Rightarrow$) If the graphs $G$ and $H$ are quantum isomorphic, then
+  we can say there exists a quantum strategy as in Theorem
+  \ref{syncthm}. Then by the second condition in Theorem
+  \ref{syncthm}, and by definition of families of projectors (see
+  section \ref{sec:prelim}), conditions 1 and 2 are satisfied. By the
+  rules of the game $rel(g, g') \neq rel(h, h')$, then $\psi^{\dag}
+  (A_{xy} \otimes B_{x'y'}) \psi = 0$ holds necessarily, and so
+  condition 3 follows.
+
+$\Leftarrow$) On the other hand, define $A_{gh} = A_{hg}$, and
+  $A_{gg'} = A_{hh'} = 0$ $\forall g, g' \in V(G)$ and $\forall h, h'
+  \in V(H)$. Now suppose that these $A_{gh}$ satisfy the above
+  conditions. Moreover, let $B_{xy} = A_{xy}^T$. Then $\mathcal{A}_x =
+  \{A_{xy}: y \in V(G) \cup V(H)\}$ and $\mathcal{B}_x = \{B_{xy}: y
+  \in V(G) \cup V(H)\}$ are both valid measurements for all $x \in
+  V(G) \cup V(H)$. Now consider the quantum strategy where Alice and
+  Bob uses these measurements on a shared maximally entangled state
+  $\psi_d = \frac{1}{\sqrt{2}} \sum_{i=1}^d e_i \otimes e_i$. Then
+  $p(y, y'|x, x') = \psi^{\dag}_d (A_{xy} \otimes B_{x'y'}) \psi_d=
+  \frac{1}{d}Tr(A_{xy}A_{x'y'})$ $\forall x, x', y, y' \in V(G) \cup
+  V(H)$. It follows that this correlation combined with condition 3
+  satisfies the rules of the game, and hence there exists a perfect
+  quantum strategy.
+\end{proof}
+
+Finally, we are well-equipped to introduce and prove the quantum
+analogue of Theorem \ref{permutation}.
+
+\begin{thm}
+  For any two graphs $G$ and $H$, $G \cong_q H$ if and only if there
+  exists a projective permutation matrix $\mathcal{P}$ such that:
+  $(A_G \otimes I_d)\mathcal{P} = \mathcal{P} (A_H \otimes I_d)$
+\end{thm}
+
+\begin{proof}
+Let $\mathcal{P} = [[A_{gh}]]$ for $g \in V(G)H$ and $h \in V(H)$. By
+Lemma \ref{ppm}, the elements are projectors and satisfy conditions 1
+and 2 from Theorem \ref{projqiso}. Then to prove $(A_G \otimes
+I_d)\mathcal{P} = \mathcal{P} (A_H \otimes I_d)$, we can just show
+that it is equivalent to condition 3 from Theorem
+\ref{projqiso}. Observe that conditions 1 and 2 from Theorem
+\ref{projqiso} already tells us that $A_{gh}A_{g'h'} = 0$ whenever $g
+= g'$ and $h \neq h'$ or vice versa, and so we only need to show that
+the orthogonality aspect (condition 3) is equivalent to $(A_G \otimes
+I_d)\mathcal{P} = \mathcal{P} (A_H \otimes I_d)$.
+
+$\Rightarrow$) The (g, g')-block of $A_G \otimes I_d$ is equal to
+$I_d$ if $g \sim g'$ but zero otherwise, and similarly for $A_H
+\otimes I_d$. Moreover, observe that for $g \in V(G)$ and $h \in
+V(H)$:
 \begin{equation}
 \label{ppmelement}
-((A_G \otimes I_d)\mathcal{P})_{g,h} = \sum_{g':g' \sim g} A_{g'h} \textit{  and  } ((A_H \otimes I_d)\mathcal{P})_{g,h} = \sum_{h':h' \sim h} A_{g'h}
+((A_G \otimes I_d)\mathcal{P})_{g,h} = \sum_{g':g' \sim g} A_{g'h}
+\textit{ and } ((A_H \otimes I_d)\mathcal{P})_{g,h} = \sum_{h':h' \sim
+  h} A_{g'h}
 \end{equation} 
 So if condition 3 of Theorem \ref{projqiso}, we get that:
-\begin{equation}
-\sum_{g' \sim g} A_{g'h} = \sum_{g' \sim g} A_{g'h} \sum_{h'} A_{gh'} = \sum_{g' \sim g} A_{g'h} \sum_{h' \sim h} A_{gh'} = \sum_{g'} A_{g'h} \sum_{h' \sim h} A_{gh'} = \sum_{h' \sim h} A_{gh'}
-\end{equation}
-And so by equation (\ref{ppmelement}), $(A_G \otimes I_d)\mathcal{P} = \mathcal{P} (A_H \otimes I_d)$.
+\begin{align*}
+\sum_{g' \sim g} A_{g'h} &= \sum_{g' \sim g} A_{g'h} \sum_{h'} A_{gh'} \\
+&= \sum_{g' \sim g} A_{g'h} \sum_{h' \sim h} A_{gh'}\\ &= \sum_{g'}
+A_{g'h} \sum_{h' \sim h} A_{gh'} = \sum_{h' \sim h} A_{gh'}
+\end{align*}
+And so by equation (\ref{ppmelement}), $(A_G \otimes I_d)\mathcal{P} =
+\mathcal{P} (A_H \otimes I_d)$.
 
-$\Leftarrow$) Conversely, if $(A_G \otimes I_d)\mathcal{P} = \mathcal{P} (A_H \otimes I_d)$, equation (\ref{ppmelement}) says that, $\forall g \in V(G), h \in V(H)$ :
+$\Leftarrow$) Conversely, if $(A_G \otimes I_d)\mathcal{P} =
+\mathcal{P} (A_H \otimes I_d)$, equation (\ref{ppmelement}) says that,
+$\forall g \in V(G), h \in V(H)$ :
 \begin{equation}
-\sum_{g':g' \sim g} A_{g'h} = \sum_{h':h' \sim h} A_{gh'} 
+\sum_{g':g' \sim g} A_{g'h} = \sum_{h':h' \sim h} A_{gh'}
 \end{equation}
-Also, given a fixed $h$, projectors become mutually orthogonal in the following way: $A_{g'h}A_{gh}=0$ if $g \neq g'$. It follows that 
+Also, given a fixed $h$, projectors become mutually orthogonal in the
+following way: $A_{g'h}A_{gh}=0$ if $g \neq g'$. It follows that
 \begin{equation}
 (\sum_{g':g' \sim g} A_{g'h})^2 = \sum_{g':g' \sim g} A_{g'h}
 \end{equation}
 Then we can say:
 \begin{equation}
-\sum_{g' \sim g} A_{g'h} \sum_{h' \sim h} A_{gh'} = \sum_{g' \sim g} A_{g'h}= \sum_{g' \sim g} A_{g'h} \sum_{h'} A_{gh'}
+\sum_{g' \sim g} A_{g'h} \sum_{h' \sim h} A_{gh'} = \sum_{g' \sim g}
+A_{g'h}= \sum_{g' \sim g} A_{g'h} \sum_{h'} A_{gh'}
 \end{equation}
-From this, we must have that $\sum_{g' \sim g} A_{g'h} \sum_{h' \nsim h} A_{gh'} = 0$. Now if we consider the trace, we have that it must be zero, i.e.
+From this, we must have that $\sum_{g' \sim g} A_{g'h} \sum_{h' \nsim
+  h} A_{gh'} = 0$. Now if we consider the trace, we have that it must
+be zero, i.e.
 \begin{equation} \label{traceproof}
 \sum_{g':g' \sim g, h':h' \nsim h} Tr(A_{g'h}A_{gh'}) = 0
 \end{equation}
-But recall that the projectors here are positive semi-definite, which means that all elements are non-negative. Then equation \ref{traceproof} implies that $A_{g'h}A_{gh'} = 0$ when $g \sim g'$ and $h \nsim h'$, and analogously,it is true also if $g \nsim g'$ and $h \sim h'$. This shows that if $rel(g,g') \neq rel(h,h')$ because one of the relations is adjacency and the other is not, then condition 3 from Theorem \ref{projqiso} holds. If one of these relations is equality, and the other is not, then from conditions 1 and 2 from Theorem \ref{projqiso}, we know condition 3 must hold (as stated above already). Finally, if one of the relations is non-adjacency and not equal, and the other is not, then the other relation must either be equality or adjacency, and so we can just use the previous arguments to get condition 3. Then all the different types of relations inequalities give condition 3, and so we have that $G \cong_q H$. 
+But recall that the projectors here are positive semi-definite, which
+means that all elements are non-negative. Then equation
+\ref{traceproof} implies that $A_{g'h}A_{gh'} = 0$ when $g \sim g'$
+and $h \nsim h'$, and analogously,it is true also if $g \nsim g'$ and
+$h \sim h'$. This shows that if $rel(g,g') \neq rel(h,h')$ because one
+of the relations is adjacency and the other is not, then condition 3
+from Theorem \ref{projqiso} holds. If one of these relations is
+equality, and the other is not, then from conditions 1 and 2 from
+Theorem \ref{projqiso}, we know condition 3 must hold (as stated above
+already). Finally, if one of the relations is non-adjacency and not
+equal, and the other is not, then the other relation must either be
+equality or adjacency, and so we can just use the previous arguments
+to get condition 3. Then all the different types of relations
+inequalities give condition 3, and so we have that $G \cong_q H$.
 \end{proof}
 
-Now that we have shown a quantum graph isomorphism definition that is an analogue to one of the classical graph isomorphism definitions, we can use it to prove the next theorem. Naturally, one would expect any new type of isomorphism to form an equivalence, and this next theorem shows just that for quantum isomorphism. 
+Now that we have shown a quantum graph isomorphism definition that is
+an analogue to one of the classical graph isomorphism definitions, we
+can use it to prove the next theorem. Naturally, one would expect any
+new type of isomorphism to form an equivalence, and this next theorem
+shows just that for quantum isomorphism.
 
 \begin{thm}
-\label{thm:equivalence}
-Quantum Graph Isomorphism forms an equivalence relation between graphs on $n$ vertices.
+  \label{thm:equivalence}
+  Quantum Graph Isomorphism forms an equivalence relation between
+  graphs on $n$ vertices.
 \end{thm}
+
 \begin{proof}
+Reflexivity: Let $\mathcal{P}$ be the identity ppm. Then $\cong_q$ is
+reflexive.
 
-Reflexivity: Let $\mathcal{P}$ be the identity ppm. Then $\cong_q$ is reflexive.
+Symmetry: If $G \cong_q H$, then $(A_G \otimes I_d)\mathcal{P} =
+\mathcal{P} (A_H \otimes I_d)$
 
-Symmetry: If $G \cong_q H$, then $(A_G \otimes I_d)\mathcal{P} = \mathcal{P} (A_H \otimes I_d)$
+$\Rightarrow$ $\mathcal{P}^\dag (A_G \otimes I_d) = (A_H \otimes I_d)
+\mathcal{P}^\dag$
 
-$\Rightarrow$ $\mathcal{P}^\dag (A_G \otimes I_d) = (A_H \otimes I_d) \mathcal{P}^\dag$
+$\Rightarrow$ $(A_H \otimes I_d) \mathcal{P}^\dag = \mathcal{P}^\dag
+(A_G \otimes I_d)$ Thus, $\cong_q$ is symmetric.
 
-$\Rightarrow$ $(A_H \otimes I_d) \mathcal{P}^\dag = \mathcal{P}^\dag (A_G \otimes I_d)$
-Thus, $\cong_q$ is symmetric.
-
-
-Transitivity: Suppose for graphs $G, H, K$, we have that $G \cong_q H$ and $H \cong_q K$. Then by Theorem \ref{projqiso}, we have two sets of projectors that satisfy the three conditions given in the theorem, where we will use $\{P_{gh} \textit{ } | \textit{ } g \in V(G), h \in V(H) \}$ which corresponds to $G \cong_q H$, and $\{Q_{gh} \textit{ } | \textit{ } h \in V(H), k \in V(K) \}$ which corresponds to $H \cong_q K$. Now define the following set of matrices, as in Lemma 2.5 from \cite{GraphHom}: $\{R_{gk} \textit{ } | \textit{ } g \in V(G), k \in V(K) \}$, where 
+Transitivity: Suppose for graphs $G, H, K$, we have that $G \cong_q H$
+and $H \cong_q K$. Then by Theorem \ref{projqiso}, we have two sets of
+projectors that satisfy the three conditions given in the theorem,
+where we will use $\{P_{gh} \textit{ } | \textit{ } g \in V(G), h \in
+V(H) \}$ which corresponds to $G \cong_q H$, and $\{Q_{gh} \textit{ }
+| \textit{ } h \in V(H), k \in V(K) \}$ which corresponds to $H
+\cong_q K$. Now define the following set of matrices, as in Lemma 2.5
+from \cite{GraphHom}: $\{R_{gk} \textit{ } | \textit{ } g \in V(G), k
+\in V(K) \}$, where
 \begin{equation}
 R_{gk} = \sum_{h \in V(H)} P_{gh} \otimes Q_{hk}
 \end{equation} 
-Then if $R_{gk}$ is a projector and satisfies the three conditions from Theorem \ref{projqiso}, we will have that $G \cong_q K$.
+Then if $R_{gk}$ is a projector and satisfies the three conditions
+from Theorem \ref{projqiso}, we will have that $G \cong_q K$.
 
-Suppose there are $n$ vertices in $H$. Observe that $R_{gk}^{\dag} = (P_{gh_1} \otimes Q_{h_1k} + P_{gh_2} \otimes Q_{h_2k} + \dots + P_{gh_n} \otimes Q_{h_nk})^{\dag} = (P_{gh_1} \otimes Q_{h_1k})^{\dag} + (P_{gh_2} \otimes Q_{h_2k})^{\dag} + \dots + (P_{gh_n} \otimes Q_{h_nk})^{\dag} = P_{gh_1}^{\dag} \otimes Q_{h_1k}^{\dag} + P_{gh_2}^{\dag} \otimes Q_{h_2k}^{\dag} + \dots + P_{gh_n}^{\dag} \otimes Q_{h_nk}^{\dag} = R_{gk}$. 
+Suppose there are $n$ vertices in $H$. Observe that $R_{gk}^{\dag} =
+(P_{gh_1} \otimes Q_{h_1k} + P_{gh_2} \otimes Q_{h_2k} + \dots +
+P_{gh_n} \otimes Q_{h_nk})^{\dag} = (P_{gh_1} \otimes Q_{h_1k})^{\dag}
++ (P_{gh_2} \otimes Q_{h_2k})^{\dag} + \dots + (P_{gh_n} \otimes
+Q_{h_nk})^{\dag} = P_{gh_1}^{\dag} \otimes Q_{h_1k}^{\dag} +
+P_{gh_2}^{\dag} \otimes Q_{h_2k}^{\dag} + \dots + P_{gh_n}^{\dag}
+\otimes Q_{h_nk}^{\dag} = R_{gk}$.
 
-Also, see that 
+Also, see that
 \begin{equation} \label{Rsquared}
-R_{gk}^2 = (P_{gh_1} \otimes Q_{h_1k} + P_{gh_2} \otimes Q_{h_2k} + \dots + P_{gh_n} \otimes Q_{h_nk}) \sum_{h \in V(H)} P_{gh} \otimes Q_{hk}
+R_{gk}^2 = (P_{gh_1} \otimes Q_{h_1k} + P_{gh_2} \otimes Q_{h_2k} +
+\dots + P_{gh_n} \otimes Q_{h_nk}) \sum_{h \in V(H)} P_{gh} \otimes
+Q_{hk}
 \end{equation}
-Given that $(A \otimes B)(C \otimes D) = AC \otimes BD$, if we expand the product in equation \ref{Rsquared}, we can use condition 3 from Theorem \ref{projqiso} to get $(P_{gh_1}P_{gh_1} \otimes Q_{h_1k}Q_{h_1k} + P_{gh_1}P_{gh_2} \otimes Q_{h_1k}Q_{h_2k} + \dots + P_{gh_1}P_{gh_n} \otimes Q_{h_1k}Q_{h_nk}) = P_{gh_1}^2 \otimes Q_{h_1k}^2 = P_{gh_1} \otimes Q_{h_1k}$, since $P_{gh}$ and $Q_{hk}$ are projectors. Repeating this for every term in the product of equation \ref{Rsquared}, we get that $R_{gk}^2 = R_{gk}$. So now we have that the $R_{gk}$ elements are projectors.
+Given that $(A \otimes B)(C \otimes D) = AC \otimes BD$, if we expand
+the product in equation \ref{Rsquared}, we can use condition 3 from
+Theorem \ref{projqiso} to get $(P_{gh_1}P_{gh_1} \otimes
+Q_{h_1k}Q_{h_1k} + P_{gh_1}P_{gh_2} \otimes Q_{h_1k}Q_{h_2k} + \dots +
+P_{gh_1}P_{gh_n} \otimes Q_{h_1k}Q_{h_nk}) = P_{gh_1}^2 \otimes
+Q_{h_1k}^2 = P_{gh_1} \otimes Q_{h_1k}$, since $P_{gh}$ and $Q_{hk}$
+are projectors. Repeating this for every term in the product of
+equation \ref{Rsquared}, we get that $R_{gk}^2 = R_{gk}$. So now we
+have that the $R_{gk}$ elements are projectors.
 
-Now,  we can show that conditions 1 and 2 from Theorem \ref{projqiso} hold for $R_{gk}$, as follows: 
+Now, we can show that conditions 1 and 2 from Theorem \ref{projqiso}
+hold for $R_{gk}$, as follows:
 \begin{equation}
-\sum_{g \in V(G)} R_{gk} = \sum_{g \in V(G)} \sum_{h \in V(H)} P_{gh} \otimes Q_{hk} = \sum_{h \in V(H)} (\sum_{g \in V(G)} P_{gh}) \otimes Q_{hk}
+\sum_{g \in V(G)} R_{gk} = \sum_{g \in V(G)} \sum_{h \in V(H)} P_{gh}
+\otimes Q_{hk} = \sum_{h \in V(H)} (\sum_{g \in V(G)} P_{gh}) \otimes
+Q_{hk}
 \end{equation} 
-But since these conditions hold the projectors $P_{gh}$ and $Q_{hk}$, we get that
-\begin{align}
-\label{entag:dd'}
-\sum_{h \in V(H)} (\sum_{g \in V(G)} P_{gh}) \otimes Q_{hk} = \sum_{h \in V(H)} I_d \otimes Q_{hk} = I_d \otimes (\sum_{h \in V(H)} Q_{hk}) = I_d \otimes I_d' = I_{dd'}
-\end{align}
+But since these conditions hold the projectors $P_{gh}$ and $Q_{hk}$,
+we get that
+\begin{align*}
+\sum_{h \in V(H)} (\sum_{g \in V(G)} P_{gh}) \otimes Q_{hk} &= \sum_{h
+  \in V(H)} I_d \otimes Q_{hk}\\ &= I_d \otimes (\sum_{h \in V(H)}
+Q_{hk}) = I_d \otimes I_d' = I_{dd'}
+\end{align*}
 So condition 1 holds, and condition 2 can be shown similarly.
 
-For condition 3, we must consider 
+For condition 3, we must consider
 \begin{equation}
-R_{gk}R_{g'k'} =(\sum_{h \in V(H)} P_{gh} \otimes Q_{hk})(\sum_{h \in V(H)} P_{g'h} \otimes Q_{hk'})
+R_{gk}R_{g'k'} =(\sum_{h \in V(H)} P_{gh} \otimes Q_{hk})(\sum_{h \in
+  V(H)} P_{g'h} \otimes Q_{hk'})
 \end{equation}
 But we can also write this as:
 \begin{equation}
-R_{gk}R_{g'k'} = \sum_{a, b \in V(H)} P_{ga}P_{g'b} \otimes Q_{ak}Q_{bk'}
+R_{gk}R_{g'k'} = \sum_{a, b \in V(H)} P_{ga}P_{g'b} \otimes
+Q_{ak}Q_{bk'}
 \end{equation}
-Then, if $rel(g, g')$ is equality, and $rel(k, k')$ is not, either $a=b$, for which $Q_{ak}Q_{bk'} = 0$, or $a \neq b$, for which $P_{ga}P_{g'b} = 0$. In either case, $R_{gk}R_{g'k'} = 0$.
-If $rel(g, g')$ is adjacency (with $g \neq g'$), and $rel(k, k')$ is not adjacency, then we have four cases. First we consider when $a \nsim b$, which gives the two cases, where either $k = k'$, or $k neq k'$ and $k \nsim k'$. But in either of these cases, $P_{ga}P_{g'b} = 0$, and so $R_{gk}R_{g'k'} = 0$. Now, if $a \sim b$, then again either $k = k'$, or $k neq k'$ and $k \nsim k'$, but still we have for both of these cases that $Q_{ak}Q_{bk'} = 0$, and so $R_{gk}R_{g'k'} = 0$.
-Finally, if $rel(g, g')$ is non-adjacency (with $g \neq g'$), then the other relation will either be equality or adjacency (with $k \neq k'$). Then we can just use the preceding arguments again on $rel(k, k')$ and we will get that $R_{gk}R_{g'k'} = 0$. 
-It follows that $R_{gk}R_{g'k'} = 0$ if $rel(g, g') \neq rel(k, k')$, and so condition 3 holds.
-Therefore, $G \cong_q K$, and so $\cong_q$ is transitive.
+Then, if $rel(g, g')$ is equality, and $rel(k, k')$ is not, either
+$a=b$, for which $Q_{ak}Q_{bk'} = 0$, or $a \neq b$, for which
+$P_{ga}P_{g'b} = 0$. In either case, $R_{gk}R_{g'k'} = 0$.  If $rel(g,
+g')$ is adjacency (with $g \neq g'$), and $rel(k, k')$ is not
+adjacency, then we have four cases. First we consider when $a \nsim
+b$, which gives the two cases, where either $k = k'$, or $k neq k'$
+and $k \nsim k'$. But in either of these cases, $P_{ga}P_{g'b} = 0$,
+and so $R_{gk}R_{g'k'} = 0$. Now, if $a \sim b$, then again either $k
+= k'$, or $k neq k'$ and $k \nsim k'$, but still we have for both of
+these cases that $Q_{ak}Q_{bk'} = 0$, and so $R_{gk}R_{g'k'} = 0$.
+Finally, if $rel(g, g')$ is non-adjacency (with $g \neq g'$), then the
+other relation will either be equality or adjacency (with $k \neq
+k'$). Then we can just use the preceding arguments again on $rel(k,
+k')$ and we will get that $R_{gk}R_{g'k'} = 0$.  It follows that
+$R_{gk}R_{g'k'} = 0$ if $rel(g, g') \neq rel(k, k')$, and so condition
+3 holds.  Therefore, $G \cong_q K$, and so $\cong_q$ is transitive.
 \end{proof}
 
-Something interesting to note about Theorem \ref{thm:equivalence} is that the reflexivity and symmetry parts of the proof did not increase the size of the Hilbert space $d$, but when proving transitivity, you can see from equation \ref{entag:dd'} that we require a Hilbert space of size $dd'$. This leads to some interesting questions to consider in the future regarding when quantum isomorphism is an equivalence relation given a fixed $d$, and what this implies about classical isomorphism (we would expect $d=0$ since no entanglement is required in this case).
+Something interesting to note about Theorem \ref{thm:equivalence} is
+that the reflexivity and symmetry parts of the proof did not increase
+the size of the Hilbert space $d$, but when proving transitivity, you
+can see that we require a Hilbert space
+of size $dd'$. This leads to some interesting questions to consider in
+the future regarding when quantum isomorphism is an equivalence
+relation given a fixed $d$, and what this implies about classical
+isomorphism (we would expect $d=0$ since no entanglement is required
+in this case).
 
-This concludes this section regarding the core ideas of quantum graph isomorphism, namely having an analogue definition of quantum graph isomorphism to a well-known definition of classical graph isomorphism, and having an equivalence relation. These two results perhaps may give a more intuitive understanding of quantum graph isomorphism, as they are results closely related to well-known and well-studied definitions, but in the next section we compare quantum graph isomorphism to its' classical counterpart.
+This concludes this section regarding the core ideas of quantum graph
+isomorphism, namely having an analogue definition of quantum graph
+isomorphism to a well-known definition of classical graph isomorphism,
+and having an equivalence relation. These two results perhaps may give
+a more intuitive understanding of quantum graph isomorphism, as they
+are results closely related to well-known and well-studied
+definitions, but in the next section we compare quantum graph
+isomorphism to its' classical counterpart.
 
+% --------------------------------------------------------------------
 \section{Comparing Various Definitions}
-Normally when a new quantum idea comes about, one can model the classical version of the idea using the quantum methodologies. This usually ends up overcomplicating the idea, but it still works. However, the opposite is not true, which we now explore by looking at how quantum and classical graph isomorphisms are related. The first relation is as follows.
+\label{sec:compare}
+
+Normally when a new quantum idea comes about, one can model the
+classical version of the idea using the quantum methodologies. This
+usually ends up over complicating the idea, but it still
+works. However, the opposite is not true, which we now explore by
+looking at how quantum and classical graph isomorphisms are
+related. The first relation is as follows.
 
 \begin{proposition}{First Isomorphic Relation}
-\label{prop:isoimpliesqiso}
-$G \cong H$ $\implies$ $G \cong_q H$
+  \label{prop:isoimpliesqiso}
+  $G \cong H$ $\implies$ $G \cong_q H$
 \end{proposition}
-To see this, observe that every classical isomorphism case can be described by the quantum game in the following way: Take two isomorphic graphs, $G$ and $H$, so that there is some classical winning strategy $f$. Let all POVM elements be the zero matrix except for one, which will be the identity. Choose the POVM element that will be identity matrix to be $A_{x_Ay_A} = 
+
+To see this, observe that every classical isomorphism case can be
+described by the quantum game in the following way: Take two
+isomorphic graphs, $G$ and $H$, so that there is some classical
+winning strategy $f$. Let all POVM elements be the zero matrix except
+for one, which will be the identity. Choose the POVM element that will
+be identity matrix to be $A_{x_Ay_A} =
 \begin{bmatrix}
 1 & 0 \\
 0 & 1
-\end{bmatrix}$, such that $y_A = f(x_A)$, and similarly for $B_{x_By_B}$. Then $\psi^\dag(A_{x_Ay_A} \otimes B_{x_By_B})\psi = 0$ whenever conditions 1 or 2 fail, thus, this is a winning quantum strategy.
-The second relation is the converse, and naturally it is not true.
+\end{bmatrix}$, such that $y_A = f(x_A)$, and similarly for
+$B_{x_By_B}$. Then $\psi^\dag(A_{x_Ay_A} \otimes B_{x_By_B})\psi = 0$
+whenever conditions 1 or 2 fail, thus, this is a winning quantum
+strategy.  The second relation is the converse, and naturally it is
+not true.
+
 \begin{proposition}{Second Isomorphic Relation}
-$G \cong_q H$ $\centernot\implies$ $G \cong H$
+  $G \cong_q H$ $\centernot\implies$ $G \cong H$
 \end{proposition}
 
-To see this, we must introduce a new concept to show an important aspect of quantum graph isomorphism, which is simply  that there exists graphs that are quantum graph isomorphic but not isomorphic. This new concept is a linear binary constraint system (BCS) $\mathcal{F}$, which is a family of binary variables, with a family of constraints. The following is an example that we will refer to later, and can be found in \cite{Binary}.
+To see this, we must introduce a new concept to show an important
+aspect of quantum graph isomorphism, which is simply that there exists
+graphs that are quantum graph isomorphic but not isomorphic. This new
+concept is a linear binary constraint system (BCS) $\mathcal{F}$,
+which is a family of binary variables, with a family of
+constraints. The following is an example that we will refer to later,
+and can be found in \cite{Binary}.
 
 \begin{equation*}
 \label{bcs}
@@ -467,32 +983,74 @@ x_3 + x_6 + x_9 &= 1
 \end{equation*}
 
 \begin{defn}
-If there is an assignment of values from $\mathbb{F}_2$ to the variables such that every constraint is satisfied, then the BCS is called satisfiable.
+  If there is an assignment of values from $\mathbb{F}_2$ to the
+  variables such that every constraint is satisfied, then the BCS is
+  called satisfiable.
 \end{defn}
-Note that this linear BCS is not satisfiable, since if you add all of the equations together, you will get $1=0$. Now, we can define a game to any BCS as follows: Let $C_l$ and $C_k$ be some constraints. A referee will send a constraint to both Alice and Bob, who will then respond with assignments $f, f'$ respectively. The assignments $f, f'$ will be assignments of variables that appear in $C_l$, and $C_k$ respectively. The goal again is to have some strategy for Alice and Bob to follow that meets two conditions: the first being that the constraints are satisfied, and the second being if $\exists x_i \in C_l \cap C_k$, then $f(x_i) = f'(x_i)$. It follows that Alice and Bob can win the game with probability 1 iff the BCS is satisfiable. Since this is a similar game to the previous one, some classical strategy, surely we can have a quantum strategy as well, which bring us to the next definition.
+
+Note that this linear BCS is not satisfiable, since if you add all of
+the equations together, you will get $1=0$. Now, we can define a game
+to any BCS as follows: Let $C_l$ and $C_k$ be some constraints. A
+referee will send a constraint to both Alice and Bob, who will then
+respond with assignments $f, f'$ respectively. The assignments $f, f'$
+will be assignments of variables that appear in $C_l$, and $C_k$
+respectively. The goal again is to have some strategy for Alice and
+Bob to follow that meets two conditions: the first being that the
+constraints are satisfied, and the second being if $\exists x_i \in
+C_l \cap C_k$, then $f(x_i) = f'(x_i)$. It follows that Alice and Bob
+can win the game with probability 1 iff the BCS is satisfiable. Since
+this is a similar game to the previous one, some classical strategy,
+surely we can have a quantum strategy as well, which bring us to the
+next definition.
+
 \begin{defn}
-A BCS is called quantum satisfiable if there exists a perfect quantum strategy for the BCS game.
+A BCS is called quantum satisfiable if there exists a perfect quantum
+strategy for the BCS game.
 \end{defn}
 
-Now, given any linear BCS, $\mathcal{F}$ with m constraints, we can associate a graph to it in the following way: for each constraint $C_{\ell}$ and each assignment $f:S_{\ell} \rightarrow \mathbb{F}_2$ that satisfies the corresponding constraint, include/create a vertex $(\ell, f)$. Consider some other vertex $(k, f')$, then if there exists an $x_i \in S_{\ell} \cap S_{k}$ such that $f(x_i) \neq  f'(x_i)$, then add an edge between these two vertices.
+Now, given any linear BCS, $\mathcal{F}$ with m constraints, we can
+associate a graph to it in the following way: for each constraint
+$C_{\ell}$ and each assignment $f:S_{\ell} \rightarrow \mathbb{F}_2$
+that satisfies the corresponding constraint, include/create a vertex
+$(\ell, f)$. Consider some other vertex $(k, f')$, then if there
+exists an $x_i \in S_{\ell} \cap S_{k}$ such that $f(x_i) \neq
+f'(x_i)$, then add an edge between these two vertices.
 
 \begin{defn}
-The homogenization of $\mathcal{F}$, denoted $\mathcal{F}_0$, is a linear BCS where the right hand side of all constraints in $\mathcal{F}$ are changed to zero.
+  The homogenization of $\mathcal{F}$, denoted $\mathcal{F}_0$, is a
+  linear BCS where the right hand side of all constraints in
+  $\mathcal{F}$ are changed to zero.
 \end{defn}
-We can then construct another graph using the homogenization of the original BCS. The next two theorems bring us back to quantum isomorphism.
 
+We can then construct another graph using the homogenization of the
+original BCS. The next two theorems bring us back to quantum
+isomorphism.
 
 \begin{thm}
-\label{classicalBCS}
-Let $\mathcal{F}$ be a linear BCS. Then $\mathcal{F}$ is satisfiable iff $G_{\mathcal{F}}$ is isomorphic to $G_{\mathcal{F}_0}$
+  \label{classicalBCS}
+  Let $\mathcal{F}$ be a linear BCS. Then $\mathcal{F}$ is satisfiable
+  iff $G_{\mathcal{F}}$ is isomorphic to $G_{\mathcal{F}_0}$
 \end{thm}
 
 \begin{thm}
-\label{quantumBCS}
-Let $\mathcal{F}$ be a linear BCS. Then $\mathcal{F}$ is quantum satisfiable iff $G_{\mathcal{F}}$ is quantum isomorphic to $G_{\mathcal{F}_0}$
+  \label{quantumBCS}
+  Let $\mathcal{F}$ be a linear BCS. Then $\mathcal{F}$ is quantum
+  satisfiable iff $G_{\mathcal{F}}$ is quantum isomorphic to
+  $G_{\mathcal{F}_0}$
 \end{thm}
 
-Using the linear BCS from \ref{bcs}, we can construct two graphs $G_{\mathcal{F}}$ and $G_{\mathcal{F}_0}$ using the methods described. We know that this linear BCS is not classically satisfiable, so Theorem \ref{classicalBCS} tells us that the corresponding graphs will not be classically isomorphic. However, this linear BCS is a well known linear BCS and was constructed to specifically be quantum satisfiable, and hence the graphs constructed will be quantum isomorphic. So now we finally have two graphs that are quantum isomorphic but not classically isomorphic. The graphs are in Figure \ref{fig:qisoNOTiso}. Also note that in general, the idea of constructing graphs in this manner comes from the Mermin-Peres magic square game, and is explained in more detail in \cite{QuantumMagic}.
+Using the linear BCS from \ref{bcs}, we can construct two graphs
+$G_{\mathcal{F}}$ and $G_{\mathcal{F}_0}$ using the methods
+described. We know that this linear BCS is not classically
+satisfiable, so Theorem \ref{classicalBCS} tells us that the
+corresponding graphs will not be classically isomorphic. However, this
+linear BCS is a well known linear BCS and was constructed to
+specifically be quantum satisfiable, and hence the graphs constructed
+will be quantum isomorphic. So now we finally have two graphs that are
+quantum isomorphic but not classically isomorphic. The graphs are in
+Figure \ref{fig:qisoNOTiso}. Also note that in general, the idea of
+constructing graphs in this manner comes from the Mermin-Peres magic
+square game, and is explained in more detail in \cite{QuantumMagic}.
 
 \begin{figure}
 \centering
@@ -509,34 +1067,82 @@ Using the linear BCS from \ref{bcs}, we can construct two graphs $G_{\mathcal{F}
 \label{fig:qisoNOTiso}
 \end{figure}
 
-
-
+% --------------------------------------------------------------------
 \section{Graphs for which classical and quantum isomorphism coincide}
+
+% --------------------------------------------------------------------
 \subsection{Non-signalling and fractional graph isomorphism}
-In this section, we seek to show that there may be certain types of graphs for which classical and quantum graph isomorphism are equivalent definitions. To do this, we briefly introduce two new types of isomorphism, namely fractional isomorphism and non-signalling isomorphism. Fractional isomorphism is a well studied type of isomorphism, and certain results may be of use in finding relations between quantum isomorphism and classical isomorphism. The significance of fractional isomorphism comes from non-signalling isomorphism, as non-signalling isomorphism is related to quantum isomorphism, and more importantly it is equivalent to fractional isomorphism. First we state the formal definitions.
 
-\begin{defn} Let $G$ and $H$ be graphs, and $A_G$, $A_H$ be there adjacency matrices respectively. Then $G$ is fractionally isomorphic to $H$ if there exists a doubly stochastic matrix $S$, such that $A_GS = SA_H$. We denote fractional isomorphism by $G \cong_f H$.
-\end{defn}
-
-Recall the definition of quantum isomorphism (definition \ref{qgame}), and the description provided above it. The definition of non-signalling isomorphism follows similarly to the game with quantum resources: suppose Alice and Bob are playing the nonlocal game with and they have a quantum strategy. If Alice is given input $x_A$, and Bob is given input $x_B$, the probability that Alice obtains outcome $y_A$ when she performs measurement $\mathcal{A}_{x_A}$ is given by: $\sum_{y_B}p(y_A, y_B | x_A, x_B) = \sum_{y_B}\psi^\dag(A_{x_Ay_A}\otimes B_{x_By_B})\psi = \psi^\dag(A_{x_Ay_A}\otimes I)\psi$. This essentially says that Bob's output vertex is not dependent on Alice's measurement. Similarly, Bob's measurement is not dependent on Alice's output vertex, and so the formal definition follows.
+In this section, we seek to show that there may be certain types of
+graphs for which classical and quantum graph isomorphism are
+equivalent definitions. To do this, we briefly introduce two new types
+of isomorphism, namely fractional isomorphism and non-signalling
+isomorphism. Fractional isomorphism is a well studied type of
+isomorphism, and certain results may be of use in finding relations
+between quantum isomorphism and classical isomorphism. The
+significance of fractional isomorphism comes from non-signalling
+isomorphism, as non-signalling isomorphism is related to quantum
+isomorphism, and more importantly it is equivalent to fractional
+isomorphism. First we state the formal definitions.
 
 \begin{defn}
-A correlation $p(y_A, y_B | x_A, x_B)$ is non-signalling if 
-\begin{itemize}
-\item $\sum_{y_B}p(y_A, y_B | x_A, x_B) = \sum_{y_B}p(y_A, y_B | x_A, x_B')$ for all $x_A, y_A, x_B, x_B'$
-\item $\sum_{y_A}p(y_A, y_B | x_A, x_B) = \sum_{y_B}p(y_A, y_B | x_A', x_B)$ for all $x_B, y_A, x_A, x_A'$
-\end{itemize}
-If all vertices come from two graphs $G$ and $H$, then they are non-signalling isomorphic, denoted by $\cong_{ns}$.
+  Let $G$ and $H$ be graphs, and $A_G$, $A_H$ be there adjacency
+  matrices respectively. Then $G$ is fractionally isomorphic to $H$ if
+  there exists a doubly stochastic matrix $S$, such that $A_GS =
+  SA_H$. We denote fractional isomorphism by $G \cong_f H$.
 \end{defn}
 
-Non-signalling isomorphism corresponds to the restriction where Alice and Bob are not allowed to communicate at all (where normally when the game is played, they are allowed to communicate before the game starts and decide upon some strategy). Since nothing can travel faster than the speed of light, any correlation with two parties at a sufficient distance away from each other will be a non-signalling correlation. For this reason, non-signalling isomorphism is an interesting topic to study, however its interest here comes from its implication. It is known that if $G \cong_q H$, then $G \cong_{ns}H$, but the following theorem shows a relation between non-signalling isomorphism and fractional isomorphism (see \cite{laura} for the proof), which will be important for Theorem \ref{Trees}.
+Recall the definition of quantum isomorphism (definition \ref{qgame}),
+and the description provided above it. The definition of
+non-signalling isomorphism follows similarly to the game with quantum
+resources: suppose Alice and Bob are playing the nonlocal game with
+and they have a quantum strategy. If Alice is given input $x_A$, and
+Bob is given input $x_B$, the probability that Alice obtains outcome
+$y_A$ when she performs measurement $\mathcal{A}_{x_A}$ is given by:
+$\sum_{y_B}p(y_A, y_B | x_A, x_B) =
+\sum_{y_B}\psi^\dag(A_{x_Ay_A}\otimes B_{x_By_B})\psi =
+\psi^\dag(A_{x_Ay_A}\otimes I)\psi$. This essentially says that Bob's
+output vertex is not dependent on Alice's measurement. Similarly,
+Bob's measurement is not dependent on Alice's output vertex, and so
+the formal definition follows.
+
+\begin{defn}
+  A correlation $p(y_A, y_B | x_A, x_B)$ is non-signalling if
+  \begin{itemize}
+  \item $\sum_{y_B}p(y_A, y_B | x_A, x_B) = \sum_{y_B}p(y_A, y_B |
+    x_A, x_B')$ for all $x_A, y_A, x_B, x_B'$
+  \item $\sum_{y_A}p(y_A, y_B | x_A, x_B) = \sum_{y_B}p(y_A, y_B |
+    x_A', x_B)$ for all $x_B, y_A, x_A, x_A'$
+  \end{itemize}
+  If all vertices come from two graphs $G$ and $H$, then they are
+  non-signalling isomorphic, denoted by $\cong_{ns}$.
+\end{defn}
+
+Non-signalling isomorphism corresponds to the restriction where Alice
+and Bob are not allowed to communicate at all (where normally when the
+game is played, they are allowed to communicate before the game starts
+and decide upon some strategy). Since nothing can travel faster than
+the speed of light, any correlation with two parties at a sufficient
+distance away from each other will be a non-signalling
+correlation. For this reason, non-signalling isomorphism is an
+interesting topic to study, however its interest here comes from its
+implication. It is known that if $G \cong_q H$, then $G \cong_{ns}H$,
+but the following theorem shows a relation between non-signalling
+isomorphism and fractional isomorphism (see \cite{laura} for the
+proof), which will be important for Theorem \ref{Trees}.
 
 \begin{thm}
-Let $G$ and $H$ be graphs. Then $G \cong_{ns} H$ if and only if $G \cong_f H$.
+  Let $G$ and $H$ be graphs. Then $G \cong_{ns} H$ if and only if $G
+  \cong_f H$.
 \end{thm}
 
+% --------------------------------------------------------------------
 \subsection{Graph Families and Discussion}
-An interesting open question about graph isomorphism is what types of graphs might have quantum isomorphism always implying classical isomorphism. Below is a list of graphs that might be of particular interest.
+
+An interesting open question about graph isomorphism is what types of
+graphs might have quantum isomorphism always implying classical
+isomorphism. Below is a list of graphs that might be of particular
+interest.
 \begin{itemize}
 \item Trees
 \item Cycles
@@ -546,24 +1152,44 @@ An interesting open question about graph isomorphism is what types of graphs mig
 \item unicyclic graphs
 \item circulant graphs (see \cite{circulant})
 \end{itemize}
-Now, together with a few results from other papers, we can establish a family of graphs for which classical and quantum graph isomorphism are equivalent relations.
+Now, together with a few results from other papers, we can establish a
+family of graphs for which classical and quantum graph isomorphism are
+equivalent relations.
 
 \begin{thm}
-\label{Trees}
-Let $G$ and $H$ be trees. Then $G \cong H$ $\Leftrightarrow$ $G \cong_q H$.
+  \label{Trees}
+  Let $G$ and $H$ be trees. Then $G \cong H$ $\Leftrightarrow$ $G
+  \cong_q H$.
 \end{thm}
+
 \begin{proof}
-By \cref{prop:isoimpliesqiso} we know that if $G$ and $H$ are classically isomorphic then they are also quantum isomorphic. Conversely, if $G$ and $H$ are quantum isomorphic then they are fractionally isomorphic. But by Lemma 2.4 in \cite{fractional}, fractionally isomorphic trees are classically isomorphic, and so $G$ and $H$ are classically isomorphic. 
+By \cref{prop:isoimpliesqiso} we know that if $G$ and $H$ are
+classically isomorphic then they are also quantum
+isomorphic. Conversely, if $G$ and $H$ are quantum isomorphic then
+they are fractionally isomorphic. But by Lemma 2.4 in
+\cite{fractional}, fractionally isomorphic trees are classically
+isomorphic, and so $G$ and $H$ are classically isomorphic.
 \end{proof}
 
-For further study, it might be useful to use the fact that graphs are fractionally isomorphic if and only if they are indistinguishable by color refinement. This may provide insight into graphs that are cycles or chordals, as the are closely related to indistinguishable color refinement. Moreover, there are still unanswered questions regarding how quantum isomorphism relates to other types of isomorphism, like semi-isomorphism. Semi-isomorphism may be particaulary useful to look at for bipartite graphs, since two bipartite graphs are semi-isomorphic if and only if they are classically isomorphic (\cite{fractional}).  Also, since we now know that quantum isomorphism is an equivalence relation, it might be interesting to use similar methods like the Polya enumeration theorem from \cite{comb}, to count the number of non-quantum isomorphic graphs given $n$ vertices. Finally, not every definition of classical isomorphism has a quantum analogue, so it would be interesting to find such analogues.
+For further study, it might be useful to use the fact that graphs are
+fractionally isomorphic if and only if they are indistinguishable by
+color refinement. This may provide insight into graphs that are cycles
+or chordals, as the are closely related to indistinguishable color
+refinement. Moreover, there are still unanswered questions regarding
+how quantum isomorphism relates to other types of isomorphism, like
+semi-isomorphism. Semi-isomorphism may be particularly useful to look
+at for bipartite graphs, since two bipartite graphs are
+semi-isomorphic if and only if they are classically isomorphic
+(\cite{fractional}).  Also, since we now know that quantum isomorphism
+is an equivalence relation, it might be interesting to use similar
+methods like the Polya enumeration theorem from \cite{comb}, to count
+the number of non-quantum isomorphic graphs given $n$
+vertices. Finally, not every definition of classical isomorphism has a
+quantum analogue, so it would be interesting to find such analogues.
 
-\newpage
-
+% --------------------------------------------------------------------
 \bibliographystyle{unsrt}
 \addcontentsline{toc}{section}{Bibliography}
 \bibliography{Bibliography}
 
 \end{document}
-
-
