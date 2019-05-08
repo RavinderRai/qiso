@@ -1,0 +1,7 @@
+* Two connected graphs are isomorphic iff they are isometric as metric
+  spaces. Is there an analoguous thing for quantum isomorphic graphs?
+  In other words, can we capture the notion of quantum isomorphism by
+  a relation on the associated metric spaces?
+
+* Is the relation of d-quantum isomorphism (for a fixed d) an
+  isomorphism? If not can we provide a counter-example?
