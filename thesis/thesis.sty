@@ -1,0 +1,96 @@
+% ----------------------------------------------------------------------
+% Packages.
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+\usepackage{braket}
+\usepackage{fullpage}
+\usepackage{mathdots}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usetikzlibrary{calc,decorations.pathreplacing,positioning,shapes}
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\usepackage[normalem]{ulem}
+\usepackage{qcircuit}
+\usepackage{tikz-cd}
+\usetikzlibrary{cd}
+\usepackage{mleftright}
+\usepackage{comment}
+\newcommand{\note}[1]{{\color{red} #1}}
+
+% ----------------------------------------------------------------------
+% Some notation.
+
+% Function restriction.
+\newcommand\restrict[1]{\raisebox{-.5ex}{$|$}_{#1}}
+
+% Residue of a matrix M.
+\newcommand\mbar{\overline{M}}
+
+% Matrix rings.
+\newcommand{\matricesmn}[3]{\mathcal{M}_{#1\times #2}(#3)}
+\newcommand{\matrices}[1]{\mathcal{M}(#1)}
+
+\newcommand{\pauli}[1]{\mathcal{P}_{#1}}
+\newcommand{\clifford}[1]{\mathcal{C}_{#1}}
+\newcommand{\realclifford}[1]{\mathcal{C}_{#1}^{\mathbb{R}}}
+\newcommand{\weight}{\operatorname{weight}}
+\newcommand{\realpauli}[1]{\mathcal{P}_{#1}^{\mathbb{R}}}
+
+% CNOT and SWAP gates.
+\newcommand{\CNOT}{\mathrm{CNOT}}
+\newcommand{\SWAP}{\mathrm{SWAP}}
+
+% Matrices.
+\newcommand{\diag}{\operatorname{diag}}
+
+% Rings.
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\F}{\mathbb{Z}_2}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Zi}{\Z\left[i\right]}
+\newcommand{\Zomega}{\Z\left[\omega\right]}
+\newcommand{\Zrt}{\Z\left[\frac{1}{\sqrt{2}}\right]}
+\newcommand{\Zrtwo}{\Z\left[\sqrt{2}\right]}
+\newcommand{\Zrtwoi}{\Z[1/\sqrt{2},i]}
+\newcommand{\Zint}{\Z\left[\sqrt{2}\right]}
+\newcommand{\rtZrt}{\frac{1}{\sqrt{2}^k}\Z\left[\sqrt{2}\right]}
+
+% Norm and adjoint.
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+% Misc math notation.
+\newcommand{\inv}{^{-1}}
+\newcommand{\s}[1]{\{#1\}}
+
+% ----------------------------------------------------------------------
+% Theorem like environments.
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% ----------------------------------------------------------------------
+% Macros for bibliography.
+
+\newcommand{\urlalt}[2]{\href{#2}{\nolinkurl{#1}}}
+\newcommand{\arxiv}[1]{\urlalt{arXiv:#1}{http://arxiv.org/abs/#1}}
+
+%----------------------------------------------------------------------
+% A hack: \m is similar to \vcenter, but works better.
+% \mp{0.2}{x}: raise the box x so that 20% of it is below the
+% centerline. Unlike \vcenter, don't change the horizontal spacing.
+
+\newlength{\localh}
+\newlength{\locald}
+\newbox\mybox
+\def\mp#1#2{\scalebox{0.8}{\setbox\mybox\hbox{#2}\localh\ht\mybox\locald\dp\mybox\addtolength{\localh}{-\locald}\raisebox{-#1\localh}{\box\mybox}}}
+\def\m#1{\mp{0.5}{#1}}
