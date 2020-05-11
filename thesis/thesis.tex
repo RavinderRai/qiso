@@ -1,6 +1,7 @@
 % simple.tex -- a very simple thesis document for demonstrating
 %   dalthesis.cls class file
 \documentclass[12pt]{dalthesis}
+\usepackage{dsfont}
 
 \input{thesis.sty}
 
@@ -130,17 +131,38 @@ and on, and on, and on, and on, and on, and on, and on, and on, and on,
 and on.
 
 
-\chapter{Doing It}
+\chapter{Basic Techniques}
 
-\section{Getting Ready}
+\section{Stabilizer Nullity}
 
-Get all the parts that I need.  I can throw in a whole pile of terms like
-preparation,
-methodology,
-forethought,
-and
-analysis
-as examples for me to use in the future.
+\begin{definition}[Stabilizer]
+Let $\ket{\psi}$ be a non-zero n-qubit state. The stabilizer of $\ket{\psi}$ is the sub-group of the Pauli group $\mathcal{P}_n$ on n qubits for which $\ket{\psi}$ is a $+1$ eigenstate, denoted by Stab$\ket{\psi}$. This means that Stab$\ket{\psi}$ = $\{P \in \mathcal{P}_n \: P \ket{\psi} = \ket{\psi} \}$. The states for which the size of the stabalizer is $2^n$are called stabalizer states. States for which the stabilizer contains only the identity matrix are said to have a trivial stabilizer. If Pauli $P$ is in Stab$\ket{\psi}$, we say that P stabilizes $\ket{\psi}$.
+\end{definition}
+
+
+
+
+Note the following facts about the Stab$\ket{\psi}$:
+\begin{itemize}
+\item Stab$\ket{\psi}$ does not contain -$I$.
+\item All Pauli group elements contained in Stab$\ket{\psi}$ commute with each other and are Hermitian matrices.
+\item The size of the stabilizer is equal to some power of two, and given any Clifford Unitary $C$, the size of Stab$\ket{\psi}$ is always equal to the size of Stab($C \ket{\psi}$.
+\item Finally, the stabilizer is multiplicative for the tensor products of states, that is $| \text{Stab} (\ket{\psi} \ket{\phi})| = |\text{Stab}\ket{\psi}| \cdot |\text{Stab}\ket{\phi}|$. 
+\end{itemize}
+
+\begin{definition}
+Let $\ket{\psi}$ be a non-zero n-qubit state. The Stabilizer nullity of $\ket{\psi}$ is $\nu(\ket{\psi}) = n - log_2 |\text{Stab}\ket{\psi}|$.
+\end{definition}
+
+\begin{proposition}
+Let $\ket{\psi}$ be a non-zero n-qubit state and let $P$ be an n-qubit Pauli matrix and suppose that the probability of a $+1$ outcome when measuring $P$ on $\ket{\psi}$ is non-zero. Then there are two alternatives for the state $\ket{\phi}$ after measurement: either $|\text{Stab}\ket{\phi}| = |\text{Stab}\ket{\psi}|$ or $|\text{Stab}\ket{\phi}| \geq 2|\text{Stab}\ket{\psi}|$, both of which satisfy $\nu(\ket{\phi}) \leq \nu(\ket{\psi})$.
+\end{proposition}
+
+\begin{proof}
+First consider the simple case when $P$ is in Stab$\ket{\psi}$. In this case, the "+1" measurement outcome occurs with probability $1$ and $\ket{\psi}$ is unchanged. When $P$ is not in Stab$\ket{\psi}$ we consider two alternatives. The first alternative is that $P$ commutes with all elements of Stab$\ket{\psi}$. Recall we have the post-measurement state $\ket{\phi} = \frac{P\ket{\psi}}{\sqrt{\bra{\psi}P^{\dag}P\ket{\psi}}} = \frac{P\ket{\psi}}{\sqrt{\bra{\psi}\ket{\psi}}}$, and let $Q \in \text{Stab}\ket{\psi}$. Then $Q\ket{\phi} = \frac{QP\ket{\psi}}{\sqrt{\bra{\psi}\ket{\psi}}} = \frac{PQ\ket{\psi}}{\sqrt{\bra{\psi}\ket{\psi}}} = \frac{P\ket{\psi}}{\sqrt{\bra{\psi}\ket{\psi}}} = \ket{\phi}$. Note also that Stab$\ket{\phi}$ also contains $P$Stab$\ket{\psi}$, and thus Stab$\ket{\phi}$ contains Stab$\ket{\psi}$ $\cup$ $P$Stab$\ket{\psi}$ and thus its size is at least $2| \text{Stab}\ket{\psi}|$.
+
+The second alternative is when $P$ anti-commutes with some element $Q \in$ Stab$\ket{\psi}$. Note that $Q\ket{\psi} = \ket{\psi}$ and $QPQ = -P$, so the probability of the $+1$ outcome is $\bra{\psi}(I+P)\ket{\psi}/2 = \bra{\psi}Q(I+P)Q\ket{\psi}/2 = \bra{\psi}(I-P)\ket{\psi}/2$, which is the probability of the $-1$ outcome. Thus the probability of the $+1$ outcome is $1/2$. Then $\ket{\phi} = (I+P)/\sqrt{2}\ket{\psi}$ where we fixed the normalization condition such that $\bra{\phi}\ket{\phi} = \bra{\psi}\ket{\psi}$. Also, observe that we can write $\ket{\phi} = (I+PQ)/\sqrt{2}\ket{\psi}$. Since $(I+PQ)/\sqrt{2}$ is a Clifford unitary equal to exp($i\pi P'/4)$ for $P' = iPQ$, we see that $\ket{\phi}$ and $\ket{\psi}$ differ by a Clifford and therefore $|$Stab$\ket{\psi}| = |$Stab$\ket{\phi}|$.
+\end{proof}
 
 \section{Next Step}
 
@@ -148,6 +170,65 @@ Do it!
 
 Of course, you have to have pictures to show how you did it to make people
 understand things better.
+
+\chapter{Conversion of Resource States}
+\begin{theorem}
+Let $\ket{U}$ be an n-qubit magic state for a diagonal unitary $U$ from the $3^{\text{rd}}$ level of the Clifford hierarchy, and let $\tau (U)$ be the minimum number of T gates needed to implement $U$ using the gate set $\{CNOT, S, T\}$. The following resource conversion is possible
+
+
+$\ket{U} \xRightarrow{\ket{T}^{\otimes \tau (U) - \nu (\ket{U}}} \ket{T}^{\otimes 2 \nu (\ket{U}) - \tau (U)}$
+\end{theorem}
+
+\begin{proof}
+Recall the following phase polynomial formalism. For any diagonal unitary in the $3^{\text{rd}}$ level Clifford hierarchy we have $U_f = \sum_x exp(if(x) \pi/4) \ket{x}\bra{x}$, where $f:\mathbb{Z}_2^n \rightarrow \mathbb{Z}_8$ is of cubic form and so can be decomposed as the phase polynomial $f(x) = \sum_{a_k \neq 0} a_k \lambda_k (x)$ (mod 8) where $a_k \in \mathbb{Z}_8$ and each $\lambda_k$ is a $\mathbb{Z}_2$ linear function. That is, each $\lambda_k$ has the form $\lambda_k (x) = (P_{1, k}x_1) \oplus (P_{2, k}, x_2) \dots (P_{n, k}, x_n)$ (mod 2) where $P_{j, k}$ are binary. Thus we can describe the function by a binary matrix $P$ and vector $a$, with columns corresponding to nonzero $a_k$ (so the number of columns is the number of terms in $f$). For a function with a single term $f(x) = a_k \lambda_k(x)$, an easily verified circuit decomposition is 
+$U_{\lambda_k} = \sum_x exp(i\lambda_k(x) \pi/4) \ket{x}\bra{x} = V^{\dag}_{CNOT(\lambda_k)}T_1^{a_k}V_{CNOT(\lambda_k)}$ where $T_1$ is a $T$ gate acting on qubit 1 and $V_{CNOT(\lambda_k)}$ is a cascade of CNOT gates such that 
+
+$V_{CNOT(\lambda_k)} \ket{x} = V_{CNOT(\lambda_k)} \ket{x_1, x_2, \dots x_n} = \ket{\lambda_k(x_1), x_2, \dots x_n}$.
+
+Now note that if $a_k$ is even then $T_a^{a_k} = S_1^{a_k/2}$ is a Clifford and the whole circuit is Clifford. But if $a_k$ is odd then $T_1^{a_k} = T_1S_1^{(a_k - 1)/2}$ and only a single $T$ gate is used. Now, generalizing to a phase polynomial $f$ with many terms we have $U_f = \displaystyle \prod_k U_{\lambda_k}$  and so the $T$-count for the associated circuit is equal to the number of odd valued $a_k$ (so if all values are even then the unitary is Clifford).
+
+
+This allows us to split the unitary $U_f$ into a Clifford and non-Clifford part. For each $a_k$ coefficient, we define $b_k \in \mathbb{Z}_4$ and $c_k \in \mathbb{Z}_2$ such that $a_k = 2b_k +c_k$ (so $c_k = 1$ if and only if $a_k$ is odd). Now for functions $g(x) = \displaystyle \sum_{c_k \neq 0} c_k \lambda_k(x)$ and $h(x) = \displaystyle \sum_{b_k \neq 0} b_k \lambda_k(x)$ we have that $f = g + h$ and $U_f = U_{g+2h} = U_gU_{2h}$ where $U_{2h}$ is a Clifford Unitary. The non-Clifford part is $U_g$ and all the terms have odd valued co-coefficients, so the number of terms in $g$ gives an upper bound on $\tau(U_g)$ as discussed earlier. It follows that if the function $g$ has $m$ (odd-valued) terms then the state can be prepared using $m$ many $T$ gates/states. Note that for any given unitary $U_g$ there is an equivalence class of different functions $g$ that all result in the same unitary but with different numbers of terms. From now on we will assume that $g$ is the optimal representative with the fewest number of terms, denoted by $\tau(U_g)$. Furthermore, there is a binary matrix $P$ description of $g$ with a number of columns also equal to $\tau (U_g)$. A trivial but relevant example is $U = T^{\otimes n}$ for which $P = \mathds{1}_n$ and $\tau (T^{\otimes n}) = n$.
+
+The next important step is that given a unitary $U_g$ we may also be able to remove terms from g by applying inverse $T$ gates. More generally, given two such unitaries $U_g$ and $U_{g'}$ with phase polynomials $g$ and $g'$, we have that $U_{g'} = U_g U_{\Delta}$ where $\Delta = g - g'$. Therefore, 
+\begin{equation}
+\ket{U_{g'}} = U_{\Delta} \ket{U_g}
+\end{equation}
+and 
+\begin{equation}
+\ket{T}^{\otimes \tau (U_{\Delta})} \ket{U_{g'}} \rightarrow \ket{U_g}
+\end{equation}
+The number of $T$ states needed is $\tau (U_{\Delta})$, which just the number of terms where $g$ and $g'$ differ.
+
+Using arguments from \cite{?}, given any $P$ we can always bring it into row-reduced echelon form using a CNOT circuit. Then
+\begin{equation}
+P = \begin{pmatrix}
+\mathds{1}_r & A \\
+0 & 0
+\end{pmatrix}
+\end{equation}
+where $\mathds{1}_r$ is an identity matrix of size $r := \text{rank}(P)$. If $P$ is full rank the additional 0 padding is not present. Note that if $P$ has any 0 rows then the unitary acts trivially on the corresponding qubits leaving them in the $\ket{+}$ state, meaning that $\ket{U} = U\ket{+} = \ket{\psi}\ket{+}^{\otimes (n-r)}$ for some state $\ket{\psi}$. Also, for an $n$ qubit stabilizer state $\ket{\phi}$, 
+\begin{equation}
+\nu (\ket{\phi}) = 0 \Rightarrow \text{log}_2 |Stab\ket{\phi}| = n
+\end{equation} 
+Next, observe that 
+
+
+\begin{align*}
+\text{log}_2 |Stab\ket{U}| = & \text{log}_2|Stab(\ket{\psi}\ket{+}^{\otimes (n-r)})| \\ 
+= & \text{log}_2 (|Stab \ket{\psi}| \cdot |Stab\ket{+}^{\otimes (n-r)}|) \\
+= & \text{log}_2 |Stab \ket{\psi}| + \text{log}_2 |Stab \ket{+}^{\otimes (n-r)}|
+= & \text{log}_2 |Stab \ket{\psi}| + (n-r)
+= & \alpha + n - r
+\end{align*}
+for some positive integer $\alpha = \text{log}_2 |Stab \ket{\psi}|$. Hence log$_2|Stab\ket{U}| \geq n - r$, so rearranging we have that $n - \text{log}_2 |Stab \ket{U}| = \nu (\ket{U}) \leq r$.
+
+Using our earlier argument, we can always remove from $P$ the columns corresponding to the matrix $A$ using a number of $T$ states equal to the number of columns in $A$. Since $A$ has $\tau (U_g) - r$ columns, this requires the same quantity of $T$ states. The resulting $U_{g'}$ has $P' = \mathds{1}_r$ (with possibly some 0 row padding) which corresponds to $r$ copies of $T$ states. Therefore, we can perform 
+\begin{equation}
+\ket{U_g}\ket{T}^{\otimes (\tau (U_g) - r)} \rightarrow \ket{T}^{\otimes r}
+\end{equation}
+If $r = \nu (U_g)$ then we have the result of the theorem. If $r \textgreater \nu (U_g)$ then the result is even stronger than the theorem, and so the theorem holds in either case.
+\end{proof}
 
 \chapter{Conclusion}
 
