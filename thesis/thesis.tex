@@ -7,7 +7,7 @@
 
 \begin{document}
 
-\title{The title}
+\title{Lower Bounds non-Clifford Resources}
 \author{Ravi Rai}
 
 % The following degrees are included in the current dalthesis.cls
@@ -70,47 +70,11 @@ and on, and on, and on, and on, and on, and on, and on, and on, and on,
 and on, and on, and on, and on, and on, and on, and on, and on, and on,
 and on, and on, and on, and on, and on, and on, and on, and on, and on,
 and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and
+
 and here we should be around top of the page~2, and we go on, and on, and on, and on, and on.
 This following line \rule{5cm}{1pt} should be exactly 5cm long.  It
 can be used to check the typesetting process.
 And now we go on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
 and on, and on, and on, and on, and on, and on, and on, and on, and on,
 and on, and on, and on, and on, and on, and on, and on, and on, and on,
 and on, and on, and on, and on, and on, and on, and on, and on, and on,
@@ -141,14 +105,43 @@ Let $\ket{\psi}$ be a non-zero n-qubit state. The stabilizer of $\ket{\psi}$ is 
 
 
 
-
-Note the following facts about the Stab$\ket{\psi}$:
-\begin{itemize}
+\begin{proposition}
+Let $\ket{\psi}$ be a non-zero n qubit state. Then we have the following facts about Stab$\ket{\psi}$:
+\begin{enumerate}
 \item Stab$\ket{\psi}$ does not contain -$I$.
 \item All Pauli group elements contained in Stab$\ket{\psi}$ commute with each other and are Hermitian matrices.
-\item The size of the stabilizer is equal to some power of two, and given any Clifford Unitary $C$, the size of Stab$\ket{\psi}$ is always equal to the size of Stab($C \ket{\psi}$.
-\item Finally, the stabilizer is multiplicative for the tensor products of states, that is $| \text{Stab} (\ket{\psi} \ket{\phi})| = |\text{Stab}\ket{\psi}| \cdot |\text{Stab}\ket{\phi}|$. 
-\end{itemize}
+\item The size of the stabilizer is equal to some power of two.
+\item Given any Clifford Unitary $C$, the size of Stab$\ket{\psi}$ is always equal to the size of Stab$(C \ket{\psi})$.
+\item Finally, the size of the stabilizer is multiplicative for the tensor products of states, that is $| \text{Stab} (\ket{\psi} \ket{\phi})| = |\text{Stab}\ket{\psi}| \cdot |\text{Stab}\ket{\phi}|$. 
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\hspace{20mm}
+\begin{enumerate}
+\item If $\-I \in \text{Stab}\ket{\psi}$, then $-\ket{\psi} =-I\ket{\psi} = \ket{\psi}$, which of course is not true for non-zero states.
+
+\item First note that for any two Pauli's $P, Q$, they either commute or anti-commute. Now suppose $P, Q \in \text{Stab}\ket{\psi}$ anti-commute. Then $\ket{\psi} = PQ\ket{\psi} = -QP\ket{\psi} = -\ket{\psi}$. This implies that $-I \in \text{Stab}\ket{\psi}$, which from above can't be true, so $P$ and $Q$ must commute.
+
+\item It is known that the Pauli group's cardinality is a power of two, and since $\text{Stab}\ket{\psi}$ is a subgroup of the Pauli group, $|\text{Stab}\ket{\psi}|$ must divide a power of two, thus it must also be a power of two.
+
+\item First note that Clifford unitaries normalize pauli matrices, i.e. for some Clifford unitary $C$, and some pauli $P$, $CPC^{\dag} = P'$, where $P'$ is also a pauli. Now let $P \in \text{Stab}\ket{\psi}$ and let $C$ be some Clifford unitary. Then $P'C\ket{\psi} = CPC^{\dag}C\ket{\psi} = CP\ket{\psi} = C\ket{\psi}$, so $P' \in \text{Stab}(C\ket{\psi})$. Now consider the map $\theta_C : \text{Stab}\ket{\psi} \rightarrow \text{Stab}(C\ket{\psi})$ which takes elements $P \mapsto CPC^{\dag} = P'$. This map has an inverse, $\theta_{C^\dag}: \text{Stab}(C\ket{\psi}) \longrightarrow \text{Stab}(C^{\dag}C\ket{\psi})$, which takes elements $P' \mapsto C^{\dag}P'C$ (where we note that $\text{Stab}(C^{\dag}C\ket{\psi}) = \text{Stab}\ket{\psi}$). Thus $\theta_C$ is a bijection, and so we have that $|\text{Stab}\ket{\psi}| = |\text{Stab}(C\ket{\psi})|$.
+
+\item Let $\ket{\phi}$ be another non-zero state on n qubits, and let $P \in \text{Stab}\ket{\psi}$ and $Q \in \text{Stab}\ket{\phi}$. Then $P \otimes Q \ket{\psi}\ket{\phi} = P\ket{\psi} \otimes Q\ket{\phi} = \ket{\psi}\ket{\phi}$. So $P \otimes Q \in \text{Stab}\ket{\psi}\ket{\phi}$. Now let $R \in \text{Stab}\ket{\psi}\ket{\phi}$. Then since $R$ is a Pauli, we can write $R = R_1 \otimes R_2$, and $R\ket{\psi}\ket{\phi} = \ket{\psi}\ket{\phi} = R_1 \otimes R_2 \ket{\psi}\ket{\phi} \Longrightarrow R_1 \in \text{Stab}\ket{\psi} \hspace{1mm} \text{and} \hspace{1mm} R_2 \in \text{Stab}\ket{\phi}$. So every element in $\text{Stab}\ket{\psi}\ket{\phi}$ is of the form $R_1 \otimes R_2$ as above, thus $\text{Stab}\ket{\psi}\ket{\phi} = \text{Stab}\ket{\psi} \otimes \text{Stab}\ket{\phi}$. Then we have a bijection (from the direct product) $\theta:\text{Stab}\ket{\psi} \times \text{Stab}\ket{\phi} \longrightarrow  \text{Stab}\ket{\psi} \otimes \text{Stab}\ket{\phi}$, which gives us $|\text{Stab}\ket{\psi}\ket{\phi}| = |\text{Stab}\ket{\psi} \otimes \text{Stab}\ket{\phi}| = |\text{Stab}\ket{\psi}| \cdot |\text{Stab}\ket{\phi}|$.
+\end{enumerate}
+\end{proof}
+
+
+
+An example of a stabilizer state is the $\ket{0}$ state, since there are $2^1$ pauli's that stabilize it, namely $I$ and $Z$. Note that for any Clifford $C$, $|\text{Stab}\ket{0}| = |Stab(C\ket{0})| = 2^1 \implies C\ket{0}$ is a stabilizer state.
+An example of a non-stabilizer state is the first bell state $\beta_1 = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$, which through computation one can find that it has the following stabilizers: $I \otimes I$, $X \otimes X$, and $Z \otimes Z$. Since there are exactly $3$ stabilizers, and $3$ is not a power of $2$, $\beta_1$ cannot be a stabilizer state.
+
+\begin{corollary}
+The computational basis state $\ket{00 \dots 0}$ on n-qubits is a stabilizer state. If $\ket{\psi}$ is a Stabilizer state, then there is a Clifford unitary $C$ such that $C\ket{\phi} = \ket{\psi}$, where $\ket{\phi}$ is a computational basis state.
+\end{corollary}
+\begin{proof}
+First we prove that $\ket{00 \dots 0}$ is a stabilizer state by induction, where the base case is the $\ket{0}$ state which we know is a stabilizer state from above (and $|\text{Stab}\ket{0}| = 2^1$). Now assume that $\ket{00 \dots 0}$ is a stabilizer state on n-qubits with $|\text{Stab}\ket{00 \dots 0}| = 2^k$. Let $P \in \text{Stab}\ket{0}$ and $Q \in \text{Stab}\ket{00 \dots 0}$, then $(P \otimes Q)\ket{0}\ket{00 \dots 0} = P\ket{0} \otimes Q\ket{00 \dots 0} = \ket{0}\ket{00 \dots 0} = \ket{00 \dots 00}$ (n+1 qubits). So $P \otimes Q \in \text{Stab}\ket{00 \dots 00}$, and from above arguments we know that every element in $\text{Stab}\ket{00 \dots 00}$ is of this form, thus there are $2^{k+1}$ elements in $\text{Stab}\ket{00 \dots 00}$, making it a stabilizer state.
+\end{proof}
 
 \begin{definition}
 Let $\ket{\psi}$ be a non-zero n-qubit state. The Stabilizer nullity of $\ket{\psi}$ is $\nu(\ket{\psi}) = n - log_2 |\text{Stab}\ket{\psi}|$.
@@ -164,12 +157,73 @@ First consider the simple case when $P$ is in Stab$\ket{\psi}$. In this case, th
 The second alternative is when $P$ anti-commutes with some element $Q \in$ Stab$\ket{\psi}$. Note that $Q\ket{\psi} = \ket{\psi}$ and $QPQ = -P$, so the probability of the $+1$ outcome is $\bra{\psi}(I+P)\ket{\psi}/2 = \bra{\psi}Q(I+P)Q\ket{\psi}/2 = \bra{\psi}(I-P)\ket{\psi}/2$, which is the probability of the $-1$ outcome. Thus the probability of the $+1$ outcome is $1/2$. Then $\ket{\phi} = (I+P)/\sqrt{2}\ket{\psi}$ where we fixed the normalization condition such that $\bra{\phi}\ket{\phi} = \bra{\psi}\ket{\psi}$. Also, observe that we can write $\ket{\phi} = (I+PQ)/\sqrt{2}\ket{\psi}$. Since $(I+PQ)/\sqrt{2}$ is a Clifford unitary equal to exp($i\pi P'/4)$ for $P' = iPQ$, we see that $\ket{\phi}$ and $\ket{\psi}$ differ by a Clifford and therefore $|$Stab$\ket{\psi}| = |$Stab$\ket{\phi}|$.
 \end{proof}
 
-\section{Next Step}
+\begin{definition}[Pauli Spectrum]
+Let $\ket{\psi}$ be a non-zero n-qubit state. The Pauli spectrum Spec$\ket{\psi}$ of $\psi$ is:
+\begin{equation}
+\text{Spec}\ket{\psi} = \left\{ \frac{|\bra{\psi}P\ket{\psi}|}{\braket{\psi|\psi}}, \forall P \in \{I, X, Y, Z\}^{\otimes n} \right\}
+\end{equation}
+The Pauli spectrum is a list of $4^n$ real numbers each between 0 and 1 which is invariant under Clifford gates. Consider the following example.
+\end{definition}
 
-Do it!
+\begin{proposition}
+The Pauli spectrum of the state $\ket{\theta} = (\ket{0} + e^{i\theta}\ket{1})/\sqrt{2}$ is $\{1, cos\theta, sin\theta, 0\}$. The state $\ket{\theta}$ is therefore a stabilizer state only for $\theta = m \pi/2$ for some integer m.
+\end{proposition}
+\begin{proof}
+First note that $\ket{\theta}$ is normalized so $\bra{\theta}\ket{\theta} = 1$. Now by direct computation, we have:
+\begin{itemize}
+\item $\bra{\theta}I\ket{\theta} = \braket{\theta|\theta} = 1$
+\item $\bra{\theta}X\ket{\theta} = (\bra{1}e^{-i\theta} + \bra{0})(\ket{1} + e^{i\theta}\ket{0})/2 = (e^{-i\theta} + e^{i\theta})/2 = cos\theta$
+\item $\bra{\theta}Y\ket{\theta} = (\bra{1}e^{-i\theta} + \bra{0})(i\ket{1} - ie^{i\theta}\ket{0})/2 = i(e^{-i\theta} - e^{i\theta})/2 = i(-2sin\theta)/2 = sin\theta$
+\item $\bra{\theta}Z\ket{\theta} = (\bra{1}e^{-i\theta} + \bra{0})(\ket{0} - e^{i\theta}\ket{1})/2 = 1 - 1 = 0$
+\end{itemize} 
+Moreover, if $\theta = 2k\pi /2$ for some integer $k$, then $X \in \text{Stab}\ket{\theta}$, and if $\theta = (2k+1)\pi /2$, then $Y \in \text{Stab}\ket{\theta}$. Observe that $\forall \theta$, $I \in \text{Stab}\ket{\theta}$ and $Z \not\in \text{Stab}\ket{\theta}$, thus $|\text{Stab}\ket{\theta}| = 2$ if and only if either $X$ or $Y \in \text{Stab}\ket{\theta}$, or more generally if $\theta = m \pi /2$, for some integer $m$.
+\end{proof}
+Note that the number of 1s in the Pauli spectrum of $\ket{\psi}$ is $|\text{Stab}\ket{\psi}|$.
 
-Of course, you have to have pictures to show how you did it to make people
-understand things better.
+\section{Catalysis}
+
+\begin{theorem}
+Let F be a number field which contains $\mathbb{Q}(i)$ and which is closed under complex conjugation. Any stabilizer circuit applied to a density matrix with all entries in F produces a density matrix with all entries in F, with both density matrices written in the computational basis.
+\end{theorem}
+
+For example, no stabilizer circuit on any number of $\ket{CS}$ or $\ket{CCZ}$ states (which have density matrices with all entries in $\mathbb{Q}(i)$) can be used to produce a $\ket{T}$ state (which has a density matrix with all entries in $\mathbb{Q}(\zeta_8)$). Similarly, no stabilizer circuit on any number of $\ket{T}$ states can be used to produce a $\ket{\sqrt{T}}$ state (with entries in $\mathbb{Q}(\zeta_{16})$).
+ 
+\begin{proof}
+Suppose our stabilizer circuit acts upon $N$ qubits initially in the $\ket{0}$ state. Clearly the density matrix $\rho_{initial} = (\ket{0}\bra{0})^{\otimes n}$ has entries over $\mathbb{Q}$. We point out that all Clifford unitaries can be written as matrices with entries over $\mathbb{Q}(i)$, and therefore as matrices with entries over F. Explicitly, the Clifford group is generated by $H$, $CZ$, and $S$ which are defined as:
+\begin{align*}
+H = \frac{1}{1+i} 
+\left[
+\begin{matrix}
+1 & 1 \\
+1 & 1
+\end{matrix}
+\right]
+\end{align*}
+
+\begin{align*}
+S: \ket{0} \mapsto \ket{0} , \ket{1} \mapsto \ket{1}
+\end{align*}
+\begin{align*}
+CZ: \ket{ab} \mapsto (-1)^{a \wedge b}\ket{ab}
+\end{align*}
+Given any gate U in the circuit is a tensor product of a unitary with entries over F and I and $\rho$ has entries over F the product $U\rho U^{\dag}$ is a density matrix with entries over F. Therefore applying the gates in the circuit preserves the required property. Note that measurement with or without post-selection can be described as:
+\begin{align*}
+\rho \mapsto \frac{P\rho P}{Tr\rho P}
+\end{align*}
+\begin{align*}
+\rho \mapsto \sum_{P \in \mathcal{P}} P\rho P
+\end{align*}
+The projectors $P$ above correspond to measurement in the computational basis and therefore can be written as matrices with entries over $\mathbb{Q}(i)$ and therefore over F. The product of matrices over F is a matrix over F. The trace of a matrix over F is also in F by the definition of a field. The quotient of a matrix over F and an element of F is again a matrix over F because any field is closed under the division operation. This completes the proof. 
+\end{proof}
+$
+\Qcircuit @C=1em @R=.7em {
+   & \ctrl{1} & \qw  & \raisebox{-2.2em}{=}  & & \gate{T} & \ctrl{1} & \qw & \ctrl{1} & \qw & \raisebox{-2.2em}{implies}  & & \gate{T} & \qw & \raisebox{-2.2em}{=} & & \ctrl{1} & \ctrl{1} &\qw & \ctrl{1} & \qw \\
+   & \gate{S} & \qw & & & \gate{T} & \targ & \gate{T^{\dag}} & \targ & \qw & & & \gate{T} & \qw & & & \gate{S} & \targ & \gate{T} & \targ & \qw
+}
+$
+\begin{definition}[Conversion Notation]
+The equation $\ket{A} \rightarrow \ket{B}$ indicates that resource state $\ket{A}$ can be converted into resource state $\ket{B}$ with stabilizer operations in the absences of a catalyst. On the other hand, $\ket{A} \xRightarrow{\ket{C}} \ket{B}$, which is equivalent to $\ket{A}\ket{C} \rightarrow \ket{B}\ket{C}$, indicates the conversion can proceed with the use of a catalyst $\ket{C}$ (which may sometimes be omitted above the arrow). When a process is impossible, we strike through the arrow, for example $\ket{A} \nRightarrow \ket{B}$ signifies that $\ket{A}$ cannot be converted to $\ket{B}$ by stabilizer operations even in the presence of an arbitrary catalyst. In cases involving multiple copies of a given state such as $\ket{A}^{\otimes 2} \xRightarrow{\ket{C}} \ket{B}$, we sometimes write $2\ket{A} \xRightarrow{\ket{C}} \ket{B}$ to avoid clutter.
+\end{definition}
 
 \chapter{Conversion of Resource States}
 \begin{theorem}
