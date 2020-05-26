@@ -22,15 +22,14 @@
 % MCS Example:
 
 \degree{Master of Science}
-\degreeinitial{M.C.Sc.}
+\degreeinitial{M.Sc.}
 \faculty{Computer Science}
 \dept{Faculty of Computer Science}
 
 % Month and Year of Defence
 \defencemonth{August}\defenceyear{2021}
 
-\dedicate{Optionally, the thesis can be dedicated to someone, and the
-  student can enter the dedication content here.}
+\dedicate{\ldots}
 
 % This sample thesis contains no tables nor figures, so there is no
 % need to include lists of tables and figures in the front matter:
@@ -40,67 +39,39 @@
 \frontmatter
 
 \begin{abstract}
-This is a test document.
+\ldots
 \end{abstract}
 
 \begin{acknowledgements}
-Thanks to all the little people who make me look tall.
+\ldots
 \end{acknowledgements}
 
 \mainmatter
 
 \chapter{Introduction}
 
-Get it done!  Use reference material by Lamport~\cite{latex-by-lamport} or
-Gooses, Mittelback, and Samarin~\cite{latex-companion}.
-
-To test if the margins are satisfactory, let us generate a lot of
-garbage text:
-This sentence goes on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-
-and here we should be around top of the page~2, and we go on, and on, and on, and on, and on.
-This following line \rule{5cm}{1pt} should be exactly 5cm long.  It
-can be used to check the typesetting process.
-And now we go on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on, and on, and on, and on, and on, and on, and on, and on, and on,
-and on.
-
+\ldots
 
 \chapter{Basic Techniques}
 
 \section{Stabilizer Nullity}
 
 \begin{definition}
-  The \emph{Pauli matrices} $X$, $Y$, and $Z$ are defined as \ldots
+The \emph{Pauli matrices} $X$, $Y$, and $Z$ are defined as:
+  \[
+  X= \begin{bmatrix}
+    0 & 1 \\
+    1 & 0
+  \end{bmatrix}
+  Y = \begin{bmatrix}
+  0 & -i \\
+  i & 0
+  \end{bmatrix}
+  Z = \begin{bmatrix}
+  1 & 0 \\
+  0 & -1
+  \end{bmatrix}
+  \]
 \end{definition}
 
 \begin{definition}
@@ -122,6 +93,7 @@ Let $\ket{\psi}$ be a non-zero $n$-qubit state. The stabilizer of $\ket{\psi}$ i
 
 
 \begin{proposition}
+\label{stabilizerfacts}
 Let $\ket{\psi}$ be a non-zero n qubit state. Then we have the following facts about Stab$\ket{\psi}$:
 \begin{enumerate}
 \item Stab$\ket{\psi}$ does not contain -$I$.
@@ -143,20 +115,22 @@ Let $\ket{\psi}$ be a non-zero n qubit state. Then we have the following facts a
 
 \item First note that Clifford unitaries normalize pauli matrices, i.e. for some Clifford unitary $C$, and some pauli $P$, $CPC^{\dag} = P'$, where $P'$ is also a pauli. Now let $P \in \text{Stab}\ket{\psi}$ and let $C$ be some Clifford unitary. Then $P'C\ket{\psi} = CPC^{\dag}C\ket{\psi} = CP\ket{\psi} = C\ket{\psi}$, so $P' \in \text{Stab}(C\ket{\psi})$. Now consider the map $\theta_C : \text{Stab}\ket{\psi} \rightarrow \text{Stab}(C\ket{\psi})$ which takes elements $P \mapsto CPC^{\dag} = P'$. This map has an inverse, $\theta_{C^\dag}: \text{Stab}(C\ket{\psi}) \longrightarrow \text{Stab}(C^{\dag}C\ket{\psi})$, which takes elements $P' \mapsto C^{\dag}P'C$ (where we note that $\text{Stab}(C^{\dag}C\ket{\psi}) = \text{Stab}\ket{\psi}$). Thus $\theta_C$ is a bijection, and so we have that $|\text{Stab}\ket{\psi}| = |\text{Stab}(C\ket{\psi})|$.
 
-\item Let $\ket{\phi}$ be another non-zero state on n qubits, and let $P \in \text{Stab}\ket{\psi}$ and $Q \in \text{Stab}\ket{\phi}$. Then $P \otimes Q \ket{\psi}\ket{\phi} = P\ket{\psi} \otimes Q\ket{\phi} = \ket{\psi}\ket{\phi}$. So $P \otimes Q \in \text{Stab}\ket{\psi}\ket{\phi}$. Now let $R \in \text{Stab}\ket{\psi}\ket{\phi}$. Then since $R$ is a Pauli, we can write $R = R_1 \otimes R_2$, and $R\ket{\psi}\ket{\phi} = \ket{\psi}\ket{\phi} = R_1 \otimes R_2 \ket{\psi}\ket{\phi} \Longrightarrow R_1 \in \text{Stab}\ket{\psi} \hspace{1mm} \text{and} \hspace{1mm} R_2 \in \text{Stab}\ket{\phi}$. So every element in $\text{Stab}\ket{\psi}\ket{\phi}$ is of the form $R_1 \otimes R_2$ as above, thus $\text{Stab}\ket{\psi}\ket{\phi} = \text{Stab}\ket{\psi} \otimes \text{Stab}\ket{\phi}$. Then we have a bijection (from the direct product) $\theta:\text{Stab}\ket{\psi} \times \text{Stab}\ket{\phi} \longrightarrow  \text{Stab}\ket{\psi} \otimes \text{Stab}\ket{\phi}$, which gives us $|\text{Stab}\ket{\psi}\ket{\phi}| = |\text{Stab}\ket{\psi} \otimes \text{Stab}\ket{\phi}| = |\text{Stab}\ket{\psi}| \cdot |\text{Stab}\ket{\phi}|$.
+\item Let $\ket{\phi}$ be another non-zero state on n qubits, and let $P \in \text{Stab}\ket{\psi}$ and $Q \in \text{Stab}\ket{\phi}$. Then $P \otimes Q \ket{\psi}\ket{\phi} = P\ket{\psi} \otimes Q\ket{\phi} = \ket{\psi}\ket{\phi}$. So $P \otimes Q \in \text{Stab}\ket{\psi}\ket{\phi}$. Now let $R \in \text{Stab}\ket{\psi}\ket{\phi}$. Then since $R$ is a Pauli, we can write $R = R_1 \otimes R_2$, and $R\ket{\psi}\ket{\phi} = \ket{\psi}\ket{\phi} = R_1 \otimes R_2 \ket{\psi}\ket{\phi} = R_1\ket{\psi} \otimes R_2\ket{\phi}$. Now let $\ket{\psi '} = R_1\ket{\psi}$ and $\ket{\phi '} = R_2\ket{\phi}$, and since $R_1$ and $R_2$ are both Clifford unitaries, fact 4 gives us that $|\text{Stab}\ket{\psi '}| = |\text{Stab}(R_1\ket{\psi})|$ and $|\text{Stab}\ket{\phi '}| = |\text{Stab}(R_2\ket{\phi})|$. We also have that $|\text{Stab}(R\ket{\psi}\ket{\phi})| = |\text{Stab}\ket{\psi '}\ket{\phi '}|$.
+
+
+ So every element in $\text{Stab}\ket{\psi}\ket{\phi}$ is of the form $R_1 \otimes R_2$ as above, thus $\text{Stab}\ket{\psi}\ket{\phi} = \text{Stab}\ket{\psi} \otimes \text{Stab}\ket{\phi}$. Then we have a bijection (from the direct product) $\theta:\text{Stab}\ket{\psi} \times \text{Stab}\ket{\phi} \longrightarrow  \text{Stab}\ket{\psi} \otimes \text{Stab}\ket{\phi}$, which gives us $|\text{Stab}\ket{\psi}\ket{\phi}| = |\text{Stab}\ket{\psi} \otimes \text{Stab}\ket{\phi}| = |\text{Stab}\ket{\psi}| \cdot |\text{Stab}\ket{\phi}|$.
 \end{enumerate}
 \end{proof}
 
 
 
-An example of a stabilizer state is the $\ket{0}$ state, since there are $2^1$ pauli's that stabilize it, namely $I$ and $Z$. Note that for any Clifford $C$, $|\text{Stab}\ket{0}| = |Stab(C\ket{0})| = 2^1 \implies C\ket{0}$ is a stabilizer state.
-An example of a non-stabilizer state is the first bell state $\beta_1 = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$, which through computation one can find that it has the following stabilizers: $I \otimes I$, $X \otimes X$, and $Z \otimes Z$. Since there are exactly $3$ stabilizers, and $3$ is not a power of $2$, $\beta_1$ cannot be a stabilizer state.
+An example of a stabilizer state is the $\ket{0}$ state, since there are $2^1$ pauli's that stabilize it, namely $I$ and $Z$. Note that, from fact 4 in Proposition \ref{stabilizerfacts}, for any Clifford $C$, $|\text{Stab}\ket{0}| = |Stab(C\ket{0})| = 2^1 \implies C\ket{0}$ is a stabilizer state. And an example of a non-stabilizer state is $\ket{\psi} = \frac{1}{\sqrt{2}}(\ket{00} + \frac{i}{2} \ket{11})$, which through computation one can find that it has the following stabilizers: $I \otimes I$ and $Z \otimes Z$. Since there are only $2$ stabilizers, and $2 \neq 2^2$, $\ket{\psi}$ cannot be a stabilizer state.
 
 \begin{corollary}
 The computational basis state $\ket{00 \dots 0}$ on n-qubits is a stabilizer state. If $\ket{\psi}$ is a Stabilizer state, then there is a Clifford unitary $C$ such that $C\ket{\phi} = \ket{\psi}$, where $\ket{\phi}$ is a computational basis state.
 \end{corollary}
 \begin{proof}
-First we prove that $\ket{00 \dots 0}$ is a stabilizer state by induction, where the base case is the $\ket{0}$ state which we know is a stabilizer state from above (and $|\text{Stab}\ket{0}| = 2^1$). Now assume that $\ket{00 \dots 0}$ is a stabilizer state on n-qubits with $|\text{Stab}\ket{00 \dots 0}| = 2^k$. Let $P \in \text{Stab}\ket{0}$ and $Q \in \text{Stab}\ket{00 \dots 0}$, then $(P \otimes Q)\ket{0}\ket{00 \dots 0} = P\ket{0} \otimes Q\ket{00 \dots 0} = \ket{0}\ket{00 \dots 0} = \ket{00 \dots 00}$ (n+1 qubits). So $P \otimes Q \in \text{Stab}\ket{00 \dots 00}$, and from above arguments we know that every element in $\text{Stab}\ket{00 \dots 00}$ is of this form, thus there are $2^{k+1}$ elements in $\text{Stab}\ket{00 \dots 00}$, making it a stabilizer state.
+First we prove that $\ket{00 \dots 0}$ is a stabilizer state by induction, where the base case is the $\ket{0}$ state which we know is a stabilizer state from above (and $|\text{Stab}\ket{0}| = 2^1$). Now assume that $\ket{00 \dots 0}$ is a stabilizer state on n-qubits with $|\text{Stab}\ket{00 \dots 0}| = 2^n$. Let $P \in \text{Stab}\ket{0}$ and $Q \in \text{Stab}\ket{00 \dots 0}$, then $(P \otimes Q)\ket{0}\ket{00 \dots 0} = P\ket{0} \otimes Q\ket{00 \dots 0} = \ket{0}\ket{00 \dots 0} = \ket{00 \dots 00}$ (n+1 qubits). So $P \otimes Q \in \text{Stab}\ket{00 \dots 00}$, and from above arguments we know that every element in $\text{Stab}\ket{00 \dots 00}$ is of this form, thus there are $2^{n+1}$ elements in $\text{Stab}\ket{00 \dots 00}$, making it a stabilizer state.
 \end{proof}
 
 \begin{definition}
@@ -170,7 +144,7 @@ Let $\ket{\psi}$ be a non-zero n-qubit state and let $P$ be an n-qubit Pauli mat
 \begin{proof}
 First consider the simple case when $P$ is in Stab$\ket{\psi}$. In this case, the "+1" measurement outcome occurs with probability $1$ and $\ket{\psi}$ is unchanged. When $P$ is not in Stab$\ket{\psi}$ we consider two alternatives. The first alternative is that $P$ commutes with all elements of Stab$\ket{\psi}$. Recall we have the post-measurement state $\ket{\phi} = \frac{P\ket{\psi}}{\sqrt{\bra{\psi}P^{\dag}P\ket{\psi}}} = \frac{P\ket{\psi}}{\sqrt{\bra{\psi}\ket{\psi}}}$, and let $Q \in \text{Stab}\ket{\psi}$. Then $Q\ket{\phi} = \frac{QP\ket{\psi}}{\sqrt{\bra{\psi}\ket{\psi}}} = \frac{PQ\ket{\psi}}{\sqrt{\bra{\psi}\ket{\psi}}} = \frac{P\ket{\psi}}{\sqrt{\bra{\psi}\ket{\psi}}} = \ket{\phi}$. Note also that Stab$\ket{\phi}$ also contains $P$Stab$\ket{\psi}$, and thus Stab$\ket{\phi}$ contains Stab$\ket{\psi}$ $\cup$ $P$Stab$\ket{\psi}$ and thus its size is at least $2| \text{Stab}\ket{\psi}|$.
 
-The second alternative is when $P$ anti-commutes with some element $Q \in$ Stab$\ket{\psi}$. Note that $Q\ket{\psi} = \ket{\psi}$ and $QPQ = -P$, so the probability of the $+1$ outcome is $\bra{\psi}(I+P)\ket{\psi}/2 = \bra{\psi}Q(I+P)Q\ket{\psi}/2 = \bra{\psi}(I-P)\ket{\psi}/2$, which is the probability of the $-1$ outcome. Thus the probability of the $+1$ outcome is $1/2$. Then $\ket{\phi} = (I+P)/\sqrt{2}\ket{\psi}$ where we fixed the normalization condition such that $\bra{\phi}\ket{\phi} = \bra{\psi}\ket{\psi}$. Also, observe that we can write $\ket{\phi} = (I+PQ)/\sqrt{2}\ket{\psi}$. Since $(I+PQ)/\sqrt{2}$ is a Clifford unitary equal to exp($i\pi P'/4)$ for $P' = iPQ$, we see that $\ket{\phi}$ and $\ket{\psi}$ differ by a Clifford and therefore $|$Stab$\ket{\psi}| = |$Stab$\ket{\phi}|$.
+The second alternative is when $P$ anti-commutes with some element $Q \in$ Stab$\ket{\psi}$. Note that $Q\ket{\psi} = \ket{\psi}$ and $QPQ = -P$, so the probability of the $+1$ outcome is $\bra{\psi}(I+P)\ket{\psi}/2 = \bra{\psi}Q(I+P)Q\ket{\psi}/2 = \bra{\psi}(I-P)\ket{\psi}/2$, which is the probability of the $-1$ outcome. Thus the probability of the $+1$ outcome is $1/2$. Then $\ket{\phi} = (I+P)/\sqrt{2}\ket{\psi}$ where we fixed the normalization condition such that $\braket{\phi} = \braket{\psi}$. Also, observe that we can write $\ket{\phi} = (I+PQ)/\sqrt{2}\ket{\psi}$. Since $(I+PQ)/\sqrt{2}$ is a Clifford unitary equal to exp($i\pi P'/4)$ for $P' = iPQ$, we see that $\ket{\phi}$ and $\ket{\psi}$ differ by a Clifford and therefore $|$Stab$\ket{\psi}| = |$Stab$\ket{\phi}|$.
 \end{proof}
 
 \begin{definition}[Pauli Spectrum]
@@ -243,10 +217,12 @@ The equation $\ket{A} \rightarrow \ket{B}$ indicates that resource state $\ket{A
 
 \chapter{Conversion of Resource States}
 \begin{theorem}
+\label{min number of T gates}
 Let $\ket{U}$ be an n-qubit magic state for a diagonal unitary $U$ from the $3^{\text{rd}}$ level of the Clifford hierarchy, and let $\tau (U)$ be the minimum number of T gates needed to implement $U$ using the gate set $\{CNOT, S, T\}$. The following resource conversion is possible
 
-
-$\ket{U} \xRightarrow{\ket{T}^{\otimes \tau (U) - \nu (\ket{U}}} \ket{T}^{\otimes 2 \nu (\ket{U}) - \tau (U)}$
+\begin{align*}
+\ket{U} \xRightarrow{\ket{T}^{\otimes \tau (U) - \nu (\ket{U}}} \ket{T}^{\otimes 2 \nu (\ket{U}) - \tau (U)}
+\end{align*}
 \end{theorem}
 
 \begin{proof}
@@ -287,8 +263,8 @@ Next, observe that
 \begin{align*}
 \text{log}_2 |Stab\ket{U}| = & \text{log}_2|Stab(\ket{\psi}\ket{+}^{\otimes (n-r)})| \\ 
 = & \text{log}_2 (|Stab \ket{\psi}| \cdot |Stab\ket{+}^{\otimes (n-r)}|) \\
-= & \text{log}_2 |Stab \ket{\psi}| + \text{log}_2 |Stab \ket{+}^{\otimes (n-r)}|
-= & \text{log}_2 |Stab \ket{\psi}| + (n-r)
+= & \text{log}_2 |Stab \ket{\psi}| + \text{log}_2 |Stab \ket{+}^{\otimes (n-r)}| \\
+= & \text{log}_2 |Stab \ket{\psi}| + (n-r) \\
 = & \alpha + n - r
 \end{align*}
 for some positive integer $\alpha = \text{log}_2 |Stab \ket{\psi}|$. Hence log$_2|Stab\ket{U}| \geq n - r$, so rearranging we have that $n - \text{log}_2 |Stab \ket{U}| = \nu (\ket{U}) \leq r$.
@@ -298,6 +274,35 @@ Using our earlier argument, we can always remove from $P$ the columns correspond
 \ket{U_g}\ket{T}^{\otimes (\tau (U_g) - r)} \rightarrow \ket{T}^{\otimes r}
 \end{equation}
 If $r = \nu (U_g)$ then we have the result of the theorem. If $r \textgreater \nu (U_g)$ then the result is even stronger than the theorem, and so the theorem holds in either case.
+\end{proof}
+
+
+
+\textbf{Claim 1:} Let $U$ be a diagonal unitary from the third level of the Clifford hierarchy with phase polynomial matrix P. If all rows of P have even Hamming weight then $U\ket{+}^{\otimes n} \not \rightarrow \ket{T}$.
+
+To see this, note that every diagonal unitary from the third level of the Clifford hierarchy is (up to Cliffords) a product of $T$, $CS$, $CCZ$ gates \cite{}. In the special case that $U$ has phase polynomial matrix with even rows, then the unitary is a product of $CS$ and $CCZ$ gates. Such a unitary has elements in the ring $\mathbb{Q}(i)$ and so $U\ket{+}^{\otimes n} \not \rightarrow \ket{T}$ follows. Though this transform is impossible without a catalyst, Theorem \ref{min number of T gates} allows us to easily construct concrete examples.
+
+For any $n \geq 2$, we define $W_n$ as the unitary with phase polynomial matrix
+\begin{align*}
+P_n = (\mathds{1}_n, 1) =
+\begin{pmatrix}
+1 & 0 & \dots & 0 & 1 \\
+0 & 1 & \dots & 0 & 1 \\
+\vdots & \vdots & \ddots & 0 & 1 \\
+0 & 0 & \dots & 1 & 1
+\end{pmatrix}
+\end{align*}
+which is the identity matrix padded with an all-one column. More explicitly, we have 
+\begin{equation}
+W_n = \sum_x exp(i\pi g(x)/4)\ket{x}\bra{x}
+\end{equation}
+with $g(x) = (\oplus_{i=1}^n x_i) + \sum_{i=1}^n x_i$, where $\oplus$ is addition modulo 2. Now we can introduce and prove the following lemma.
+
+\begin{lemma}
+$\tau (W_n) = n + 1$
+\end{lemma}
+\begin{proof}
+Since $P$ has a width of $n+1$ columns, we have $\tau (W_n) \leq n+1$. The only full rank phase polynomial matrices that give a unitary that is Clifford equivalent to $T^{\otimes n}$ are square. Since this is not the case we conclude $\tau (W_n) = n + 1$.
 \end{proof}
 
 \chapter{Conclusion}
