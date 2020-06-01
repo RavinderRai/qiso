@@ -75,15 +75,26 @@ The \emph{Pauli matrices} $X$, $Y$, and $Z$ are defined as:
 \end{definition}
 
 \begin{definition}
-  The \emph{Pauli group on $n$ qubits} $\mathcal{P}(n)$ is defined as \ldots
+\label{PauliGroup}
+  The \emph{Pauli group on $n$ qubits} $\mathcal{P}(n)$ is a group with elements $\{ \pm I, \pm X, \pm Y, \pm Z, \pm iI, \pm iX, \pm iY, \pm iZ \}^{\otimes n}$, where $\otimes n$ represents tensors of these $ 2 \times 2$ matrices.
 \end{definition}
+
+The Pauli group defines the $1st-level$ of the Clifford Hierarchy, which is $\mathcal{C}^{(1)} = e^{i\theta} \cdot \{I, X, Y, Z\}^{\otimes n}$, so it is as above but with all phases. The group of automorphisms of the Pauli group is the $2nd-level$ of the Clifford Hierarchy, $\mathcal{C}^{(2)}$, and is also known as the Clifford Group. It is important to note that circuits made from only gates in $\mathcal{C}^{(2)}$ are not universal for quantum computing. To get around this issue, we can use gates from the $3rd-level$ of the Clifford Hierarchy: $\mathcal{C}^{(3)} = \{ U | UPU^{\dag} \in \mathcal{C}^{(2)}, \forall P \in \mathcal{P}(n)$, and so we will use unitaries from $\mathcal{C}^{(3)}$ frequently. Finally, we now define the $kth-level$ of the Clifford Hierarchy. 
+
+\begin{definition} The k-th level of the Clifford Hierarchy is:
+\label{CliffHierarchy}
+\begin{equation}
+\mathcal{C}^{(k)} = \{ U | UPU^{\dag} \in \mathcal{C}^{(k-1)}, \forall P \in \mathcal{P}(n) \}
+\end{equation}
+\end{definition}
+
 
 \begin{proposition}
   We have $|\mathcal{P}(n)|=4^{n+1}$.
 \end{proposition}
 
 \begin{proof}
-  \ldots
+By induction, first let $n=1$. Then from definition \ref{PauliGroup} we easily see that there are $16 = 4^2$ elements in $\mathcal{P}(1)$, so the base case is true. Now assume true for $m$ qubits, i.e. $|\mathcal{P}(m)| = 4^{m+1}$. Then to $\mathcal{P}(m+1)$ has elements that are tensor products of elements in $\mathcal{P}(m)$ and $I$, $X$, $Y$, and $Z$. Thus there are $4 \cdot 4^{m+1} = 4^{(m+1)+1}$ elements in $\mathcal{P}(m+1)$. Note we do not take tensor products with $-I, \pm iI, -X, \ldots$, as we would then quadruple count the elements in $\mathcal{P}(m+1)$.
 \end{proof}
 
 \begin{definition}[Stabilizer]
@@ -127,10 +138,13 @@ Let $\ket{\psi}$ be a non-zero n qubit state. Then we have the following facts a
 An example of a stabilizer state is the $\ket{0}$ state, since there are $2^1$ pauli's that stabilize it, namely $I$ and $Z$. Note that, from fact 4 in Proposition \ref{stabilizerfacts}, for any Clifford $C$, $|\text{Stab}\ket{0}| = |Stab(C\ket{0})| = 2^1 \implies C\ket{0}$ is a stabilizer state. And an example of a non-stabilizer state is $\ket{\psi} = \frac{1}{\sqrt{2}}(\ket{00} + \frac{i}{2} \ket{11})$, which through computation one can find that it has the following stabilizers: $I \otimes I$ and $Z \otimes Z$. Since there are only $2$ stabilizers, and $2 \neq 2^2$, $\ket{\psi}$ cannot be a stabilizer state.
 
 \begin{corollary}
-The computational basis state $\ket{00 \dots 0}$ on n-qubits is a stabilizer state. If $\ket{\psi}$ is a Stabilizer state, then there is a Clifford unitary $C$ such that $C\ket{\phi} = \ket{\psi}$, where $\ket{\phi}$ is a computational basis state.
+The computational basis state $\ket{00 \dots 0}$ on n-qubits is a stabilizer state. If $\ket{\psi}$ is a basis state, then it is a stabilizer state.
 \end{corollary}
 \begin{proof}
 First we prove that $\ket{00 \dots 0}$ is a stabilizer state by induction, where the base case is the $\ket{0}$ state which we know is a stabilizer state from above (and $|\text{Stab}\ket{0}| = 2^1$). Now assume that $\ket{00 \dots 0}$ is a stabilizer state on n-qubits with $|\text{Stab}\ket{00 \dots 0}| = 2^n$. Let $P \in \text{Stab}\ket{0}$ and $Q \in \text{Stab}\ket{00 \dots 0}$, then $(P \otimes Q)\ket{0}\ket{00 \dots 0} = P\ket{0} \otimes Q\ket{00 \dots 0} = \ket{0}\ket{00 \dots 0} = \ket{00 \dots 00}$ (n+1 qubits). So $P \otimes Q \in \text{Stab}\ket{00 \dots 00}$, and from above arguments we know that every element in $\text{Stab}\ket{00 \dots 00}$ is of this form, thus there are $2^{n+1}$ elements in $\text{Stab}\ket{00 \dots 00}$, making it a stabilizer state.
+
+
+Next, if $\ket{\psi}$ is an $n$-qubit basis state, then it differs from the $n$-qubit computational basis state $\ket{00 \ldots 0}$ by only a Clifford unitary, i.e. $C\ket{00 \ldots 0} = \ket{\psi}$ for some Clifford circuit C. Then as remarked above, it follows that $\ket{\psi}$ is a stabilizer state.
 \end{proof}
 
 \begin{definition}
@@ -207,7 +221,7 @@ The projectors $P$ above correspond to measurement in the computational basis an
 \end{proof}
 $
 \Qcircuit @C=1em @R=.7em {
-   & \ctrl{1} & \qw  & \raisebox{-2.2em}{=}  & & \gate{T} & \ctrl{1} & \qw & \ctrl{1} & \qw & \raisebox{-2.2em}{implies}  & & \gate{T} & \qw & \raisebox{-2.2em}{=} & & \ctrl{1} & \ctrl{1} &\qw & \ctrl{1} & \qw \\
+   & \ctrl{1} & \qw  & \raisebox{-2.2em}{=}  & & \gate{T} & \ctrl{1} & \qw & \ctrl{1} & \qw & \raisebox{-2.2em}{$\implies$}  & & \gate{T} & \qw & \raisebox{-2.2em}{=} & & \ctrl{1} & \ctrl{1} &\qw & \ctrl{1} & \qw \\
    & \gate{S} & \qw & & & \gate{T} & \targ & \gate{T^{\dag}} & \targ & \qw & & & \gate{T} & \qw & & & \gate{S} & \targ & \gate{T} & \targ & \qw
 }
 $
