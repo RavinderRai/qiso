@@ -138,7 +138,7 @@ Let $\ket{\psi}$ be a non-zero n qubit state. Then we have the following facts a
 An example of a stabilizer state is the $\ket{0}$ state, since there are $2^1$ pauli's that stabilize it, namely $I$ and $Z$. Note that, from fact 4 in Proposition \ref{stabilizerfacts}, for any Clifford $C$, $|\text{Stab}\ket{0}| = |Stab(C\ket{0})| = 2^1 \implies C\ket{0}$ is a stabilizer state. And an example of a non-stabilizer state is $\ket{\psi} = \frac{1}{\sqrt{2}}(\ket{00} + \frac{i}{2} \ket{11})$, which through computation one can find that it has the following stabilizers: $I \otimes I$ and $Z \otimes Z$. Since there are only $2$ stabilizers, and $2 \neq 2^2$, $\ket{\psi}$ cannot be a stabilizer state.
 
 \begin{corollary}
-The computational basis state $\ket{00 \dots 0}$ on n-qubits is a stabilizer state. If $\ket{\psi}$ is a basis state, then it is a stabilizer state.
+The computational basis state $\ket{00 \dots 0}$ on n-qubits is a stabilizer state. If $\ket{\psi}$ is a basis state, then it is a stabilizer state. 
 \end{corollary}
 \begin{proof}
 First we prove that $\ket{00 \dots 0}$ is a stabilizer state by induction, where the base case is the $\ket{0}$ state which we know is a stabilizer state from above (and $|\text{Stab}\ket{0}| = 2^1$). Now assume that $\ket{00 \dots 0}$ is a stabilizer state on n-qubits with $|\text{Stab}\ket{00 \dots 0}| = 2^n$. Let $P \in \text{Stab}\ket{0}$ and $Q \in \text{Stab}\ket{00 \dots 0}$, then $(P \otimes Q)\ket{0}\ket{00 \dots 0} = P\ket{0} \otimes Q\ket{00 \dots 0} = \ket{0}\ket{00 \dots 0} = \ket{00 \dots 00}$ (n+1 qubits). So $P \otimes Q \in \text{Stab}\ket{00 \dots 00}$, and from above arguments we know that every element in $\text{Stab}\ket{00 \dots 00}$ is of this form, thus there are $2^{n+1}$ elements in $\text{Stab}\ket{00 \dots 00}$, making it a stabilizer state.
@@ -146,6 +146,21 @@ First we prove that $\ket{00 \dots 0}$ is a stabilizer state by induction, where
 
 Next, if $\ket{\psi}$ is an $n$-qubit basis state, then it differs from the $n$-qubit computational basis state $\ket{00 \ldots 0}$ by only a Clifford unitary, i.e. $C\ket{00 \ldots 0} = \ket{\psi}$ for some Clifford circuit C. Then as remarked above, it follows that $\ket{\psi}$ is a stabilizer state.
 \end{proof}
+
+\begin{theorem}
+If $\ket{\psi}$ is a stabilizer state, then there is a circuit $C$ such that $C\ket{\psi} = \ket{00 \dots 0}$.
+\end{theorem}
+\begin{proof}
+By Theorem 8 in \cite{}, every stabilizer state can be represented by a tableau, which can then be converted into a tableau that represents the $\ket{00 \dots 0}$ state using only Clifford operations. Applying these Clifford operators is equivalently applying Clifford operators to the appropriate qubits of $\ket{\psi}$, thus resulting in a Clifford circuit $C$ such that $C\ket{\psi} = \ket{00 \dots 0}$. 
+\end{proof}
+
+\begin{theorem}
+If $\ket{\psi}$ is an $n$-qubit stabilizer state, then $\textit{Stab}\ket{\psi}$ uniquely determines $\ket{\psi}$.
+\end{theorem}
+\begin{proof}
+First note that each $P \in \textit{Stab}\ket{\psi}$ imposes the linear constraint that $P\ket{\psi} = \ket{\psi}$ on the $2^n$-dimensional vector space. The subspace of vectors that satisfy this constraint has half of this space, meaning that it has dimension $2^{n-1}$. Let gen($\ket{\psi}$) be the set of generators for $\textit{Stab}\ket{\psi}$, where we add independent generators to gen($\ket{\psi}$) one by one. This way we subsequently half the dimension of the vector subspace that satisfies all the linear constraints, and since $|\textit{gen}(\ket{\psi})| = n$, this dimension reduces to $1$. Thus there is only one possible vector and so $\ket{\psi}$ is uniquely determined.
+\end{proof}
+
 
 \begin{definition}
 Let $\ket{\psi}$ be a non-zero n-qubit state. The Stabilizer nullity of $\ket{\psi}$ is $\nu(\ket{\psi}) = n - log_2 |\text{Stab}\ket{\psi}|$.
@@ -318,6 +333,24 @@ $\tau (W_n) = n + 1$
 \begin{proof}
 Since $P$ has a width of $n+1$ columns, we have $\tau (W_n) \leq n+1$. The only full rank phase polynomial matrices that give a unitary that is Clifford equivalent to $T^{\otimes n}$ are square. Since this is not the case we conclude $\tau (W_n) = n + 1$.
 \end{proof}
+
+\subsection{Conversion Protocols}
+Here we introduce some conversion protocols that use catalysis to convert resource states for the third level of the Clifford hierarchy to resource states for higher levels. First an important building block for these protocols is the following circuit in Figure \ref{one bit adder}.
+
+\begin{figure}
+\caption{Circuits for applying three $\sqrt{T}$ gates using five $T$ gates and one $sqrt{T}$ gate}
+\label{one bit adder}
+
+$
+\Qcircuit @C=1em @R=.7em {
+   \ket{a} & \gate{\sqrt{T}}  & \qw  \ket{a} & \raisebox{-2.2em}{=} & & \ket{a}  \\
+   \ket{b} & \gate{\sqrt{T}} & \qw \ket{b} & & & \ket{b}  \\
+   \ket{c} & \gate{\sqrt{T}} & \qw \ket{c}  & & & \ket{c} 
+}
+$
+
+
+\end{figure}
 
 \chapter{Conclusion}
 
