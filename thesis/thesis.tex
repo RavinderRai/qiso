@@ -2,6 +2,9 @@
 %   dalthesis.cls class file
 \documentclass[12pt]{dalthesis}
 \usepackage{dsfont}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
 
 \input{thesis.sty}
 
@@ -337,20 +340,85 @@ Since $P$ has a width of $n+1$ columns, we have $\tau (W_n) \leq n+1$. The only 
 \subsection{Conversion Protocols}
 Here we introduce some conversion protocols that use catalysis to convert resource states for the third level of the Clifford hierarchy to resource states for higher levels. First an important building block for these protocols is the following circuit in Figure \ref{one bit adder}.
 
-\begin{figure}
-\caption{Circuits for applying three $\sqrt{T}$ gates using five $T$ gates and one $sqrt{T}$ gate}
-\label{one bit adder}
+\vspace{2mm}
+
+\begin{figure}[H]
+
+\caption{Circuits for applying three $\sqrt{T}$ gates using five $T$ gates and one $\sqrt{T}$ gate}
+
+\begin{subfigure}[b]{0.5\textwidth}
+
 
 $
-\Qcircuit @C=1em @R=.7em {
-   \ket{a} & \gate{\sqrt{T}}  & \qw  \ket{a} & \raisebox{-2.2em}{=} & & \ket{a}  \\
-   \ket{b} & \gate{\sqrt{T}} & \qw \ket{b} & & & \ket{b}  \\
-   \ket{c} & \gate{\sqrt{T}} & \qw \ket{c}  & & & \ket{c} 
+\small
+\Qcircuit @C=0.07em @R=.3em {
+   \lstick{\ket{a}} & \gate{\sqrt{T}}  & \qw & \rstick{\zeta_{16}^{(a+b+c)_0} \zeta_8^{(a+b+c)_1} \ket{a}} & & & \lstick{\ket{a}} &  \ctrl{2} & \qw & \qw & \qw & \ctrl{3} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw  & \qw & \qw & \qw  & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \ctrl{3} & \qw & \qw & \ctrl{2} & \qw & \rstick{\zeta_{16}^{(a+b+c)_0} \zeta_8^{(a+b+c)_1}\ket{a}} \\
+   \lstick{\ket{b}} & \gate{\sqrt{T}} & \qw & \rstick{\ket{b}} & \push{\rule{9em}{0em}=\rule{1.5em}{0em}} & & \lstick{\ket{b}} & \targ & \qw & \qw & \ctrl{2} & \targ & \ctrl{1} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw  & \qw & \qw & \qw  & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \ctrl{1} & \targ & \ctrl{2} & \qw & \targ & \qw & \rstick{\ket{b}} \\
+   \lstick{\ket{c}} & \gate{\sqrt{T}} & \qw & \rstick{\ket{c}}  & & & \lstick{\ket{c}} & \targ & \qw  & \qw & \ctrl{1} & \qw & \targ & \qw & \rstick{\ket{a \oplus b \oplus c}} \qw & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \gate{\sqrt{T}} & \targ & \qw  & \ctrl{1} & \qw & \targ & \qw & \rstick{\ket{c}} \\
+   & & & & & & & & & \lstick{\ket{0}} & \gate{X} & \targ & \qw & \qw & \rstick{\ket{ab \oplus ac \oplus bc}} \qw  & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & &  & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & \gate{T} & \qw & \targ & \gate{X} & \qw & \rstick{\ket{0}}
+}
+$
+\label{one bit adder a}
+\caption{Three $\sqrt{T}$ gates can be applied with just one $\sqrt{T}$ gate and other third level Clifford unitaries}
+\end{subfigure}
+
+
+\vspace{2mm}
+
+\begin{subfigure}[b]{0.5\textwidth}
+\centering
+$
+\Qcircuit @C=0.5em @R=.7em {
+   & \ctrl{2} & \qw & & & & \qw & \qw & \multigate{1}{CZ} & \qw \\
+   & \ctrl{1} & \qw & & \push{\rule{1em}{0em}=\rule{1.5em}{0em}} & & \qw & \qw & \ghost{CZ} & \qw \\
+   & \gate{X} & \qw & \rstick{\ket{0}} & & & \gate{H} & \measureD{Z} & \ctrl{-1} \cw \cwx
 }
 $
 
+\vspace{4mm}
 
+$
+\Qcircuit @C=0.5em @R=.7em {
+   & \lstick{\ket{a}} & \ctrl{2} & \qw & \rstick{\ket{a}} & & & \lstick{\ket{a}} & \ctrl{2} & \qw & \targ & \gate{T^{\dag}} & \targ & \qw & \qw & \qw & \rstick{\ket{a}} \\
+   & \lstick{\ket{b}} & \ctrl{1} & \qw & \rstick{\ket{b}} & & \push{\rule{1em}{0em}=\rule{1.5em}{0em}} & \lstick{\ket{b}} & \qw & \ctrl{1} & \targ & \gate{T^{\dag}} &  \targ & \qw & \qw & \qw & \rstick{\ket{b}} \\
+   & \lstick{\ket{0}} & \gate{X} & \qw & \rstick{\ket{ab}} & & & \lstick{\ket{T}} & \targ & \targ & \ctrl{-2} & \gate{T} & \ctrl{-2} & \gate{H} & \gate{S} & \qw & \rstick{\ket{ab}} 
+}
+$
+\caption{Simplified circuits given specific input states.}
+\label{one bit adder b}
+\end{subfigure}
+
+\label{one bit adder}
 \end{figure}
+
+Note that the gate exp$(i\theta \ket{1} \bra{1})^{\otimes n}$ acting on an n-qubit register in the computational basis state $\ket{w}$ gives $e^{i \theta \cdot hw(w)}\ket{w}$, where hw($w$) is the Hamming weight of the bit string $w$. With this we can compute the gate exp$(i\theta \ket{1}\bra{1})^{\otimes n}$ by just computing hw($w$) and storing it in a quantum register $\ket{x_k \ldots x_0}$, and for $j$ from 0 to $k$ apply exp($i2^j\theta \ket{1} \bra{1}$) to qubit j in the register. In Figure \ref{one bit adder} we use the adder circuit to compute the Hamming weight of the bit string $a, b,$ and $c$. For bit strings of length three the Hamming weight can be represented using two bits. The lower bit is the parity$a \oplus b \oplus c$ and the higher bit is the majority function$ab \oplus bc \oplus ac$. These are exactly the values computed by the adder. An important efficiency gain comes from the first circuit in Figure \ref{one bit adder b} where you can observe that the one qubit adder can be un-computed by ising Clifford gates and single qubit Pauli measurements only. Using this trick, Figure \ref{one bit adder a} applies three $\sqrt{T}$ gates using only one $\sqrt{T}$, and either one $T$ and $CCX$ gate each, or five $T$ gates (if using the second circuit in Figure \ref{one bit adder b} instead).
+
+
+
+
+
+We now give an example that uses the above results to form a resource state conversion protocol: $\ket{\sqrt{T}} + 5.5\ket{T} \rightarrow 3\ket{\sqrt{T}}$. This protocol follows directly when $\ket{+}$ states are fed into Figure \ref{one bit adder a} when the $\sqrt{T}$ gate is implemented by injection of $\ket{\sqrt{T}}$, and when the third level Clifford gates are implemented with $\ket{T}$ resource states. We need to use 5$\ket{T}$ states to implement the first $CCX$ gate and the T gate in Figure \ref{one bit adder a}. The $\sqrt{T}$ gate is implemented with the injection circuit which requires an additional $T$ gate correction $50\%$ of the time, which adds $1/2$ to the number of $\ket{T}$ states consumed on average.
+
+The extra $T$ gate can be amortized to give the conversion $k\ket{CCZ} + (k+ \frac{1}{2})\ket{T} \xRightarrow{\ket{\sqrt{T}}} 2k\ket{\sqrt{T}}$ which is valid for any positive integer $k$. We see that asymptotically $\ket{\sqrt{T}}$ state costs half of $\ket{\sqrt{T}}$ state plus half of $\ket{CCZ}$ state. Using the circuit on Figure \ref{one bit adder a} we can reduce the parallel application of $2k+1 \sqrt{T}$ gates to the parallel application of $2k-1 \sqrt{T}$ gates for any positive integer k. We use the circuit on Figure \ref{one bit adder a} to execute the first three out of $2k+1 \sqrt{T}$ gates by only using one $\sqrt{T}$ gate. Then we observe that the rest of the $2k-2 \sqrt{T}$ gates can be executed in parallel with the newly introduced $\sqrt{T}$ gate. The main observation here is that the cost of applying $\sqrt{T}^3$ gate is the same as the cost of applying $\sqrt{T}$. Figure \ref{conversion example} applies this to show how to reduce the parallel application of five $\sqrt{T}$ gates to only three.
+
+\begin{figure}[H]
+\caption{Conversion example of $k\ket{CCZ} + 1\frac{1}{2}\ket{T} + \ket{\sqrt{T}}$ for k=2}
+\label{conversion example}
+$
+\Qcircuit @C=0.5em @R=.7em {
+   & \lstick{\ket{+}} & \gate{\sqrt{T}} & \qw & & & \ctrl{2} & \qw & \qw & \qw & \qw & \ctrl{3} & \qw & \qw & \qw & \qw & \qw & \ctrl{3} & \qw & \qw & \ctrl{2} & \qw & \rstick{\ket{\sqrt{T}}} \\
+   & \lstick{\ket{+}} & \gate{\sqrt{T}} & \qw & & & \targ & \qw & \qw & \qw & \ctrl{2} & \targ & \ctrl{1} & \qw & \qw & \qw & \ctrl{1} & \targ & \ctrl{2} & \qw & \targ & \qw & \rstick{\ket{\sqrt{T}}} \\
+   & \lstick{\ket{+}} & \gate{\sqrt{T}} & \qw & \push{\rule{1em}{0em}=\rule{1em}{0em}} & & \targ & \qw & \qw & \qw & \ctrl{1} & \qw & \targ & \qswap & \gate{T} & \qswap & \targ & \qw & \ctrl{1} & \qw & \targ & \qw & \rstick{\ket{\sqrt{T}}} \\
+   & & & & & & & & & \lstick{\ket{0}} & \gate{X} & \targ & \qw & \qswap \qwx & \gate{\sqrt{T}} & \qswap \qwx & \qw & \targ & \gate{X} & \qw & \rstick{\ket{0}}  \\
+   & \lstick{\ket{+}} & \gate{\sqrt{T}} & \qw & & & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \gate{\sqrt{T}} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \rstick{\ket{\sqrt{T}}} \\
+   & \lstick{\ket{+}} & \gate{\sqrt{T}} & \qw & & & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \gate{\sqrt{T}} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \rstick{\ket{\sqrt{T}}}
+}
+$
+\end{figure}
+
+
+
+
 
 \chapter{Conclusion}
 
