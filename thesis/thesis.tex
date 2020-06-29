@@ -391,7 +391,7 @@ $
 \label{one bit adder}
 \end{figure}
 
-Note that the gate exp$(i\theta \ket{1} \bra{1})^{\otimes n}$ acting on an n-qubit register in the computational basis state $\ket{w}$ gives $e^{i \theta \cdot hw(w)}\ket{w}$, where hw($w$) is the Hamming weight of the bit string $w$. With this we can compute the gate exp$(i\theta \ket{1}\bra{1})^{\otimes n}$ by just computing hw($w$) and storing it in a quantum register $\ket{x_k \ldots x_0}$, and for $j$ from 0 to $k$ apply exp($i2^j\theta \ket{1} \bra{1}$) to qubit j in the register. In Figure \ref{one bit adder} we use the adder circuit to compute the Hamming weight of the bit string $a, b,$ and $c$. For bit strings of length three the Hamming weight can be represented using two bits. The lower bit is the parity$a \oplus b \oplus c$ and the higher bit is the majority function$ab \oplus bc \oplus ac$. These are exactly the values computed by the adder. An important efficiency gain comes from the first circuit in Figure \ref{one bit adder b} where you can observe that the one qubit adder can be un-computed by ising Clifford gates and single qubit Pauli measurements only. Using this trick, Figure \ref{one bit adder a} applies three $\sqrt{T}$ gates using only one $\sqrt{T}$, and either one $T$ and $CCX$ gate each, or five $T$ gates (if using the second circuit in Figure \ref{one bit adder b} instead).
+Note that the gate exp$(i\theta \ket{1} \bra{1})^{\otimes n}$ acting on an n-qubit register in the computational basis state $\ket{w}$ gives $e^{i \theta \cdot hw(w)}\ket{w}$, where hw($w$) is the Hamming weight of the bit string $w$. With this we can compute the gate exp$(i\theta \ket{1}\bra{1})^{\otimes n}$ by just computing hw($w$) and storing it in a quantum register $\ket{x_k \ldots x_0}$, and for $j$ from 0 to $k$ apply exp($i2^j\theta \ket{1} \bra{1}$) to qubit j in the register. In Figure \ref{one bit adder} we use the adder circuit to compute the Hamming weight of the bit string $a, b,$ and $c$. For bit strings of length three the Hamming weight can be represented using two bits. The lower bit is the parity$a \oplus b \oplus c$ and the higher bit is the majority function $ab \oplus bc \oplus ac$. These are exactly the values computed by the adder. An important efficiency gain comes from the first circuit in Figure \ref{one bit adder b} where you can observe that the one qubit adder can be un-computed by using Clifford gates and single qubit Pauli measurements only. Using this trick, Figure \ref{one bit adder a} applies three $\sqrt{T}$ gates using only one $\sqrt{T}$, and either one $T$ and $CCX$ gate each, or five $T$ gates (if using the second circuit in Figure \ref{one bit adder b} instead).
 
 
 
@@ -416,8 +416,29 @@ $
 $
 \end{figure}
 
+\subsection{Conversion Bounds}
+Suppose we can identify a monotone $\mathcal{M}$ such that $\mathcal{M}(\ket{\psi})$ is real for any state $\ket{\psi}$, and is non-increasing under stabilizer operations. We call such a function a \textit{monotone}, and use it to bound conversion precesses since for example, a resource state $\ket{A}$ cannot be used to produce a resource state $\ket{B}$ with stabilizer operations if $\mathcal{M}(\ket{A}) < \mathcal{M}(\ket{B})$, so we have: $\mathcal{M}(\ket{A}) < \mathcal{M}(\ket{B}) \implies \ket{A} \not \longrightarrow \ket{B} $
 
+Furthermore, if $\mathcal{M}(\ket{\psi} \otimes \ket{\phi}) = \mathcal{M}(\ket{\psi}) + \mathcal{M}(\ket{\phi})$ for all $\ket{\psi}$ and $\ket{\phi}$, then we can say even more. First, we can rule out catalyzed conversions since $\mathcal{M}(\ket{A} \otimes \ket{cat.}) < \mathcal{M}(\ket{B})$ implies that $\mathcal{M}(\ket{B} \otimes \ket{cat.})$ for any catalyzing state $\ket{cat.}$. Tensor powers of states simplify, allowing us to make asymptotic implications, i.e., 
+\begin{center}
+$\mathcal{M}(\ket{A}) < \alpha \cdot \mathcal{M}(\ket{B}) \implies \ket{A}^{\otimes n} \not \Longrightarrow \ket{B}^{\otimes \alpha n} \hspace{2mm} \forall n$.
+\end{center}
 
+In other words this would put an upper bound of $\alpha$ on the catalytic rate of conversion from $\ket{A}$ to $\ket{B}$. Note that equivalent implications hold if the monotone is \textit{multiplicative} rather than additive.
+For example, consider the states $\ket{T}$ and $\ket{CCZ}$ for which the best known conversion algorithms are:
+\begin{center}
+$4\ket{T} \rightarrow \ket{CCZ}$
+\end{center}
+\begin{center}
+$\ket{CCZ} \xRightarrow{\ket{T}} 2\ket{T}$
+\end{center}
+Clearly these algorithms would have loss if feeding the output of one into the other. The best possible conversion algorithms have (for any n and any catalyst) the minimum $r$ and maximum $r'$ in 
+\begin{center}
+$rn\ket{T} \Rightarrow n\ket{CCZ}$,
+\end{center}
+\begin{center}
+$n\ket{CCZ} r'n\ket{T}$.
+\end{center}
 
 
 \chapter{Conclusion}
