@@ -202,6 +202,25 @@ Moreover, if $\theta = 2k\pi /2$ for some integer $k$, then $X \in \text{Stab}\k
 \end{proof}
 Note that the number of 1s in the Pauli spectrum of $\ket{\psi}$ is $|\text{Stab}\ket{\psi}|$.
 
+\subsection{Stabilizer Extent}
+\begin{definition}
+For an arbitrary pure state $\ket{\psi}$, \textbf{the stabilizer extent} $\xi (\ket{\psi})$ is:
+\begin{equation}
+\xi (\ket{\psi}) = min||(c_1, \dots , c_k)||_1^2 \hspace{4mm} s.t. \hspace{3mm} \ket{\psi} = \sum_{\alpha = 1}^k c_{\alpha} \ket{\phi_{\alpha}}
+\end{equation}
+\end{definition}
+
+The stabilizer extent is sub-multiplicative, but multiplicative in specific cases, as in the following lemma.
+
+\begin{lemma}
+\label{stabextent}
+The stabilizer extent is multiplicative with respect to a given set of states $\{ \ket{\psi_1}, \ket{\psi_2}, \dots \ket{\psi_l} \}$, such that, $\xi (\ket{\psi_1}\ket{\psi_2} \dots \ket{\psi_l}) = \prod_{j=1}^l \xi (\ket{\psi_j})$, if for each state at least one of the following conditions are satisfied (where $\ket{\phi_j}$ is always a stabilizer state):
+\begin{enumerate}
+\item $\ket{\psi_j}$ is a state of at most three qubits
+\item There exist states $\ket{\omega_j}$ and $\ket{\phi_j}$ such that $\xi (\ket{\psi_j}) = \frac{|\braket{\psi_j| \omega_j}|^2}{max_{\phi_j}|\braket{\omega_j |\phi_j}|^2}$ \textbf{and} $|\braket{\omega_j | \phi_j}|^2 \geq 1/4$.
+\end{enumerate}
+\end{lemma}
+
 \section{Catalysis}
 
 \begin{theorem}
@@ -417,6 +436,7 @@ $
 \end{figure}
 
 \subsection{Conversion Bounds}
+\label{ConvBounds}
 Suppose we can identify a monotone $\mathcal{M}$ such that $\mathcal{M}(\ket{\psi})$ is real for any state $\ket{\psi}$, and is non-increasing under stabilizer operations. We call such a function a \textit{monotone}, and use it to bound conversion precesses since for example, a resource state $\ket{A}$ cannot be used to produce a resource state $\ket{B}$ with stabilizer operations if $\mathcal{M}(\ket{A}) < \mathcal{M}(\ket{B})$, so we have: $\mathcal{M}(\ket{A}) < \mathcal{M}(\ket{B}) \implies \ket{A} \not \longrightarrow \ket{B} $
 
 Furthermore, if $\mathcal{M}(\ket{\psi} \otimes \ket{\phi}) = \mathcal{M}(\ket{\psi}) + \mathcal{M}(\ket{\phi})$ for all $\ket{\psi}$ and $\ket{\phi}$, then we can say even more. First, we can rule out catalyzed conversions since $\mathcal{M}(\ket{A} \otimes \ket{cat.}) < \mathcal{M}(\ket{B})$ implies that $\mathcal{M}(\ket{B} \otimes \ket{cat.})$ for any catalyzing state $\ket{cat.}$. Tensor powers of states simplify, allowing us to make asymptotic implications, i.e., 
@@ -440,6 +460,76 @@ $rn\ket{T} \Rightarrow n\ket{CCZ}$,
 $n\ket{CCZ} r'n\ket{T}$.
 \end{center}
 
+Now, since the stabilizer nullity and extent are monotone functions, we can use them to find $r$ and $r'$ values. By straightforward computation, we have that $\nu (\ket{T}) = 1$ and $\nu(\ket{CCZ}) = 3$. Since $\nu$ is additive we can use the above equations to deduce that $r \geq 3$ and $r' \leq 3$. While not straightforward, it is also possible to compute the extent values $\xi (\ket{T}) = 1.17157$ and $\xi (\ket{CCZ}) = 1.7778$. Moreover, $\texttt{log} \xi$ is an additive monotone with respect to collections of $\ket{T}$ states and $\ket{CCZ}$ states (which satisfies Lemma \ref{stabextent}) and therefore $r \geq \texttt{log}[1.77778]/\texttt{log}[1.17157] = 3.63356$ and $r' \leq \texttt{log}[1.77778]/\texttt{log}[1.17157] = 3.63356$ (which implies $r' \leq 3$).
+
+
+\section{Lower Bounds for $C^nZ$ gate}
+The $C^nZ$ gate is a gate worth considering in detail since it is used in many important algorithms, like the Grover's search algorithm. Lower bounds on resources required for this gate are as follows:
+
+\begin{proposition}
+For $n \geq 3$, it is not possible to apply the multiply controlled $Z$ gate $C^{n-1}Z$ or produce the state $\ket{C^{n-1}Z} = C^{n-1}Z\ket{+}^{\otimes n}$ by Clifford gates and measurements using fewer than $n\ket{T}$ states, or $n/2 \ket{CS}$ states, or $n/3 \ket{CCZ}$ states.
+\end{proposition}
+
+\begin{proof}
+First note that proving that a bound holds for the state $\ket{C^{n-1}Z}$ implies that it holds for the gate $C^{n-1}Z$. To complete the proof, we simply compute and gather the following stabilizer nullity values: $\nu (\ket{T}) = 1$, $\nu (\ket{CS}) = 2$, $\nu (\ket{CCZ}) = 3$. Now, by the next proposition, since $\forall n \geq 3$ the state $\ket{C^{n-1}Z}$ has a trivial stabilizer group, we see that $\nu (\ket{C^{n-1}Z}) = n$. The result then follows from the equations in section \ref{ConvBounds}.
+\end{proof}
+
+\begin{proposition}
+For all $n \geq 3$, the Pauli spectrum of the state $\ket{C^{n-1}Z} = C^{n-1}Z \ket{+}^{\otimes n}$ has values (and multiplicities): $1 \hspace{2mm} (1)$; $0 \hspace{2mm} (-1 +2^{n-1} + 2^{2n-1})$; $1-2^{2-n} \hspace{2mm} (2^n-1)$; $2^{2-n}  \hspace{2mm} (1-3 \cdot 2^{n-1} + 2^{2n-1})$.
+\end{proposition}
+
+\begin{proof}
+Consider the state $\ket{C^{n-1}Z}$, defined as 
+\begin{center}
+$\ket{C^{n-1}Z} = C^{n-1}Z\ket{+}^{\otimes n} = \frac{1}{\sqrt{2^n}} \sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} \ket{b}$
+\end{center}
+We are interested in the set of Pauli expectation values $\braket{C^{n-1}Z|X^xZ^z|C^{n-1}Z}$ for arbitrary bit strings $x$ and $z$. We can directly calculate as follows:
+
+\begin{equation}
+\begin{split}
+2^n\braket{C^{n-1}Z|X^xZ^z|C^{n-1}Z} & = \sum\limits_{b, b' \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{b'_1 \cdot b'_2 \cdots b'_n} \braket{b'|X^xZ^z|b} \\
+& = \sum\limits_{b, b' \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{b'_1 \cdot b'_2 \cdots b'_n} (-1)^{z \cdot b} \braket{b' + x|b} \\
+& = \sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{(b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_n + x_n)} (-1)^{z \cdot b}
+\end{split}
+\end{equation}
+
+
+When $x=0^n$, we see that the sum simplifies to $\sum_{b \in \{0, 1\}^n} (-1)^{z \cdot b}$ which is $2^n$ for $z=0^n$, and for any other $z$ half of the terms in the summation will be $-1$ and the other half $1$, giving $0$. For $x \neq 0^n$, note that the terms in the sum over $b$ differ from $\sum_{b \in \{0, 1\}^n} (-1)^{z \cdot b}$ only for $b = 1^n$ and $b = 1^n + x$. Therefore,
+
+\begin{equation}
+\begin{split}
+2^n\braket{C^{n-1}Z|X^xZ^z|C^{n-1}Z} & = \sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{(b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_n + x_n)} (-1)^{z \cdot b} \\
+& = -2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot (1^n + x)} + \sum\limits_{b \in \{0, 1\}^n} (-1)^{z \cdot b}
+\end{split}
+\end{equation}
+
+When $z = 0^n$, this is simply $2^n - 4$. When $z \neq 0^n$, it is $-2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot (1^n + x)}$. Summarizing,
+\begin{equation*}
+|\braket{C^{n-1}Z|X^xZ^z|C^{n-1}Z}| = \begin{cases}
+1 & \texttt{if } x = 0^n \texttt{ and } z = 0^n, \\
+0 & \texttt{if } x \cdot z \texttt{ is odd, or if } x = 0^n \texttt{ and } z \neq 0^n, \\
+1 - 2^{2-n} & \texttt{if } x \neq 0^n \texttt{ and } z = 0^n, \\
+2^{2-n} & \texttt{if } x \neq 0^n \texttt{ and } z \neq 0^n
+ \texttt{ and } x \cdot z \texttt{is even}
+\end{cases}
+\end{equation*}
+We can count the number of each subset of binary vectors x and z to find multiplicities.
+\end{proof}
+
+\subsection{Lower Bounds for modular adder}
+The adder circuit is a fundamental quantum operation because it implements basic arithmetic, being addition, on pairs of registers in superposition. We can lower bound the resources required to implement it as follows:
+
+\begin{proposition}
+An adder circuit on two n-qubit registers acts on basis states as 
+\begin{center}
+$A(\ket{i} \ket{j}) = \ket{i} \ket{i+j}$
+\end{center}
+with $i + j$ evaluated modulo $2^n$. It is not possible to implement the adder circuit with Clifford gates and measurements using fewer than $(n-2) \ket{T}$ states, $(n-2)/2 \ket{CS}$ states or $(n-2)/3 \ket{CCZ}$ states.
+\end{proposition}
+
+\begin{proof}
+We proceed in two steps. First, we show that the adder circuit $A$ acting on the $n$-qubit quantum Fourier state $\ket{QFT_n^b}$ (defined below) and the stabilizer state $\ket{+}^{\otimes n}$ has the action $A(\ket{+}^{\otimes n} \ket{QFT_n^b})$. This tells us that if $A$ is implemented by a set of Clifford gates and Pauli measurements along with some input resource state $\ket{\psi}$, it must be that $\nu (\ket{\psi} \ket{QFT_n^b}) \geq \nu(\ket{QFT_n^{-b}} \ket{QFT_n^b})$ which implies that $\nu (\ket{\psi}) \geq \nu(\ket{QFT_n^{-b}})$ since the stabilizer nullity is additive. Second we show that $\nu(\ket{QFT_n^{-1}}) = n-2$, which then directly implies our bounds since if the bounds are not satisfied, $\nu(\ket{\psi}) \geq \nu(\ket{QFT_n^{-1}})$ would not be satisfied.
+\end{proof}
 
 \chapter{Conclusion}
 
