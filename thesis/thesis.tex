@@ -483,37 +483,49 @@ Consider the state $\ket{C^{n-1}Z}$, defined as
 \begin{center}
 $\ket{C^{n-1}Z} = C^{n-1}Z\ket{+}^{\otimes n} = \frac{1}{\sqrt{2^n}} \sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} \ket{b}$
 \end{center}
-We are interested in the set of Pauli expectation values $\braket{C^{n-1}Z|X^xZ^z|C^{n-1}Z}$ for arbitrary bit strings $x$ and $z$. We can directly calculate as follows:
+We are interested in the set of Pauli expectation values $\braket{C^{n-1}Z|X^xZ^z|C^{n-1}Z}$ for arbitrary bit strings $x$ and $z$. Note that we need not consider the Pauli matrix $Y$ (as in $X^xY^yZ^z$ in the inner product) since $Y = iXZ$, and the phase will vanish once we take the absolute value as in the definition of the Pauli spectrum. Moreover, for one bit bit strings $i$ and $j$, observe that $Z^i \ket{j} = \ket{j}$ if $i=j=0$ or $i \neq j$, and $Z^i \ket{j} = -\ket{j}$ if $i=j=1$. So in general $Z^z \ket{b} = (-1)^{z \cdot b}\ket{b}$. Furthermore, $X^i \ket{j} = \ket{i+j}$, so for arbitrary bit strings it follows that $X^x\ket{b} = \ket{b + x}$ (where $b+x$ is component-wise addition modulo 2. We can now directly calculate as follows:
 
 \begin{equation}
 \begin{split}
 2^n\braket{C^{n-1}Z|X^xZ^z|C^{n-1}Z} & = \sum\limits_{b, b' \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{b'_1 \cdot b'_2 \cdots b'_n} \braket{b'|X^xZ^z|b} \\
-& = \sum\limits_{b, b' \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{b'_1 \cdot b'_2 \cdots b'_n} (-1)^{z \cdot b} \braket{b' + x|b} \\
+& = \sum\limits_{b, b' \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{b'_1 \cdot b'_2 \cdots b'_n} (-1)^{z \cdot b} \braket{b'|X^x|b} \\
+& = \sum\limits_{b, b' \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{b'_1 \cdot b'_2 \cdots b'_n} (-1)^{z \cdot b} \braket{b'|b + x} \\
 & = \sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{(b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_n + x_n)} (-1)^{z \cdot b}
 \end{split}
 \end{equation}
 
 
-When $x=0^n$, we see that the sum simplifies to $\sum_{b \in \{0, 1\}^n} (-1)^{z \cdot b}$ which is $2^n$ for $z=0^n$, and for any other $z$ half of the terms in the summation will be $-1$ and the other half $1$, giving $0$. For $x \neq 0^n$, note that the terms in the sum over $b$ differ from $\sum_{b \in \{0, 1\}^n} (-1)^{z \cdot b}$ only for $b = 1^n$ and $b = 1^n + x$. Therefore,
+Note that we have the last line since $\braket{b'|b+x} = 0$ when $b' \neq b + x$, and so we can substitute $b'_i = b_i + x_i$. When $x=0^n$, we see that the sum simplifies to $\sum_{b \in \{0, 1\}^n} (-1)^{z \cdot b}$ which is $2^n$ for $z=0^n$, and for any other $z$ half of the terms in the summation will be $-1$ and the other half $1$, giving $0$. For $x \neq 0^n$, note that the terms in the sum over $b$ differ from $\sum_{b \in \{0, 1\}^n} (-1)^{z \cdot b}$ only for $b = 1^n$ and $b = 1^n + x$. Therefore,
 
 \begin{equation}
 \begin{split}
 2^n\braket{C^{n-1}Z|X^xZ^z|C^{n-1}Z} & = \sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{(b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_n + x_n)} (-1)^{z \cdot b} \\
+& = - (-1)^{z \cdot 1^n} - (-1)^{z \cdot (1^n + x)} \hspace{2mm} + \sum\limits_{b \in \{0, 1\}^n \texttt{\textbackslash} \{1^n, 1^n + x \} } (-1)^{z \cdot b}  \\
 & = -2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot (1^n + x)} + \sum\limits_{b \in \{0, 1\}^n} (-1)^{z \cdot b}
 \end{split}
 \end{equation}
 
-When $z = 0^n$, this is simply $2^n - 4$. When $z \neq 0^n$, it is $-2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot (1^n + x)}$. Summarizing,
+When $z = 0^n$, this is simply $2^n - 4$. When $z \neq 0^n$, it is $-2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot (1^n + x)}$, and we have two more final cases. The first is when $x \cdot z$ is odd, where we get:
+\begin{equation}
+\begin{split}
+-2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot (1^n + x)} & = -2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot 1^n} (-1)^{z \cdot x} \\
+& = -2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot 1^n} (-1)^1 \\
+& = -2(-1)^{z \cdot 1^n} + 2(-1)^{z \cdot 1^n} \\
+& = 0
+\end{split}
+\end{equation}
+and if $x \cdot z$ is even, then we have $-2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot 1^n} = -4(-1)^{z \cdot 1^n}$ instead, which simply becomes $4$ since the pauli spectrum requires we take the absolute value. We can now summarize:
 \begin{equation*}
 |\braket{C^{n-1}Z|X^xZ^z|C^{n-1}Z}| = \begin{cases}
-1 & \texttt{if } x = 0^n \texttt{ and } z = 0^n, \\
-0 & \texttt{if } x \cdot z \texttt{ is odd, or if } x = 0^n \texttt{ and } z \neq 0^n, \\
-1 - 2^{2-n} & \texttt{if } x \neq 0^n \texttt{ and } z = 0^n, \\
-2^{2-n} & \texttt{if } x \neq 0^n \texttt{ and } z \neq 0^n
- \texttt{ and } x \cdot z \texttt{is even}
+1 & \texttt{if } z = 0^n \texttt{ and } x = 0^n, \\
+1 - 2^{2-n} & \texttt{if } z = 0^n \texttt{ and } x \neq 0^n, \\
+0 & \texttt{if } z \neq 0^n \texttt{ and either } x = 0^n \texttt{ or } x \neq 0^n \texttt{ and } \\
+& x \cdot z \texttt{ is odd} \\
+2^{2-n} & \texttt{if } z \neq 0^n \texttt{ and } x \neq 0^n
+ \texttt{ and } x \cdot z \texttt{ is even}
 \end{cases}
 \end{equation*}
-We can count the number of each subset of binary vectors x and z to find multiplicities.
+We can count the number of each subset of binary vectors x and z to find multiplicities. When, $x=0^n$ and $z = 0^n$, there is clearly one one possible choice for each $x$ and $z$, thus we have a multiplicity of $1$. When $z = 0^n$ and $x \neq 0^n$, we now have only $1$ possibility for $z$ and $2^n - 1$ possibilities for $x$, giving a multiplicity of $2^n - 1$ for this case. Similarly, when $x = 0^n$ and $z \neq 0^n$ we have $2^n - 1$ possibilities again. Also, observe that $x \cdot z$ takes an odd value for $(2^{2n}-2^{n})/2$ different possible combinations of $x$ and $z$ pairings. Adding these and simplifying gives the multiplicity of the third case: $2^{2n-1} - 2^{n+1} - 1$. Finally, there are overall $2^{2n}$ different combinations of $x$ and $z$ pairings, so we can simply subtract all the multiplicities above from this to get the multiplicity of the fourth case, which comes out to be $2^{2n-1} - 3 \cdot 2^{n-1} + 1$ as above.
 \end{proof}
 
 \subsection{Lower Bounds for modular adder}
@@ -528,8 +540,51 @@ with $i + j$ evaluated modulo $2^n$. It is not possible to implement the adder c
 \end{proposition}
 
 \begin{proof}
-We proceed in two steps. First, we show that the adder circuit $A$ acting on the $n$-qubit quantum Fourier state $\ket{QFT_n^b}$ (defined below) and the stabilizer state $\ket{+}^{\otimes n}$ has the action $A(\ket{+}^{\otimes n} \ket{QFT_n^b})$. This tells us that if $A$ is implemented by a set of Clifford gates and Pauli measurements along with some input resource state $\ket{\psi}$, it must be that $\nu (\ket{\psi} \ket{QFT_n^b}) \geq \nu(\ket{QFT_n^{-b}} \ket{QFT_n^b})$ which implies that $\nu (\ket{\psi}) \geq \nu(\ket{QFT_n^{-b}})$ since the stabilizer nullity is additive. Second we show that $\nu(\ket{QFT_n^{-1}}) = n-2$, which then directly implies our bounds since if the bounds are not satisfied, $\nu(\ket{\psi}) \geq \nu(\ket{QFT_n^{-1}})$ would not be satisfied.
+We proceed in two steps. First, we show that the adder circuit $A$ acting on the $n$-qubit quantum Fourier state $\ket{QFT_n^b}$ (defined below) and the stabilizer state $\ket{+}^{\otimes n}$ has the action $A(\ket{+}^{\otimes n} \ket{QFT_n^b}) = \ket{QFT_n^{-b}}\ket{QFT_n^b}$. This tells us that if $A$ is implemented by a set of Clifford gates and Pauli measurements along with some input resource state $\ket{\psi}$, it must be that $\nu (\ket{\psi} \ket{QFT_n^b}) \geq \nu(\ket{QFT_n^{-b}} \ket{QFT_n^b})$ which implies that $\nu (\ket{\psi}) \geq \nu(\ket{QFT_n^{-b}})$ since the stabilizer nullity is additive. Second we show that $\nu(\ket{QFT_n^{-1}}) = n-2$, which then directly implies our bounds since if the bounds are not satisfied, $\nu(\ket{\psi}) \geq \nu(\ket{QFT_n^{-1}})$ would not be satisfied.
+
+First recall the family of quantum Fourier states for each integer $a = 0, 1, \dots, 2^n - 1$:
+\begin{equation}
+\label{QFTdef}
+\ket{QFT_n^a} = \frac{1}{\sqrt{2^n}} \sum\limits_{y=0}^{2^n-1} exp \Big[ \frac{i2 \pi a y}{2^n} \Big] \ket{y} = \otimes_{k=1}^n \frac{\ket{0} + e^{i2\pi a/2^k} \ket{1}}{\sqrt{2}}
+\end{equation}
+where $\ket{y}$ is an $n$-qubit basis state (with $y$ expressed in binary), and note that $\ket{QFT_n^0} = \ket{+}^{\otimes n}$, and $\ket{QFT_n^a} = \ket{a + 2}$. Consider applying the adder to a pair of such states:
+\begin{equation}
+\begin{split}
+A \big(\ket{QFT_n^a} \ket{QFT_n^b} \big) & = \frac{1}{2^n} \sum\limits_{y=0}^{2^n-1} \sum\limits_{z=0}^{2^n-1} exp \Big[ \frac{i2 \pi (ay + bz)}{2^n} \Big] \ket{y}\ket{z+y} \\
+& = \frac{1}{2^n} \sum\limits_{y=0}^{2^n-1} \sum\limits_{x=0}^{2^n-1} exp \Big[ \frac{i2 \pi (ay + b(x-y))}{2^n} \Big] \ket{y}\ket{x} \\
+& = \ket{QFT_n^{a-b}}\ket{QFT_n^b}
+\end{split}
+\end{equation}
+
+Setting $a=0$ gives $A(\ket{+}^{\otimes n} \ket{QFT_n^b}) = \ket{QFT_n^{-b}}\ket{QFT_n^b}$, as desired. Finally, to calculate $\nu \ket{QFT_n^{-b}}$, we use the sum of the stabilizer nullity for each state in the tensor product. From the tensor product variant of the definition of the $\ket{QFT_n^b}$ in equation \ref{QFTdef} the first two terms will have $\nu = 0$, since they will be computational basis states. The rest of the terms all have a relative phase, thus having $\nu = 1$ (i.e. they will only a trivial stabilizer group). Since the stabilizer nullity is additive, we have that $\nu(\ket{QFT_n^{-1}}) = n-2$. Then considering the following possible implications: $r\ket{T} \Longrightarrow \ket{QFT_n^{-1}}$, $r\ket{CS} \Longrightarrow \ket{QFT_n^{-1}}$, and $r\ket{CCZ} \Longrightarrow \ket{QFT_n^{-1}}$, and the respective stabilizer nullity values: $\nu (\ket{T}) = 1$, $\nu (\ket{CS}) = 2$ and $\nu (\ket{CCZ}) = 3$, we get the final results above using methods from section \ref{ConvBounds}.
 \end{proof}
+
+Note the calculation of $\nu(\ket{QFT_n^{-1}}) = \nu(\ket{QFT_n^{1}}) = n-2$ above also implies that the Quantum Fourier Transform on $n$ qubits can not be performed using fewer than $n-2$ copies of $\ket{T}$.
+
+\section{Lower Bounds for approximate unitary synthesis}
+In this section, we lower bound the number of resource states needed to approximate an arbitrary single-qubit unitary using Clifford gates and Pauli measurements. Unlike the previously known lower bounds, our bounds: allow for Pauli measurements; allow measurement outcomes to affect the subsequent parts of the protocol; and do not depend on the number of ancillary qubits used in the protocol.
+There are some subtleties to be addressed when analysing a protocol containing measurements that can affect the operations applied in subsequent parts of the protocol. In particular, the state the protocol outputs and the number of resource states it consumes are random variables, which depend on the sequence of measurement outcomes obtained. The following definition is convenient for formulating lower bounds in this setting.
+
+\begin{definition}
+Consider a protocol with measurement outcomes that can affect subsequent parts of the protocol. Fixing a sequence of measurement outcomes in the protocol specifies an associated post-selected quantum circuit. Every input state to such a protocol defines a probability distribution on the set of all measurement outcomes and on their associated post-selected quantum circuits. We say that the protocol has some property $P$ with probability at least p if, for all states input to the protocol, a sample drawn from the distribution of post-selected quantum circuits has the property $P$ with probability at least p.
+\end{definition}
+
+Next, we introduce two definitions used in the upcoming theorem. Firstly, we have the diamond norm, which offers a measure of distance between quantum operations, and is defined as: $insert diamond norm here$. Now, let $\mathcal{N}_{\ket{T}}(U, \epsilon)$ be the number of copies of $\ket{T}$ consumed by a stabilizer circuit that approximates a unitary U to within diamond-norm precision $\epsilon$. 
+
+
+\begin{theorem}
+Consider a protocol  that uses $\mathcal{N}_{\ket{T}}(U, \epsilon)$ copies of the resource state $\ket{\Psi}$ and stabilizer operations to approximate a one-qubit  unitary $U$ to within precision $\epsilon$ (measured by the diamond norm). For any positive $C>1$ and $\epsilon < 1/(2^8C)$ there exists a unitary $U$ such that the following inequalities must hold
+\begin{center}
+$\mathcal{N}_{\ket{T}}(U, \epsilon) \geq \frac{1}{6}log_2(1/\epsilon) - \frac{1}{6}log_2(C) - 1$
+\end{center}
+\begin{center}
+$\mathcal{N}_{\ket{CCZ}}(U, \epsilon) \geq \frac{1}{8}log_2(1/\epsilon) - \frac{1}{8}log_2(C) - \frac{3}{4}$
+\end{center}
+\begin{center}
+$\mathcal{N}_{\ket{CS}}(U, \epsilon) \geq \frac{1}{6}log_2(1/\epsilon) - \frac{1}{6}log_2(C) - 1$
+\end{center}
+with probability at least $(C-1)/C$. In particular, this is the case for all unitaries $U$ such that $2\sqrt{C \epsilon} \leq |\braket{0|U|1}|^2 \leq 6\sqrt{C \epsilon}$
+\end{theorem}
 
 \chapter{Conclusion}
 
