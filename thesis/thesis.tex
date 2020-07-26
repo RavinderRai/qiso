@@ -574,6 +574,7 @@ Next, we introduce two definitions used in the upcoming theorem. Firstly, we hav
 
 
 \begin{theorem}
+\label{Sec5mainTheorem}
 Consider a protocol  that uses $\mathcal{N}_{\ket{T}}(U, \epsilon)$ copies of the resource state $\ket{\Psi}$ and stabilizer operations to approximate a one-qubit  unitary $U$ to within precision $\epsilon$ (measured by the diamond norm). For any positive $C>1$ and $\epsilon < 1/(2^8C)$ there exists a unitary $U$ such that the following inequalities must hold
 \begin{center}
 $\mathcal{N}_{\ket{T}}(U, \epsilon) \geq \frac{1}{6}log_2(1/\epsilon) - \frac{1}{6}log_2(C) - 1$
@@ -588,7 +589,7 @@ with probability at least $(C-1)/C$. In particular, this is the case for all uni
 \end{theorem}
 
 \begin{theorem}
-Consider a post-selected stabilizer circuit with input $\ket{\psi_{in}}$ and output $\ket{\psi_{out}}$, where $\ket{\psi_{in}}$ is defined on no fewer qubits than $\ket{\psi_{out}}$. Then three exists a set of $k = \nu (\ket{\psi_{in}})-\nu (\ket{\psi_{out}})$ independent commuting Pauli operators $P_1, \dots , P_k$ and a Clifford unitary $C$ such that 
+Consider a post-selected stabilizer circuit with input $\ket{\psi_{in}}$ and output $\ket{\psi_{out}}$, where $\ket{\psi_{in}}$ is defined on no fewer qubits than $\ket{\psi_{out}}$. Then there exists a set of $k = \nu (\ket{\psi_{in}})-\nu (\ket{\psi_{out}})$ independent commuting Pauli operators $P_1, \dots , P_k$ and a Clifford unitary $C$ such that 
 \begin{center}
 $\ket{\psi_{out}} \otimes \ket{S} \propto CM_{P_1} \dots M_{P_k} \ket{\psi_{in}}$,
 \end{center}
@@ -602,8 +603,50 @@ Consider a protocol that, when averaged over measurement outcomes, produces a de
 \end{lemma}
 
 \begin{lemma}
+\label{lemma5.5}
 Consider a protocol that uses $\mathcal{N}_{\ket{\Psi}}(U, \epsilon)$ copies of the resource state $\ket{\Psi}$ and stabilizer operations to approximate a one-qubit unitary $U$ to within precision $\epsilon$ (measured by the diamond norm). For any $C>1$, let $N$ be the minimum number of copies of a resource state $\ket{\Psi}$  needed to approximate the state $\ket{\psi} = U\ket{1}$ to trace distance $2\sqrt{C\epsilon}$ with any protocol composed of stabilizer operations and post-selection. Then $\mathcal{N}_{\ket{\Psi}}(u, \epsilon) \geq N$ with probability at least $(C - 1)/C$, following the convention of Definition \ref{propertydef}.
 \end{lemma}
+
+\begin{lemma}
+\label{lemma5.6}
+Let $N_{\ket{CS}}(\ket{\psi}, \epsilon)$ be the minimum number of $\ket{CS}$ resource states required to approximate the one-qubit state $\ket{\psi}$ to within trace distance $\epsilon$ using stabilizer operations and post-selection. When $\epsilon < 1/8$, there exists a state $ket{\psi}$ such that $N_{\ket{CS}}(\ket{\psi}, \epsilon) \geq 1/3 \cdot log_2(1/\epsilon) - 2/3$. For example, this is the case for all states such that $\epsilon <|\braket{\psi | 0}|^2 < 3\epsilon$.
+\end{lemma}
+
+To generalize the above lemma from $\ket{CS}$ states to an arbitrary $k$-qubit resource state $\ket{\Psi}$, we must establish a lower bound on the quantity:
+\begin{equation}
+\frac{1}{2^m} \sum\limits_{\langle P \in P_1, \dots , P_m \rangle} \braket{\Psi|^{\otimes n} P|\Psi}^{\otimes n}
+\end{equation}
+where $\{ P_1, \dots , P_m \}$ are independent commuting Pauli operators and $m \leq k \cdot n$. Note that replacing $p$ with one in the statement of the lemma leads to a slightly weaker lower bound that does not require the knowledge of $p$. For example, it is not too difficult to generalize the above result to use $\ket{CCZ}$ states in place of $\ket{CS}$ states, because their Pauli expectations also take values $0$, $1$, and $\pm 1/2$. We then get the following lemma.
+
+\begin{lemma}
+\label{lemma5.7}
+Let $N_{\ket{CCZ}}(\ket{\psi}, \epsilon)$ be the minimum number of $\ket{CCZ}$ resource states required to approximate the one-qubit state $\ket{\psi}$ to within trace distance $\epsilon$ using stabilizer operations and post-selection probability $p$. When $\epsilon < 1/8$, there exists a state $ket{\psi}$ such that $N_{\ket{CCZ}}(\ket{\psi}, \epsilon) \geq 1/4 \cdot log_2(1/\epsilon) - 1/2$. 
+\end{lemma}
+
+\begin{proposition}
+Let $\{ P_1, \dots , P_k \}$ be independent commuting Pauli operators and let the probability of measuring the $+1$ eigenvalue of each be
+\begin{equation}
+\label{pvalue}
+p = 1/2^k \sum\limits_{\langle P \in P_1, \dots , P_m \rangle}  \braket{T|^{\otimes n} P|T}^{\otimes n}
+\end{equation}
+If the value of p is non-zero, then $p \geq \frac{1}{2^{2k+n}}$.
+\end{proposition}
+
+Now consider the following set:
+\begin{center}
+$\mathcal{R} = \Big\{ \frac{a+bi+\sqrt{2}(c+di)}{2^j} : \texttt{for } a, b, c, d, j \texttt{ integers} \Big\}$
+\end{center}
+Note that the set $\mathcal{R}$ is closed under addition, negation and multiplication, and contains $0$ and $1$ (and is even closed under complex conjugation). Thus, the set $\mathcal{R}$ is a ring.
+Note that the state $\ket{T}$ and all Pauli operators can be written with entries in $\mathcal{R}$, and hence, so can $p$ as defined in \ref{pvalue}. 
+
+\begin{lemma}
+\label{lemma5.9}
+Let $N_{\ket{T}}(\ket{\psi} , \epsilon)$ be the minimum number of $\ket{T}$ resource states required to approximate the one-qubit state $\ket{\psi}$ to within trace distance $\epsilon$ using stabilizer operations. When $\epsilon < 1/8$, there exists a state $\ket{\psi}$ such that $N_{\ket{T}}(\ket{\psi} , \epsilon) \geq 1/3 \cdot \texttt{log}_2(1/\epsilon) - 2/3$. For example, this is the case for all states such that $\epsilon < |\braket{\psi | 0}|^2 < 3\epsilon$.
+\end{lemma}
+
+\begin{proof}[Proof of theorem \ref{Sec5mainTheorem}]
+First note that setting $p=1$ on the right hand side of the inequalities in Lemma's   \ref{lemma5.6}, \ref{lemma5.7}, and \ref{lemma5.9} form new (yet weaker) inequalities which hold for all $p$. Then apply Lemma \ref{lemma5.5} to each of these inequalities.
+\end{proof}
 
 \chapter{Conclusion}
 
