@@ -599,8 +599,33 @@ where $\ket{S}$ is a stabilizer state and where $M_P$ is the projector on the ei
 The following lemma shows that a protocol that has an average output density matrix which is close to a desired state also has, on average, an output density matrix which is close to the desired state on individual runs of the protocol.
 
 \begin{lemma}
+\label{lemma5.4}
 Consider a protocol that, when averaged over measurement outcomes, produces a density matrix $\rho$ that has fidelity $\braket{\psi | \rho | \psi}$ at least $1 - \delta$ with a pure state $\ket{\psi}$. Then, for any $C > 1$, with probability at least $(C-1)/C$ the fidelity between $\ket{\psi}$ and the protocol's output is at least $1 - C\delta$ following the convention of Definition \ref{propertydef}.
 \end{lemma}
+
+\begin{proof}
+Suppose the protocol has $N$ possible sequences of measurement outcomes. Let $p_k$ be the probability of the $k^{th}$ sequence of measurement outcomes occurring, and let $\rho_k$ be the normalized density matrix of the output register for that sequence.
+For fixed $C > 1$ we split the set of all fixed sequences of measurement outcomes into two subsets, $S$ and its complement $\overline{S}$. Let the set $S$ contain sequences that output good approximations of $\ket{\psi}$ such that for $k \in S$, $\braket{\psi | \rho_k | \psi} \geq 1 - C \delta$, and let $\overline{S}$ contain sequences that output worse approximations, such that for $k \in \overline{S}$, $\braket{\psi | \rho_k | \psi} < 1 - C \delta$. Since, by assumption, the overall average output $\rho$ has fidelity at least $1 - \delta$ with $\ket{\psi}$, the probability $p_S$ of all outcomes leading to a good approximations can not be small. More explicitly, let $\rho_S$ and $\rho_{\overline{S}}$ be the normalized density matrices corresponding to averaging over the subsets $S$ and $\overline{S}$ respectively:
+\begin{center}
+$\rho_S \propto \sum\limits_{k \in S} p_k \rho_k$ and $\rho_{\overline{S}} \propto \sum\limits_{k \in \overline{S}} p_k \rho_k$
+\end{center}
+The density matrix of the output is then $\rho = p_S \rho_S + (1 - p_S)p_{\overline{S}}$. From above, $\braket{\psi | \rho | \psi} < 1 - C \delta$, so we have the following inequalities:
+\begin{center}
+$1 - \delta \leq \braket{\psi | \rho | \psi} = p_s \braket{\psi | \rho_S | \psi} + (1 - p_S) \braket{\psi | \rho_{\overline{S}} | \psi} \leq p_S + (1 - p_S)(1 - C \delta)$
+\end{center}
+Then by solving $1 - C \delta \leq p_S + (1 - p_S)(1 - C \delta)$ you get the desired lower bound: $p_S \geq \frac{C-1}{C}$.
+\end{proof}
+
+Now we want to consider the diamond norm distance between channels, and can give bounds in both directions between the trace distance and the fidelity $\sqrt{\braket{\psi | \rho | \psi}}$ using the Fuchs-van de Graaf inequalities:
+\begin{equation}
+\sqrt{\braket{\psi | \rho | \psi}} \geq 1 -\frac{1}{2}||\ket{\psi} \bra{\psi} - \rho ||_1
+\end{equation}
+
+\begin{equation}
+||\ket{\psi} \bra{\psi} - \rho ||_1 \leq 2\sqrt{1 - \braket{\psi | \rho | \psi}}
+\end{equation}
+
+From the second of these inequalities and from Lemma \ref{lemma5.4}, the following is implied:
 
 \begin{lemma}
 \label{lemma5.5}
