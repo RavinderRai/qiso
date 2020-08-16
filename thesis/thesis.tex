@@ -596,7 +596,15 @@ $\ket{\psi_{out}} \otimes \ket{S} \propto CM_{P_1} \dots M_{P_k} \ket{\psi_{in}}
 where $\ket{S}$ is a stabilizer state and where $M_P$ is the projector on the eigenspace of $P$.
 \end{theorem}
 
-The following lemma shows that a protocol that has an average output density matrix which is close to a desired state also has, on average, an output density matrix which is close to the desired state on individual runs of the protocol.
+The following lemma shows that a protocol that has an average output density matrix which is close to a desired state also has, on average, an output density matrix which is close to the desired state on individual runs of the protocol. It will also consider the diamond norm distance between channels, and using the inequalities below, we can give bounds in both directions between the trace distance and the fidelity $\sqrt{\braket{\psi | \rho | \psi}}$. The aforementioned inequalities are called the Fuchs-van de Graaf inequalities:
+\begin{equation}
+\sqrt{\braket{\psi | \rho | \psi}} \geq 1 -\frac{1}{2}||\ket{\psi} \bra{\psi} - \rho ||_1
+\end{equation}
+
+\begin{equation}
+\label{Fuchs2}
+||\ket{\psi} \bra{\psi} - \rho ||_1 \leq 2\sqrt{1 - \braket{\psi | \rho | \psi}}
+\end{equation}
 
 \begin{lemma}
 \label{lemma5.4}
@@ -613,19 +621,24 @@ The density matrix of the output is then $\rho = p_S \rho_S + (1 - p_S)p_{\overl
 \begin{center}
 $1 - \delta \leq \braket{\psi | \rho | \psi} = p_s \braket{\psi | \rho_S | \psi} + (1 - p_S) \braket{\psi | \rho_{\overline{S}} | \psi} \leq p_S + (1 - p_S)(1 - C \delta)$
 \end{center}
-Then by solving $1 - C \delta \leq p_S + (1 - p_S)(1 - C \delta)$ you get the desired lower bound: $p_S \geq \frac{C-1}{C}$.
+Note that we make use of the fact that the fidelity is always a value between $0$ and $1$, as a consequence of Uhlmann's theorem. Then by solving $1 - C \delta \leq p_S + (1 - p_S)(1 - C \delta)$ you get the desired lower bound: $p_S \geq \frac{C-1}{C}$.
+
+Now, using the equation \ref{Fuchs2}, we have that 
+\begin{equation}
+\begin{split}
+||\ket{\psi} \bra{\psi} - \rho ||_1 & \leq 2\sqrt{1 - (p_s \braket{\psi | \rho_S | \psi} + (1 - p_S) \braket{\psi | \rho_{\overline{S}} | \psi})} \\
+& = 2\sqrt{1 - p_s \braket{\psi | \rho_S | \psi} - (1 - p_S) \braket{\psi | \rho_{\overline{S}} | \psi}} \\
+& \leq 2\sqrt{1 + p_s(C\delta - 1) - (1 - p_S)} \\
+& = 2\sqrt{1 + p_sC\delta - p_s - 1 + p_S} \\
+& = 2\sqrt{p_sC\delta} \\
+& \leq 2\sqrt{C\delta}
+\end{split}
+\end{equation}
+This gives an upper bound on the trace distance.
 \end{proof}
 
-Now we want to consider the diamond norm distance between channels, and can give bounds in both directions between the trace distance and the fidelity $\sqrt{\braket{\psi | \rho | \psi}}$ using the Fuchs-van de Graaf inequalities:
-\begin{equation}
-\sqrt{\braket{\psi | \rho | \psi}} \geq 1 -\frac{1}{2}||\ket{\psi} \bra{\psi} - \rho ||_1
-\end{equation}
 
-\begin{equation}
-||\ket{\psi} \bra{\psi} - \rho ||_1 \leq 2\sqrt{1 - \braket{\psi | \rho | \psi}}
-\end{equation}
 
-From the second of these inequalities and from Lemma \ref{lemma5.4}, the following is implied:
 
 \begin{lemma}
 \label{lemma5.5}
@@ -671,6 +684,95 @@ Let $N_{\ket{T}}(\ket{\psi} , \epsilon)$ be the minimum number of $\ket{T}$ reso
 
 \begin{proof}[Proof of theorem \ref{Sec5mainTheorem}]
 First note that setting $p=1$ on the right hand side of the inequalities in Lemma's   \ref{lemma5.6}, \ref{lemma5.7}, and \ref{lemma5.9} form new (yet weaker) inequalities which hold for all $p$. Then apply Lemma \ref{lemma5.5} to each of these inequalities.
+\end{proof}
+
+\chapter{Tighter Bounds with measurement probabilities one half}
+\section{Lower bound with CCZ gates for C\textsuperscript{n}Z gate}
+Consider quantum states the have entries in $\mathbb{Z}[i, 1/2] = \big\{\frac{a+ib}{2^k}: a, b, k, \in \mathbb{Z} \big\}$ when written in the computational basis. Indeed, $\ket{C^nZ}$ can be written as vectors with entries in the above set. We have a few note worthy facts to observe here:
+\begin{itemize}
+\item The set $\mathbb{Z}[i, 1/2]$ is a ring since it is closed under addition, negation, multiplication and contains $0$ and $1$.
+\item If a state $\ket{\psi}$ has entries in $\mathbb{Z}[i, 1/2]$ then for any Hermitian multi-qubit Pauli operator $P$, the expectation $\braket{\psi | P | \psi}$ can be written as $a/2^k$ for integers $a, k$, and is in $\mathbb{Z}[i, 1/2]$ because the entries of all Pauli matrices are also, and $\mathbb{Z}[i, 1/2]$ is closed under complex conjugation.
+\item The expectation is also a real number and all the real numbers in $\mathbb{Z}[i, 1/2]$ are of the form $a/2^k$ for integers $a$ and $k$. 
+\item For stabilizer states Pauli expectations can only be $\pm 1$ and $0$.
+\end{itemize}
+
+The power of $2$ in the denominator of the Pauli expectation gives us a sense of how non-stabilizer the state is. We now develop an intuition for this sort of measure. Firstly, let $q$ be a non-zero rational number. It can be written as a product of integer powers of prime numbers in a unique way:
+\begin{center}
+$q = \pm 2^k \cdot p_1^{k(1)} \cdots p_m^{k(m)}$, $p_k$ are odd primes, and $k, k(1), \dots , k(m)$ are integers
+\end{center}
+
+Let us define $v_2 (q)$ to be $k$. Note that function $v_2$ is somewhat similar to log$|\cdot|$ in that $v_2(q_1q_2) = v_2(q_1) + v_2(q_2), v_2(\pm 1) = 0$ and $v_2 (q) = v_2 (-q)$. For odd integer $a$ and integer $k$ the value is $v_2 (a/2^k) = - k$. Note also that $v_2$ is always non-negative for integer arguments. It is convenient to extend $v_2$ to all rational numbers, by defining $v_2(0) = + \infty $ (and note that the multiplicative property still holds).
+\begin{definition}
+Let $\ket{\psi}$ be an $n$-qubit state with entries in $\mathbb{Z}[i, 1/2]$, the dyadic monotone is 
+\begin{center}
+$\mu_2 \ket{\psi} = \texttt{max} \big\{-v_2(\braket{\psi | P | \psi}): P \in \{I, X, Y, Z \}^{\otimes n} \big\}$.
+\end{center}
+\end{definition}
+The dyadic monotone basically is the maximum power of two in the denominator over the Pauli spectrum. Now note that it is invariant under Clifford unitaries because they map the set of all multi-qubit Pauli matrices to the set of all of all Pauli matrices up to a sign and $v_2$ is insensitive to the sign of its argument. Moreover, Clifford unitaries map states with entries in $\mathbb{Z}[i, 1/2]$ to states with entries in $\mathbb{Z}[i, 1/2]$ because all Clifford unitaries can be written as matrices with entries in $\mathbb{Z}[i, 1/2]$ up to a global phase. The next proposition shows a similarity between the stabilizer nullity $\nu$ and $\mu_2$, namely the nice behaviour under tensor products.
+
+\begin{proposition}
+Let $\ket{\phi}$ and $\ket{\psi}$ be states with entries in $\mathbb{Z}[i, 1/2]$, then 
+\begin{center}
+$\mu_2 (\ket{\phi} \otimes \ket{\psi}) = \mu_2 \ket{\phi} + \mu_2 \ket{\psi}$
+\end{center}
+\end{proposition}
+
+\begin{proof}
+The results follows from the fact that for Pauli matrics $P$ and $Q$ such that the expectations $\braket{\phi | P |\phi}$ and $\braket{\psi | Q | \psi}$ are non-zero it is the case that:
+\begin{center}
+$v_2 (\bra{\phi} \otimes \bra{\psi} (P \otimes Q) \ket{\phi} \otimes \ket{\psi}) = v_2 (\braket{\phi | P | \phi}) + v_2(\braket{\psi | Q | \psi})$.
+\end{center}
+\end{proof}
+
+Another important property is that the dyadic monotone is minimal for stabilizer states:
+\begin{proposition}
+Let $\ket{\psi}$ be a state in $\mathbb{Z}[i, 1/2]$, then $\mu_2 \ket{\psi} \geq 0$ with equality achieved if and only if $\ket{\psi}$ is a stabilizer state.
+\end{proposition}
+\begin{proof}
+Consider a non-zero Pauli expectation $\braket{\psi |P| \psi}$ and write it as $a/2^k$ for some odd integer $a$. Note that $k$ must be non-negative because $|\braket{\psi |P| \psi}| \leq 1$. This shows that $\mu_2 (\ket{\psi}) \geq 0$. For stabilizer states, the only non-zero expectations can be $\pm 1$ and therefore $\mu_2$ is zero. It remains to show that $\mu_2 (\ket{\psi}) = 0$ implies that $\ket{\psi}$ is a stabilizer state. First note that $\mu_2 (\ket{\psi}) = 0$ implies that all non-zero Pauli expectations are odd integers. Together with the condition $|\braket{\psi |P| \psi}| \leq 1$ this implies that the expectations can only be $\pm 1$, in other words either $P$ or $-P$ is in Stab$\ket{\psi}$. Suppose that $\ket{\psi}$ is an $n$-qubit state and let us compute the size of Stab$\ket{\psi}$. Note that the set $\{ I, X, Y, Z \}^{\otimes n}$ is an orthogonal basis of the space of matrices with respect to the inner product $\langle A, B \rangle = \texttt{Tr} AB^{\dag}$. The norm squared of the density matrix $\ket{\psi} \bra{\psi}$ is given be the following expression:
+\begin{center}
+$1 = \braket{\psi | \psi}^2 = \frac{1}{2^n} \sum\limits_{P \in \{ I, X, Y, Z \}^{\otimes n}} |\texttt{Tr}(\ket{\psi}\bra{\psi}P)|^2$
+\end{center}
+which implies that the size of Stab$\ket{\psi}$ is $2^n$ and therefore that $\ket{\psi}$ is a stabilizer state.
+\end{proof}
+
+We will now need the fact that Pauli measurements with probability half take states with entries in $\mathbb{Z}[i, 1/2]$ to states with entries in $\mathbb{Z}[i, 1/2]$ (allowing the dyadic monotone to be evaluated). To see this, recall that measuring a $\pm 1$ eigenvalue of a Pauli observable $P$ with probability $1/2$ is equivalent to multiplying the state by the matrix $(I \pm P)/\sqrt{2}$ which is equal to $(1 + i)(I \pm P)/2$ up to a global phase. The matrix $(1 + i)(I \pm P)/2$ has entries in the ring $\mathbb{Z}[i, 1/2]$ and therefore the resulting state will also have entries in $\mathbb{Z}[i, 1/2]$.
+
+The next goal is to show that $\mu_2$ in non-increasing under these measurements, but to do this we will require another property of the function $v_2$ as seen in the next proposition:
+
+\begin{proposition}
+\label{prop6.4}
+For arbitrary rational numbers $a, b$ the following inequality holds
+\begin{center}
+$v_2 (a_1 + a_2) \geq min(v_2 (a_1), v_2(a_2))$.
+\end{center} 
+\end{proposition}
+\begin{proof}
+Let us first prove the inequality for non-zero $a_1, a_2$. Rewrite $a_j = 2^{k_j}p_j/q_j$ for integer $k_j$ and odd integers $p_j$ and $q_j$ such that
+\begin{center}
+$a_1 + a_2 = 2^{min(k_1, k_2)} \big( 2^{k_1 - min(k_1, k_2)} p_1q_2 + 2^{k_2 - min(k_1, k_2)}p_2q_1 \big) /q_1q_2$.
+\end{center}
+Since $q_1$ and $q_2$ are odd, $v_2 (a_1 + a_2)$ is equal to
+\begin{center}
+min$(k_1, k_2) + v_2 \big( 2^{k_1 - min(k_1, k_2)} p_1q_2 + 2^{k_2 - min(k_1, k_2)}p_2q_1 \big)$
+\end{center}
+by the multiplicative property of $v_2$. Since $2^{k_1 - min(k_1, k_2)} p_1q_2 + 2^{k_2 - min(k_1, k_2)}p_2q_1$ is an integer, its value of $v_2$ is non-negative. Finally, the case when at least one of $a_j$ is zero follows from the fact that min$(x, +\infty) = x$.
+\end{proof}
+
+Next we use this to prove what we initially wanted to show.
+\begin{proposition}
+Let $\ket{\psi}$ be a state with entries in $\mathbb{Z}[i, 1/2]$, let $P$ be a Pauli observable such that measuring its eigenvalue $+1$ has probability $1/2$ and let $\ket{\psi_+}$ be the normalized result of that measurement. Then $\mu_2\ket{\psi} \geq \mu_2\ket{\psi_+}$. 
+\end{proposition}
+\begin{proof}
+Let us bound the value of $v_2$ for some Pauli operator $Q$ evaluated on the expectation $\braket{\psi_+ | Q |\psi_+}$. The normalized state is $\ket{\psi_+} = \frac{I + P}{\sqrt{2}}\ket{\psi}$. The expectation of $Q$ is therefore equal to:
+\begin{center}
+$\braket{\psi_+ | Q |\psi_+} = \braket{\psi | (I + P)Q(I + P) | \psi}/2$.
+\end{center}
+If $P$ and $Q$ anti-commute, the expectation is zero and does not contribute to the calculation of $\mu_2$. When $P$ and $Q$ commute, the expectation is equal to $\braket{\psi | Q | \psi} + \braket{\psi |PQ |\psi}$. Next we use the inequality from Proposition \ref{prop6.4} to see that:
+\begin{center}
+$v_2(\braket{\psi |Q| \psi} + \braket{\psi |PQ| \psi}) \geq \texttt{min}(\braket{\psi |Q|\psi}, \braket{\psi |pQ|\psi}) \geq -\mu_2\ket{\psi}$.
+\end{center}
+Now recall that $v_2(\braket{\psi |Q| \psi} + \braket{\psi |PQ| \psi}) = v_2(\braket{\psi_+ |Q| \psi_+})$ which is exactly equal to $\mu_2\ket{\psi_+}$ given our choice of $Q$. So finally by multiplying by $-1$, we have the result: $\mu_2\ket{\psi} \geq \mu_2\ket{\psi_+}$
 \end{proof}
 
 \chapter{Conclusion}
