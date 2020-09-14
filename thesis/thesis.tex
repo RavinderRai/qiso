@@ -841,8 +841,64 @@ Consider a protocol that uses stabilizer operations with measurements probabilit
 Let $\ket{cat}$ be a state used as a catalyst, then $\mu_2$ for the input of our protocol is $\mu_2 \ket{cat} + k$ and for the output the value of $\mu_2$ is $n(1-1/2^{d-1}) + \mu_2\ket{cat}$. This is because for odd $j$ and integer $d \geq 2$, $\mu_2 \ket{\pi j/2^d} = 1 - 1/2^{d-1}$. Above implies that $k \geq n(1 - 1/2^d)$.
 \end{proof}
 
+\chapter{Main Points of Section 6}
+The section is based around the dyadic monotone below. For this monotone function, we only consider states that have entries in the ring $\mathbb{Z}[i, 1/2] = \big\{\frac{a+ib}{2^k}: a, b, k, \in \mathbb{Z} \big\}$, and note that Pauli's and Clifford unitaries take states with entries in this ring too states with entries still in this ring.
 
 
+
+\begin{definition}
+Let $\ket{\psi}$ be an $n$-qubit state with entries in $\mathbb{Z}[i, 1/2]$, the dyadic monotone is 
+\begin{center}
+$\mu_2 \ket{\psi} = \texttt{max} \big\{-v_2(\braket{\psi | P | \psi}): P \in \{I, X, Y, Z \}^{\otimes n} \big\}$.
+\end{center}
+\end{definition}
+
+
+
+$v_2$ is defined as follows: let $q$ be a non-zero rational number and write it as:
+\begin{center}
+$q = \pm 2^k \cdot p_1^{k(1)} \cdots p_m^{k(m)}$, $p_k$ are odd primes, and $k, k(1), \dots , k(m)$ are integers
+\end{center}
+We let $v_2 (q) = k$. It also has the two properties: $v_2(a \cdot b) = v_2(a) + v_2(b)$ and $v_2(a + b) \geq min(v_2(a), v_2(b))$.
+
+
+\vspace{5mm}
+
+Properties of $\mu_2$ are:
+\begin{itemize}
+\item $\mu_2 (\ket{\phi} \otimes \ket{\psi}) = \mu_2 (\ket{\phi}) + \mu_2 (\ket{\psi})$
+\item Let $\ket{\psi}$ be a state in $\mathbb{Z}[i, 1/2]$, then $\mu_2 \ket{\psi} \geq 0$ with equality achieved if and only if $\ket{\psi}$ is a stabilizer state.
+\item it is non-increasing (under Pauli measurements with probability of $1/2$)
+\end{itemize}
+
+\vspace{5mm}
+
+We need to extend the ring that $\mu_2$ is defined on to:
+\begin{center}
+$\mathcal{R}_d = \mathbb{Z} \big[ exp(i\pi /2^d), 1/2 \big] = \Big\{ \frac{1}{2^k} \sum\limits_{j=0}^{2^d - 1} a_j \texttt{exp}(i\pi j/2^d): \texttt{where } a_j, k \texttt{ are integers} \Big\}$
+\end{center}
+Note that all of its previously mentioned properties still hold (and also for $v_2$).
+
+\vspace{5mm}
+
+Now, a result regarding the Quantum Fourier Transform:
+\begin{center}
+$\ket{QFT_n^a} = \sum\limits_{y=o}^{2^n-1} \texttt{exp}\Big[ \frac{i2\pi ay}{2^n} \Big] \ket{y} = \otimes_{k=1}^n \big( \ket{0} + e^{i2\pi a/2^k}\ket{1}\big)$,
+\end{center}
+For all odd $a$, $\mu_2\ket{QFT_n^a} = n-3 +(1/2)^{n-2}$.
+
+\vspace{5mm}
+
+The following are three possibly relevant results/theorems:
+
+\begin{enumerate}
+\item At least $n-2$ $\ket{CCZ}$ states are needed to implement the $n$-qubit multiply controlled $Z$ gate $C^{n-1}Z$ by using stabilizer operations with measurement probabilities one half.
+
+\item At least $n-2$ $\ket{CCZ}$ states are needed to implement the $n$-qubit modular adder for $n \geq 3$ by using stabilizer operations with measurement probabilities one half.
+
+
+\item Consider a protocol that uses stabilizer operations with measurements probability $50 \% $, $\ket{CCZ}$ states and a multi-qubit state as a catalyst. The catalyst has entries in $\mathcal{R}_{d'}$ for some $d'$. Suppose that such a circuit uses $k$ $\ket{CCZ}$ states and produces $n$ states $\ket{\pi j/2^d}$ for odd $j$ and integer $d \geq 2$, then $k \geq n(1-1/2^{d-1})$. Asymptotically, at least $1 - 1/2^{d-1}$ copies of $\ket{CCZ}$ state are needed to produce state $\ket{\pi j/2^d}$.
+\end{enumerate}
 \chapter{Conclusion}
 
 Did it!
