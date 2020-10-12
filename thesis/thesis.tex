@@ -55,9 +55,9 @@
 
 \ldots
 
-\chapter{Stabilizer Formalism}
+\chapter{The Stabilizer Formalism}
 \section{Basics}
-To begin, we need to introduce and develop the formalism of stabilizer operators and its related quantities, but first some  basic definitions, starting with the Pauli matrices.
+%To begin, we need to introduce and develop the formalism of stabilizer operators and its related quantities, but first some  basic definitions, starting with the Pauli matrices.
 
 \begin{definition}
 The \emph{Pauli matrices} $X$, $Y$, and $Z$ are defined as:
@@ -65,25 +65,29 @@ The \emph{Pauli matrices} $X$, $Y$, and $Z$ are defined as:
   X= \begin{bmatrix}
     0 & 1 \\
     1 & 0
-  \end{bmatrix}
+  \end{bmatrix}, \quad
   Y = \begin{bmatrix}
   0 & -i \\
   i & 0
-  \end{bmatrix}
+  \end{bmatrix}, \quad \mbox{and} \quad
   Z = \begin{bmatrix}
   1 & 0 \\
   0 & -1
-  \end{bmatrix}
+  \end{bmatrix}.
   \]
 \end{definition}
 
-\begin{definition}
-\label{PauliGroup}
-The \emph{Pauli group on $n$ qubits} $\mathcal{P}(n)$ is a group with elements $\{ \pm I, \pm X, \pm Y, \pm Z, \pm iI, \pm iX, \pm iY, \pm iZ \}^{\otimes n}$, where $\otimes n$ represents tensors of these $ 2 \times 2$ matrices.
-\end{definition}
+We write $A \otimes B$ for the tensor product of two matrices $A$ and $B$. If S is a set of matrices then $M^{\otimes n}$ is the set of matrices comprised of tensor products of elements ins $M$.
 
 \begin{definition}
-For $P \in \mathcal{P}(n)$, we have the notation $P_j = I \otimes \dots \otimes I \otimes P \otimes I \dots \otimes I$, where the $P$ is applied to the $j^{th}$ qubit.
+\label{PauliGroup}
+The \emph{Pauli group on $n$ qubits} $\mathcal{P}(n)$ is the matrix group with elements $\{ \pm I, \pm X, \pm Y, \pm Z, \pm iI, \pm iX, \pm iY, \pm iZ \}^{\otimes n}$.
+\end{definition}
+
+Note that the $\pm 1$ and $\pm i$ factors in the elements of $\mathcal{P}(n)$ ensures the closure of the group.
+
+\begin{definition}
+For $P \in \mathcal{P}(1)$, we write $P_j$ for $I \otimes \dots \otimes I \otimes P \otimes I \dots \otimes I$.
 \end{definition}
 
 \begin{proposition}
@@ -91,171 +95,24 @@ We have $|\mathcal{P}(n)|=4^{n+1}$.
 \end{proposition}
 
 \begin{proof}
-By induction, first let $n=1$. Then from definition \ref{PauliGroup} we easily see that there are $16 = 4^2$ elements in $\mathcal{P}(1)$, so the base case is true. Now assume true for $m$ qubits, i.e. $|\mathcal{P}(m)| = 4^{m+1}$. Then to $\mathcal{P}(m+1)$ has elements that are tensor products of elements in $\mathcal{P}(m)$ and $I$, $X$, $Y$, and $Z$. Thus there are $4 \cdot 4^{m+1} = 4^{(m+1)+1}$ elements in $\mathcal{P}(m+1)$. Note we do not take tensor products with $-I, \pm iI, -X, \ldots$, as we would then quadruple count the elements in $\mathcal{P}(m+1)$.
+By induction, first let $n=1$. Then from definition \ref{PauliGroup} we see that there are $16 = 4^2$ elements in $\mathcal{P}(1)$, so the base case is true. Now assume that the statement is true for $m$ qubits, i.e. $|\mathcal{P}(m)| = 4^{m+1}$. Then $\mathcal{P}(m+1)$ has elements that are tensor products of elements in $\mathcal{P}(m)$ and $I$, $X$, $Y$, and $Z$. Thus there are $4 \cdot 4^{m+1} = 4^{(m+1)+1}$ elements in $\mathcal{P}(m+1)$. Note that we only count these tensor products since e.g., $P \otimes -iX = P' \otimes X$ where $P' = -iP$, for $P, P' \in \mathcal{P}(m)$.
 \end{proof}
 
 \begin{definition}
-Let $\ket{\psi}$ be a quantum state and $U$ be an operator, then we say that $\ket{\psi}$ is stabilized by $U$ if $U\ket{\psi} = U$. 
+Let $\ket{\psi}$ be a quantum state and $U$ be an operator, then we say that $\ket{\psi}$ is \emph{stabilized} by $U$ if $U\ket{\psi} = \ket{\psi}$. 
 \end{definition}
 
 \begin{definition}[Stabilizer]
-Let $\ket{\psi}$ be a non-zero $n$-qubit state. The stabilizer of $\ket{\psi}$ is the sub-group of the Pauli group $\mathcal{P}(n)$ on $n$ qubits for which $\ket{\psi}$ is a $+1$ eigenstate, denoted by Stab$\ket{\psi}$. This means that Stab$\ket{\psi}$ = $\{P \in \mathcal{P}(n) \: P \ket{\psi} = \ket{\psi} \}$. The states for which the size of the stabilizer is $2^n$are called stabilizer states. States for which the stabilizer contains only the identity matrix are said to have a trivial stabilizer. If Pauli $P$ is in Stab$\ket{\psi}$, we say that P stabilizes $\ket{\psi}$.
+Let $\ket{\psi}$ be a non-zero $n$-qubit state. The \emph{stabilizer} of $\ket{\psi}$ is the subgroup $\mathcal{P}(n)$ for which $\ket{\psi}$ is a $+1$ eigenstate, and is denoted by Stab$\ket{\psi}$. 
 \end{definition}
 
+This means that Stab$\ket{\psi}$ = $\{P \in \mathcal{P}(n) \: P \ket{\psi} = \ket{\psi} \}$.  States for which the stabilizer contains only the identity matrix are said to have a trivial stabilizer. 
 
-The reason behind using this stabilizer formalism is that we can easily describe many quantum states by working with operators that stabilize them, rather than by explicitly working with the states themselves. A key component to making use of the stabilizer formalism lies in the Pauli group $\mathcal{P}(n)$ defined above. Note that the $\pm 1$ and $\pm i$ factors in the elements of $\mathcal{P}(n)$ ensures the closure of the group.
-
-\begin{definition}
-Now, suppose $S$ is a subgroup of $\mathcal{P}(n)$ and define $V_S$ to be the set of $n$ qubit states which are fixed by every element of $S$. $V_S$ is the vector space stabilized by $S$, and we call $S$ the stabilizer of the space $V_S$. 
+\begin{definition}[Stabilizer States]
+Let $\ket{\psi}$ be a state for which the size of its stabilizer is $2^n$. The we call $\ket{\psi}$ a stabilizer state.
 \end{definition}
 
-We can also make use of the Pauli groups generators, where to check if a particular vector is stabilized by a group $S$, checking if the generators stabilize it will be sufficient.
-
-Next, we need two conditions for a subgroup $S$ of the Pauli group to be able to be used as the stabilizer for a non-trivial vector space. To see these conditions, consider the subgroup $\{\pm I, \pm X \}$ of $\mathcal{P}(1)$. Obviously the only solution to $(-I)\ket{\psi} = \ket{\psi}$ is $\ket{\psi} = 0$, and so $\{\pm I, \pm X \}$ stabilizes the trivial vector space. An immediate consequence of this is that we need $-I$ to not be an element of $S$, and furthermore, all elements of $S$ must commute. Hence, if $V_S$ is not trivial then $S$ is a commutative group that does not contain $_I$.
-
-The following is a useful proposition which we make use of later on:
-\begin{proposition}
-Let $S = \langle g_1, \dots , g_{n-k} \rangle$ be generated by $n-k$ independent and commuting elements from $\mathcal{P}(n)$, and such that $-I \not \in S$. Then $V_S$ is a $2^k$ - dimensional vector space.
-\end{proposition}
-
-
-\section{Relating Unitaries}
-Now we describe how unitaries relate to the stabilizer formalism, starting with a proposition. 
-\begin{proposition}
-$Stab(\ket{\psi}) = \langle g_1 , \dots , g_n \rangle \Longrightarrow Stab(U\ket{\psi}) = \langle Ug_1U^{\dag}, \dots , Ug_lU^{\dag} \rangle$
-\end{proposition}
-\begin{proof}
-First, suppose we apply a unitary operations $U$ to a vector space $V_S$ stabilized by the subgroup $S$ as before, and let $\ket{\psi} \in V_S$. Note that $S = Stab(\ket{\psi})$. Then for any $g \in S$, $U\ket{\psi} = Ug\ket{\psi} = UgU^{\dag}U\ket{\psi}$. Thus, the state $U\ket{\psi}$ is stabilized by $UgU^{\dag}$, and so the vector space $UV_S$ is stabilized by the group $USU^{\dag}$. Furthermore, if $g_1, \dots , g_l$ generate $S$, then $Ug_1U^{\dag}, \dots , Ug_lU^{\dag}$ generates $USU^{\dag}$.
-\end{proof}
-
-There is a particularly appealing and advantageous form that special unitary operations take on. For us, the Hadamard and phase gates are nice examples to consider. We define them now, along with the CNOT gate which will be used later on.
-
-\begin{definition}
-The Hadamard ($H$), phase ($S$) and controlled-NOT (CNOT) gates are defined as follows:
-\begin{equation}
-H = 
-\frac{1}{\sqrt{2}} 
-\begin{bmatrix}
-1 & 1 \\
-1 & -1
-\end{bmatrix}
-\hspace{5mm}
-S = 
-\begin{bmatrix}
-1 & 0 \\
-0 & i
-\end{bmatrix}
-\hspace{5mm}
-CNOT = 
-\begin{bmatrix}
-1 & 0 & 0 & 0 \\
-0 & 1 & 0 & 0 \\
-0 & 0 & 0 & 1 \\
-0 & 0 & 1 & 0
-\end{bmatrix}.
-\end{equation}
-\end{definition}
-
-
-\begin{proposition}
-$H$ and $S$ act on Pauli's as follows:
-\begin{center}
-$HXH^{\dag} = Z$ and $HZH^{\dag} = X$, $SXS^{\dag} = Y$ and $SZS^{\dag} = Z$.
-\end{center}
-Note that we need not specify the action on $Y$ since $Y = iXZ$, so the action on $X$ and $Z$ gives and fixes the action on $Y$.
-\end{proposition}
-
-
-The state $\ket{0}$ is stabilized by $Z$, and after applying the Hadamard to $\ket{0}$ to get the new state $\ket{+}$, we see that it is now stabilized by $X$. The power in this example can be seen once you consider the general $n$ qubit case. Consider the state $\ket{0}^{\otimes n}$ whose stabilizer is $\langle Z_1, Z_2, \dots , Z_n \rangle$. Then applying the Hadamard to each of of the $n$ qubits gives a state with stabilizer $\langle X_1 , X_2, \dots , X_n \rangle $. Now, observe that the final state vector here requires $2^n$ amplitudes to be specified, compared with the description provided by the generators: $\langle X_1, \dots , X_n \rangle$, which is linear in $n$. 
-
-You can see that there is no entanglement in the quantum computer here, after applying the Hadamard to each qubit. This may lead to thinking that this stabilizer formalism is not so useful, however this changes when you see that there is an efficient description of the controlled-NOT gate, which together with the Hadamard gate can create entanglement. 
-
-It turns out that there is a theorem that says that any unitary operation that takes elements of $\mathcal{P}(n)$ to elements of $\mathcal{P}(n)$ under conjugation can be composed of Hadamard, phase and controlled-NOT gates (proved later). This brings us to what we call the Clifford hierarchy. The Pauli group defines the $1st-level$ of the Clifford Hierarchy, which is $\mathcal{C}^{(1)} = e^{i\theta} \cdot \{I, X, Y, Z\}^{\otimes n}$, so it is $\mathcal{P}(1)$ but with all phases. The aforementioned group of automorphisms of the Pauli group is the $2nd-level$ of the Clifford Hierarchy, $\mathcal{C}^{(2)}$, and is also known as both the Clifford Group and the normalizer of $\mathcal{P}(n)$. We now define the $k^{th}-level$ of the Clifford Hierarchy, and follow it with an aforementioned theorem.
-
-\begin{definition} The k-th level of the Clifford Hierarchy is:
-\label{CliffHierarchy}
-\begin{equation}
-\mathcal{C}^{(k)} = \{ U | UPU^{\dag} \in \mathcal{C}^{(k-1)}, \forall P \in \mathcal{P}(n) \}
-\end{equation}
-\end{definition}
-
-\begin{theorem}
-Let $U \in \mathcal{C}^{(k)}$, then up to a global phase $U$ may be composed of $H$, $S$, and $CNOT$ gates.
-\end{theorem}
-
-It is important to note that circuits made from only gates in $\mathcal{C}^{(2)}$ are not universal for quantum computing. To get around this issue, we can use gates from the $3rd-level$ of the Clifford Hierarchy: $\mathcal{C}^{(3)} = \{ U | UPU^{\dag} \in \mathcal{C}^{(2)}, \forall P \in \mathcal{P}(n)$, and so we will use unitaries from $\mathcal{C}^{(3)}$ frequently.
-
-Two gates that are commonly used, including in this paper, that are not in the normalizer are the $\pi /8$ and Toffoli gates. 
-
-\begin{definition}
-The $\pi /8$ ($T$) and Toffoli ($CCNOT$) gates are defined as follows:
-\begin{equation}
-T = 
-\begin{bmatrix}
-1 & 0 \\
-0 & e^{i\pi/4}
-\end{bmatrix}
-\hspace{5mm}
-CCNOT = 
-\begin{bmatrix}
-1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
-0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
-0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
-\end{bmatrix}.
-\end{equation}
-\end{definition}
-
-
-Unfortunately analysing quantum circuits that include these gates via the stabilizer formalism is rather inconvenient. To see why, simply observe the following example conjugation calculations:
-\begin{center}
-$TXT^{\dag} = \frac{X+Y}{\sqrt{2}}$
-\end{center}
-\begin{center}
-$VX_1V^{\dag} = X_1 \otimes \frac{I + Z_2 +X_3 -Z_2X_3}{2}$
-\end{center}
-where we let $T$ be the $\pi /8$ gate and $V$ be the Toffoli gate where qubit $1$ and $2$ are controls and qubit $3$ is the target. Fortunately, we are still able to make use of the stabilizer formalism and relate it to these gates, particularly to the $T$ gate, later on.
-
-\section{Measurements}
-Yet another benefit of the stabilizer formalism shows up in the topic of measurements, specifically because we can quite easily describe measurements in the computational basis. Consider a $g \in \mathcal{P}(n)$, and imagine we make a measurement on it. Recall this means that $g$ is a Hermitian operator and is a product of Pauli's, and also for convenience let it not have any multiplicative factor of $-1$ or $\pm i$. Letting our system be in some state $\ket{\psi}$ with stabilizer $\langle g_1, \dots , g_n \rangle $, how does the stabilizer of the state transform under measurement? 
-
-\begin{proposition}
-Given a state $\ket{\psi}$ and Pauli $g$, after measurement the state transforms into $(I + g)\ket{\psi}/\sqrt{2}$ when the $+1$ result occurs, and $(I - g)\ket{\psi}/\sqrt{2}$ when the $-1$ result occurs, with probabilities $p(+1) = p(-1) = 1/2$.
-\end{proposition}
-
-\begin{proof}
-We have two possible scenario's to consider, the first of which is when $g$ commutes with all generators. Observe that $g_jg\ket{\psi} = gg_j\ket{\psi} = g\ket{\psi}$ for each stabilizer generator, so $g\ket{\psi}$ is in $V_S$ and is thus a multiple of $\ket{\psi}$. Because $g^2 = I$, $g\ket{\psi} = \pm\ket{\psi}$, so either $g$ or $-g$ must be in the stabilizer. It follows that either $g$ or $-g$ is an element of the stabilizer. Suppose $g$ is in the stabilizer, then $g\ket{\psi} = \ket{\psi}$ and so a measurement of $g$ yields $+1$ with probability one, and the measurement leaves the stabilizer invariant. The argument for $-g$ being in the stabilizer follows similarly.
-
-The second scenario is when $g$ anti-commutes with one or more generators. Without loss of generality let $g$ anti-commute with $g_1$, and commute with all other generators. Note that if $g$ did anti-commutes with another generator, say $g_2$, then it does commute with $g_1g_2$, and so you could just replace the generator $g_2$ with $g_1g_2$ in the stabilizer of $\ket{\psi}$. Also, $g$ has eigenvalues $\pm 1$ and so the projectors for the measurements outcomes are $(I \pm g)/2$ respectively, so we have measurement probabilities:
-\begin{center}
-$p(+1) = tr(\frac{I+g}{2}\ket{\psi}\bra{\psi})$
-\end{center}
-and 
-\begin{center}
-$p(-1) = tr(\frac{I-g}{2}\ket{\psi}\bra{\psi})$
-\end{center}
-Now, using the equalities $g_1\ket{\psi} = \ket{\psi}$ and $gg_1 = -g_1g$, and the cyclic property of the trace, we get:
-\begin{center}
-$p(+1) = tr(\frac{I+g}{2}g_1\ket{\psi}\bra{\psi}) = tr(g_1\frac{I-g}{2}g_1\ket{\psi}\bra{\psi}) = tr(\frac{I-g}{2}\ket{\psi}\bra{\psi}g_1)$
-\end{center}
-Since $g_1 = g_1^{\dag}$ and $\bra{\psi}g_1 = \bra{\psi}$ we have that:
-\begin{center}
-$p(+1) = tr(\frac{I-g}{2}\ket{\psi}\bra{\psi}) = p(-1)$.
-\end{center}
-Moreover, $p(+1) + p(-1) = 1$, so $p(+1) = p(-1) = 1/2$. So when the $+1$ result occurs, the new state of the system will be $(I + g)\ket{\psi}/\sqrt{2}$ with stabilizer $\langle g, g_2, \dots , g_n \rangle$ and probability $1/2$. And similarly, when the $-1$ result occurs, the state will be $(I - g)\ket{\psi}/\sqrt{2}$ with stabilizer $\langle -g, g_2, \dots , g_n \rangle$ and probability $1/2$.
-\end{proof}
-
-
-\chapter{Basic Techniques}
-
-\section{Stabilizer Nullity}
-
-
-
+The reason behind using this stabilizer formalism is that we can easily describe many quantum states by working with operators that stabilize them, rather than by explicitly working with the states themselves. A key component to making use of the stabilizer formalism lies in the Pauli group $\mathcal{P}(n)$ defined above. Next are a few propositions regarding the stabilizer.
 
 \begin{proposition}
 \label{stabilizerfacts}
@@ -315,9 +172,165 @@ If $\ket{\psi}$ is an $n$-qubit stabilizer state, then $\textit{Stab}\ket{\psi}$
 First note that each $P \in \textit{Stab}\ket{\psi}$ imposes the linear constraint that $P\ket{\psi} = \ket{\psi}$ on the $2^n$-dimensional vector space. The subspace of vectors that satisfy this constraint has half of this space, meaning that it has dimension $2^{n-1}$. Let gen($\ket{\psi}$) be the set of generators for $\textit{Stab}\ket{\psi}$, where we add independent generators to gen($\ket{\psi}$) one by one. This way we subsequently half the dimension of the vector subspace that satisfies all the linear constraints, and since $|\textit{gen}(\ket{\psi})| = n$, this dimension reduces to $1$. Thus there is only one possible vector and so $\ket{\psi}$ is uniquely determined.
 \end{proof}
 
+\begin{definition}
+Let $S$ be a subgroup of $\mathcal{P}(n)$, and let $V_S$ be the set of $n$ qubit states which are fixed by every element of $S$. $V_S$ is the vector space stabilized by $S$, and we call $S$ the stabilizer of the space $V_S$. 
+\end{definition}
+
+We can also make use of the Pauli groups generators, where to check if a particular vector is stabilized by a group $S$, checking if the generators stabilize it will be sufficient.
+
+
+\begin{proposition}
+Let $S$ be a subgroup of $\mathcal{P}(n)$ and $V_S$ its associated vector space stabilized by $S$. Then if $V_S$ is not trivial $S$ is a commutative group that does not contain $-I$.
+\end{proposition}
+\begin{proof}
+Consider the subgroup $\{\pm I, \pm X \}$ of $\mathcal{P}(1)$. Obviously the only solution to $(-I)\ket{\psi} = \ket{\psi}$ is $\ket{\psi} = 0$, and so $\{\pm I, \pm X \}$ stabilizes the trivial vector space. An immediate consequence of this is that we need $-I$ to not be an element of $S$. Furthermore, all elements of $S$ must commute, because if they did not then they would anti-commute, so $-I$ would necessarily be an element of the group.
+\end{proof}
+
+
+\begin{proposition}
+Let $S = \langle g_1, \dots , g_{n-k} \rangle$ be generated by $n-k$ independent and commuting elements from $\mathcal{P}(n)$, and such that $-I \not \in S$. Then $V_S$ is a $2^k$ - dimensional vector space.
+\end{proposition}
+
+
+\section{Relating Unitaries}
+Now we describe how unitaries relate to the stabilizer formalism, starting with a proposition. 
+\begin{proposition}
+$Stab(\ket{\psi}) = \langle g_1 , \dots , g_n \rangle \Longrightarrow Stab(U\ket{\psi}) = \langle Ug_1U^{\dag}, \dots , Ug_lU^{\dag} \rangle$
+\end{proposition}
+\begin{proof}
+First, suppose we apply a unitary operations $U$ to a vector space $V_S$ stabilized by the subgroup $S$ as before, and let $\ket{\psi} \in V_S$. Note that $S = Stab(\ket{\psi})$. Then for any $g \in S$, $U\ket{\psi} = Ug\ket{\psi} = UgU^{\dag}U\ket{\psi}$. Thus, the state $U\ket{\psi}$ is stabilized by $UgU^{\dag}$, and so the vector space $UV_S$ is stabilized by the group $USU^{\dag}$. Furthermore, if $g_1, \dots , g_l$ generate $S$, then $Ug_1U^{\dag}, \dots , Ug_lU^{\dag}$ generates $USU^{\dag}$.
+\end{proof}
+
+There is a particularly appealing and advantageous form that special unitary operations take on. For us, the Hadamard and phase gates are nice examples to consider. We define them now, along with the CNOT gate which will be used later on.
 
 \begin{definition}
-Let $\ket{\psi}$ be a non-zero n-qubit state. The Stabilizer nullity of $\ket{\psi}$ is $\nu(\ket{\psi}) = n - log_2 |\text{Stab}\ket{\psi}|$.
+The Hadamard ($H$), phase ($S$) and controlled-NOT (CNOT) gates are defined as follows:
+\begin{equation}
+H = 
+\frac{1}{\sqrt{2}} 
+\begin{bmatrix}
+1 & 1 \\
+1 & -1
+\end{bmatrix}, \quad
+S = 
+\begin{bmatrix}
+1 & 0 \\
+0 & i
+\end{bmatrix}, \quad \mbox{and} \quad
+CNOT = 
+\begin{bmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 1 \\
+0 & 0 & 1 & 0
+\end{bmatrix}.
+\end{equation}
+\end{definition}
+
+
+\begin{proposition}
+$H$ and $S$ act on Paulis as follows:
+\begin{center}
+$HXH^{\dag} = Z$ and $HZH^{\dag} = X$, $SXS^{\dag} = Y$ and $SZS^{\dag} = Z$.
+\end{center}
+Note that we need not specify the action on $Y$ since $Y = iXZ$, so the action on $X$ and $Z$ gives and fixes the action on $Y$.
+\end{proposition}
+
+
+The state $\ket{0}$ is stabilized by $Z$, and after applying the Hadamard to $\ket{0}$ to get the new state $\ket{+}$, we see that it is now stabilized by $X$. The power in this example can be seen once you consider the general $n$ qubit case. Consider the state $\ket{0}^{\otimes n}$ whose stabilizer is $\langle Z_1, Z_2, \dots , Z_n \rangle$. Then applying the Hadamard to each of of the $n$ qubits gives a state with stabilizer $\langle X_1 , X_2, \dots , X_n \rangle $. Now, observe that the final state vector here requires $2^n$ amplitudes to be specified, compared with the description provided by the generators: $\langle X_1, \dots , X_n \rangle$, which is linear in $n$. 
+
+You can see that there is no entanglement in the quantum computer here, after applying the Hadamard to each qubit. This may lead to thinking that this stabilizer formalism is not so useful, however this changes when you see that there is an efficient description of the controlled-NOT gate, which together with the Hadamard gate can create entanglement. 
+
+It turns out that there is a theorem that says that any unitary operation that takes elements of $\mathcal{P}(n)$ to elements of $\mathcal{P}(n)$ under conjugation can be composed of Hadamard, phase and controlled-NOT gates (proved later). This brings us to what we call the Clifford hierarchy. The Pauli group defines the $1st-level$ of the Clifford Hierarchy, which is $\mathcal{C}^{(1)} = e^{i\theta} \cdot \{I, X, Y, Z\}^{\otimes n}$, so it is $\mathcal{P}(1)$ but with all phases. The aforementioned group of automorphisms of the Pauli group is the $2nd-level$ of the Clifford Hierarchy, $\mathcal{C}^{(2)}$, and is also known as both the Clifford Group and the normalizer of $\mathcal{P}(n)$. We now define the $k^{th}-level$ of the Clifford Hierarchy, and follow it with an aforementioned theorem.
+
+\begin{definition} The k-th level of the Clifford Hierarchy is:
+\label{CliffHierarchy}
+\begin{equation}
+\mathcal{C}^{(k)} = \{ U | UPU^{\dag} \in \mathcal{C}^{(k-1)}, \forall P \in \mathcal{P}(n) \}
+\end{equation}
+\end{definition}
+
+\begin{theorem}
+Let $U \in \mathcal{C}^{(2)}$, then up to a global phase $U$ may be composed of $H$, $S$, and $CNOT$ gates.
+\end{theorem}
+
+
+\section{Measurements}
+Yet another benefit of the stabilizer formalism shows up in the topic of measurements, specifically because we can quite easily describe measurements in the computational basis. Consider a $g \in \mathcal{P}(n)$, and imagine we make a measurement on it. Recall this means that $g$ is a Hermitian operator and is a product of Pauli's, and also for convenience let it not have any multiplicative factor of $-1$ or $\pm i$. Letting our system be in some state $\ket{\psi}$ with stabilizer $\langle g_1, \dots , g_n \rangle $, how does the stabilizer of the state transform under measurement? 
+
+\begin{proposition}
+Given a state $\ket{\psi}$ and Pauli $g$, after measurement the state transforms into $(I + g)\ket{\psi}/\sqrt{2}$ when the $+1$ result occurs, and $(I - g)\ket{\psi}/\sqrt{2}$ when the $-1$ result occurs, with probabilities $p(+1) = p(-1) = 1/2$.
+\end{proposition}
+
+\begin{proof}
+We have two possible scenario's to consider, the first of which is when $g$ commutes with all generators. Observe that $g_jg\ket{\psi} = gg_j\ket{\psi} = g\ket{\psi}$ for each stabilizer generator, so $g\ket{\psi}$ is in $V_S$ and is thus a multiple of $\ket{\psi}$. Because $g^2 = I$, $g\ket{\psi} = \pm\ket{\psi}$, so either $g$ or $-g$ must be in the stabilizer. It follows that either $g$ or $-g$ is an element of the stabilizer. Suppose $g$ is in the stabilizer, then $g\ket{\psi} = \ket{\psi}$ and so a measurement of $g$ yields $+1$ with probability one, and the measurement leaves the stabilizer invariant. The argument for $-g$ being in the stabilizer follows similarly.
+
+The second scenario is when $g$ anti-commutes with one or more generators. Without loss of generality let $g$ anti-commute with $g_1$, and commute with all other generators. Note that if $g$ did anti-commutes with another generator, say $g_2$, then it does commute with $g_1g_2$, and so you could just replace the generator $g_2$ with $g_1g_2$ in the stabilizer of $\ket{\psi}$. Also, $g$ has eigenvalues $\pm 1$ and so the projectors for the measurements outcomes are $(I \pm g)/2$ respectively, so we have measurement probabilities:
+\begin{center}
+$p(+1) = tr(\frac{I+g}{2}\ket{\psi}\bra{\psi})$
+\end{center}
+and 
+\begin{center}
+$p(-1) = tr(\frac{I-g}{2}\ket{\psi}\bra{\psi})$
+\end{center}
+Now, using the equalities $g_1\ket{\psi} = \ket{\psi}$ and $gg_1 = -g_1g$, and the cyclic property of the trace, we get:
+\begin{center}
+$p(+1) = tr(\frac{I+g}{2}g_1\ket{\psi}\bra{\psi}) = tr(g_1\frac{I-g}{2}g_1\ket{\psi}\bra{\psi}) = tr(\frac{I-g}{2}\ket{\psi}\bra{\psi}g_1)$
+\end{center}
+Since $g_1 = g_1^{\dag}$ and $\bra{\psi}g_1 = \bra{\psi}$ we have that:
+\begin{center}
+$p(+1) = tr(\frac{I-g}{2}\ket{\psi}\bra{\psi}) = p(-1)$.
+\end{center}
+Moreover, $p(+1) + p(-1) = 1$, so $p(+1) = p(-1) = 1/2$. So when the $+1$ result occurs, the new state of the system will be $(I + g)\ket{\psi}/\sqrt{2}$ with stabilizer $\langle g, g_2, \dots , g_n \rangle$ and probability $1/2$. And similarly, when the $-1$ result occurs, the state will be $(I - g)\ket{\psi}/\sqrt{2}$ with stabilizer $\langle -g, g_2, \dots , g_n \rangle$ and probability $1/2$.
+\end{proof}
+
+It is important to note that circuits made from only gates in $\mathcal{C}^{(2)}$ are not universal for quantum computing. To get around this issue, we can use gates from the $3rd-level$ of the Clifford Hierarchy: $\mathcal{C}^{(3)} = \{ U | UPU^{\dag} \in \mathcal{C}^{(2)}, \forall P \in \mathcal{P}(n)$, and so we will use unitaries from $\mathcal{C}^{(3)}$ frequently.
+
+Two gates that are commonly used, including in this paper, that are not in the normalizer are the $\pi /8$ and Toffoli gates. 
+
+\begin{definition}
+The $\pi /8$ ($T$) and Toffoli ($CCNOT$) gates are defined as follows:
+\begin{equation}
+T = 
+\begin{bmatrix}
+1 & 0 \\
+0 & e^{i\pi/4}
+\end{bmatrix}
+\hspace{5mm}
+CCNOT = 
+\begin{bmatrix}
+1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+\end{bmatrix}.
+\end{equation}
+\end{definition}
+
+
+Unfortunately analysing quantum circuits that include these gates via the stabilizer formalism is rather inconvenient. To see why, simply observe the following example conjugation calculations:
+\begin{center}
+$TXT^{\dag} = \frac{X+Y}{\sqrt{2}}$
+\end{center}
+\begin{center}
+$VX_1V^{\dag} = X_1 \otimes \frac{I + Z_2 +X_3 -Z_2X_3}{2}$
+\end{center}
+where we let $T$ be the $\pi /8$ gate and $V$ be the Toffoli gate where qubit $1$ and $2$ are controls and qubit $3$ is the target. Fortunately, we are still able to make use of the stabilizer formalism and relate it to these gates, particularly to the $T$ gate, later on.
+
+
+\chapter{Monotones}
+
+\section{Stabilizer Nullity}
+
+
+
+
+\begin{definition}[Stabilizer Nullity]
+Let $\ket{\psi}$ be a non-zero n-qubit state. The \emph{Stabilizer Nullity} of $\ket{\psi}$ is $\nu(\ket{\psi}) = n - log_2 |\text{Stab}\ket{\psi}|$.
 \end{definition}
 
 \begin{proposition}
