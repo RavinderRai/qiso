@@ -5,6 +5,7 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{float}
+\usepackage{graphicx}
 
 \input{thesis.sty}
 
@@ -253,7 +254,65 @@ It turns out that there is a theorem that says that any unitary operation that t
 \begin{theorem}
 Let $U \in \mathcal{C}^{(2)}$, then up to a global phase $U$ may be composed of $H$, $S$, and $CNOT$ gates.
 \end{theorem}
+\begin{proof}
+We proceed by induction on $n$, the number of qubits.
+Let $U$ be a single qubit unitary operator such that for $p \in \mathcal{P}$, $UPU^{\dag} \in \mathcal{P}$.
 
+Now, suppose $U$ is an $n+1$ qubit gate in $N(G_{n+1})$ such that $UZ_1U^{\dag} = X_1 \otimes g$ and $UX_1U^{\dag} = Z_1 \otimes g'$ for some $g, g' \in G_n$.
+Define a circuit $C$ as:
+\begin{center}
+\includegraphics[scale = 0.5]{CliffordCircuitDef}
+\end{center}
+Now observe that $CZ_1C^{\dag} = X_1 \otimes g$ as follows:
+\begin{center}
+\includegraphics[scale = 0.5]{CZC}
+\end{center}
+
+Note that $g$ and $g'$ commute, as can be seen below:
+\begin{align}
+X_1Z_1 \otimes gg' &= (X_1 \otimes g)(Z_1 \otimes g') \\
+ &= UZ_1U^{\dag}UX_1U^{\dag} \\ 
+ &= -UX_1Z_1U^\dag \\
+ &= -UX_1U^\dag UZ_1U^\dag \\ 
+ &= -(Z_1 \otimes g')(X_1 \otimes g) \\
+ &= -(Z_1X_1 \otimes g'g) \\
+ &= X_1Z_1 \otimes g'g \\
+\end{align}
+Then we have that $I \otimes gg' = I \otimes g'g$, so applying the inverse of $I \otimes gg'$ to both sides, we have:
+\begin{align}
+I_{n+1} &= (I \otimes g'g)(I \otimes gg')^{-1} \\
+ &= (I \otimes g'g)(I \otimes g'^{-1}g^{-1}) \\ 
+ &= I \otimes g'gg'^{-1}g^{-1} \\
+\end{align}
+where $I_{n+1}$ is the identity on $n+1$ qubits. This implies that $g'gg'^{-1}g^{-1} = I_n$, thus $g'g = gg'$.
+
+Now we make use of this commutation to show that $CX_1C^\dag = Z_1 \otimes g'$:
+\begin{center}
+\includegraphics[scale = 0.5]{CXC}
+\end{center}
+Consider $U':= C^\dag U$. Then 
+\begin{center}
+$U'X_1U'^\dag = C^\dag U X_1 U^\dag C = C^\dag (Z_1 \otimes g') C = X_1$
+\end{center} and 
+\begin{center}
+$U'Z_1U'^\dag = C^\dag U Z_1 U^\dag C = C^\dag (X_1 \otimes g) C = Z_1$
+\end{center}
+so $U' \in \mathcal{C}^{(2)}$.
+
+Now let $U \in \mathcal{C}^{(2)}(n+1)$ so $UX_1U^\dag = P$ and $UZ_1U^\dag = Q$ for some $P, Q \in \mathcal{P}(n+1)$. Then we can write $P = P_1 \otimes g$ and $Q = Q_1 \otimes g'$ for $g, g' \in \mathcal{P}(n)$. From the inductive step, we can conjugate $UX_1U^\dag = P$ with some circuit $C$, which is comprised of only Hadamards and phase gates, such that 
+\begin{center}
+$CUX_1U^\dag C^\dag = CPC^\dag = C(P_1 \otimes g)C^\dag = Z_1 \otimes g$
+\end{center}
+and 
+\begin{center}
+$CUZ_1U^\dag C^\dag = CQC^\dag = C(Q_1 \otimes g')C^\dag = X_1 \otimes g'$
+\end{center}
+Let $u' = CU$, then by the inductive step, $U' \in \mathcal{C}^{(2)}(n)$. Next we repeat this process on $U'$ to get a $U'' = C'U' \in \mathcal{C}^{(2)}(n-1)$. Continue this process until we have a $U^{(n+1)'} = U^{n'}C^{n'} \in \mathcal{C}^{(2)}(1)$. Then $U = C^\dag U'$, but $U' = C'^\dag U''$, so $U = C^\dag C'^\dag U''$. Continuing this process results in 
+\begin{center}
+$U = C^\dag C'^\dag C''^\dag \cdots C^{n' \dag} U^{(n+1)'}$
+\end{center}
+Thus $U$ is a product of components comprised of only $H$ and $S$ gates, so it is as well (note $U^{(n+1)'}$ is a one-qubit Clifford so we know it is comprised of only $H$ and $S$ gates from the base case).
+\end{proof}
 
 \section{Measurements}
 Yet another benefit of the stabilizer formalism shows up in the topic of measurements, specifically because we can quite easily describe measurements in the computational basis. Consider a $g \in \mathcal{P}(n)$, and imagine we make a measurement on it. Recall this means that $g$ is a Hermitian operator and is a product of Pauli's, and also for convenience let it not have any multiplicative factor of $-1$ or $\pm i$. Letting our system be in some state $\ket{\psi}$ with stabilizer $\langle g_1, \dots , g_n \rangle $, how does the stabilizer of the state transform under measurement? 
