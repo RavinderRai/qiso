@@ -256,7 +256,7 @@ Let $U \in \mathcal{C}^{(2)}$, then up to a global phase $U$ may be composed of 
 \end{theorem}
 \begin{proof}
 We proceed by induction on $n$, the number of qubits.
-Let $U$ be a single qubit unitary operator such that for $p \in \mathcal{P}$, $UPU^{\dag} \in \mathcal{P}$.
+Let $U$ be a single qubit unitary operator such that for $P \in \mathcal{P}(1)$, $UPU^{\dag} \in \mathcal{P}$. So $UPU^\dag = Q$ for some $Q \in \mathcal{P}(1)$. Since conjugation by $U$ on $P$ essentially acts as an automorphism map, observe that $P, Q \not\in \{iX, iY, iZ\}$, since for example $X^2 = I$ so $(UXU^\dag )^2 = I$, but if $X \mapsto iX = Q$, then we will have $I = (UXU^\dag)^2 = (iX)^2 = -I$, which is obviously not true. Moreover, we also have that $P \neq iI$ and $P \neq I$.
 
 Now, suppose $U$ is an $n+1$ qubit gate in $N(G_{n+1})$ such that $UZ_1U^{\dag} = X_1 \otimes g$ and $UX_1U^{\dag} = Z_1 \otimes g'$ for some $g, g' \in G_n$.
 Define a circuit $C$ as:
