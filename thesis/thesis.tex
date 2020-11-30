@@ -56,12 +56,42 @@
 
 \ldots
 
+\chapter{Foundational Quantum Computing}
+\section{Linear Algebra}
+\subsection{Fundamentals}
+Let $\mathbb{C}$ be the set of complex numbers. We write $\mathbb{C}^n$ to represent the space of $n$-dimensional column vectors, and $\mathbb{C}^{n \times m}$ for the space of matrices with $n$ rows and $m$ columns, with the normal matrix multiplication. The complex conjugate of a scalar $c \in \mathbb{C}$ is denoted $\bar{c}$, and the adjoint of a matrix $M = (c_{ij}) \in \mathbb{C}^{n \times m}$ is $M^\dag = (\bar{c}_{ji}) \in \mathbb{C}^{m \times n}$. The trace of a matrix $M$, denoted $tr(M)$, is the sum of its diagonal entries. Note that $tr(BA) = tr(BA)$. 
+
+For a vector $v \in \mathbb{C}^n$, the norm of $v$ is $||v|| = \sqrt{v^\dag v}$, and is called a unit vector if $||v|| = 1$. Now, a matrix $U \in \mathbb{C}^{n \times n}$ is unitary if $U^{-1} = U^\dag$. Observe that unitary matrices are isometries since $||Uv|| = ||v||$ holds for all $v$ iff $U$ is unitary. Furthermore, we call a square matrix $A \in \mathbb{C}^{n \times n}$ hermitian if $A = A^\dag$. 
+
+\subsection{Tensor Products}
+The tensor product of two vector spaces is defined as usual (denoted by $\otimes$), with the notable special cases that we will use: $\mathbb{C}^n \otimes \mathbb{C}^m = \mathbb{C}^{nm}$ and $\mathbb{C}^{n \times n} \otimes \mathbb{C}^{m \times m} = \mathbb{C}^{nm \times nm}$. The tensor product $w = u \otimes v \in \mathbb{C}^{nm}$ of two vectors is defined by $w_{(i, j)} = u_iv_j$. Similarly the tensor product $C = A \otimes B \in \mathbb{C}^{nm \times nm}$ of two matrices is defined by $c_{(i, j)(i', j')} = a_{ii'}b_{jj'}$, with pairs $(i, j)$ ordered lexicographically. 
+
+The basis for a tensor product of vector spaces is defined as the tensor product of the basis elements of the individual vector spaces. For example if $\{ a_1, a_2 \}$ and $\{ b_1 , b_2  \}$ are two bases for $\mathbb{C}^2$, then $\{ a_1 \otimes b_1, a_1 \otimes b_2, a_2 \otimes b_1, a_2 \otimes b_2 \}$ is a basis for $\mathbb{C}^4$. Note that not all elements of $\mathbb{C}^4$ are of the form $a \otimes b$ with $a, b \in \mathbb{C}^2$.
+
+
+\section{Quantum Formalism}
+\subsection{Qubits}
+In quantum computing the basic unit of information is called a qubit. In classical computing the classical bit has the states $0$ or $1$, but in quantum computing the qubit takes any complex linear combination $\alpha [1, 0]^\dag + \beta [0, 1]^\dag$ as its state, where $\alpha , \beta \in \mathbb{C}$ and are both nonzero. $\alpha$ and $\beta$ are called the amplitudes of the state, and it is often assumed that $|\alpha | + |\beta | = 1$.
+
+\subsection{Dirac Notation}
+In quantum computing we make use of dirac notation to represent our vectors and operations. Consider the column vectors $[1, 0]^\dag$ and $[0, 1]^\dag$. In dirac notation we write these as "ket" vectors: $\ket{0}$ and $\ket{1}$ respectively. Then their row vector counterparts are written as "bra" vectors $\bra{0}$ and $\bra{1}$ respectively. The inner product between two states is written as a "braket", for example, the inner product of $\bra{0}$ and $\ket{1}$ is $\braket{0|1}$.
+
+Note $\ket{0}$ and $\ket{1}$ are just the classical basis states $[0, 1]^\dag , [1, 0]^\dag $. Any state that is a linear combination of $\ket{0}$ and $\ket{1}$, i.e. $\alpha \ket{0} + \beta \ket{1}$, is said to be in a quantum superposition of $\ket{0}$ and $\ket{1}$. In quantum computing, the basis formed by $\{ \ket{0} , \ket{1} \}$ in $\mathbb{C}^2$ is known as the computational basis. As mentioned before, you can get the computational basis of higher dimensional vector spaces by taking tensor products of $\ket{0}$ and $\ket{1}$. For example, the computational basis for $\mathbb{C}^4$ is $\{ \ket{00} , \ket{01} , \ket{10} , \ket{11} \}$, where $\{ \ket{00} = \ket{0} \otimes \ket{0}$, $\{ \ket{01} = \ket{0} \otimes \ket{1}$, etc.
+
+\section{Quantum Operations}
+\subsection{Unitary Transformations}
+The state of a quantum system is described by a quantum state and is transformed by applying unitary transformations to it......
+
+\subsection{Measurement}
+... 
+
+
 \chapter{The Stabilizer Formalism}
 \section{Basics}
 %To begin, we need to introduce and develop the formalism of stabilizer operators and its related quantities, but first some  basic definitions, starting with the Pauli matrices.
 
 \begin{definition}
-The \emph{Pauli matrices} $X$, $Y$, and $Z$ are defined as:
+The \emph{Pauli matrices} X, Y, and Z are defined as:
   \[
   X= \begin{bmatrix}
     0 & 1 \\
