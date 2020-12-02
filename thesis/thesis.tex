@@ -76,15 +76,18 @@ In quantum computing the basic unit of information is called a qubit. In classic
 \subsection{Dirac Notation}
 In quantum computing we make use of dirac notation to represent our vectors and operations. Consider the column vectors $[1, 0]^\dag$ and $[0, 1]^\dag$. In dirac notation we write these as "ket" vectors: $\ket{0}$ and $\ket{1}$ respectively. Then their row vector counterparts are written as "bra" vectors $\bra{0}$ and $\bra{1}$ respectively. The inner product between two states is written as a "braket", for example, the inner product of $\bra{0}$ and $\ket{1}$ is $\braket{0|1}$.
 
-Note $\ket{0}$ and $\ket{1}$ are just the classical basis states $[0, 1]^\dag , [1, 0]^\dag $. Any state that is a linear combination of $\ket{0}$ and $\ket{1}$, i.e. $\alpha \ket{0} + \beta \ket{1}$, is said to be in a quantum superposition of $\ket{0}$ and $\ket{1}$. In quantum computing, the basis formed by $\{ \ket{0} , \ket{1} \}$ in $\mathbb{C}^2$ is known as the computational basis. As mentioned before, you can get the computational basis of higher dimensional vector spaces by taking tensor products of $\ket{0}$ and $\ket{1}$. For example, the computational basis for $\mathbb{C}^4$ is $\{ \ket{00} , \ket{01} , \ket{10} , \ket{11} \}$, where $\{ \ket{00} = \ket{0} \otimes \ket{0}$, $\{ \ket{01} = \ket{0} \otimes \ket{1}$, etc.
+Note $\ket{0}$ and $\ket{1}$ are just the classical basis states $[0, 1]^\dag , [1, 0]^\dag $. Any state that is a linear combination of $\ket{0}$ and $\ket{1}$, i.e. $\alpha \ket{0} + \beta \ket{1}$, is said to be in a quantum superposition of $\ket{0}$ and $\ket{1}$. In quantum computing, the basis formed by $\{ \ket{0} , \ket{1} \}$ in $\mathbb{C}^2$ is known as the computational basis. As mentioned before, you can get the computational basis of higher dimensional vector spaces by taking tensor products of $\ket{0}$ and $\ket{1}$. For example, the computational basis for $\mathbb{C}^4$ is $\{ \ket{00} , \ket{01} , \ket{10} , \ket{11} \}$, where $ \ket{00} = \ket{0} \otimes \ket{0}$, $ \ket{01} = \ket{0} \otimes \ket{1}$, etc.
 
 \section{Quantum Operations}
 \subsection{Unitary Transformations}
-The state of a quantum system is described by a quantum state and is transformed by applying unitary transformations to it......
+The state of a quantum system is described by a quantum state and is transformed by applying unitary transformations to it. For example, say a quantum system is described by the column vector $\ket{\psi}$ and $U$ is some unitary matrix. Then the evolution of $\ket{\psi}$ under $U$ is given by $U \ket{\psi}$. A unitary transformation on an $n$ qubit system is also called an $n$-ary quantum gate. Some notable gates are the Hadamard, Not, CNOT, and T gates.
+
 
 \subsection{Measurement}
-... 
+Aside from unitary transformations, we can also act on a quantum state by measuring it. Say we have a qubit in the state $\alpha \ket{0} + \beta \ket{1}$, and we measure it. Then the post-measurement state will be in the state $\ket{0}$ with probability $|\alpha |$ or in the state $\ket{1}$ with probability $|\beta |$.  Measurement is a probabilistic process, and we say it is like observing the state. We also say that the quantum state collapses due to measurement, and if you were to measure it again, you will get the same result.
 
+\section{Quantum Circuits}
+...
 
 \chapter{The Stabilizer Formalism}
 \section{Basics}
