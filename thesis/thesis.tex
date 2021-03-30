@@ -596,12 +596,18 @@ Remark: Let $q \in \mathbb{Q}$ be in reduced form as above. Then we have three d
 \begin{proposition}
 \begin{enumerate}
 \item $\bar{v}_2(\pm 1) = 0$
-\item $\bar{v}_2 (-q) = \bar(v)_2 (q)$
-\item $\bar{v}_2(q_1q_2) = \bar(v)_2 (q_1) + \bar(v)_2 (q_2)$
+\item $\bar{v}_2 (-q) = \bar{v}_2 (q)$
+\item $\bar{v}_2(q_1q_2) = \bar{v}_2 (q_1) + \bar{v}_2 (q_2)$
 \end{enumerate}
 \end{proposition}
 
-Next we introduce the functions $N_d: \mathbb{Q}(e^{i\cdot \pi / 2^d}) \longrightarrow \mathbb{Q}$ for a positive integer $d$.
+Now, we wish to extend $\bar{v}_2$ to the real subsets of $\mathcal{R}_d = \mathbb{Z}[\zeta_{2^{d+1}}, 1/2]$, where $\zeta_{2^{d+1}}$ is the $d+1$ primitive root of unity. To do this, we need the field norm of a cyclotomic field, which is defined as $N_d: \mathbb{Q}(\zeta_{2^{d+1}}) \longrightarrow \mathbb{Q}$ for a positive integer $d$, where $N_d (\alpha) = \prod_{\sigma \in Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q}} \sigma (\alpha)$. 
+
+For a cyclotomic field, each $\sigma \in Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q})$ sends $\zeta_{2^{d+1}}$ to one of it's conjugates, so that we can define the $\sigma$'s in the following way: $\sigma_k (\zeta_{2^{d+1}}) = \zeta_{2^{d+1}}^k$. Note that $Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q} \cong (\mathbb{Z}/n\mathbb{Z})^x$, and that elements in $Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q}$ are precisely the $\sigma_k$'s where $gcd(k, 2^{d+1}) = 1$. This means that $k$ must be odd, so that:
+
+\begin{equation}
+N_d(\alpha) = \prod_{k-odd} \sigma_k (\alpha) = \prod_{k=0}^{2^d - 1} \sigma_{2k+1} (\alpha)
+\end{equation}
 
 Remark if $d \leq d'$ then $\mathbb{Q}(e^{i\cdot \pi / 2^d}) \subseteq \mathbb{Q}(e^{i\cdot \pi / 2^{d'}})$.
 
@@ -677,6 +683,27 @@ $
 \begin{definition}[Conversion Notation]
 The equation $\ket{A} \rightarrow \ket{B}$ indicates that resource state $\ket{A}$ can be converted into resource state $\ket{B}$ with stabilizer operations in the absences of a catalyst. On the other hand, $\ket{A} \xRightarrow{\ket{C}} \ket{B}$, which is equivalent to $\ket{A}\ket{C} \rightarrow \ket{B}\ket{C}$, indicates the conversion can proceed with the use of a catalyst $\ket{C}$ (which may sometimes be omitted above the arrow). When a process is impossible, we strike through the arrow, for example $\ket{A} \nRightarrow \ket{B}$ signifies that $\ket{A}$ cannot be converted to $\ket{B}$ by stabilizer operations even in the presence of an arbitrary catalyst. In cases involving multiple copies of a given state such as $\ket{A}^{\otimes 2} \xRightarrow{\ket{C}} \ket{B}$, we sometimes write $2\ket{A} \xRightarrow{\ket{C}} \ket{B}$ to avoid clutter.
 \end{definition}
+
+\section{Abstract Monotones}
+$\mathcal{S}$ is the set of $n$-qubit (pure) states $\mathcal{S} = \cup_n \mathcal{S}(n)$.
+
+\begin{definition}
+Let $\mathcal{J} \subseteq \mathcal{S}$ and suppose that $\mathcal{J}$ is closed under multiplication by a stabilizer. A monotone for $\mathcal{J}$ is a function $M: \mathcal{J} \rightarrow \mathbb{R}$ such that if $C$ is a stabilizer operator then $M(C\ket{\phi}) \leq M(\ket{\phi})$ for all $\ket{\phi} \in \mathcal{J}$.
+\end{definition}
+
+There are some properties of interest that monotones may have, which depend on the monotone function in question. 
+\begin{enumerate}
+\item $M(\ket{\phi} \otimes \ket{\psi}) = M(\ket{\phi}) + M(\ket{\psi})$
+\item $M(\ket{\phi}) \geq 0$
+\item $M(\ket{\phi}) = 0 \Leftrightarrow \ket{\phi} \in Stab(\phi)$
+\item $M(\ket{\phi} \otimes \ket{\psi}) = M(\ket{\phi}) \cdot M(\ket{\psi})$
+\item non-increasing under Pauli measurements
+\item $M(\ket{\phi}) = M(\ket{\phi}\ket{\psi})$ for all stabilizer states $\ket{\psi}$
+\end{enumerate}
+
+Note: for the above properties to hold, $\mathcal{J}$ must contain Stabilizer states, measurements, and be closed under Clifford operations and tensor products.
+
+We make note here that the stabilizer nullity has properties $1-6$ except $5$, the stabilizer has property $4$ for certain states, and the dyadic monotone has properties $1, 2, 3, 4, 6$ and a version of property $5$ for certain measurements. Also, observe that if a monotone has property $1$ and $3$, then it immediately has property $6$.
 
 \chapter{Conversion of Resource States}
 \begin{theorem}
