@@ -1226,6 +1226,46 @@ At least $n-2$ $\ket{CCZ}$ states are needed to implement the $n$-qubit multiply
 The circuit for $C^{n-1}Z$ that follows from \cite{} uses $n-2$ $CCZ$ gates. By applying that circuit to $\ket{+}^{\otimes n}$ we can prepare $\ket{C^{n-1}Z}$. If there existed a circuit that used $k$ $CCZ$ gates for $k < n-2$, we would be able to prepare states $\ket{C^{n-1}Z}$ starting from $k$ $\ket{CCZ}$ states and then using Clifford unitaries and Pauli observable measurements with probability one half. To complete this proof, we simply show that this is not possible. Indeed for the input state we would have value $\mu_2 (\ket{CCZ}^{\otimes k}) = k$. For the output state we would have $\mu_2 (\ket{\C^{n-1}Z}) = n-2$. This follows from the calculation of the Pauli spectrum of $\ket{C^nZ}$ in \ref{prop4.2}. We have shown above that $\mu_2$ is non-increasing when we apply Clifford unitaries and measurements with probability $1/2$, therefore $k \geq n-2$, as desired.
 \end{proof}
 
+The next proposition provides reasoning as to why we do not more than $n-2$ $CCZ$ gates by showing a specific circuit construction.
+
+\begin{proposition}
+Let $n \in \mathbb{Z}^{\geq 2}$. The $C^{n-1}Z$ gate can be implemented using exactly $n-2$ $CCZ$ gates along with Clifford gates and measurements with probability $1/2$.
+\end{proposition}
+\begin{proof}
+(Note we use $CCZ$ and $CCX$ gates interchangeably because they are equivalent under a simple conjugation by a Hadamard gate)
+By induction on $n$, consider the base case of $n=2$. Then we are left with a $C^0Z$ gate which is just the $CNOT$ gate. Thus we have used $n-2 = 0$ $CCZ$ gates and just one CNOT gate which is a Clifford gate, so we are done. 
+
+Now for $n \geq 3$ assume we have an $n-1$ qubit circuit $C$ that acts as a $C^{n-2}Z$ gate that can be performed using only $n-3$ $CCZ$ gates. Then consider the following $n$ qubit circuit:
+
+\begin{center}
+$
+\Qcircuit @C=0.7em @R=1.1em {
+   & \lstick{\ket{c_1}} & \qw & \ctrl{1} & \qw & \qw & \qw & \qw & \qw & \qw & \multigate{1}{CZ} & \qw \\
+   & \lstick{\ket{c_2}} & \qw & \ctrl{1} & \qw & \qw & \qw & \qw & \qw & \qw & \ghost{CZ} & \qw \\
+   & \lstick{\ket{0}} & \qw & \targ & \qw & \multigate{4}{C^{n-2}Z} & \qw & \qw & \gate{H} & \meter & \cctrlo{-1} \\
+   & \lstick{\ket{c_3}} & \qw & \qw & \qw & \ghost{C^{n-2}Z} & \qw & \qw & \qw & \qw & \qw & \qw \\
+   & \lstick{\vdots}  \\
+   & \lstick{\vdots}  \\
+   & \lstick{\ket{t}} & \qw & \qw & \qw & \ghost{C^{n-2}Z} & \qw & \qw & \qw & \qw & \qw & \qw 
+   }
+$
+\end{center}
+
+Starting with the input state and tracking the state of this system step by step, we get the following: 
+\begin{itemize}
+\item[] $\ket{c_1}\ket{c_2}\ket{0}\ket{c_3} \cdots \ket{c_{n-1}}\ket{t}$
+\item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{(c_1 \cdot c_2)}\ket{c_3} \cdots \ket{c_{n-1}}\ket{t}$
+\item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{(c_1 \cdot c_2)}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus ((c_1 \cdot c_2) \cdot c_3 \cdots c_{n-1})}$
+\item[$=$] $\ket{c_1}\ket{c_2}\ket{(c_1 \cdot c_2)}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})}$
+\item[$\mapsto$] $\begin{cases} \ket{c_1}\ket{c_2}\ket{+}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \texttt{if } c_1 \cdot c_2 = 0, \\
+\ket{c_1}\ket{c_2}\ket{-}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \texttt{if } c_1 \cdot c_2 = 1 \end{cases}$
+\item[$\mapsto$] $\begin{cases} \ket{c_1}\ket{c_2}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \texttt{if measurement is } \ket{0} , \\
+\pm \ket{c_1}\ket{c_2}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \texttt{if measurement is } \ket{1} \end{cases}$
+\item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{c_3} \cdots \ket{c_{n-1}}\ket{t \oplus (c_1 \cdots c_{n-1})}$
+\end{itemize}
+This circuit and the $C^{n-1}Z$ gate acts on the input in the same way, and by the induction hypothesis this circuit performs the $C^{n-1}Z$ gate with $n-3 +1$ $CCZ$ gates. Thus we have an equivalent circuit of the $C^{n-1}Z$ gate using exactly $n-2$ $CCZ$ gates. Note the uncomputation of the added toffoli gate follows from \ref{one bit adder b}.
+\end{proof}
+
 \section{Lower Bounds for the modular adder}
 To establish lower bounds for adder circuits we will use the fact that adder can create a complex conjugate copy of a Fourier state. Our strategy is to generalize $\mu_2$ to be defined on a wider set of states including Fourier states. This is achieved by extending the domain of $v_2$ to a wider set of values. Now we will list and discuss properties of $v_2$ needed for the lower-bound proof and prove the lower bound for the adder using them. 
 
