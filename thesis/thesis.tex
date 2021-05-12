@@ -11,7 +11,7 @@
 
 \begin{document}
 
-\title{Lower Bounds non-Clifford Resources}
+\title{Lower Bounds for Quantum Circuits}
 \author{Ravi Rai}
 
 % The following degrees are included in the current dalthesis.cls
@@ -639,6 +639,95 @@ If $x \in \mathbb{Q}$ then $v_2 (x) = \bar{v}_2 (x)$.
 If $x, x' \in \mathbb{R}$ then $v_2 (x \cdot x') = v_2 (x) + v_2 (x')$.
 \end{proposition}
 
+
+Consider quantum states the have entries in $\mathbb{Z}[i, 1/2] = \big\{\frac{a+ib}{2^k}: a, b, k, \in \mathbb{Z} \big\}$ when written in the computational basis. Indeed, $\ket{C^nZ}$ can be written as vectors with entries in the above set. We have a few note worthy facts to observe here:
+\begin{itemize}
+\item The set $\mathbb{Z}[i, 1/2]$ is a ring since it is closed under addition, negation, multiplication and contains $0$ and $1$.
+\item If a state $\ket{\psi}$ has entries in $\mathbb{Z}[i, 1/2]$ then for any Hermitian multi-qubit Pauli operator $P$, the expectation $\braket{\psi | P | \psi}$ can be written as $a/2^k$ for integers $a, k$, and is in $\mathbb{Z}[i, 1/2]$ because the entries of all Pauli matrices are also, and $\mathbb{Z}[i, 1/2]$ is closed under complex conjugation.
+\item The expectation is also a real number and all the real numbers in $\mathbb{Z}[i, 1/2]$ are of the form $a/2^k$ for integers $a$ and $k$. 
+\item For stabilizer states Pauli expectations can only be $\pm 1$ and $0$.
+\end{itemize}
+
+The power of $2$ in the denominator of the Pauli expectation gives us a sense of how non-stabilizer the state is. We now develop an intuition for this sort of measure. Firstly, let $q$ be a non-zero rational number. It can be written as a product of integer powers of prime numbers in a unique way:
+\begin{center}
+$q = \pm 2^k \cdot p_1^{k(1)} \cdots p_m^{k(m)}$, $p_k$ are odd primes, and $k, k(1), \dots , k(m)$ are integers
+\end{center}
+
+Let us define $v_2 (q)$ to be $k$. Note that function $v_2$ is somewhat similar to log$|\cdot|$ in that $v_2(q_1q_2) = v_2(q_1) + v_2(q_2), v_2(\pm 1) = 0$ and $v_2 (q) = v_2 (-q)$. For odd integer $a$ and integer $k$ the value is $v_2 (a/2^k) = - k$. Note also that $v_2$ is always non-negative for integer arguments. It is convenient to extend $v_2$ to all rational numbers, by defining $v_2(0) = + \infty $ (and note that the multiplicative property still holds).
+\begin{definition}
+Let $\ket{\psi}$ be an $n$-qubit state with entries in $\mathbb{Z}[i, 1/2]$, the dyadic monotone is 
+\begin{center}
+$\mu_2 \ket{\psi} = \texttt{max} \big\{-v_2(\braket{\psi | P | \psi}): P \in \{I, X, Y, Z \}^{\otimes n} \big\}$.
+\end{center}
+\end{definition}
+The dyadic monotone basically is the maximum power of two in the denominator over the Pauli spectrum. Now note that it is invariant under Clifford unitaries because they map the set of all multi-qubit Pauli matrices to the set of all of all Pauli matrices up to a sign and $v_2$ is insensitive to the sign of its argument. Moreover, Clifford unitaries map states with entries in $\mathbb{Z}[i, 1/2]$ to states with entries in $\mathbb{Z}[i, 1/2]$ because all Clifford unitaries can be written as matrices with entries in $\mathbb{Z}[i, 1/2]$ up to a global phase. The next proposition shows a similarity between the stabilizer nullity $\nu$ and $\mu_2$, namely the nice behaviour under tensor products.
+
+\begin{proposition}
+Let $\ket{\phi}$ and $\ket{\psi}$ be states with entries in $\mathbb{Z}[i, 1/2]$, then 
+\begin{center}
+$\mu_2 (\ket{\phi} \otimes \ket{\psi}) = \mu_2 \ket{\phi} + \mu_2 \ket{\psi}$
+\end{center}
+\end{proposition}
+
+\begin{proof}
+The results follows from the fact that for Pauli matrices $P$ and $Q$ such that the expectations $\braket{\phi | P |\phi}$ and $\braket{\psi | Q | \psi}$ are non-zero it is the case that:
+\begin{center}
+$v_2 (\bra{\phi} \otimes \bra{\psi} (P \otimes Q) \ket{\phi} \otimes \ket{\psi}) = v_2 (\braket{\phi | P | \phi}) + v_2(\braket{\psi | Q | \psi})$.
+\end{center}
+\end{proof}
+
+Another important property is that the dyadic monotone is minimal for stabilizer states:
+\begin{proposition}
+Let $\ket{\psi}$ be a state in $\mathbb{Z}[i, 1/2]$, then $\mu_2 \ket{\psi} \geq 0$ with equality achieved if and only if $\ket{\psi}$ is a stabilizer state.
+\end{proposition}
+\begin{proof}
+Consider a non-zero Pauli expectation $\braket{\psi |P| \psi}$ and write it as $a/2^k$ for some odd integer $a$. Note that $k$ must be non-negative because $|\braket{\psi |P| \psi}| \leq 1$. This shows that $\mu_2 (\ket{\psi}) \geq 0$. For stabilizer states, the only non-zero expectations can be $\pm 1$ and therefore $\mu_2$ is zero. It remains to show that $\mu_2 (\ket{\psi}) = 0$ implies that $\ket{\psi}$ is a stabilizer state. First note that $\mu_2 (\ket{\psi}) = 0$ implies that all non-zero Pauli expectations are odd integers. Together with the condition $|\braket{\psi |P| \psi}| \leq 1$ this implies that the expectations can only be $\pm 1$, in other words either $P$ or $-P$ is in Stab$\ket{\psi}$. Suppose that $\ket{\psi}$ is an $n$-qubit state and let us compute the size of Stab$\ket{\psi}$. Note that the set $\{ I, X, Y, Z \}^{\otimes n}$ is an orthogonal basis of the space of matrices with respect to the inner product $\langle A, B \rangle = \texttt{Tr} AB^{\dag}$. The norm squared of the density matrix $\ket{\psi} \bra{\psi}$ is given be the following expression:
+\begin{center}
+$1 = \braket{\psi | \psi}^2 = \frac{1}{2^n} \sum\limits_{P \in \{ I, X, Y, Z \}^{\otimes n}} |\texttt{Tr}(\ket{\psi}\bra{\psi}P)|^2$
+\end{center}
+which implies that the size of Stab$\ket{\psi}$ is $2^n$ and therefore that $\ket{\psi}$ is a stabilizer state.
+\end{proof}
+
+We will now need the fact that Pauli measurements with probability half take states with entries in $\mathbb{Z}[i, 1/2]$ to states with entries in $\mathbb{Z}[i, 1/2]$ (allowing the dyadic monotone to be evaluated). To see this, recall that measuring a $\pm 1$ eigenvalue of a Pauli observable $P$ with probability $1/2$ is equivalent to multiplying the state by the matrix $(I \pm P)/\sqrt{2}$ which is equal to $(1 + i)(I \pm P)/2$ up to a global phase. The matrix $(1 + i)(I \pm P)/2$ has entries in the ring $\mathbb{Z}[i, 1/2]$ and therefore the resulting state will also have entries in $\mathbb{Z}[i, 1/2]$.
+
+The next goal is to show that $\mu_2$ in non-increasing under these measurements, but to do this we will require another property of the function $v_2$ as seen in the next proposition:
+
+\begin{proposition}
+\label{prop6.4}
+For arbitrary rational numbers $a, b$ the following inequality holds
+\begin{center}
+$v_2 (a_1 + a_2) \geq min(v_2 (a_1), v_2(a_2))$.
+\end{center} 
+\end{proposition}
+\begin{proof}
+Let us first prove the inequality for non-zero $a_1, a_2$. Rewrite $a_j = 2^{k_j}p_j/q_j$ for integer $k_j$ and odd integers $p_j$ and $q_j$ such that
+\begin{center}
+$a_1 + a_2 = 2^{min(k_1, k_2)} \big( 2^{k_1 - min(k_1, k_2)} p_1q_2 + 2^{k_2 - min(k_1, k_2)}p_2q_1 \big) /q_1q_2$.
+\end{center}
+Since $q_1$ and $q_2$ are odd, $v_2 (a_1 + a_2)$ is equal to
+\begin{center}
+min$(k_1, k_2) + v_2 \big( 2^{k_1 - min(k_1, k_2)} p_1q_2 + 2^{k_2 - min(k_1, k_2)}p_2q_1 \big)$
+\end{center}
+by the multiplicative property of $v_2$. Since $2^{k_1 - min(k_1, k_2)} p_1q_2 + 2^{k_2 - min(k_1, k_2)}p_2q_1$ is an integer, its value of $v_2$ is non-negative. Finally, the case when at least one of $a_j$ is zero follows from the fact that min$(x, +\infty) = x$.
+\end{proof}
+
+Next we use this to prove what we initially wanted to show.
+\begin{proposition}
+Let $\ket{\psi}$ be a state with entries in $\mathbb{Z}[i, 1/2]$, let $P$ be a Pauli observable such that measuring its eigenvalue $+1$ has probability $1/2$ and let $\ket{\psi_+}$ be the normalized result of that measurement. Then $\mu_2\ket{\psi} \geq \mu_2\ket{\psi_+}$. 
+\end{proposition}
+\begin{proof}
+Let us bound the value of $v_2$ for some Pauli operator $Q$ evaluated on the expectation $\braket{\psi_+ | Q |\psi_+}$. The normalized state is $\ket{\psi_+} = \frac{I + P}{\sqrt{2}}\ket{\psi}$. The expectation of $Q$ is therefore equal to:
+\begin{center}
+$\braket{\psi_+ | Q |\psi_+} = \braket{\psi | (I + P)Q(I + P) | \psi}/2$.
+\end{center}
+If $P$ and $Q$ anti-commute, the expectation is zero and does not contribute to the calculation of $\mu_2$. When $P$ and $Q$ commute, the expectation is equal to $\braket{\psi | Q | \psi} + \braket{\psi |PQ |\psi}$. Next we use the inequality from Proposition \ref{prop6.4} to see that:
+\begin{center}
+$v_2(\braket{\psi |Q| \psi} + \braket{\psi |PQ| \psi}) \geq \texttt{min}(\braket{\psi |Q|\psi}, \braket{\psi |pQ|\psi}) \geq -\mu_2\ket{\psi}$.
+\end{center}
+Now recall that $v_2(\braket{\psi |Q| \psi} + \braket{\psi |PQ| \psi}) = v_2(\braket{\psi_+ |Q| \psi_+})$ which is exactly equal to $\mu_2\ket{\psi_+}$ given our choice of $Q$. So finally by multiplying by $-1$, we have the result: $\mu_2\ket{\psi} \geq \mu_2\ket{\psi_+}$
+\end{proof}
+
+
 \section{Catalysis}
 
 \begin{theorem}
@@ -705,7 +794,8 @@ Note: for the above properties to hold, $\mathcal{J}$ must contain Stabilizer st
 
 We make note here that the stabilizer nullity has properties $1-6$ except $5$, the stabilizer has property $4$ for certain states, and the dyadic monotone has properties $1, 2, 3, 4, 6$ and a version of property $5$ for certain measurements. Also, observe that if a monotone has property $1$ and $3$, then it immediately has property $6$.
 
-\chapter{Conversion of Resource States}
+\chapter{Applications}
+\section{Lower Bounds for $C^{n-1}Z$ gate}
 \begin{theorem}
 \label{min number of T gates}
 Let $\ket{U}$ be an n-qubit magic state for a diagonal unitary $U$ from the $3^{\text{rd}}$ level of the Clifford hierarchy, and let $\tau (U)$ be the minimum number of T gates needed to implement $U$ using the gate set $\{CNOT, S, T\}$. The following resource conversion is possible
@@ -902,7 +992,7 @@ $n\ket{CCZ} r'n\ket{T}$.
 Now, since the stabilizer nullity and extent are monotone functions, we can use them to find $r$ and $r'$ values. By straightforward computation, we have that $\nu (\ket{T}) = 1$ and $\nu(\ket{CCZ}) = 3$. Since $\nu$ is additive we can use the above equations to deduce that $r \geq 3$ and $r' \leq 3$. While not straightforward, it is also possible to compute the extent values $\xi (\ket{T}) = 1.17157$ and $\xi (\ket{CCZ}) = 1.7778$. Moreover, $\texttt{log} \xi$ is an additive monotone with respect to collections of $\ket{T}$ states and $\ket{CCZ}$ states (which satisfies Lemma \ref{stabextent}) and therefore $r \geq \texttt{log}[1.77778]/\texttt{log}[1.17157] = 3.63356$ and $r' \leq \texttt{log}[1.77778]/\texttt{log}[1.17157] = 3.63356$ (which implies $r' \leq 3$).
 
 
-\section{Lower Bounds for $C^nZ$ gate}
+\section{Lower Bounds for $C^{n-1}Z$ gate}
 The $C^nZ$ gate is a gate worth considering in detail since it is used in many important algorithms, like the Grover's search algorithm. Lower bounds on resources required for this gate are as follows:
 
 \begin{proposition}
@@ -968,6 +1058,107 @@ and if $x \cdot z$ is even, then we have $-2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot 
 We can count the number of each subset of binary vectors $x$ and $z$ to find multiplicities. When, $x=0^n$ and $z = 0^n$, there is clearly one one possible choice for each $x$ and $z$, thus we have a multiplicity of $1$. When $z = 0^n$ and $x \neq 0^n$, we now have only $1$ possibility for $z$ and $2^n - 1$ possibilities for $x$, giving a multiplicity of $2^n - 1$ for this case. Similarly, when $x = 0^n$ and $z \neq 0^n$ we have $2^n - 1$ possibilities again. Also, observe that $x \cdot z$ takes an odd value for $(2^{2n}-2^{n})/2$ different possible combinations of $x$ and $z$ pairings. Adding these and simplifying gives the multiplicity of the third case: $2^{2n-1} - 2^{n+1} - 1$. Finally, there are overall $2^{2n}$ different combinations of $x$ and $z$ pairings, so we can simply subtract all the multiplicities above from this to get the multiplicity of the fourth case, which comes out to be $2^{2n-1} - 3 \cdot 2^{n-1} + 1$ as above.
 \end{proof}
 
+\subsection{Tighter Bounds with measurement probabilities one half}
+
+
+\begin{lemma}
+\label{CCZ lowerbound}
+At least $n-2$ $\ket{CCZ}$ states are needed to implement the $n$-qubit multiply controlled $Z$ gate $C^{n-1}Z$ by using stabilizer operations with measurement probabilities one half. (The optimal circuit follows from the construction for multiply-controlled unitaries described in \cite{}).
+\end{lemma}
+\begin{proof}
+The circuit for $C^{n-1}Z$ that follows from \cite{} uses $n-2$ $CCZ$ gates. By applying that circuit to $\ket{+}^{\otimes n}$ we can prepare $\ket{C^{n-1}Z}$. If there existed a circuit that used $k$ $CCZ$ gates for $k < n-2$, we would be able to prepare states $\ket{C^{n-1}Z}$ starting from $k$ $\ket{CCZ}$ states and then using Clifford unitaries and Pauli observable measurements with probability one half. To complete this proof, we simply show that this is not possible. Indeed for the input state we would have value $\mu_2 (\ket{CCZ}^{\otimes k}) = k$. For the output state we would have $\mu_2 (\ket{\C^{n-1}Z}) = n-2$. This follows from the calculation of the Pauli spectrum of $\ket{C^nZ}$ in \ref{prop4.2}. We have shown above that $\mu_2$ is non-increasing when we apply Clifford unitaries and measurements with probability $1/2$, therefore $k \geq n-2$, as desired.
+\end{proof}
+
+The next proposition provides reasoning as to why we do not more than $n-2$ $CCZ$ gates by showing a specific circuit construction.
+
+\begin{proposition}
+\label{CCZ upperbound}
+Let $n \in \mathbb{Z}^{\geq 2}$. The $C^{n-1}Z$ gate can be implemented using exactly $n-2$ $CCZ$ gates along with Clifford gates and measurements with probability $1/2$.
+\end{proposition}
+\begin{proof}
+(Note we use $CCZ$ and $CCX$ gates interchangeably because they are equivalent under a simple conjugation by a Hadamard gate)
+By induction on $n$, consider the base case of $n=2$. Then we are left with a $C^0Z$ gate which is just the $CNOT$ gate. Thus we have used $n-2 = 0$ $CCZ$ gates and just one CNOT gate which is a Clifford gate, so we are done. 
+
+Now for $n \geq 3$ assume we have an $n-1$ qubit circuit $C$ that acts as a $C^{n-2}Z$ gate that can be performed using only $n-3$ $CCZ$ gates. Then consider the following $n$ qubit circuit:
+
+\begin{center}
+$
+\Qcircuit @C=0.7em @R=1.1em {
+   & \lstick{\ket{c_1}} & \qw & \ctrl{1} & \qw & \qw & \qw & \qw & \qw & \qw & \multigate{1}{CZ} & \qw \\
+   & \lstick{\ket{c_2}} & \qw & \ctrl{1} & \qw & \qw & \qw & \qw & \qw & \qw & \ghost{CZ} & \qw \\
+   & \lstick{\ket{0}} & \qw & \targ & \qw & \multigate{4}{C^{n-2}Z} & \qw & \qw & \gate{H} & \meter & \cctrlo{-1} \\
+   & \lstick{\ket{c_3}} & \qw & \qw & \qw & \ghost{C^{n-2}Z} & \qw & \qw & \qw & \qw & \qw & \qw \\
+   & \lstick{\vdots}  \\
+   & \lstick{\vdots}  \\
+   & \lstick{\ket{t}} & \qw & \qw & \qw & \ghost{C^{n-2}Z} & \qw & \qw & \qw & \qw & \qw & \qw 
+   }
+$
+\end{center}
+
+Starting with the input state and tracking the state of this system step by step, we get the following: 
+\begin{itemize}
+\item[] $\ket{c_1}\ket{c_2}\ket{0}\ket{c_3} \cdots \ket{c_{n-1}}\ket{t}$
+\item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{(c_1 \cdot c_2)}\ket{c_3} \cdots \ket{c_{n-1}}\ket{t}$
+\item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{(c_1 \cdot c_2)}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus ((c_1 \cdot c_2) \cdot c_3 \cdots c_{n-1})}$
+\item[$=$] $\ket{c_1}\ket{c_2}\ket{(c_1 \cdot c_2)}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})}$
+\item[$\mapsto$] $\begin{cases} \ket{c_1}\ket{c_2}\ket{+}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \texttt{if } c_1 \cdot c_2 = 0, \\
+\ket{c_1}\ket{c_2}\ket{-}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \texttt{if } c_1 \cdot c_2 = 1 \end{cases}$
+\item[$\mapsto$] $\begin{cases} \ket{c_1}\ket{c_2}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \texttt{if measurement is } \ket{0} , \\
+\pm \ket{c_1}\ket{c_2}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \texttt{if measurement is } \ket{1} \end{cases}$
+\item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{c_3} \cdots \ket{c_{n-1}}\ket{t \oplus (c_1 \cdots c_{n-1})}$
+\end{itemize}
+This circuit and the $C^{n-1}Z$ gate acts on the input in the same way, and by the induction hypothesis this circuit performs the $C^{n-1}Z$ gate with $n-3 +1$ $CCZ$ gates. Thus we have an equivalent circuit of the $C^{n-1}Z$ gate using exactly $n-2$ $CCZ$ gates. Note the uncomputation of the added toffoli gate follows from \ref{one bit adder b}.
+\end{proof}
+
+Similarly to lemma \ref{CCZ lowerbound}, we need at least $n-2$ $CS$ gates to perform a $C^{n-1}Z$ gate and at least $2n-4$ $T$ gates to perform a $C^{n-1}Z$ gate. This follows from the fact that $\mu_2 (\ket{CS}) = 1$ and $\mu_2 (\ket{T}) = 1/2$ (obtained by calculation).
+
+We can also give similar upper-bounds as in proposition \ref{CCZ upperbound} for $CS$ and $T$ gates by giving already known circuits.
+
+\begin{proposition}
+\label{CS upperbound}
+The $C^{n-1}Z$ gate can be implemented using exactly $2n-4$ $CS$ gates along with Clifford gates and measurements with probability $1/2$.
+\end{proposition}
+\begin{proof}
+Simply put, we can write the $CCZ$ gate with an equivalent circuit using only two $CS$ gates and then use this circuit to replace all the CCZ gates used in the circuit in proposition \ref{CCZ upperbound}. The circuit is:
+
+\begin{center}
+$
+\Qcircuit @C=0.7em @R=1.1em {
+   & \lstick{\ket{c_1}} & \qw & \qw & \qw & \targ & \gate{S^{\dag}} & \targ & \ctrl{1} & \qw & \qw & \qw & \qw & \qw & \multigate{1}{CZ} & \qw \\
+   & \lstick{\ket{c_2}} & \qw & \qw & \gate{S} & \qw & \ctrl{-1} & \qw & \gate{Z} & \qw & \qw & \qw & \qw & \qw & \ghost{CZ} & \qw \\
+   & \lstick{\ket{0}} & \qw & \gate{H} & \ctrl{-1} & \ctrl{-2} & \qw & \ctrl{-2} & \qw & \gate{H} & \ctrl{1} & \gate{S} & \gate{H} & \meter & \cctrlo{-1} \\
+   & \lstick{\ket{c_3}} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \gate{Z} & \qw & \qw & \qw & \qw & \qw \\
+   }
+$
+\end{center}
+
+Thus, since we used $n-2$ $CCZ$ gates in proposition \ref{CCZ upperbound}, we can implement the $C^{n-1}Z$ gate with $2\cdot (n-2)$ $CS$ gates.
+
+\end{proof}
+
+\begin{proposition}
+\label{T upperbound}
+The $C^{n-1}Z$ gate can be implemented using exactly $4n-8$ $T$ gates along with Clifford gates and measurements with probability $1/2$.
+\end{proposition}
+\begin{proof}
+Simply put, we can write the $CCZ$ gate with an equivalent circuit using four $T$ gates and then use this circuit to replace all the CCZ gates used in the circuit in proposition \ref{CCZ upperbound}. The circuit is:
+
+\begin{center}
+$
+\Qcircuit @C=0.7em @R=1.1em {
+   & \lstick{\ket{c_1}} & \qw & \qw & \qw & \ctrl{2} & \qw & \targ & \gate{T^{\dag}} & \targ & \qw & \qw & \qw & \qw & \qw & \qw & \multigate{1}{CZ} & \qw \\
+   & \lstick{\ket{c_2}} & \qw & \qw & \qw & \qw & \ctrl{1} & \targ & \gate{T^{\dag}} & \targ & \qw & \qw & \qw & \qw & \qw & \qw & \ghost{CZ} & \qw \\
+   & \lstick{\ket{0}} & \qw & \gate{H} & \gate{T} & \targ & \targ & \ctrl{-2} & \gate{T} & \ctrl{-2} & \gate{H} & \gate{S} & \ctrl{1} & \qw & \gate{H} & \meter & \cctrlo{-1} \\
+   & \lstick{\ket{c_3}} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \gate{Z} & \qw & \qw & \qw & \qw & \qw \\
+   }
+$
+\end{center}
+
+Again, since we used $n-2$ $CCZ$ gates in proposition \ref{CCZ upperbound}, we can implement the $C^{n-1}Z$ gate with $4\cdot (n-2)$ $T$ gates.
+
+\end{proof}
+
+
 \subsection{Lower Bounds for modular adder}
 The adder circuit is a fundamental quantum operation because it implements basic arithmetic, being addition, on pairs of registers in superposition. We can lower bound the resources required to implement it as follows:
 
@@ -1000,6 +1191,52 @@ Setting $a=0$ gives $A(\ket{+}^{\otimes n} \ket{QFT_n^b}) = \ket{QFT_n^{-b}}\ket
 \end{proof}
 
 Note the calculation of $\nu(\ket{QFT_n^{-1}}) = \nu(\ket{QFT_n^{1}}) = n-2$ above also implies that the Quantum Fourier Transform on $n$ qubits can not be performed using fewer than $n-2$ copies of $\ket{T}$.
+
+\subsection{Lower Bounds for the modular adder (using dyadic monotone)}
+To establish lower bounds for adder circuits we will use the fact that adder can create a complex conjugate copy of a Fourier state. Our strategy is to generalize $\mu_2$ to be defined on a wider set of states including Fourier states. This is achieved by extending the domain of $v_2$ to a wider set of values. Now we will list and discuss properties of $v_2$ needed for the lower-bound proof and prove the lower bound for the adder using them. 
+
+We will now need to define rings we can use to write down the coordinates of Fourier states, and not just $\ket{C^nZ}$ states. To do this we extend the domain of $\mu_2$ to the union of the following family of sets:
+\begin{center}
+$\mathcal{R}_d = \mathbb{Z} \big[ exp(i\pi /2^d), 1/2 \big] = \Big\{ \frac{1}{2^k} \sum\limits_{j=0}^{2^d - 1} a_j \texttt{exp}(i\pi j/2^d): \texttt{where } a_j, k \texttt{ are integers} \Big\}$
+\end{center}
+Note that $\mathcal{R}_d$ is closed under addition, negation, and multiplication making it a ring, and furthermore that it is closed under taking complex conjugates. Also note that $\mathcal{R}_1 = \mathbb{Z}[i, 1/2]$ and $\mathcal{R}_d \subset \mathcal{R}_{d+1}$ for all positive $d$.
+
+We extend the domain of $v_2$ so it is defined on values of Pauli expectations of Fourier states, and so $v_2$ must be defined at least on the real subsets of $\mathcal{R}_d$. The proof of the lower bound for multiply-controlled-$Z$ gate relied on additivity for a tensor product of states and monotonicity under measurements with probability $1/2$ of dyadic monotone $\mu_2$. In turn, our proofs of the mentioned properties of $\mu_2$ relied on the properties: $v_2(a \cdot b) = v_2(a) + v_2(b)$ and $v_2(a+b) \geq \texttt{min}(v_2(a), v_2(b))$. All these properties also hold for the extension of $v_2$, and now note some explicit values of $v_2$ that we will need to compute $\mu_2$ for Fourier states:
+\begin{equation}
+\texttt{For all odd integers } k \texttt{, integers } d \geq 2: v_2(cos(\pi k/2^d)) = v_2(sin(\pi k /2^d)) = \frac{1}{2^{d-1}} - 1
+\end{equation}
+
+For example, using above we see that $\mu_2\ket{T} = 1/2$ because $v_2(1/\sqrt{2}) = -1/2$. We can immediately conclude that the $C^nZ$ gate requires at least $2(n-2)\ket{T}$ states. Next we proceed to calculate $\mu_2$ for Fourier states.
+
+\begin{proposition}
+Consider Fourier state
+\begin{center}
+$\ket{QFT_n^a} = \sum\limits_{y=o}^{2^n-1} \texttt{exp}\Big[ \frac{i2\pi ay}{2^n} \Big] \ket{y} = \otimes_{k=1}^n \big( \ket{0} + e^{i2\pi a/2^k}\ket{1}\big)$,
+\end{center}
+For all odd $a$, $\mu_2\ket{QFT_n^a} = n-3 +(1/2)^{n-2}$.
+\end{proposition}
+\begin{proof}
+Recall that Pauli expectations of $(\ket{0} + e^{i2\pi a/2^k}\ket{1})/\sqrt{2}$ are
+\begin{center}
+$\{ 0, cos(2\pi a/2^k), sin(2\pi a/2^k), 1 \}$.
+\end{center}
+So for $k \geq 2$ we have:
+\begin{center}
+$\mu_2 \big( (\ket{0} + e^{i2\pi a/2^k} \ket{1}/\sqrt{2} \big) = v_2 \big( sin(\pi a/2^{k-1}) \big) = 1 - 1/2^{k-2}$
+\end{center}
+Using the multiplicative property of $\mu_2$ we get:
+\begin{center}
+$\mu_2 (\ket{QFT_n^a}) = \sum\limits_{k=2}^n \big( 1-1/2^{k-2}) = n-3 + 1/2^{n-2}$
+\end{center}
+\end{proof}
+
+\begin{lemma}
+At least $n-2$ $\ket{CCZ}$ states are needed to implement the $n$-qubit modular adder for $n \geq 3$ by using stabilizer operations with measurement probabilities one half.
+\end{lemma}
+\begin{proof}
+Recall that by applying a circuit for modular adder $\ket{+}^{\otimes n} \otimes \ket{QFT_n^1}$ we can create a state $\ket{QFT_n^{-1}} \otimes \ket{QFT_n^1}$. If there existed a circuit that used $k$ $CCZ$ gates for $k < n-2$, we would be able to prepare states $\ket{QFT_n^{-1}}$ starting from $k \ket{CCZ}$ and then using Clifford unitaries and Pauli observable measurements with probability half by using $\ket{QFT_n^1}$ as a catalyst. Let us show that this is impossible. Indeed for the input state we would have value $\mu_2$ equal to $k + \mu_2 \ket{QFT_n^1}$ and for the output state we would have $\mu_2 \ket{QFT_n^{-1}} + \mu_2 \ket{QFT_n^1}$. We know that $\mu_2$ is non-increasing when we apply Clifford unitaries and measurements with probability $1/2$, therefore $k \geq \mu_2 \ket{QFT_n^{-1}} = n - 3 +(1/2)^{n-2}$ which implies that $k \geq n-2$.
+\end{proof}
+
 
 \section{Lower Bounds for approximate unitary synthesis}
 In this section, we lower bound the number of resource states needed to approximate an arbitrary single-qubit unitary using Clifford gates and Pauli measurements. Unlike the previously known lower bounds, our bounds: allow for Pauli measurements; allow measurement outcomes to affect the subsequent parts of the protocol; and do not depend on the number of ancillary qubits used in the protocol.
@@ -1126,192 +1363,13 @@ Let $N_{\ket{T}}(\ket{\psi} , \epsilon)$ be the minimum number of $\ket{T}$ reso
 First note that setting $p=1$ on the right hand side of the inequalities in Lemma's   \ref{lemma5.6}, \ref{lemma5.7}, and \ref{lemma5.9} form new (yet weaker) inequalities which hold for all $p$. Then apply Lemma \ref{lemma5.5} to each of these inequalities.
 \end{proof}
 
-\chapter{Tighter Bounds with measurement probabilities one half}
-\section{Lower bound with CCZ gates for C\textsuperscript{n}Z gate}
 
 
-Consider quantum states the have entries in $\mathbb{Z}[i, 1/2] = \big\{\frac{a+ib}{2^k}: a, b, k, \in \mathbb{Z} \big\}$ when written in the computational basis. Indeed, $\ket{C^nZ}$ can be written as vectors with entries in the above set. We have a few note worthy facts to observe here:
-\begin{itemize}
-\item The set $\mathbb{Z}[i, 1/2]$ is a ring since it is closed under addition, negation, multiplication and contains $0$ and $1$.
-\item If a state $\ket{\psi}$ has entries in $\mathbb{Z}[i, 1/2]$ then for any Hermitian multi-qubit Pauli operator $P$, the expectation $\braket{\psi | P | \psi}$ can be written as $a/2^k$ for integers $a, k$, and is in $\mathbb{Z}[i, 1/2]$ because the entries of all Pauli matrices are also, and $\mathbb{Z}[i, 1/2]$ is closed under complex conjugation.
-\item The expectation is also a real number and all the real numbers in $\mathbb{Z}[i, 1/2]$ are of the form $a/2^k$ for integers $a$ and $k$. 
-\item For stabilizer states Pauli expectations can only be $\pm 1$ and $0$.
-\end{itemize}
 
-The power of $2$ in the denominator of the Pauli expectation gives us a sense of how non-stabilizer the state is. We now develop an intuition for this sort of measure. Firstly, let $q$ be a non-zero rational number. It can be written as a product of integer powers of prime numbers in a unique way:
-\begin{center}
-$q = \pm 2^k \cdot p_1^{k(1)} \cdots p_m^{k(m)}$, $p_k$ are odd primes, and $k, k(1), \dots , k(m)$ are integers
-\end{center}
 
-Let us define $v_2 (q)$ to be $k$. Note that function $v_2$ is somewhat similar to log$|\cdot|$ in that $v_2(q_1q_2) = v_2(q_1) + v_2(q_2), v_2(\pm 1) = 0$ and $v_2 (q) = v_2 (-q)$. For odd integer $a$ and integer $k$ the value is $v_2 (a/2^k) = - k$. Note also that $v_2$ is always non-negative for integer arguments. It is convenient to extend $v_2$ to all rational numbers, by defining $v_2(0) = + \infty $ (and note that the multiplicative property still holds).
-\begin{definition}
-Let $\ket{\psi}$ be an $n$-qubit state with entries in $\mathbb{Z}[i, 1/2]$, the dyadic monotone is 
-\begin{center}
-$\mu_2 \ket{\psi} = \texttt{max} \big\{-v_2(\braket{\psi | P | \psi}): P \in \{I, X, Y, Z \}^{\otimes n} \big\}$.
-\end{center}
-\end{definition}
-The dyadic monotone basically is the maximum power of two in the denominator over the Pauli spectrum. Now note that it is invariant under Clifford unitaries because they map the set of all multi-qubit Pauli matrices to the set of all of all Pauli matrices up to a sign and $v_2$ is insensitive to the sign of its argument. Moreover, Clifford unitaries map states with entries in $\mathbb{Z}[i, 1/2]$ to states with entries in $\mathbb{Z}[i, 1/2]$ because all Clifford unitaries can be written as matrices with entries in $\mathbb{Z}[i, 1/2]$ up to a global phase. The next proposition shows a similarity between the stabilizer nullity $\nu$ and $\mu_2$, namely the nice behaviour under tensor products.
 
-\begin{proposition}
-Let $\ket{\phi}$ and $\ket{\psi}$ be states with entries in $\mathbb{Z}[i, 1/2]$, then 
-\begin{center}
-$\mu_2 (\ket{\phi} \otimes \ket{\psi}) = \mu_2 \ket{\phi} + \mu_2 \ket{\psi}$
-\end{center}
-\end{proposition}
 
-\begin{proof}
-The results follows from the fact that for Pauli matrices $P$ and $Q$ such that the expectations $\braket{\phi | P |\phi}$ and $\braket{\psi | Q | \psi}$ are non-zero it is the case that:
-\begin{center}
-$v_2 (\bra{\phi} \otimes \bra{\psi} (P \otimes Q) \ket{\phi} \otimes \ket{\psi}) = v_2 (\braket{\phi | P | \phi}) + v_2(\braket{\psi | Q | \psi})$.
-\end{center}
-\end{proof}
-
-Another important property is that the dyadic monotone is minimal for stabilizer states:
-\begin{proposition}
-Let $\ket{\psi}$ be a state in $\mathbb{Z}[i, 1/2]$, then $\mu_2 \ket{\psi} \geq 0$ with equality achieved if and only if $\ket{\psi}$ is a stabilizer state.
-\end{proposition}
-\begin{proof}
-Consider a non-zero Pauli expectation $\braket{\psi |P| \psi}$ and write it as $a/2^k$ for some odd integer $a$. Note that $k$ must be non-negative because $|\braket{\psi |P| \psi}| \leq 1$. This shows that $\mu_2 (\ket{\psi}) \geq 0$. For stabilizer states, the only non-zero expectations can be $\pm 1$ and therefore $\mu_2$ is zero. It remains to show that $\mu_2 (\ket{\psi}) = 0$ implies that $\ket{\psi}$ is a stabilizer state. First note that $\mu_2 (\ket{\psi}) = 0$ implies that all non-zero Pauli expectations are odd integers. Together with the condition $|\braket{\psi |P| \psi}| \leq 1$ this implies that the expectations can only be $\pm 1$, in other words either $P$ or $-P$ is in Stab$\ket{\psi}$. Suppose that $\ket{\psi}$ is an $n$-qubit state and let us compute the size of Stab$\ket{\psi}$. Note that the set $\{ I, X, Y, Z \}^{\otimes n}$ is an orthogonal basis of the space of matrices with respect to the inner product $\langle A, B \rangle = \texttt{Tr} AB^{\dag}$. The norm squared of the density matrix $\ket{\psi} \bra{\psi}$ is given be the following expression:
-\begin{center}
-$1 = \braket{\psi | \psi}^2 = \frac{1}{2^n} \sum\limits_{P \in \{ I, X, Y, Z \}^{\otimes n}} |\texttt{Tr}(\ket{\psi}\bra{\psi}P)|^2$
-\end{center}
-which implies that the size of Stab$\ket{\psi}$ is $2^n$ and therefore that $\ket{\psi}$ is a stabilizer state.
-\end{proof}
-
-We will now need the fact that Pauli measurements with probability half take states with entries in $\mathbb{Z}[i, 1/2]$ to states with entries in $\mathbb{Z}[i, 1/2]$ (allowing the dyadic monotone to be evaluated). To see this, recall that measuring a $\pm 1$ eigenvalue of a Pauli observable $P$ with probability $1/2$ is equivalent to multiplying the state by the matrix $(I \pm P)/\sqrt{2}$ which is equal to $(1 + i)(I \pm P)/2$ up to a global phase. The matrix $(1 + i)(I \pm P)/2$ has entries in the ring $\mathbb{Z}[i, 1/2]$ and therefore the resulting state will also have entries in $\mathbb{Z}[i, 1/2]$.
-
-The next goal is to show that $\mu_2$ in non-increasing under these measurements, but to do this we will require another property of the function $v_2$ as seen in the next proposition:
-
-\begin{proposition}
-\label{prop6.4}
-For arbitrary rational numbers $a, b$ the following inequality holds
-\begin{center}
-$v_2 (a_1 + a_2) \geq min(v_2 (a_1), v_2(a_2))$.
-\end{center} 
-\end{proposition}
-\begin{proof}
-Let us first prove the inequality for non-zero $a_1, a_2$. Rewrite $a_j = 2^{k_j}p_j/q_j$ for integer $k_j$ and odd integers $p_j$ and $q_j$ such that
-\begin{center}
-$a_1 + a_2 = 2^{min(k_1, k_2)} \big( 2^{k_1 - min(k_1, k_2)} p_1q_2 + 2^{k_2 - min(k_1, k_2)}p_2q_1 \big) /q_1q_2$.
-\end{center}
-Since $q_1$ and $q_2$ are odd, $v_2 (a_1 + a_2)$ is equal to
-\begin{center}
-min$(k_1, k_2) + v_2 \big( 2^{k_1 - min(k_1, k_2)} p_1q_2 + 2^{k_2 - min(k_1, k_2)}p_2q_1 \big)$
-\end{center}
-by the multiplicative property of $v_2$. Since $2^{k_1 - min(k_1, k_2)} p_1q_2 + 2^{k_2 - min(k_1, k_2)}p_2q_1$ is an integer, its value of $v_2$ is non-negative. Finally, the case when at least one of $a_j$ is zero follows from the fact that min$(x, +\infty) = x$.
-\end{proof}
-
-Next we use this to prove what we initially wanted to show.
-\begin{proposition}
-Let $\ket{\psi}$ be a state with entries in $\mathbb{Z}[i, 1/2]$, let $P$ be a Pauli observable such that measuring its eigenvalue $+1$ has probability $1/2$ and let $\ket{\psi_+}$ be the normalized result of that measurement. Then $\mu_2\ket{\psi} \geq \mu_2\ket{\psi_+}$. 
-\end{proposition}
-\begin{proof}
-Let us bound the value of $v_2$ for some Pauli operator $Q$ evaluated on the expectation $\braket{\psi_+ | Q |\psi_+}$. The normalized state is $\ket{\psi_+} = \frac{I + P}{\sqrt{2}}\ket{\psi}$. The expectation of $Q$ is therefore equal to:
-\begin{center}
-$\braket{\psi_+ | Q |\psi_+} = \braket{\psi | (I + P)Q(I + P) | \psi}/2$.
-\end{center}
-If $P$ and $Q$ anti-commute, the expectation is zero and does not contribute to the calculation of $\mu_2$. When $P$ and $Q$ commute, the expectation is equal to $\braket{\psi | Q | \psi} + \braket{\psi |PQ |\psi}$. Next we use the inequality from Proposition \ref{prop6.4} to see that:
-\begin{center}
-$v_2(\braket{\psi |Q| \psi} + \braket{\psi |PQ| \psi}) \geq \texttt{min}(\braket{\psi |Q|\psi}, \braket{\psi |pQ|\psi}) \geq -\mu_2\ket{\psi}$.
-\end{center}
-Now recall that $v_2(\braket{\psi |Q| \psi} + \braket{\psi |PQ| \psi}) = v_2(\braket{\psi_+ |Q| \psi_+})$ which is exactly equal to $\mu_2\ket{\psi_+}$ given our choice of $Q$. So finally by multiplying by $-1$, we have the result: $\mu_2\ket{\psi} \geq \mu_2\ket{\psi_+}$
-\end{proof}
-
-Now we use these techniques to show the optimality of the well-known circuit...
-
-\begin{lemma}
-At least $n-2$ $\ket{CCZ}$ states are needed to implement the $n$-qubit multiply controlled $Z$ gate $C^{n-1}Z$ by using stabilizer operations with measurement probabilities one half. (The optimal circuit follows from the construction for multiply-controlled unitaries described in \cite{}).
-\end{lemma}
-\begin{proof}
-The circuit for $C^{n-1}Z$ that follows from \cite{} uses $n-2$ $CCZ$ gates. By applying that circuit to $\ket{+}^{\otimes n}$ we can prepare $\ket{C^{n-1}Z}$. If there existed a circuit that used $k$ $CCZ$ gates for $k < n-2$, we would be able to prepare states $\ket{C^{n-1}Z}$ starting from $k$ $\ket{CCZ}$ states and then using Clifford unitaries and Pauli observable measurements with probability one half. To complete this proof, we simply show that this is not possible. Indeed for the input state we would have value $\mu_2 (\ket{CCZ}^{\otimes k}) = k$. For the output state we would have $\mu_2 (\ket{\C^{n-1}Z}) = n-2$. This follows from the calculation of the Pauli spectrum of $\ket{C^nZ}$ in \ref{prop4.2}. We have shown above that $\mu_2$ is non-increasing when we apply Clifford unitaries and measurements with probability $1/2$, therefore $k \geq n-2$, as desired.
-\end{proof}
-
-The next proposition provides reasoning as to why we do not more than $n-2$ $CCZ$ gates by showing a specific circuit construction.
-
-\begin{proposition}
-Let $n \in \mathbb{Z}^{\geq 2}$. The $C^{n-1}Z$ gate can be implemented using exactly $n-2$ $CCZ$ gates along with Clifford gates and measurements with probability $1/2$.
-\end{proposition}
-\begin{proof}
-(Note we use $CCZ$ and $CCX$ gates interchangeably because they are equivalent under a simple conjugation by a Hadamard gate)
-By induction on $n$, consider the base case of $n=2$. Then we are left with a $C^0Z$ gate which is just the $CNOT$ gate. Thus we have used $n-2 = 0$ $CCZ$ gates and just one CNOT gate which is a Clifford gate, so we are done. 
-
-Now for $n \geq 3$ assume we have an $n-1$ qubit circuit $C$ that acts as a $C^{n-2}Z$ gate that can be performed using only $n-3$ $CCZ$ gates. Then consider the following $n$ qubit circuit:
-
-\begin{center}
-$
-\Qcircuit @C=0.7em @R=1.1em {
-   & \lstick{\ket{c_1}} & \qw & \ctrl{1} & \qw & \qw & \qw & \qw & \qw & \qw & \multigate{1}{CZ} & \qw \\
-   & \lstick{\ket{c_2}} & \qw & \ctrl{1} & \qw & \qw & \qw & \qw & \qw & \qw & \ghost{CZ} & \qw \\
-   & \lstick{\ket{0}} & \qw & \targ & \qw & \multigate{4}{C^{n-2}Z} & \qw & \qw & \gate{H} & \meter & \cctrlo{-1} \\
-   & \lstick{\ket{c_3}} & \qw & \qw & \qw & \ghost{C^{n-2}Z} & \qw & \qw & \qw & \qw & \qw & \qw \\
-   & \lstick{\vdots}  \\
-   & \lstick{\vdots}  \\
-   & \lstick{\ket{t}} & \qw & \qw & \qw & \ghost{C^{n-2}Z} & \qw & \qw & \qw & \qw & \qw & \qw 
-   }
-$
-\end{center}
-
-Starting with the input state and tracking the state of this system step by step, we get the following: 
-\begin{itemize}
-\item[] $\ket{c_1}\ket{c_2}\ket{0}\ket{c_3} \cdots \ket{c_{n-1}}\ket{t}$
-\item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{(c_1 \cdot c_2)}\ket{c_3} \cdots \ket{c_{n-1}}\ket{t}$
-\item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{(c_1 \cdot c_2)}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus ((c_1 \cdot c_2) \cdot c_3 \cdots c_{n-1})}$
-\item[$=$] $\ket{c_1}\ket{c_2}\ket{(c_1 \cdot c_2)}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})}$
-\item[$\mapsto$] $\begin{cases} \ket{c_1}\ket{c_2}\ket{+}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \texttt{if } c_1 \cdot c_2 = 0, \\
-\ket{c_1}\ket{c_2}\ket{-}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \texttt{if } c_1 \cdot c_2 = 1 \end{cases}$
-\item[$\mapsto$] $\begin{cases} \ket{c_1}\ket{c_2}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \texttt{if measurement is } \ket{0} , \\
-\pm \ket{c_1}\ket{c_2}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \texttt{if measurement is } \ket{1} \end{cases}$
-\item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{c_3} \cdots \ket{c_{n-1}}\ket{t \oplus (c_1 \cdots c_{n-1})}$
-\end{itemize}
-This circuit and the $C^{n-1}Z$ gate acts on the input in the same way, and by the induction hypothesis this circuit performs the $C^{n-1}Z$ gate with $n-3 +1$ $CCZ$ gates. Thus we have an equivalent circuit of the $C^{n-1}Z$ gate using exactly $n-2$ $CCZ$ gates. Note the uncomputation of the added toffoli gate follows from \ref{one bit adder b}.
-\end{proof}
-
-\section{Lower Bounds for the modular adder}
-To establish lower bounds for adder circuits we will use the fact that adder can create a complex conjugate copy of a Fourier state. Our strategy is to generalize $\mu_2$ to be defined on a wider set of states including Fourier states. This is achieved by extending the domain of $v_2$ to a wider set of values. Now we will list and discuss properties of $v_2$ needed for the lower-bound proof and prove the lower bound for the adder using them. 
-
-We will now need to define rings we can use to write down the coordinates of Fourier states, and not just $\ket{C^nZ}$ states. To do this we extend the domain of $\mu_2$ to the union of the following family of sets:
-\begin{center}
-$\mathcal{R}_d = \mathbb{Z} \big[ exp(i\pi /2^d), 1/2 \big] = \Big\{ \frac{1}{2^k} \sum\limits_{j=0}^{2^d - 1} a_j \texttt{exp}(i\pi j/2^d): \texttt{where } a_j, k \texttt{ are integers} \Big\}$
-\end{center}
-Note that $\mathcal{R}_d$ is closed under addition, negation, and multiplication making it a ring, and furthermore that it is closed under taking complex conjugates. Also note that $\mathcal{R}_1 = \mathbb{Z}[i, 1/2]$ and $\mathcal{R}_d \subset \mathcal{R}_{d+1}$ for all positive $d$.
-
-We extend the domain of $v_2$ so it is defined on values of Pauli expectations of Fourier states, and so $v_2$ must be defined at least on the real subsets of $\mathcal{R}_d$. The proof of the lower bound for multiply-controlled-$Z$ gate relied on additivity for a tensor product of states and monotonicity under measurements with probability $1/2$ of dyadic monotone $\mu_2$. In turn, our proofs of the mentioned properties of $\mu_2$ relied on the properties: $v_2(a \cdot b) = v_2(a) + v_2(b)$ and $v_2(a+b) \geq \texttt{min}(v_2(a), v_2(b))$. All these properties also hold for the extension of $v_2$, and now note some explicit values of $v_2$ that we will need to compute $\mu_2$ for Fourier states:
-\begin{equation}
-\texttt{For all odd integers } k \texttt{, integers } d \geq 2: v_2(cos(\pi k/2^d)) = v_2(sin(\pi k /2^d)) = \frac{1}{2^{d-1}} - 1
-\end{equation}
-
-For example, using above we see that $\mu_2\ket{T} = 1/2$ because $v_2(1/\sqrt{2}) = -1/2$. We can immediately conclude that the $C^nZ$ gate requires at least $2(n-2)\ket{T}$ states. Next we proceed to calculate $\mu_2$ for Fourier states.
-
-\begin{proposition}
-Consider Fourier state
-\begin{center}
-$\ket{QFT_n^a} = \sum\limits_{y=o}^{2^n-1} \texttt{exp}\Big[ \frac{i2\pi ay}{2^n} \Big] \ket{y} = \otimes_{k=1}^n \big( \ket{0} + e^{i2\pi a/2^k}\ket{1}\big)$,
-\end{center}
-For all odd $a$, $\mu_2\ket{QFT_n^a} = n-3 +(1/2)^{n-2}$.
-\end{proposition}
-\begin{proof}
-Recall that Pauli expectations of $(\ket{0} + e^{i2\pi a/2^k}\ket{1})/\sqrt{2}$ are
-\begin{center}
-$\{ 0, cos(2\pi a/2^k), sin(2\pi a/2^k), 1 \}$.
-\end{center}
-So for $k \geq 2$ we have:
-\begin{center}
-$\mu_2 \big( (\ket{0} + e^{i2\pi a/2^k} \ket{1}/\sqrt{2} \big) = v_2 \big( sin(\pi a/2^{k-1}) \big) = 1 - 1/2^{k-2}$
-\end{center}
-Using the multiplicative property of $\mu_2$ we get:
-\begin{center}
-$\mu_2 (\ket{QFT_n^a}) = \sum\limits_{k=2}^n \big( 1-1/2^{k-2}) = n-3 + 1/2^{n-2}$
-\end{center}
-\end{proof}
-
-\begin{lemma}
-At least $n-2$ $\ket{CCZ}$ states are needed to implement the $n$-qubit modular adder for $n \geq 3$ by using stabilizer operations with measurement probabilities one half.
-\end{lemma}
-\begin{proof}
-Recall that by applying a circuit for modular adder $\ket{+}^{\otimes n} \otimes \ket{QFT_n^1}$ we can create a state $\ket{QFT_n^{-1}} \otimes \ket{QFT_n^1}$. If there existed a circuit that used $k$ $CCZ$ gates for $k < n-2$, we would be able to prepare states $\ket{QFT_n^{-1}}$ starting from $k \ket{CCZ}$ and then using Clifford unitaries and Pauli observable measurements with probability half by using $\ket{QFT_n^1}$ as a catalyst. Let us show that this is impossible. Indeed for the input state we would have value $\mu_2$ equal to $k + \mu_2 \ket{QFT_n^1}$ and for the output state we would have $\mu_2 \ket{QFT_n^{-1}} + \mu_2 \ket{QFT_n^1}$. We know that $\mu_2$ is non-increasing when we apply Clifford unitaries and measurements with probability $1/2$, therefore $k \geq \mu_2 \ket{QFT_n^{-1}} = n - 3 +(1/2)^{n-2}$ which implies that $k \geq n-2$.
-\end{proof}
-
-\section{Lower Bounds for Resource State Conversion}
+\subsection{Lower Bounds for Resource State Conversion}
 In other sections, we have introduced protocols for catalysis assisted conversion of $\ket{CCZ}$ states into states $\ket{\pi j /2^d}$. We have found that for odd $j$ and integer $d \geq 2$, asymptotically, one can create one $\ket{\pi j /2^d}$ state at the cost of $1 - 1/2^{d-1}$ $\ket{CCZ}$ states. Using the dyadic monotone we can show that this is optimal when only Pauli measurements with probability $50 \% $ are allowed.
 
 
