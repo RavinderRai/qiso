@@ -522,9 +522,28 @@ This means they are not universal, so there are quantum computations that cannot
 
 \chapter{Monotones}
 
+\section{Abstract Monotones}
+$\mathcal{S}$ is the set of $n$-qubit (pure) states $\mathcal{S} = \cup_n \mathcal{S}(n)$.
+
+\begin{definition}
+Let $\mathcal{J} \subseteq \mathcal{S}$ and suppose that $\mathcal{J}$ is closed under multiplication by a stabilizer. A monotone for $\mathcal{J}$ is a function $M: \mathcal{J} \rightarrow \mathbb{R}$ such that if $C$ is a stabilizer operator then $M(C\ket{\phi}) \leq M(\ket{\phi})$ for all $\ket{\phi} \in \mathcal{J}$.
+\end{definition}
+
+There are some properties of interest that monotones may have, which depend on the monotone function in question. 
+\begin{enumerate}
+\item $M(\ket{\phi} \otimes \ket{\psi}) = M(\ket{\phi}) + M(\ket{\psi})$
+\item $M(\ket{\phi}) \geq 0$
+\item $M(\ket{\phi}) = 0 \Leftrightarrow \ket{\phi} \in Stab(\phi)$
+\item $M(\ket{\phi} \otimes \ket{\psi}) = M(\ket{\phi}) \cdot M(\ket{\psi})$
+\item non-increasing under Pauli measurements
+\item $M(\ket{\phi}) = M(\ket{\phi}\ket{\psi})$ for all stabilizer states $\ket{\psi}$
+\end{enumerate}
+
+Note: for the above properties to hold, $\mathcal{J}$ must contain Stabilizer states, measurements, and be closed under Clifford operations and tensor products.
+
+We make note here that the stabilizer nullity has properties $1-6$ except $5$, the stabilizer has property $4$ for certain states, and the dyadic monotone has properties $1, 2, 3, 4, 6$ and a version of property $5$ for certain measurements. Also, observe that if a monotone has property $1$ and $3$, then it immediately has property $6$.
+
 \section{Stabilizer Nullity}
-
-
 
 
 \begin{definition}[Stabilizer Nullity]
@@ -564,7 +583,7 @@ Moreover, if $\theta = 2k\pi /2$ for some integer $k$, then $X \in \text{Stab}\k
 \end{proof}
 Note that the number of 1s in the Pauli spectrum of $\ket{\psi}$ is $|\text{Stab}\ket{\psi}|$.
 
-\subsection{Stabilizer Extent}
+\section{Stabilizer Extent}
 \begin{definition}
 For an arbitrary pure state $\ket{\psi}$, \textbf{the stabilizer extent} $\xi (\ket{\psi})$ is:
 \begin{equation}
@@ -773,29 +792,10 @@ $
 The equation $\ket{A} \rightarrow \ket{B}$ indicates that resource state $\ket{A}$ can be converted into resource state $\ket{B}$ with stabilizer operations in the absences of a catalyst. On the other hand, $\ket{A} \xRightarrow{\ket{C}} \ket{B}$, which is equivalent to $\ket{A}\ket{C} \rightarrow \ket{B}\ket{C}$, indicates the conversion can proceed with the use of a catalyst $\ket{C}$ (which may sometimes be omitted above the arrow). When a process is impossible, we strike through the arrow, for example $\ket{A} \nRightarrow \ket{B}$ signifies that $\ket{A}$ cannot be converted to $\ket{B}$ by stabilizer operations even in the presence of an arbitrary catalyst. In cases involving multiple copies of a given state such as $\ket{A}^{\otimes 2} \xRightarrow{\ket{C}} \ket{B}$, we sometimes write $2\ket{A} \xRightarrow{\ket{C}} \ket{B}$ to avoid clutter.
 \end{definition}
 
-\section{Abstract Monotones}
-$\mathcal{S}$ is the set of $n$-qubit (pure) states $\mathcal{S} = \cup_n \mathcal{S}(n)$.
 
-\begin{definition}
-Let $\mathcal{J} \subseteq \mathcal{S}$ and suppose that $\mathcal{J}$ is closed under multiplication by a stabilizer. A monotone for $\mathcal{J}$ is a function $M: \mathcal{J} \rightarrow \mathbb{R}$ such that if $C$ is a stabilizer operator then $M(C\ket{\phi}) \leq M(\ket{\phi})$ for all $\ket{\phi} \in \mathcal{J}$.
-\end{definition}
-
-There are some properties of interest that monotones may have, which depend on the monotone function in question. 
-\begin{enumerate}
-\item $M(\ket{\phi} \otimes \ket{\psi}) = M(\ket{\phi}) + M(\ket{\psi})$
-\item $M(\ket{\phi}) \geq 0$
-\item $M(\ket{\phi}) = 0 \Leftrightarrow \ket{\phi} \in Stab(\phi)$
-\item $M(\ket{\phi} \otimes \ket{\psi}) = M(\ket{\phi}) \cdot M(\ket{\psi})$
-\item non-increasing under Pauli measurements
-\item $M(\ket{\phi}) = M(\ket{\phi}\ket{\psi})$ for all stabilizer states $\ket{\psi}$
-\end{enumerate}
-
-Note: for the above properties to hold, $\mathcal{J}$ must contain Stabilizer states, measurements, and be closed under Clifford operations and tensor products.
-
-We make note here that the stabilizer nullity has properties $1-6$ except $5$, the stabilizer has property $4$ for certain states, and the dyadic monotone has properties $1, 2, 3, 4, 6$ and a version of property $5$ for certain measurements. Also, observe that if a monotone has property $1$ and $3$, then it immediately has property $6$.
 
 \chapter{Applications}
-\section{Lower Bounds for $C^{n-1}Z$ gate}
+\section{Conversions}
 \begin{theorem}
 \label{min number of T gates}
 Let $\ket{U}$ be an n-qubit magic state for a diagonal unitary $U$ from the $3^{\text{rd}}$ level of the Clifford hierarchy, and let $\tau (U)$ be the minimum number of T gates needed to implement $U$ using the gate set $\{CNOT, S, T\}$. The following resource conversion is possible
@@ -993,31 +993,23 @@ Now, since the stabilizer nullity and extent are monotone functions, we can use 
 
 
 \section{Lower Bounds for $C^{n-1}Z$ gate}
-The $C^nZ$ gate is a gate worth considering in detail since it is used in many important algorithms, like the Grover's search algorithm. Lower bounds on resources required for this gate are as follows:
-
-\begin{proposition}
-For $n \geq 3$, it is not possible to apply the multiply controlled $Z$ gate $C^{n-1}Z$ or produce the state $\ket{C^{n-1}Z} = C^{n-1}Z\ket{+}^{\otimes n}$ by Clifford gates and measurements using fewer than $n\ket{T}$ states, or $n/2 \ket{CS}$ states, or $n/3 \ket{CCZ}$ states.
-\end{proposition}
-
-\begin{proof}
-First note that proving that a bound holds for the state $\ket{C^{n-1}Z}$ implies that it holds for the gate $C^{n-1}Z$. To complete the proof, we simply compute and gather the following stabilizer nullity values: $\nu (\ket{T}) = 1$, $\nu (\ket{CS}) = 2$, $\nu (\ket{CCZ}) = 3$. Now, by the next proposition, since $\forall n \geq 3$ the state $\ket{C^{n-1}Z}$ has a trivial stabilizer group, we see that $\nu (\ket{C^{n-1}Z}) = n$. The result then follows from the equations in section \ref{ConvBounds}.
-\end{proof}
+The $\Lambda_n (Z)$ gate is a gate worth considering in detail since it is used in many important algorithms, like the Grover's search algorithm. Lower bounds on resources required for this gate follow after this proposition.
 
 \begin{proposition}
 \label{prop4.2}
-For all $n \geq 3$, the Pauli spectrum of the state $\ket{C^{n-1}Z} = C^{n-1}Z \ket{+}^{\otimes n}$ has values (and multiplicities): $1 \hspace{2mm} (1)$; $0 \hspace{2mm} (-1 +2^{n-1} + 2^{2n-1})$; $1-2^{2-n} \hspace{2mm} (2^n-1)$; $2^{2-n}  \hspace{2mm} (1-3 \cdot 2^{n-1} + 2^{2n-1})$.
+For all $n \geq 3$, the Pauli spectrum of the state $\ket{\Lambda_n (Z)} = \Lambda_n (Z) \ket{+}^{\otimes n}$ has values (and multiplicities): $1 \hspace{2mm} (1)$; $0 \hspace{2mm} (-1 +2^{n-1} + 2^{2n-1})$; $1-2^{2-n} \hspace{2mm} (2^n-1)$; $2^{2-n}  \hspace{2mm} (1-3 \cdot 2^{n-1} + 2^{2n-1})$.
 \end{proposition}
 
 \begin{proof}
-Consider the state $\ket{C^{n-1}Z}$, defined as 
+Consider the state $\ket{\Lambda_n (Z)}$, defined as 
 \begin{center}
-$\ket{C^{n-1}Z} = C^{n-1}Z\ket{+}^{\otimes n} = \frac{1}{\sqrt{2^n}} \sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} \ket{b}$
+$\ket{\Lambda_n (Z)} = \Lambda_n (Z)\ket{+}^{\otimes n} = \frac{1}{\sqrt{2^n}} \sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} \ket{b}$
 \end{center}
-We are interested in the set of Pauli expectation values $\braket{C^{n-1}Z|X^xZ^z|C^{n-1}Z}$ for arbitrary bit strings $x$ and $z$. Note that we need not consider the Pauli matrix $Y$ (as in $X^xY^yZ^z$ in the inner product) since $Y = iXZ$, and the phase will vanish once we take the absolute value as in the definition of the Pauli spectrum. Moreover, for one-bit bit strings $i$ and $j$, observe that $Z^i \ket{j} = \ket{j}$ if $i=j=0$ or $i \neq j$, and $Z^i \ket{j} = -\ket{j}$ if $i=j=1$. So in general $Z^z \ket{b} = (-1)^{z \cdot b}\ket{b}$. Furthermore, $X^i \ket{j} = \ket{i+j}$, so for arbitrary bit strings it follows that $X^x\ket{b} = \ket{b + x}$ (where $b+x$ is component-wise addition modulo 2. We can now directly calculate as follows:
+We are interested in the set of Pauli expectation values $\braket{\Lambda_n (Z)|X^xZ^z|\Lambda_n (Z)}$ for arbitrary bit strings $x$ and $z$. Note that we need not consider the Pauli matrix $Y$ (as in $X^xY^yZ^z$ in the inner product) since $Y = iXZ$, and the phase will vanish once we take the absolute value as in the definition of the Pauli spectrum. Moreover, for one-bit bit strings $i$ and $j$, observe that $Z^i \ket{j} = \ket{j}$ if $i=j=0$ or $i \neq j$, and $Z^i \ket{j} = -\ket{j}$ if $i=j=1$. So in general $Z^z \ket{b} = (-1)^{z \cdot b}\ket{b}$. Furthermore, $X^i \ket{j} = \ket{i+j}$, so for arbitrary bit strings it follows that $X^x\ket{b} = \ket{b + x}$ (where $b+x$ is component-wise addition modulo 2. We can now directly calculate as follows:
 
 \begin{equation}
 \begin{split}
-2^n\braket{C^{n-1}Z|X^xZ^z|C^{n-1}Z} & = \sum\limits_{b, b' \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{b'_1 \cdot b'_2 \cdots b'_n} \braket{b'|X^xZ^z|b} \\
+2^n\braket{\Lambda_n (Z)|X^xZ^z|\Lambda_n (Z)} & = \sum\limits_{b, b' \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{b'_1 \cdot b'_2 \cdots b'_n} \braket{b'|X^xZ^z|b} \\
 & = \sum\limits_{b, b' \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{b'_1 \cdot b'_2 \cdots b'_n} (-1)^{z \cdot b} \braket{b'|X^x|b} \\
 & = \sum\limits_{b, b' \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{b'_1 \cdot b'_2 \cdots b'_n} (-1)^{z \cdot b} \braket{b'|b + x} \\
 & = \sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{(b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_n + x_n)} (-1)^{z \cdot b}
@@ -1029,7 +1021,7 @@ Note that we have the last line since $\braket{b'|b+x} = 0$ when $b' \neq b + x$
 
 \begin{equation}
 \begin{split}
-2^n\braket{C^{n-1}Z|X^xZ^z|C^{n-1}Z} & = \sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{(b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_n + x_n)} (-1)^{z \cdot b} \\
+2^n\braket{\Lambda_n (Z)|X^xZ^z|\Lambda_n (Z)} & = \sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{(b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_n + x_n)} (-1)^{z \cdot b} \\
 & = - (-1)^{z \cdot 1^n} - (-1)^{z \cdot (1^n + x)} \hspace{2mm} + \sum\limits_{b \in \{0, 1\}^n \texttt{\textbackslash} \{1^n, 1^n + x \} } (-1)^{z \cdot b}  \\
 & = -2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot (1^n + x)} + \sum\limits_{b \in \{0, 1\}^n} (-1)^{z \cdot b}
 \end{split}
@@ -1046,7 +1038,7 @@ When $z = 0^n$, this is simply $2^n - 4$. When $z \neq 0^n$, it is $-2(-1)^{z \c
 \end{equation}
 and if $x \cdot z$ is even, then we have $-2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot 1^n} = -4(-1)^{z \cdot 1^n}$ instead, which simply becomes $4$ since the pauli spectrum requires we take the absolute value. We can now summarize:
 \begin{equation*}
-|\braket{C^{n-1}Z|X^xZ^z|C^{n-1}Z}| = \begin{cases}
+|\braket{\Lambda_n (Z)|X^xZ^z|\Lambda_n (Z)}| = \begin{cases}
 1 & \texttt{if } z = 0^n \texttt{ and } x = 0^n, \\
 1 - 2^{2-n} & \texttt{if } z = 0^n \texttt{ and } x \neq 0^n, \\
 0 & \texttt{if } z \neq 0^n \texttt{ and either } x = 0^n \texttt{ or } x \neq 0^n \texttt{ and } \\
@@ -1058,22 +1050,46 @@ and if $x \cdot z$ is even, then we have $-2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot 
 We can count the number of each subset of binary vectors $x$ and $z$ to find multiplicities. When, $x=0^n$ and $z = 0^n$, there is clearly one one possible choice for each $x$ and $z$, thus we have a multiplicity of $1$. When $z = 0^n$ and $x \neq 0^n$, we now have only $1$ possibility for $z$ and $2^n - 1$ possibilities for $x$, giving a multiplicity of $2^n - 1$ for this case. Similarly, when $x = 0^n$ and $z \neq 0^n$ we have $2^n - 1$ possibilities again. Also, observe that $x \cdot z$ takes an odd value for $(2^{2n}-2^{n})/2$ different possible combinations of $x$ and $z$ pairings. Adding these and simplifying gives the multiplicity of the third case: $2^{2n-1} - 2^{n+1} - 1$. Finally, there are overall $2^{2n}$ different combinations of $x$ and $z$ pairings, so we can simply subtract all the multiplicities above from this to get the multiplicity of the fourth case, which comes out to be $2^{2n-1} - 3 \cdot 2^{n-1} + 1$ as above.
 \end{proof}
 
+\begin{corollary}
+\label{nu values}
+We have the following stabilizer nullity values.
+\begin{itemize}
+\item $\nu (\ket{T}) = 1$
+\item $\nu (\ket{CS}) = 2$
+\item $\nu (\ket{CCZ}) = 3$
+\item $\nu (\ket{\Lambda_n (Z)}) = n+1$
+\end{itemize}
+\end{corollary}
+\begin{proof}
+The first three come from calculation. For $\nu (\ket{\Lambda_n (Z)}) = n+1$, recall that if $\ket{\psi}$ is an $m$-qubit state then $\nu (\ket{\psi}) = m - \textit{log}_2|\textit{Stab}(\ket{\psi})|$. By proposition \ref{prop4.2} we have $|$Stab$(\ket{\psi})| = 1$ so that $\nu (\ket{\Lambda_n (Z)}) = n+1 - \textit{log}_2 (1) = n+1-0 = n+1$.
+\end{proof}
+
+\begin{proposition}
+For $n \geq 2$, $\Lambda_n (Z)$ gate cannot be implemented with Clifford gates and measurements using fewer than $n\ket{T}$ states, or $n/2 \ket{CS}$ states, or $n/3 \ket{CCZ}$ states.
+\end{proposition}
+
+\begin{proof}
+First note that proving that a bound holds for the state $\ket{\Lambda_n (Z)}$ implies that it holds for the gate $\Lambda_n (Z)$. Indeed, if we can perform a task with $k$ $T$ gates (and $k$ $CS$ or $k$ $CCZ$ gates respectively) then we can also perform it with $k$ $\ket{T}$ states (and $k$ $\ket{CS}$ or $k$ $\ket{CCZ}$ states respectively). Hence, any lower bound on the number of required states is a lower bound on the number of required gates. Now, $\nu (\ket{T}) = 1$ and $\nu (\ket{\Lambda_n (Z)}) = n+1$ by corollary \ref{nu values}. Since $\nu$ is a monotone, at least $n+1$ $\ket{T}$ states are required to implement the $\nu (\ket{\Lambda_n (Z)})$ state and hence the $\Lambda_n (Z)$ gate. Similarly, since $\nu (\ket{CS}) = 2$, $\nu (\ket{CCZ}) = 3$, we get that to implement the $\Lambda_n (Z)$ we need at least $(n+1)/2$ $\ket{CS}$ states or $(n+1)/3$ $\ket{CCZ}$ states.
+\end{proof}
+
+
+
 \subsection{Tighter Bounds with measurement probabilities one half}
 
 
 \begin{lemma}
 \label{CCZ lowerbound}
-At least $n-2$ $\ket{CCZ}$ states are needed to implement the $n$-qubit multiply controlled $Z$ gate $C^{n-1}Z$ by using stabilizer operations with measurement probabilities one half. (The optimal circuit follows from the construction for multiply-controlled unitaries described in \cite{}).
+At least $n-2$ $\ket{CCZ}$ states are needed to implement the $n$-qubit multiply controlled $Z$ gate $\Lambda_n (Z)$ by using stabilizer operations with measurement probabilities one half. (The optimal circuit follows from the construction for multiply-controlled unitaries described in \cite{}).
 \end{lemma}
 \begin{proof}
-The circuit for $C^{n-1}Z$ that follows from \cite{} uses $n-2$ $CCZ$ gates. By applying that circuit to $\ket{+}^{\otimes n}$ we can prepare $\ket{C^{n-1}Z}$. If there existed a circuit that used $k$ $CCZ$ gates for $k < n-2$, we would be able to prepare states $\ket{C^{n-1}Z}$ starting from $k$ $\ket{CCZ}$ states and then using Clifford unitaries and Pauli observable measurements with probability one half. To complete this proof, we simply show that this is not possible. Indeed for the input state we would have value $\mu_2 (\ket{CCZ}^{\otimes k}) = k$. For the output state we would have $\mu_2 (\ket{\C^{n-1}Z}) = n-2$. This follows from the calculation of the Pauli spectrum of $\ket{C^nZ}$ in \ref{prop4.2}. We have shown above that $\mu_2$ is non-increasing when we apply Clifford unitaries and measurements with probability $1/2$, therefore $k \geq n-2$, as desired.
+The circuit for $\Lambda_n (Z)$ that follows from \cite{} uses $n-2$ $CCZ$ gates. By applying that circuit to $\ket{+}^{\otimes n}$ we can prepare $\ket{\Lambda_n (Z)}$. If there existed a circuit that used $k$ $CCZ$ gates for $k < n-2$, we would be able to prepare states $\ket{\Lambda_n (Z)}$ starting from $k$ $\ket{CCZ}$ states and then using Clifford unitaries and Pauli observable measurements with probability one half. To complete this proof, we simply show that this is not possible. Indeed for the input state we would have value $\mu_2 (\ket{CCZ}^{\otimes k}) = k$. For the output state we would have $\mu_2 (\ket{\\Lambda_n (Z)}) = n-2$. This follows from the calculation of the Pauli spectrum of $\ket{C^nZ}$ in \ref{prop4.2}. We have shown above that $\mu_2$ is non-increasing when we apply Clifford unitaries and measurements with probability $1/2$, therefore $k \geq n-2$, as desired.
 \end{proof}
 
 The next proposition provides reasoning as to why we do not more than $n-2$ $CCZ$ gates by showing a specific circuit construction.
 
 \begin{proposition}
 \label{CCZ upperbound}
-Let $n \in \mathbb{Z}^{\geq 2}$. The $C^{n-1}Z$ gate can be implemented using exactly $n-2$ $CCZ$ gates along with Clifford gates and measurements with probability $1/2$.
+Let $n \in \mathbb{Z}^{\geq 2}$. The $\Lambda_n (Z)$ gate can be implemented using exactly $n-2$ $CCZ$ gates along with Clifford gates and measurements with probability $1/2$.
 \end{proposition}
 \begin{proof}
 (Note we use $CCZ$ and $CCX$ gates interchangeably because they are equivalent under a simple conjugation by a Hadamard gate)
