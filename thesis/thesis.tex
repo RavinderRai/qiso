@@ -732,6 +732,7 @@ by the multiplicative property of $v_2$. Since $2^{k_1 - min(k_1, k_2)} p_1q_2 +
 
 Next we use this to prove what we initially wanted to show.
 \begin{proposition}
+\label{dyadic is monotone}
 Let $\ket{\psi}$ be a state with entries in $\mathbb{Z}[i, 1/2]$, let $P$ be a Pauli observable such that measuring its eigenvalue $+1$ has probability $1/2$ and let $\ket{\psi_+}$ be the normalized result of that measurement. Then $\mu_2\ket{\psi} \geq \mu_2\ket{\psi_+}$. 
 \end{proposition}
 \begin{proof}
@@ -992,50 +993,54 @@ $n\ket{CCZ} r'n\ket{T}$.
 Now, since the stabilizer nullity and extent are monotone functions, we can use them to find $r$ and $r'$ values. By straightforward computation, we have that $\nu (\ket{T}) = 1$ and $\nu(\ket{CCZ}) = 3$. Since $\nu$ is additive we can use the above equations to deduce that $r \geq 3$ and $r' \leq 3$. While not straightforward, it is also possible to compute the extent values $\xi (\ket{T}) = 1.17157$ and $\xi (\ket{CCZ}) = 1.7778$. Moreover, $\texttt{log} \xi$ is an additive monotone with respect to collections of $\ket{T}$ states and $\ket{CCZ}$ states (which satisfies Lemma \ref{stabextent}) and therefore $r \geq \texttt{log}[1.77778]/\texttt{log}[1.17157] = 3.63356$ and $r' \leq \texttt{log}[1.77778]/\texttt{log}[1.17157] = 3.63356$ (which implies $r' \leq 3$).
 
 
-\section{Lower Bounds for $C^{n-1}Z$ gate}
-The $\Lambda_n (Z)$ gate is a gate worth considering in detail since it is used in many important algorithms, like the Grover's search algorithm. Lower bounds on resources required for this gate follow after this proposition.
+\section{The $C^nZ$ gate}
+\subsection{Lower Bounds for the $C^nZ$ gate}
+The $C^n Z$ gate is a gate worth considering in detail since it is used in many important algorithms, like the Grover's search algorithm. We start by computing the Pauli spectrum of $\ket{\C^nZ}$. Lower bounds on the resources required for this gate follow after this proposition.
 
 \begin{proposition}
 \label{prop4.2}
-For all $n \geq 3$, the Pauli spectrum of the state $\ket{\Lambda_n (Z)} = \Lambda_n (Z) \ket{+}^{\otimes n}$ has values (and multiplicities): $1 \hspace{2mm} (1)$; $0 \hspace{2mm} (-1 +2^{n-1} + 2^{2n-1})$; $1-2^{2-n} \hspace{2mm} (2^n-1)$; $2^{2-n}  \hspace{2mm} (1-3 \cdot 2^{n-1} + 2^{2n-1})$.
+For all $n \geq 3$, the Pauli spectrum of the state $\ket{C^n Z}$ is: $\{ 1 \hspace{2mm} (1)$, $0 \hspace{2mm} (-1 +2^{n-1} + 2^{2n-1})$, $1-2^{2-n} \hspace{2mm} (2^n-1)$, $2^{2-n}  \hspace{2mm} (1-3 \cdot 2^{n-1} + 2^{2n-1}) \}$.
 \end{proposition}
 
 \begin{proof}
-Consider the state $\ket{\Lambda_n (Z)}$, defined as 
+We have 
 \begin{center}
-$\ket{\Lambda_n (Z)} = \Lambda_n (Z)\ket{+}^{\otimes n} = \frac{1}{\sqrt{2^n}} \sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} \ket{b}$
+$\ket{Cn Z} = \C^n Z \ket{+}^{\otimes n} = \frac{1}{\sqrt{2^n}} \sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} \ket{b}$
 \end{center}
-We are interested in the set of Pauli expectation values $\braket{\Lambda_n (Z)|X^xZ^z|\Lambda_n (Z)}$ for arbitrary bit strings $x$ and $z$. Note that we need not consider the Pauli matrix $Y$ (as in $X^xY^yZ^z$ in the inner product) since $Y = iXZ$, and the phase will vanish once we take the absolute value as in the definition of the Pauli spectrum. Moreover, for one-bit bit strings $i$ and $j$, observe that $Z^i \ket{j} = \ket{j}$ if $i=j=0$ or $i \neq j$, and $Z^i \ket{j} = -\ket{j}$ if $i=j=1$. So in general $Z^z \ket{b} = (-1)^{z \cdot b}\ket{b}$. Furthermore, $X^i \ket{j} = \ket{i+j}$, so for arbitrary bit strings it follows that $X^x\ket{b} = \ket{b + x}$ (where $b+x$ is component-wise addition modulo 2. We can now directly calculate as follows:
-
-\begin{equation}
+We want to compute the Pauli expectation $\braket{\Lambda_n (Z)|X^xZ^z|\Lambda_n (Z)}$ where $x$ and $z$ are bit strings. Note that we need not consider the Pauli matrix $Y$ since $Y = iXZ$, and the phase will vanish once we take the absolute value as in the definition of the Pauli spectrum. For one-bit bit strings $i$ and $j$, observe that $Z^i \ket{j} = \ket{j}$ if $i=j=0$ or $i \neq j$, and $Z^i \ket{j} = -\ket{j}$ if $i=j=1$. So in general $Z^z \ket{b} = (-1)^{z \cdot b}\ket{b}$. Furthermore, $X^i \ket{j} = \ket{i \oplus j}$, where $\oplus$ is addition modulo 2, so for arbitrary bit strings it follows that $X^x\ket{b} = \ket{b \oplus x}$, where $b \oplus x$ is extended component-wise. We can now directly calculate as follows:
+\begin{equation*}
 \begin{split}
 2^n\braket{\Lambda_n (Z)|X^xZ^z|\Lambda_n (Z)} & = \sum\limits_{b, b' \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{b'_1 \cdot b'_2 \cdots b'_n} \braket{b'|X^xZ^z|b} \\
 & = \sum\limits_{b, b' \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{b'_1 \cdot b'_2 \cdots b'_n} (-1)^{z \cdot b} \braket{b'|X^x|b} \\
-& = \sum\limits_{b, b' \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{b'_1 \cdot b'_2 \cdots b'_n} (-1)^{z \cdot b} \braket{b'|b + x} \\
-& = \sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{(b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_n + x_n)} (-1)^{z \cdot b}
+& = \sum\limits_{b, b' \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{b'_1 \cdot b'_2 \cdots b'_n} (-1)^{z \cdot b} \braket{b'|b \oplus x} \\
+& = \sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{(b_1 \oplus x_1) \cdot (b_2 \oplus x_2) \cdots (b_n \oplus x_n)} (-1)^{z \cdot b}
 \end{split}
-\end{equation}
+\end{equation*}
+Note that we have the last line since $\braket{b'|b \oplus x} = 0$ when $b' \neq b \oplus x$, and so we can substitute $b'_i = b_i \oplus x_i$. 
 
+When $x$ is the all zero vector $\textbf{0}$, we get 
+\begin{center}
+$2^n\braket{C^n Z|X^xZ^z|C^n Z} = \sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{z \cdot b} = \sum\limits_{b \in \{0, 1\}^n} (-1)^{z \cdot b}$.
+\end{center} This is $2^n$ for $z = \textbf{0}$
+ For any other $z$ half of the terms in the summation will be $-1$ and the other half $1$, giving $0$. 
 
-Note that we have the last line since $\braket{b'|b+x} = 0$ when $b' \neq b + x$, and so we can substitute $b'_i = b_i + x_i$. When $x=0^n$, we see that the sum simplifies to $\sum_{b \in \{0, 1\}^n} (-1)^{z \cdot b}$ which is $2^n$ for $z=0^n$, and for any other $z$ half of the terms in the summation will be $-1$ and the other half $1$, giving $0$. For $x \neq 0^n$, note that the terms in the sum over $b$ differ from $\sum_{b \in \{0, 1\}^n} (-1)^{z \cdot b}$ only for $b = 1^n$ and $b = 1^n + x$. Therefore,
-
-\begin{equation}
+When $x \neq \textbf{0}$, note that the terms in the sum over $b$ differ from $\sum_{b \in \{0, 1\}^n} (-1)^{z \cdot b}$ only for $b = \textbf{1}$ and $b = \textbf{1} + x$, where $\textbf{1}$ is the all one vector. Therefore,
+\begin{equation*}
 \begin{split}
 2^n\braket{\Lambda_n (Z)|X^xZ^z|\Lambda_n (Z)} & = \sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{(b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_n + x_n)} (-1)^{z \cdot b} \\
 & = - (-1)^{z \cdot 1^n} - (-1)^{z \cdot (1^n + x)} \hspace{2mm} + \sum\limits_{b \in \{0, 1\}^n \texttt{\textbackslash} \{1^n, 1^n + x \} } (-1)^{z \cdot b}  \\
 & = -2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot (1^n + x)} + \sum\limits_{b \in \{0, 1\}^n} (-1)^{z \cdot b}
 \end{split}
-\end{equation}
-
+\end{equation*}
 When $z = 0^n$, this is simply $2^n - 4$. When $z \neq 0^n$, it is $-2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot (1^n + x)}$, and we have two more final cases. The first is when $x \cdot z$ is odd, where we get:
-\begin{equation}
+\begin{equation*}
 \begin{split}
 -2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot (1^n + x)} & = -2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot 1^n} (-1)^{z \cdot x} \\
 & = -2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot 1^n} (-1)^1 \\
 & = -2(-1)^{z \cdot 1^n} + 2(-1)^{z \cdot 1^n} \\
 & = 0
 \end{split}
-\end{equation}
+\end{equation*}
 and if $x \cdot z$ is even, then we have $-2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot 1^n} = -4(-1)^{z \cdot 1^n}$ instead, which simply becomes $4$ since the pauli spectrum requires we take the absolute value. We can now summarize:
 \begin{equation*}
 |\braket{\Lambda_n (Z)|X^xZ^z|\Lambda_n (Z)}| = \begin{cases}
@@ -1052,68 +1057,68 @@ We can count the number of each subset of binary vectors $x$ and $z$ to find mul
 
 \begin{corollary}
 \label{nu values}
-We have the following stabilizer nullity values.
-\begin{itemize}
-\item $\nu (\ket{T}) = 1$
-\item $\nu (\ket{CS}) = 2$
-\item $\nu (\ket{CCZ}) = 3$
-\item $\nu (\ket{\Lambda_n (Z)}) = n+1$
-\end{itemize}
+We have the following stabilizer nullity values: $\nu (\ket{T}) = 1$, $\nu (\ket{CS}) = 2$, $\nu (\ket{CCZ}) = 3$, $\nu (\ket{C^n Z}) = n+1$
 \end{corollary}
 \begin{proof}
 
-The first three come from calculation. For $\nu (\ket{\Lambda_n (Z)})
-= n+1$, recall that if $\ket{\psi}$ is an $m$-qubit state then $\nu
-(\ket{\psi}) = m - \textit{log}_2|\textit{Stab}(\ket{\psi})|$. By
+The first three follow by direct calculation. For $\nu (\ket{C^n Z}) = n+1$, recall that if $\ket{\psi}$ is an $m$-qubit state then $\nu
+(\ket{\psi}) = m - \log_2|\Stab(\ket{\psi})|$. By
 %proposition \ref{prop4.2} we have $|$Stab$(\ket{\psi})| = 1$ so that
 %$\nu (\ket{\Lambda_n (Z)}) = n+1 - \textit{log}_2 (1) = n+1-0 = n+1$.
-proposition \ref{prop4.2} we have $|\Stab(\ket{\psi})| = 1$ so that
-$\nu (\ket{\Lambda_n (Z)}) = n+1 - \log_2 (1) = n+1-0 = n+1$.
+Proposition \ref{prop4.2} we have $|\Stab(\ket{C^n Z})| = 1$ since the size of the stabilizer of a state is the multiplicity of $1$ in its Pauli spectrum. Hence $\nu (\ket{C^n Z}) = n+1 - \log_2 (1) = n+1-0 = n+1$.
 \end{proof}
 
 \begin{proposition}
-For $n \geq 2$, $\Lambda_n (Z)$ gate cannot be implemented with Clifford gates and measurements using fewer than $n\ket{T}$ states, or $n/2 \ket{CS}$ states, or $n/3 \ket{CCZ}$ states.
+\label{nullity(C^nZ) LB}
+For $n \geq 2$, the $C^n Z$ gate cannot be implemented with Clifford gates and measurements using fewer than $n+1$ $T$ gates, or $(n+1)$ $CS$ gates, or $(n+1)/3$ $CCZ$ gates.
 \end{proposition}
 
 \begin{proof}
-First note that proving that a bound holds for the state $\ket{\Lambda_n (Z)}$ implies that it holds for the gate $\Lambda_n (Z)$. Indeed, if we can perform a task with $k$ $T$ gates (and $k$ $CS$ or $k$ $CCZ$ gates respectively) then we can also perform it with $k$ $\ket{T}$ states (and $k$ $\ket{CS}$ or $k$ $\ket{CCZ}$ states respectively). Hence, any lower bound on the number of required states is a lower bound on the number of required gates. Now, $\nu (\ket{T}) = 1$ and $\nu (\ket{\Lambda_n (Z)}) = n+1$ by corollary \ref{nu values}. Since $\nu$ is a monotone, at least $n+1$ $\ket{T}$ states are required to implement the $\nu (\ket{\Lambda_n (Z)})$ state and hence the $\Lambda_n (Z)$ gate. Similarly, since $\nu (\ket{CS}) = 2$, $\nu (\ket{CCZ}) = 3$, we get that to implement the $\Lambda_n (Z)$ we need at least $(n+1)/2$ $\ket{CS}$ states or $(n+1)/3$ $\ket{CCZ}$ states.
+First note that proving that a bound holds for the state $\ket{\Lambda_n (Z)}$ implies that it holds for the gate $\Lambda_n (Z)$. Indeed, if we can perform a task with $k$ $T$ gates then we can also perform it with $k$ $\ket{T}$ states. Hence, any lower bound on the number of required states is a lower bound on the number of required gates. Now, $\nu (\ket{T}) = 1$ and $\nu (\ket{\Lambda_n (Z)}) = n+1$ by Corollary \ref{nu values}. Since $\nu$ is a monotone it is non-increasing under Clifford operations and measurements. This implies that at least $n+1$ $\ket{T}$ states are required to implement the $\ket{\Lambda_n (Z)}$ state and hence the $\Lambda_n (Z)$ gate. Similarly, since $\nu (\ket{CS}) = 2$ and $\nu (\ket{CCZ}) = 3$, we get that to implement the $C^n Z$ we need at least $(n+1)/2$ $\ket{CS}$ states or $(n+1)/3$ $\ket{CCZ}$ states.
 \end{proof}
 
+The above lower bound can be improved when measurements are restricted.
 
-
-\subsection{Tighter Bounds with measurement probabilities one half}
-
+\begin{corollary}
+\label{dyadic values}
+We have the following dyadic monotone values: $\mu_2 (\ket{T}) = 1/2$, $\mu_2 (\ket{CS}) = 1$, and $\mu_2 (\ket{CCZ}) = 1$.
+\end{corollary}
+\begin{proof}
+These all follow from direct calculation.
+\end{proof}
 
 \begin{lemma}
 \label{CCZ lowerbound}
-At least $n-2$ $\ket{CCZ}$ states are needed to implement the $n$-qubit multiply controlled $Z$ gate $\Lambda_n (Z)$ by using stabilizer operations with measurement probabilities one half. (The optimal circuit follows from the construction for multiply-controlled unitaries described in \cite{}).
+For $n \geq 2$, the $C^n Z$ gate cannot be implemented with Clifford gates and measurements with probability one half using fewer than $2n-2$ $T$ gates, or $n-1$ $CS$ gates, or $n-1$ $CCZ$ gates.
 \end{lemma}
 \begin{proof}
-The circuit for $\Lambda_n (Z)$ that follows from \cite{} uses $n-2$ $CCZ$ gates. By applying that circuit to $\ket{+}^{\otimes n}$ we can prepare $\ket{\Lambda_n (Z)}$. If there existed a circuit that used $k$ $CCZ$ gates for $k < n-2$, we would be able to prepare states $\ket{\Lambda_n (Z)}$ starting from $k$ $\ket{CCZ}$ states and then using Clifford unitaries and Pauli observable measurements with probability one half. To complete this proof, we simply show that this is not possible. Indeed for the input state we would have value $\mu_2 (\ket{CCZ}^{\otimes k}) = k$. For the output state we would have $\mu_2 (\ket{\\Lambda_n (Z)}) = n-2$. This follows from the calculation of the Pauli spectrum of $\ket{C^nZ}$ in \ref{prop4.2}. We have shown above that $\mu_2$ is non-increasing when we apply Clifford unitaries and measurements with probability $1/2$, therefore $k \geq n-2$, as desired.
+We reason as in the proof of Proposition \ref{nullity(C^nZ) LB} but using the dyadic monotone which is also non-increasing under Clifford operations, but with measurements of probability one half, as seen in \ref{dyadic is monotone}. This time the values in Corollary \ref{dyadic values} are used.
 \end{proof}
 
-The next proposition provides reasoning as to why we do not more than $n-2$ $CCZ$ gates by showing a specific circuit construction.
+\subsection{Upper Bounds for the $C^nZ$ gate}
+
+The next proposition provides reasoning as to why we do not need more than $n-1$ $CCZ$ gates by showing a specific circuit construction.
 
 \begin{proposition}
 \label{CCZ upperbound}
-Let $n \in \mathbb{Z}^{\geq 2}$. The $\Lambda_n (Z)$ gate can be implemented using exactly $n-2$ $CCZ$ gates along with Clifford gates and measurements with probability $1/2$.
+Let $n \in \mathbb{Z}^{\geq 2}$. The $\Lambda_n (Z)$ gate can be implemented using $n-1$ $CCZ$ gates along with Clifford gates and measurements with probability $1/2$.
 \end{proposition}
 \begin{proof}
-(Note we use $CCZ$ and $CCX$ gates interchangeably because they are equivalent under a simple conjugation by a Hadamard gate)
-By induction on $n$, consider the base case of $n=2$. Then we are left with a $C^0Z$ gate which is just the $CNOT$ gate. Thus we have used $n-2 = 0$ $CCZ$ gates and just one CNOT gate which is a Clifford gate, so we are done. 
+In the proof, we use the $CCZ$ and the $CCX$ gates interchangeably because they are equivalent under a simple conjugation by a Hadamard gate)
+We reason by induction on $n$. Consider the base case of $n=2$. Then $C^nZ$ is just the $CCZ$ gate, so the result holds in this case.
 
-Now for $n \geq 3$ assume we have an $n-1$ qubit circuit $C$ that acts as a $C^{n-2}Z$ gate that can be performed using only $n-3$ $CCZ$ gates. Then consider the following $n$ qubit circuit:
+Now for $n \geq 3$ assume we have a circuit $D$ for $C^{n-1}Z$ which can be performed using $n-2$ $CCZ$ gates. Then consider the following circuit:
 
 \begin{center}
 $
 \Qcircuit @C=0.7em @R=1.1em {
    & \lstick{\ket{c_1}} & \qw & \ctrl{1} & \qw & \qw & \qw & \qw & \qw & \qw & \multigate{1}{CZ} & \qw \\
    & \lstick{\ket{c_2}} & \qw & \ctrl{1} & \qw & \qw & \qw & \qw & \qw & \qw & \ghost{CZ} & \qw \\
-   & \lstick{\ket{0}} & \qw & \targ & \qw & \multigate{4}{C^{n-2}Z} & \qw & \qw & \gate{H} & \meter & \cctrlo{-1} \\
-   & \lstick{\ket{c_3}} & \qw & \qw & \qw & \ghost{C^{n-2}Z} & \qw & \qw & \qw & \qw & \qw & \qw \\
+   & \lstick{\ket{0}} & \qw & \targ & \qw & \multigate{4}{D} & \qw & \qw & \gate{H} & \meter & \cctrlo{-1} \\
+   & \lstick{\ket{c_3}} & \qw & \qw & \qw & \ghost{D} & \qw & \qw & \qw & \qw & \qw & \qw \\
    & \lstick{\vdots}  \\
    & \lstick{\vdots}  \\
-   & \lstick{\ket{t}} & \qw & \qw & \qw & \ghost{C^{n-2}Z} & \qw & \qw & \qw & \qw & \qw & \qw 
+   & \lstick{\ket{t}} & \qw & \qw & \qw & \ghost{D} & \qw & \qw & \qw & \qw & \qw & \qw 
    }
 $
 \end{center}
@@ -1124,25 +1129,24 @@ Starting with the input state and tracking the state of this system step by step
 \item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{(c_1 \cdot c_2)}\ket{c_3} \cdots \ket{c_{n-1}}\ket{t}$
 \item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{(c_1 \cdot c_2)}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus ((c_1 \cdot c_2) \cdot c_3 \cdots c_{n-1})}$
 \item[$=$] $\ket{c_1}\ket{c_2}\ket{(c_1 \cdot c_2)}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})}$
-\item[$\mapsto$] $\begin{cases} \ket{c_1}\ket{c_2}\ket{+}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \texttt{if } c_1 \cdot c_2 = 0, \\
-\ket{c_1}\ket{c_2}\ket{-}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \texttt{if } c_1 \cdot c_2 = 1 \end{cases}$
-\item[$\mapsto$] $\begin{cases} \ket{c_1}\ket{c_2}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \texttt{if measurement is } \ket{0} , \\
-\pm \ket{c_1}\ket{c_2}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \texttt{if measurement is } \ket{1} \end{cases}$
+\item[$\mapsto$] $\begin{cases} \ket{c_1}\ket{c_2}\ket{+}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \mbox{if } c_1 \cdot c_2 = 0, \\
+\ket{c_1}\ket{c_2}\ket{-}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \mbox{if } c_1 \cdot c_2 = 1 \end{cases}$
+\item[$\mapsto$] $\begin{cases} \ket{c_1}\ket{c_2}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \mbox{if measurement is } \ket{0} , \\
+\pm \ket{c_1}\ket{c_2}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \mbox{if measurement is } \ket{1} \end{cases}$
 \item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{c_3} \cdots \ket{c_{n-1}}\ket{t \oplus (c_1 \cdots c_{n-1})}$
 \end{itemize}
-This circuit and the $C^{n-1}Z$ gate acts on the input in the same way, and by the induction hypothesis this circuit performs the $C^{n-1}Z$ gate with $n-3 +1$ $CCZ$ gates. Thus we have an equivalent circuit of the $C^{n-1}Z$ gate using exactly $n-2$ $CCZ$ gates. Note the uncomputation of the added toffoli gate follows from \ref{one bit adder b}.
+Hence, this circuit acts as the $C^nZ$ gate. Note that the uncomputation of the added toffoli gate follows from \ref{one bit adder b}.
 \end{proof}
 
-Similarly to lemma \ref{CCZ lowerbound}, we need at least $n-2$ $CS$ gates to perform a $C^{n-1}Z$ gate and at least $2n-4$ $T$ gates to perform a $C^{n-1}Z$ gate. This follows from the fact that $\mu_2 (\ket{CS}) = 1$ and $\mu_2 (\ket{T}) = 1/2$ (obtained by calculation).
 
-We can also give similar upper-bounds as in proposition \ref{CCZ upperbound} for $CS$ and $T$ gates by giving already known circuits.
+We can also give upper-bounds similar to the ones in Proposition \ref{CCZ upperbound} for the $CS$ and $T$ gates.
 
 \begin{proposition}
 \label{CS upperbound}
-The $C^{n-1}Z$ gate can be implemented using exactly $2n-4$ $CS$ gates along with Clifford gates and measurements with probability $1/2$.
+The $C^{n}Z$ gate can be implemented using exactly $2n-2$ $CS$ gates along with Clifford gates and measurements with probability $1/2$.
 \end{proposition}
 \begin{proof}
-Simply put, we can write the $CCZ$ gate with an equivalent circuit using only two $CS$ gates and then use this circuit to replace all the CCZ gates used in the circuit in proposition \ref{CCZ upperbound}. The circuit is:
+Simply put, we can implement the $CCZ$ gate with a circuit using only two $CS$ gates and then use this circuit to replace all the CCZ gates used in the circuit in proposition \ref{CCZ upperbound}. The circuit for the $CCZ$ gate using two $CS$ gates is given below.
 
 \begin{center}
 $
@@ -1155,16 +1159,16 @@ $
 $
 \end{center}
 
-Thus, since we used $n-2$ $CCZ$ gates in proposition \ref{CCZ upperbound}, we can implement the $C^{n-1}Z$ gate with $2\cdot (n-2)$ $CS$ gates.
+Thus, since we used $n-1$ $CCZ$ gates in proposition \ref{CCZ upperbound}, we can implement the $C^{n-1}Z$ gate with $2\cdot (n-1)$ $CS$ gates.
 
 \end{proof}
 
 \begin{proposition}
 \label{T upperbound}
-The $C^{n-1}Z$ gate can be implemented using exactly $4n-8$ $T$ gates along with Clifford gates and measurements with probability $1/2$.
+The $C^{n}Z$ gate can be implemented using exactly $4n-4$ $T$ gates along with Clifford gates and measurements with probability $1/2$.
 \end{proposition}
 \begin{proof}
-Simply put, we can write the $CCZ$ gate with an equivalent circuit using four $T$ gates and then use this circuit to replace all the CCZ gates used in the circuit in proposition \ref{CCZ upperbound}. The circuit is:
+Simply put, we can write the $CCZ$ gate with an equivalent circuit using four $T$ gates and then use this circuit to replace all the CCZ gates used in the circuit in proposition \ref{CCZ upperbound}. The circuit for the $CCZ$ gate using four $T$ gates is given below.
 
 \begin{center}
 $
@@ -1177,7 +1181,7 @@ $
 $
 \end{center}
 
-Again, since we used $n-2$ $CCZ$ gates in proposition \ref{CCZ upperbound}, we can implement the $C^{n-1}Z$ gate with $4\cdot (n-2)$ $T$ gates.
+Again, since we used $n-1$ $CCZ$ gates in proposition \ref{CCZ upperbound}, we can implement the $C^{n}Z$ gate with $4\cdot (n-1)$ $T$ gates.
 
 \end{proof}
 
