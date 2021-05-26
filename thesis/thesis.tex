@@ -53,8 +53,18 @@
 \mainmatter
 
 \chapter{Introduction}
+\section{Motivation}
+In Quantum information theory there are certain computationally expensive gates to perform. Finding upper and lower bounds on expensive gates to perform computationally expensive tasks is of particular interest, and in this paper we explore methods using stabilizer operations to do so. To find upper bounds on an expensive gate needed to perform a computational task, one need only state explicitly a quantum circuit to show that it can be done with no more than the upper bound. As such, upper bounds are less interesting as, for commonly used expensive gate, there upper bounds are already well known. Regardless, we state some of the best known upper bounds here, but mostly focus on the new discovery of lower bounds, and the stabilizer operations used to acquire them.
+In this paper we discuss 
+\section{The Stabilizer and Monotonic Functions}
+In chapter \ref{chap Stab} we introduce the stabilizer formalism, which is the backbone of our methods to realizing lower bounds for resources (where resources here refers to either an expensive gate or circuit). We start with some basic definitions regarding the Pauli matrices, to then get into the definition of the stabilizer of a state. The stabilizer relies on these Pauli matrices, but more importantly, the monotonic functions that we introduce relies on this stabilizer. 
+Monotonic functions are non-increasing functions, and in our case they are non-increasing under Clifford operations and Pauli measurements (where Clifford operations can be thought of as inexpensive resources, thus negligible in cost). In this paper, there are two important monotones that we discuss. The first one is called the stabilizer nullity, which we use first to get lower bounds for our circuits discussed later on. The stabilizer nullity gives us more general lower bounds, and is easier to compute as well, making it the easier one to deal with. 
+The second monotone that we discuss is called the dyadic monotone. This function however us only non-increasing under Clifford operations and Pauli measurements when the Pauli measurements are restricted to having probability $1/2$. Fortunately, with this added restriction comes tighter lower bounds, thus meaning that we can perform certain computational expensive tasks with fewer resources given that our measurements are done with probability $1/2$ only. Since this restriction may not always be feasible, we still have the stabilizer nullity lower bounds regardless. 
+A nice observation to make is the comparison between upper and lower bounds, which is precisely what we did for the $C^nZ$ gate, which is the $n$-controlled $Z$ gate. In the case that the lower bound and upper bounds are the same for a given resource, then we know for certain what the optimal number of said resource is required to perform the task at hand. This case only arises once in this paper, and in the other cases having different lower and upper bounds means that we still do not know if we can do better. 
 
-\ldots
+\section{Conversion Examples}
+When we refer to a conversion it means we are applying a Clifford or non-Clifford circuit to some gate or circuit to get an equivalence to some other gate or circuit of interest. For example for some circuit $D$ there is some other Clifford circuit $C$ such that $C \otimes D = E$, where $E$ is another circuit of interest. In the case of $C$ not being Clifford, then we call it a catalyst, where we will instead have $C \otimes D = E \otimes D$. As explained above, we are interested in the number of a certain resource required to use this equivalences, and the stabilizer nullity and dyadic monotones both give us this answer. 
+The first main conversion is looking at going from the $T$, $CS$, and $CCZ$ gates to the $C^nZ$ gate. All three of these conversions do not require a catalyst, so a Clifford circuit is all that is required. Thus in this case the only expensive resource to consider is the one of interest, being either the $T$, $CS$, or $CCZ$ gate. First we provide and prove lower bounds using the stabilizer nullity, and then the dyadic monotone. For example, using the stabilizer nullity we find that at least $n+1$ $T$ gates are needed to perform a $C^nZ$ gate, but then get that only $2\cdot (n+1)$ $T$ gates are needed when using the dyadic monotone, and similar values are obtained for the other gates. Following this, we show the best known circuit to show these equivalences, explicitly giving upper bounds.
 
 \chapter{Foundational Quantum Computing}
 \section{Linear Algebra}
@@ -90,6 +100,7 @@ Aside from unitary transformations, we can also act on a quantum state by measur
 ...
 
 \chapter{The Stabilizer Formalism}
+\label{chap Stab}
 \section{Basics}
 %To begin, we need to introduce and develop the formalism of stabilizer operators and its related quantities, but first some  basic definitions, starting with the Pauli matrices.
 
@@ -603,6 +614,14 @@ The stabilizer extent is multiplicative with respect to a given set of states $\
 \end{lemma}
 
 \section{Dyadic Monotone}
+Consider quantum states the have entries in $\mathbb{Z}[i, 1/2] = \big\{\frac{a+ib}{2^k}: a, b, k, \in \mathbb{Z} \big\}$ when written in the computational basis. Indeed, $\ket{C^nZ}$ can be written as vectors with entries in the above set. We have a few note worthy facts to observe here:
+\begin{itemize}
+\item The set $\mathbb{Z}[i, 1/2]$ is a ring since it is closed under addition, negation, multiplication and contains $0$ and $1$.
+\item If a state $\ket{\psi}$ has entries in $\mathbb{Z}[i, 1/2]$ then for any Hermitian multi-qubit Pauli operator $P$, the expectation $\braket{\psi | P | \psi}$ can be written as $a/2^k$ for integers $a, k$, and is in $\mathbb{Z}[i, 1/2]$ because the entries of all Pauli matrices are also, and $\mathbb{Z}[i, 1/2]$ is closed under complex conjugation.
+\item The expectation is also a real number and all the real numbers in $\mathbb{Z}[i, 1/2]$ are of the form $a/2^k$ for integers $a$ and $k$. 
+\item For stabilizer states Pauli expectations can only be $\pm 1$ and $0$.
+\end{itemize}
+
 First let us define a function $\bar{v}_2 :\mathbb{Q} \rightarrow \mathbb{Z} \cup \{ \infty \}$. Let $0 \neq q \in \mathbb{Q}$ so we can write $q = n/d$ with $n, d \in \mathbb{Z}$ and gcd$(n, d) = 1$ (so it is in reduced form). By the fundamental theorem of algebra we can write $n = 2^{r_2} \cdot p^{r_{p_1}}_1 \cdots p^{r_{p_m}}_m$ and $d = 2^{l_2} \cdot p^{l_{p_1}}_1 \cdots p^{l_{p_m}}_m$ for $k_i, l_i \in \mathbb{Z} \forall i \in [m]$. So $q = 2^{k} \cdot p^{k_{p_1}}_1 \cdots p^{k_{p_m}}_m$ where $k = r_2 - l_2$ and $k_j = r_{p_j} - l_{p_j}$. This map is unique so we define $\bar{v}_2(q) = k$ and $\bar{v}_2(0) = \infty$.
 
 Remark: Let $q \in \mathbb{Q}$ be in reduced form as above. Then we have three different cases:
@@ -613,6 +632,7 @@ Remark: Let $q \in \mathbb{Q}$ be in reduced form as above. Then we have three d
 \end{enumerate}
 
 \begin{proposition}
+
 \begin{enumerate}
 \item $\bar{v}_2(\pm 1) = 0$
 \item $\bar{v}_2 (-q) = \bar{v}_2 (q)$
@@ -659,20 +679,18 @@ If $x, x' \in \mathbb{R}$ then $v_2 (x \cdot x') = v_2 (x) + v_2 (x')$.
 \end{proposition}
 
 
-Consider quantum states the have entries in $\mathbb{Z}[i, 1/2] = \big\{\frac{a+ib}{2^k}: a, b, k, \in \mathbb{Z} \big\}$ when written in the computational basis. Indeed, $\ket{C^nZ}$ can be written as vectors with entries in the above set. We have a few note worthy facts to observe here:
-\begin{itemize}
-\item The set $\mathbb{Z}[i, 1/2]$ is a ring since it is closed under addition, negation, multiplication and contains $0$ and $1$.
-\item If a state $\ket{\psi}$ has entries in $\mathbb{Z}[i, 1/2]$ then for any Hermitian multi-qubit Pauli operator $P$, the expectation $\braket{\psi | P | \psi}$ can be written as $a/2^k$ for integers $a, k$, and is in $\mathbb{Z}[i, 1/2]$ because the entries of all Pauli matrices are also, and $\mathbb{Z}[i, 1/2]$ is closed under complex conjugation.
-\item The expectation is also a real number and all the real numbers in $\mathbb{Z}[i, 1/2]$ are of the form $a/2^k$ for integers $a$ and $k$. 
-\item For stabilizer states Pauli expectations can only be $\pm 1$ and $0$.
-\end{itemize}
 
-The power of $2$ in the denominator of the Pauli expectation gives us a sense of how non-stabilizer the state is. We now develop an intuition for this sort of measure. Firstly, let $q$ be a non-zero rational number. It can be written as a product of integer powers of prime numbers in a unique way:
+
+The power of $2$ in the denominator of the Pauli expectation gives us a sense of how non-stabilizer the state is. The definition of the dyadic monotone below gives us an intuition for this sort of measure. 
+\begin{comment}
+Firstly, let $q$ be a non-zero rational number. It can be written as a product of integer powers of prime numbers in a unique way:
 \begin{center}
 $q = \pm 2^k \cdot p_1^{k(1)} \cdots p_m^{k(m)}$, $p_k$ are odd primes, and $k, k(1), \dots , k(m)$ are integers
 \end{center}
 
 Let us define $v_2 (q)$ to be $k$. Note that function $v_2$ is somewhat similar to log$|\cdot|$ in that $v_2(q_1q_2) = v_2(q_1) + v_2(q_2), v_2(\pm 1) = 0$ and $v_2 (q) = v_2 (-q)$. For odd integer $a$ and integer $k$ the value is $v_2 (a/2^k) = - k$. Note also that $v_2$ is always non-negative for integer arguments. It is convenient to extend $v_2$ to all rational numbers, by defining $v_2(0) = + \infty $ (and note that the multiplicative property still holds).
+\end{comment}
+
 \begin{definition}
 Let $\ket{\psi}$ be an $n$-qubit state with entries in $\mathbb{Z}[i, 1/2]$, the dyadic monotone is 
 \begin{center}
@@ -886,111 +904,6 @@ $\tau (W_n) = n + 1$
 Since $P$ has a width of $n+1$ columns, we have $\tau (W_n) \leq n+1$. The only full rank phase polynomial matrices that give a unitary that is Clifford equivalent to $T^{\otimes n}$ are square. Since this is not the case we conclude $\tau (W_n) = n + 1$.
 \end{proof}
 
-\subsection{Conversion Protocols}
-Here we introduce some conversion protocols that use catalysis to convert resource states for the third level of the Clifford hierarchy to resource states for higher levels. First an important building block for these protocols is the following circuit in Figure \ref{one bit adder}.
-
-\vspace{2mm}
-
-\begin{figure}[H]
-
-\caption{Circuits for applying three $\sqrt{T}$ gates using five $T$ gates and one $\sqrt{T}$ gate}
-
-\begin{subfigure}[b]{0.5\textwidth}
-
-
-$
-\small
-\Qcircuit @C=0.07em @R=.3em {
-   \lstick{\ket{a}} & \gate{\sqrt{T}}  & \qw & \rstick{\zeta_{16}^{(a+b+c)_0} \zeta_8^{(a+b+c)_1} \ket{a}} & & & \lstick{\ket{a}} &  \ctrl{2} & \qw & \qw & \qw & \ctrl{3} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw  & \qw & \qw & \qw  & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \ctrl{3} & \qw & \qw & \ctrl{2} & \qw & \rstick{\zeta_{16}^{(a+b+c)_0} \zeta_8^{(a+b+c)_1}\ket{a}} \\
-   \lstick{\ket{b}} & \gate{\sqrt{T}} & \qw & \rstick{\ket{b}} & \push{\rule{9em}{0em}=\rule{1.5em}{0em}} & & \lstick{\ket{b}} & \targ & \qw & \qw & \ctrl{2} & \targ & \ctrl{1} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw  & \qw & \qw & \qw  & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \ctrl{1} & \targ & \ctrl{2} & \qw & \targ & \qw & \rstick{\ket{b}} \\
-   \lstick{\ket{c}} & \gate{\sqrt{T}} & \qw & \rstick{\ket{c}}  & & & \lstick{\ket{c}} & \targ & \qw  & \qw & \ctrl{1} & \qw & \targ & \qw & \rstick{\ket{a \oplus b \oplus c}} \qw & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \gate{\sqrt{T}} & \targ & \qw  & \ctrl{1} & \qw & \targ & \qw & \rstick{\ket{c}} \\
-   & & & & & & & & & \lstick{\ket{0}} & \gate{X} & \targ & \qw & \qw & \rstick{\ket{ab \oplus ac \oplus bc}} \qw  & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & &  & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & \gate{T} & \qw & \targ & \gate{X} & \qw & \rstick{\ket{0}}
-}
-$
-\label{one bit adder a}
-\caption{Three $\sqrt{T}$ gates can be applied with just one $\sqrt{T}$ gate and other third level Clifford unitaries}
-\end{subfigure}
-
-
-\vspace{2mm}
-
-\begin{subfigure}[b]{0.5\textwidth}
-\centering
-$
-\Qcircuit @C=0.5em @R=.7em {
-   & \ctrl{2} & \qw & & & & \qw & \qw & \multigate{1}{CZ} & \qw \\
-   & \ctrl{1} & \qw & & \push{\rule{1em}{0em}=\rule{1.5em}{0em}} & & \qw & \qw & \ghost{CZ} & \qw \\
-   & \gate{X} & \qw & \rstick{\ket{0}} & & & \gate{H} & \measureD{Z} & \ctrl{-1} \cw \cwx
-}
-$
-
-\vspace{4mm}
-
-$
-\Qcircuit @C=0.5em @R=.7em {
-   & \lstick{\ket{a}} & \ctrl{2} & \qw & \rstick{\ket{a}} & & & \lstick{\ket{a}} & \ctrl{2} & \qw & \targ & \gate{T^{\dag}} & \targ & \qw & \qw & \qw & \rstick{\ket{a}} \\
-   & \lstick{\ket{b}} & \ctrl{1} & \qw & \rstick{\ket{b}} & & \push{\rule{1em}{0em}=\rule{1.5em}{0em}} & \lstick{\ket{b}} & \qw & \ctrl{1} & \targ & \gate{T^{\dag}} &  \targ & \qw & \qw & \qw & \rstick{\ket{b}} \\
-   & \lstick{\ket{0}} & \gate{X} & \qw & \rstick{\ket{ab}} & & & \lstick{\ket{T}} & \targ & \targ & \ctrl{-2} & \gate{T} & \ctrl{-2} & \gate{H} & \gate{S} & \qw & \rstick{\ket{ab}} 
-}
-$
-\caption{Simplified circuits given specific input states.}
-\label{one bit adder b}
-\end{subfigure}
-
-\label{one bit adder}
-\end{figure}
-
-Note that the gate exp$(i\theta \ket{1} \bra{1})^{\otimes n}$ acting on an n-qubit register in the computational basis state $\ket{w}$ gives $e^{i \theta \cdot hw(w)}\ket{w}$, where hw($w$) is the Hamming weight of the bit string $w$. With this we can compute the gate exp$(i\theta \ket{1}\bra{1})^{\otimes n}$ by just computing hw($w$) and storing it in a quantum register $\ket{x_k \ldots x_0}$, and for $j$ from 0 to $k$ apply exp($i2^j\theta \ket{1} \bra{1}$) to qubit j in the register. In Figure \ref{one bit adder} we use the adder circuit to compute the Hamming weight of the bit string $a, b,$ and $c$. For bit strings of length three the Hamming weight can be represented using two bits. The lower bit is the parity$a \oplus b \oplus c$ and the higher bit is the majority function $ab \oplus bc \oplus ac$. These are exactly the values computed by the adder. An important efficiency gain comes from the first circuit in Figure \ref{one bit adder b} where you can observe that the one qubit adder can be un-computed by using Clifford gates and single qubit Pauli measurements only. Using this trick, Figure \ref{one bit adder a} applies three $\sqrt{T}$ gates using only one $\sqrt{T}$, and either one $T$ and $CCX$ gate each, or five $T$ gates (if using the second circuit in Figure \ref{one bit adder b} instead).
-
-
-
-
-
-We now give an example that uses the above results to form a resource state conversion protocol: $\ket{\sqrt{T}} + 5.5\ket{T} \rightarrow 3\ket{\sqrt{T}}$. This protocol follows directly when $\ket{+}$ states are fed into Figure \ref{one bit adder a} when the $\sqrt{T}$ gate is implemented by injection of $\ket{\sqrt{T}}$, and when the third level Clifford gates are implemented with $\ket{T}$ resource states. We need to use 5$\ket{T}$ states to implement the first $CCX$ gate and the T gate in Figure \ref{one bit adder a}. The $\sqrt{T}$ gate is implemented with the injection circuit which requires an additional $T$ gate correction $50\%$ of the time, which adds $1/2$ to the number of $\ket{T}$ states consumed on average.
-
-The extra $T$ gate can be amortized to give the conversion $k\ket{CCZ} + (k+ \frac{1}{2})\ket{T} \xRightarrow{\ket{\sqrt{T}}} 2k\ket{\sqrt{T}}$ which is valid for any positive integer $k$. We see that asymptotically $\ket{\sqrt{T}}$ state costs half of $\ket{\sqrt{T}}$ state plus half of $\ket{CCZ}$ state. Using the circuit on Figure \ref{one bit adder a} we can reduce the parallel application of $2k+1 \sqrt{T}$ gates to the parallel application of $2k-1 \sqrt{T}$ gates for any positive integer k. We use the circuit on Figure \ref{one bit adder a} to execute the first three out of $2k+1 \sqrt{T}$ gates by only using one $\sqrt{T}$ gate. Then we observe that the rest of the $2k-2 \sqrt{T}$ gates can be executed in parallel with the newly introduced $\sqrt{T}$ gate. The main observation here is that the cost of applying $\sqrt{T}^3$ gate is the same as the cost of applying $\sqrt{T}$. Figure \ref{conversion example} applies this to show how to reduce the parallel application of five $\sqrt{T}$ gates to only three.
-
-\begin{figure}[H]
-\caption{Conversion example of $k\ket{CCZ} + 1\frac{1}{2}\ket{T} + \ket{\sqrt{T}}$ for k=2}
-\label{conversion example}
-$
-\Qcircuit @C=0.5em @R=.7em {
-   & \lstick{\ket{+}} & \gate{\sqrt{T}} & \qw & & & \ctrl{2} & \qw & \qw & \qw & \qw & \ctrl{3} & \qw & \qw & \qw & \qw & \qw & \ctrl{3} & \qw & \qw & \ctrl{2} & \qw & \rstick{\ket{\sqrt{T}}} \\
-   & \lstick{\ket{+}} & \gate{\sqrt{T}} & \qw & & & \targ & \qw & \qw & \qw & \ctrl{2} & \targ & \ctrl{1} & \qw & \qw & \qw & \ctrl{1} & \targ & \ctrl{2} & \qw & \targ & \qw & \rstick{\ket{\sqrt{T}}} \\
-   & \lstick{\ket{+}} & \gate{\sqrt{T}} & \qw & \push{\rule{1em}{0em}=\rule{1em}{0em}} & & \targ & \qw & \qw & \qw & \ctrl{1} & \qw & \targ & \qswap & \gate{T} & \qswap & \targ & \qw & \ctrl{1} & \qw & \targ & \qw & \rstick{\ket{\sqrt{T}}} \\
-   & & & & & & & & & \lstick{\ket{0}} & \gate{X} & \targ & \qw & \qswap \qwx & \gate{\sqrt{T}} & \qswap \qwx & \qw & \targ & \gate{X} & \qw & \rstick{\ket{0}}  \\
-   & \lstick{\ket{+}} & \gate{\sqrt{T}} & \qw & & & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \gate{\sqrt{T}} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \rstick{\ket{\sqrt{T}}} \\
-   & \lstick{\ket{+}} & \gate{\sqrt{T}} & \qw & & & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \gate{\sqrt{T}} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \rstick{\ket{\sqrt{T}}}
-}
-$
-\end{figure}
-
-\subsection{Conversion Bounds}
-\label{ConvBounds}
-Suppose we can identify a monotone $\mathcal{M}$ such that $\mathcal{M}(\ket{\psi})$ is real for any state $\ket{\psi}$, and is non-increasing under stabilizer operations. We call such a function a \textit{monotone}, and use it to bound conversion precesses since for example, a resource state $\ket{A}$ cannot be used to produce a resource state $\ket{B}$ with stabilizer operations if $\mathcal{M}(\ket{A}) < \mathcal{M}(\ket{B})$, so we have: $\mathcal{M}(\ket{A}) < \mathcal{M}(\ket{B}) \implies \ket{A} \not \longrightarrow \ket{B} $
-
-Furthermore, if $\mathcal{M}(\ket{\psi} \otimes \ket{\phi}) = \mathcal{M}(\ket{\psi}) + \mathcal{M}(\ket{\phi})$ for all $\ket{\psi}$ and $\ket{\phi}$, then we can say even more. First, we can rule out catalyzed conversions since $\mathcal{M}(\ket{A} \otimes \ket{cat.}) < \mathcal{M}(\ket{B})$ implies that $\mathcal{M}(\ket{B} \otimes \ket{cat.})$ for any catalyzing state $\ket{cat.}$. Tensor powers of states simplify, allowing us to make asymptotic implications, i.e., 
-\begin{center}
-$\mathcal{M}(\ket{A}) < \alpha \cdot \mathcal{M}(\ket{B}) \implies \ket{A}^{\otimes n} \not \Longrightarrow \ket{B}^{\otimes \alpha n} \hspace{2mm} \forall n$.
-\end{center}
-
-In other words this would put an upper bound of $\alpha$ on the catalytic rate of conversion from $\ket{A}$ to $\ket{B}$. Note that equivalent implications hold if the monotone is \textit{multiplicative} rather than additive.
-For example, consider the states $\ket{T}$ and $\ket{CCZ}$ for which the best known conversion algorithms are:
-\begin{center}
-$4\ket{T} \rightarrow \ket{CCZ}$
-\end{center}
-\begin{center}
-$\ket{CCZ} \xRightarrow{\ket{T}} 2\ket{T}$
-\end{center}
-Clearly these algorithms would have loss if feeding the output of one into the other. The best possible conversion algorithms have (for any n and any catalyst) the minimum $r$ and maximum $r'$ in 
-\begin{center}
-$rn\ket{T} \Rightarrow n\ket{CCZ}$,
-\end{center}
-\begin{center}
-$n\ket{CCZ} r'n\ket{T}$.
-\end{center}
-
-Now, since the stabilizer nullity and extent are monotone functions, we can use them to find $r$ and $r'$ values. By straightforward computation, we have that $\nu (\ket{T}) = 1$ and $\nu(\ket{CCZ}) = 3$. Since $\nu$ is additive we can use the above equations to deduce that $r \geq 3$ and $r' \leq 3$. While not straightforward, it is also possible to compute the extent values $\xi (\ket{T}) = 1.17157$ and $\xi (\ket{CCZ}) = 1.7778$. Moreover, $\texttt{log} \xi$ is an additive monotone with respect to collections of $\ket{T}$ states and $\ket{CCZ}$ states (which satisfies Lemma \ref{stabextent}) and therefore $r \geq \texttt{log}[1.77778]/\texttt{log}[1.17157] = 3.63356$ and $r' \leq \texttt{log}[1.77778]/\texttt{log}[1.17157] = 3.63356$ (which implies $r' \leq 3$).
 
 
 \section{The $C^nZ$ gate}
@@ -1005,7 +918,7 @@ For all $n \geq 3$, the Pauli spectrum of the state $\ket{C^n Z}$ is: $\{ 1 \hsp
 \begin{proof}
 We have 
 \begin{center}
-$\ket{Cn Z} = \C^n Z \ket{+}^{\otimes n} = \frac{1}{\sqrt{2^n}} \sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} \ket{b}$
+$\ket{C^n Z} = \C^n Z \ket{+}^{\otimes n} = \frac{1}{\sqrt{2^n}} \sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} \ket{b}$
 \end{center}
 We want to compute the Pauli expectation $\braket{\Lambda_n (Z)|X^xZ^z|\Lambda_n (Z)}$ where $x$ and $z$ are bit strings. Note that we need not consider the Pauli matrix $Y$ since $Y = iXZ$, and the phase will vanish once we take the absolute value as in the definition of the Pauli spectrum. For one-bit bit strings $i$ and $j$, observe that $Z^i \ket{j} = \ket{j}$ if $i=j=0$ or $i \neq j$, and $Z^i \ket{j} = -\ket{j}$ if $i=j=1$. So in general $Z^z \ket{b} = (-1)^{z \cdot b}\ket{b}$. Furthermore, $X^i \ket{j} = \ket{i \oplus j}$, where $\oplus$ is addition modulo 2, so for arbitrary bit strings it follows that $X^x\ket{b} = \ket{b \oplus x}$, where $b \oplus x$ is extended component-wise. We can now directly calculate as follows:
 \begin{equation*}
@@ -1013,23 +926,31 @@ We want to compute the Pauli expectation $\braket{\Lambda_n (Z)|X^xZ^z|\Lambda_n
 2^n\braket{\Lambda_n (Z)|X^xZ^z|\Lambda_n (Z)} & = \sum\limits_{b, b' \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{b'_1 \cdot b'_2 \cdots b'_n} \braket{b'|X^xZ^z|b} \\
 & = \sum\limits_{b, b' \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{b'_1 \cdot b'_2 \cdots b'_n} (-1)^{z \cdot b} \braket{b'|X^x|b} \\
 & = \sum\limits_{b, b' \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{b'_1 \cdot b'_2 \cdots b'_n} (-1)^{z \cdot b} \braket{b'|b \oplus x} \\
-& = \sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{(b_1 \oplus x_1) \cdot (b_2 \oplus x_2) \cdots (b_n \oplus x_n)} (-1)^{z \cdot b}
+& = \sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{(b_1 \oplus x_1) \cdot (b_2 \oplus x_2) \cdots (b_n \oplus x_n)} (-1)^{z \cdot b}.
 \end{split}
 \end{equation*}
 Note that we have the last line since $\braket{b'|b \oplus x} = 0$ when $b' \neq b \oplus x$, and so we can substitute $b'_i = b_i \oplus x_i$. 
 
 When $x$ is the all zero vector $\textbf{0}$, we get 
 \begin{center}
-$2^n\braket{C^n Z|X^xZ^z|C^n Z} = \sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{z \cdot b} = \sum\limits_{b \in \{0, 1\}^n} (-1)^{z \cdot b}$.
+$2^n\braket{C^n Z|X^xZ^z|C^n Z} = \sum\limits_{b \in \{0, 1\}^n} ((-1)^{b_1 \cdot b_2 \cdots b_n})^2  (-1)^{z \cdot b} = \sum\limits_{b \in \{0, 1\}^n} (-1)^{z \cdot b}$.
 \end{center} This is $2^n$ for $z = \textbf{0}$
  For any other $z$ half of the terms in the summation will be $-1$ and the other half $1$, giving $0$. 
 
-When $x \neq \textbf{0}$, note that the terms in the sum over $b$ differ from $\sum_{b \in \{0, 1\}^n} (-1)^{z \cdot b}$ only for $b = \textbf{1}$ and $b = \textbf{1} + x$, where $\textbf{1}$ is the all one vector. Therefore,
+Now consider the case when $x \neq \textbf{0}$. Denoting $\textbf{1}$ as the all one vector, if $b = \textbf{1}$ then $b_1 \cdot b_2 \cdots b_n = 1 \mbox{ and } (b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_n + x_n) = 0$. Similarly, if $b = \textbf{1} + x$, then $b_1 \cdot b_2 \cdots b_n = 0 \mbox{ and } (b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_n + x_n) = 1$, and in either case we get: 
+\begin{center}
+$\sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{(b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_n + x_n)} (-1)^{z \cdot b} = \sum\limits_{b \in \{0, 1\}^n} (-1) (-1)^{z \cdot b}$.
+\end{center}
+For any other $b$ we have $b_1 \cdot b_2 \cdots b_n = 0 \mbox{ and } (b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_n + x_n) = 0$ giving us 
+\begin{center}
+$\sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{(b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_n + x_n)} (-1)^{z \cdot b} = \sum\limits_{b \in \{0, 1\}^n} (-1)^{z \cdot b}$.
+\end{center}
+Thus the terms in the sum over $b$ differ from $\sum_{b \in \{0, 1\}^n} (-1)^{z \cdot b}$ only for $b = \textbf{1}$ and $b = \textbf{1} + x$. Therefore, 
 \begin{equation*}
 \begin{split}
 2^n\braket{\Lambda_n (Z)|X^xZ^z|\Lambda_n (Z)} & = \sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{(b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_n + x_n)} (-1)^{z \cdot b} \\
 & = - (-1)^{z \cdot 1^n} - (-1)^{z \cdot (1^n + x)} \hspace{2mm} + \sum\limits_{b \in \{0, 1\}^n \texttt{\textbackslash} \{1^n, 1^n + x \} } (-1)^{z \cdot b}  \\
-& = -2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot (1^n + x)} + \sum\limits_{b \in \{0, 1\}^n} (-1)^{z \cdot b}
+& = -2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot (1^n + x)} + \sum\limits_{b \in \{0, 1\}^n} (-1)^{z \cdot b}.
 \end{split}
 \end{equation*}
 When $z = 0^n$, this is simply $2^n - 4$. When $z \neq 0^n$, it is $-2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot (1^n + x)}$, and we have two more final cases. The first is when $x \cdot z$ is odd, where we get:
@@ -1070,7 +991,7 @@ Proposition \ref{prop4.2} we have $|\Stab(\ket{C^n Z})| = 1$ since the size of t
 
 \begin{proposition}
 \label{nullity(C^nZ) LB}
-For $n \geq 2$, the $C^n Z$ gate cannot be implemented with Clifford gates and measurements using fewer than $n+1$ $T$ gates, or $(n+1)$ $CS$ gates, or $(n+1)/3$ $CCZ$ gates.
+For $n \geq 2$, the $C^n Z$ gate cannot be implemented with Clifford gates and measurements using fewer than $n+1$ $T$ gates, or $(n+1)/2$ $CS$ gates, or $(n+1)/3$ $CCZ$ gates.
 \end{proposition}
 
 \begin{proof}
@@ -1185,42 +1106,10 @@ Again, since we used $n-1$ $CCZ$ gates in proposition \ref{CCZ upperbound}, we c
 
 \end{proof}
 
-
-\subsection{Lower Bounds for modular adder}
-The adder circuit is a fundamental quantum operation because it implements basic arithmetic, being addition, on pairs of registers in superposition. We can lower bound the resources required to implement it as follows:
-
-\begin{proposition}
-An adder circuit on two n-qubit registers acts on basis states as 
-\begin{center}
-$A(\ket{i} \ket{j}) = \ket{i} \ket{i+j}$
-\end{center}
-with $i + j$ evaluated modulo $2^n$. It is not possible to implement the adder circuit with Clifford gates and measurements using fewer than $(n-2) \ket{T}$ states, $(n-2)/2 \ket{CS}$ states or $(n-2)/3 \ket{CCZ}$ states.
-\end{proposition}
-
-\begin{proof}
-We proceed in two steps. First, we show that the adder circuit $A$ acting on the $n$-qubit quantum Fourier state $\ket{QFT_n^b}$ (defined below) and the stabilizer state $\ket{+}^{\otimes n}$ has the action $A(\ket{+}^{\otimes n} \ket{QFT_n^b}) = \ket{QFT_n^{-b}}\ket{QFT_n^b}$. This tells us that if $A$ is implemented by a set of Clifford gates and Pauli measurements along with some input resource state $\ket{\psi}$, it must be that $\nu (\ket{\psi} \ket{QFT_n^b}) \geq \nu(\ket{QFT_n^{-b}} \ket{QFT_n^b})$ which implies that $\nu (\ket{\psi}) \geq \nu(\ket{QFT_n^{-b}})$ since the stabilizer nullity is additive. Second we show that $\nu(\ket{QFT_n^{-1}}) = n-2$, which then directly implies our bounds since if the bounds are not satisfied, $\nu(\ket{\psi}) \geq \nu(\ket{QFT_n^{-1}})$ would not be satisfied.
-
-First recall the family of quantum Fourier states for each integer $a = 0, 1, \dots, 2^n - 1$:
-\begin{equation}
-\label{QFTdef}
-\ket{QFT_n^a} = \frac{1}{\sqrt{2^n}} \sum\limits_{y=0}^{2^n-1} exp \Big[ \frac{i2 \pi a y}{2^n} \Big] \ket{y} = \otimes_{k=1}^n \frac{\ket{0} + e^{i2\pi a/2^k} \ket{1}}{\sqrt{2^n}}
-\end{equation}
-where $\ket{y}$ is an $n$-qubit basis state (with $y$ expressed in binary), and note that $\ket{QFT_n^0} = \ket{+}^{\otimes n}$, and $\ket{QFT_n^a} = \ket{a + 2}$. Consider applying the adder to a pair of such states:
-\begin{equation}
-\begin{split}
-A \big(\ket{QFT_n^a} \ket{QFT_n^b} \big) & = \frac{1}{2^n} \sum\limits_{y=0}^{2^n-1} \sum\limits_{z=0}^{2^n-1} exp \Big[ \frac{i2 \pi (ay + bz)}{2^n} \Big] \ket{y}\ket{z+y} \\
-& = \frac{1}{2^n} \sum\limits_{y=0}^{2^n-1} \sum\limits_{x=0}^{2^n-1} exp \Big[ \frac{i2 \pi (ay + b(x-y))}{2^n} \Big] \ket{y}\ket{x} \\
-& = \ket{QFT_n^{a-b}}\ket{QFT_n^b}
-\end{split}
-\end{equation}
-
-Setting $a=0$ gives $A(\ket{+}^{\otimes n} \ket{QFT_n^b}) = \ket{QFT_n^{-b}}\ket{QFT_n^b}$, as desired. Finally, to calculate $\nu \ket{QFT_n^{-b}}$, we use the sum of the stabilizer nullity for each state in the tensor product. From the tensor product variant of the definition of the $\ket{QFT_n^b}$ in equation \ref{QFTdef} the first two terms will have $\nu = 0$, since they will be computational basis states. The rest of the terms all have a relative phase ($\neq i$), and for a single qubit it is easy to verify that this results in a trivial stabilizer, thus giving $\nu = 1$. Since the stabilizer nullity is additive, we have that $\nu(\ket{QFT_n^{-1}}) = n-2$. Then considering the following possible implications: $r\ket{T} \Longrightarrow \ket{QFT_n^{-1}}$, $r\ket{CS} \Longrightarrow \ket{QFT_n^{-1}}$, and $r\ket{CCZ} \Longrightarrow \ket{QFT_n^{-1}}$, and the respective stabilizer nullity values: $\nu (\ket{T}) = 1$, $\nu (\ket{CS}) = 2$ and $\nu (\ket{CCZ}) = 3$, we get the final results above using methods from section \ref{ConvBounds}.
-\end{proof}
-
-Note the calculation of $\nu(\ket{QFT_n^{-1}}) = \nu(\ket{QFT_n^{1}}) = n-2$ above also implies that the Quantum Fourier Transform on $n$ qubits can not be performed using fewer than $n-2$ copies of $\ket{T}$.
-
-\subsection{Lower Bounds for the modular adder (using dyadic monotone)}
+\section{Quantum Fourier Transform}
+\begin{comment}
 To establish lower bounds for adder circuits we will use the fact that adder can create a complex conjugate copy of a Fourier state. Our strategy is to generalize $\mu_2$ to be defined on a wider set of states including Fourier states. This is achieved by extending the domain of $v_2$ to a wider set of values. Now we will list and discuss properties of $v_2$ needed for the lower-bound proof and prove the lower bound for the adder using them. 
+
 
 We will now need to define rings we can use to write down the coordinates of Fourier states, and not just $\ket{C^nZ}$ states. To do this we extend the domain of $\mu_2$ to the union of the following family of sets:
 \begin{center}
@@ -1230,10 +1119,16 @@ Note that $\mathcal{R}_d$ is closed under addition, negation, and multiplication
 
 We extend the domain of $v_2$ so it is defined on values of Pauli expectations of Fourier states, and so $v_2$ must be defined at least on the real subsets of $\mathcal{R}_d$. The proof of the lower bound for multiply-controlled-$Z$ gate relied on additivity for a tensor product of states and monotonicity under measurements with probability $1/2$ of dyadic monotone $\mu_2$. In turn, our proofs of the mentioned properties of $\mu_2$ relied on the properties: $v_2(a \cdot b) = v_2(a) + v_2(b)$ and $v_2(a+b) \geq \texttt{min}(v_2(a), v_2(b))$. All these properties also hold for the extension of $v_2$, and now note some explicit values of $v_2$ that we will need to compute $\mu_2$ for Fourier states:
 \begin{equation}
-\texttt{For all odd integers } k \texttt{, integers } d \geq 2: v_2(cos(\pi k/2^d)) = v_2(sin(\pi k /2^d)) = \frac{1}{2^{d-1}} - 1
+\mbox{For all odd integers } k \mbox{, integers } d \geq 2: v_2(cos(\pi k/2^d)) = v_2(sin(\pi k /2^d)) = \frac{1}{2^{d-1}} - 1
 \end{equation}
 
 For example, using above we see that $\mu_2\ket{T} = 1/2$ because $v_2(1/\sqrt{2}) = -1/2$. We can immediately conclude that the $C^nZ$ gate requires at least $2(n-2)\ket{T}$ states. Next we proceed to calculate $\mu_2$ for Fourier states.
+\end{comment}
+
+Now we introduce the Quantum Fourier Transform so that later we can establish lower bounds for the adder circuit. We will use the fact that the adder can create a complex conjugate copy of a Fourier state, but first note some explicit values of $v_2$ that we will need to compute $\mu_2$ for Fourier states:
+\begin{equation}
+\mbox{For all odd integers } k \mbox{, integers } d \geq 2: v_2(cos(\pi k/2^d)) = v_2(sin(\pi k /2^d)) = \frac{1}{2^{d-1}} - 1
+\end{equation}
 
 \begin{proposition}
 Consider Fourier state
@@ -1257,6 +1152,44 @@ $\mu_2 (\ket{QFT_n^a}) = \sum\limits_{k=2}^n \big( 1-1/2^{k-2}) = n-3 + 1/2^{n-2
 \end{center}
 \end{proof}
 
+
+\section{Modular adder}
+\subsection{Lower Bounds for the modular adder}
+The adder circuit is a fundamental quantum operation because it implements basic arithmetic, being addition, on pairs of registers in superposition. We can lower bound the resources required to implement it as follows:
+
+\begin{proposition}
+An adder circuit on two n-qubit registers acts on basis states as 
+\begin{center}
+$A(\ket{i} \ket{j}) = \ket{i} \ket{i+j}$
+\end{center}
+with $i + j$ evaluated modulo $2^n$. It is not possible to implement the adder circuit with Clifford gates and measurements using fewer than $(n-2) \ket{T}$ states, $(n-2)/2 \ket{CS}$ states or $(n-2)/3 \ket{CCZ}$ states.
+\end{proposition}
+
+\begin{proof}
+We proceed in two steps. First, we show that the adder circuit $A$ acting on the $n$-qubit quantum Fourier state $\ket{QFT_n^b}$ and the stabilizer state $\ket{+}^{\otimes n}$ has the action $A(\ket{+}^{\otimes n} \ket{QFT_n^b}) = \ket{QFT_n^{-b}}\ket{QFT_n^b}$. This tells us that if $A$ is implemented by a set of Clifford gates and Pauli measurements along with some input resource state $\ket{\psi}$, it must be that $\nu (\ket{\psi} \ket{QFT_n^b}) \geq \nu(\ket{QFT_n^{-b}} \ket{QFT_n^b})$ which implies that $\nu (\ket{\psi}) \geq \nu(\ket{QFT_n^{-b}})$ since the stabilizer nullity is additive. Second we show that $\nu(\ket{QFT_n^{-1}}) = n-2$, which then directly implies our bounds since if the bounds are not satisfied, $\nu(\ket{\psi}) \geq \nu(\ket{QFT_n^{-1}})$ would not be satisfied.
+
+First recall the family of quantum Fourier states for each integer $a = 0, 1, \dots, 2^n - 1$:
+\begin{equation}
+\label{QFTdef}
+\ket{QFT_n^a} = \frac{1}{\sqrt{2^n}} \sum\limits_{y=0}^{2^n-1} exp \Big[ \frac{i2 \pi a y}{2^n} \Big] \ket{y} = \otimes_{k=1}^n \frac{\ket{0} + e^{i2\pi a/2^k} \ket{1}}{\sqrt{2^n}}
+\end{equation}
+where $\ket{y}$ is an $n$-qubit basis state (with $y$ expressed in binary), and note that $\ket{QFT_n^0} = \ket{+}^{\otimes n}$, and $\ket{QFT_n^a} = \ket{a + 2}$. Consider applying the adder to a pair of such states:
+\begin{equation}
+\begin{split}
+A \big(\ket{QFT_n^a} \ket{QFT_n^b} \big) & = \frac{1}{2^n} \sum\limits_{y=0}^{2^n-1} \sum\limits_{z=0}^{2^n-1} exp \Big[ \frac{i2 \pi (ay + bz)}{2^n} \Big] \ket{y}\ket{z+y} \\
+& = \frac{1}{2^n} \sum\limits_{y=0}^{2^n-1} \sum\limits_{x=0}^{2^n-1} exp \Big[ \frac{i2 \pi (ay + b(x-y))}{2^n} \Big] \ket{y}\ket{x} \\
+& = \ket{QFT_n^{a-b}}\ket{QFT_n^b}
+\end{split}
+\end{equation}
+
+Setting $a=0$ gives $A(\ket{+}^{\otimes n} \ket{QFT_n^b}) = \ket{QFT_n^{-b}}\ket{QFT_n^b}$, as desired. Finally, to calculate $\nu \ket{QFT_n^{-b}}$, we use the sum of the stabilizer nullity for each state in the tensor product. From the tensor product variant of the definition of the $\ket{QFT_n^b}$ in equation \ref{QFTdef} the first two terms will have $\nu = 0$, since they will be computational basis states. The rest of the terms all have a relative phase ($\neq i$), and for a single qubit it is easy to verify that this results in a trivial stabilizer, thus giving $\nu = 1$. Since the stabilizer nullity is additive, we have that $\nu(\ket{QFT_n^{-1}}) = n-2$. Then considering the following possible implications: $r\ket{T} \Longrightarrow \ket{QFT_n^{-1}}$, $r\ket{CS} \Longrightarrow \ket{QFT_n^{-1}}$, and $r\ket{CCZ} \Longrightarrow \ket{QFT_n^{-1}}$, and the respective stabilizer nullity values: $\nu (\ket{T}) = 1$, $\nu (\ket{CS}) = 2$ and $\nu (\ket{CCZ}) = 3$, we get the final results above using methods from section \ref{ConvBounds}.
+\end{proof}
+
+Note the calculation of $\nu(\ket{QFT_n^{-1}}) = \nu(\ket{QFT_n^{1}}) = n-2$ above also implies that the Quantum Fourier Transform on $n$ qubits can not be performed using fewer than $n-2$ copies of $\ket{T}$.
+
+Now we give lower bounds using the dyadic monotone.
+
+
 \begin{lemma}
 At least $n-2$ $\ket{CCZ}$ states are needed to implement the $n$-qubit modular adder for $n \geq 3$ by using stabilizer operations with measurement probabilities one half.
 \end{lemma}
@@ -1264,8 +1197,116 @@ At least $n-2$ $\ket{CCZ}$ states are needed to implement the $n$-qubit modular 
 Recall that by applying a circuit for modular adder $\ket{+}^{\otimes n} \otimes \ket{QFT_n^1}$ we can create a state $\ket{QFT_n^{-1}} \otimes \ket{QFT_n^1}$. If there existed a circuit that used $k$ $CCZ$ gates for $k < n-2$, we would be able to prepare states $\ket{QFT_n^{-1}}$ starting from $k \ket{CCZ}$ and then using Clifford unitaries and Pauli observable measurements with probability half by using $\ket{QFT_n^1}$ as a catalyst. Let us show that this is impossible. Indeed for the input state we would have value $\mu_2$ equal to $k + \mu_2 \ket{QFT_n^1}$ and for the output state we would have $\mu_2 \ket{QFT_n^{-1}} + \mu_2 \ket{QFT_n^1}$. We know that $\mu_2$ is non-increasing when we apply Clifford unitaries and measurements with probability $1/2$, therefore $k \geq \mu_2 \ket{QFT_n^{-1}} = n - 3 +(1/2)^{n-2}$ which implies that $k \geq n-2$.
 \end{proof}
 
+\section{Conversion Protocols}
+Here we introduce some conversion protocols that use catalysis to convert resource states for the third level of the Clifford hierarchy to resource states for higher levels. First an important building block for these protocols is the following circuit in Figure \ref{one bit adder}.
 
-\section{Lower Bounds for approximate unitary synthesis}
+\vspace{2mm}
+
+\begin{figure}[H]
+
+\caption{Circuits for applying three $\sqrt{T}$ gates using five $T$ gates and one $\sqrt{T}$ gate}
+
+\begin{subfigure}[b]{0.5\textwidth}
+
+
+$
+\small
+\Qcircuit @C=0.07em @R=.3em {
+   \lstick{\ket{a}} & \gate{\sqrt{T}}  & \qw & \rstick{\zeta_{16}^{(a+b+c)_0} \zeta_8^{(a+b+c)_1} \ket{a}} & & & \lstick{\ket{a}} &  \ctrl{2} & \qw & \qw & \qw & \ctrl{3} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw  & \qw & \qw & \qw  & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \ctrl{3} & \qw & \qw & \ctrl{2} & \qw & \rstick{\zeta_{16}^{(a+b+c)_0} \zeta_8^{(a+b+c)_1}\ket{a}} \\
+   \lstick{\ket{b}} & \gate{\sqrt{T}} & \qw & \rstick{\ket{b}} & \push{\rule{9em}{0em}=\rule{1.5em}{0em}} & & \lstick{\ket{b}} & \targ & \qw & \qw & \ctrl{2} & \targ & \ctrl{1} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw  & \qw & \qw & \qw  & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \ctrl{1} & \targ & \ctrl{2} & \qw & \targ & \qw & \rstick{\ket{b}} \\
+   \lstick{\ket{c}} & \gate{\sqrt{T}} & \qw & \rstick{\ket{c}}  & & & \lstick{\ket{c}} & \targ & \qw  & \qw & \ctrl{1} & \qw & \targ & \qw & \rstick{\ket{a \oplus b \oplus c}} \qw & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \gate{\sqrt{T}} & \targ & \qw  & \ctrl{1} & \qw & \targ & \qw & \rstick{\ket{c}} \\
+   & & & & & & & & & \lstick{\ket{0}} & \gate{X} & \targ & \qw & \qw & \rstick{\ket{ab \oplus ac \oplus bc}} \qw  & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & &  & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & \gate{T} & \qw & \targ & \gate{X} & \qw & \rstick{\ket{0}}
+}
+$
+\label{one bit adder a}
+\caption{Three $\sqrt{T}$ gates can be applied with just one $\sqrt{T}$ gate and other third level Clifford unitaries}
+\end{subfigure}
+
+
+\vspace{2mm}
+
+\begin{subfigure}[b]{0.5\textwidth}
+\centering
+$
+\Qcircuit @C=0.5em @R=.7em {
+   & \ctrl{2} & \qw & & & & \qw & \qw & \multigate{1}{CZ} & \qw \\
+   & \ctrl{1} & \qw & & \push{\rule{1em}{0em}=\rule{1.5em}{0em}} & & \qw & \qw & \ghost{CZ} & \qw \\
+   & \gate{X} & \qw & \rstick{\ket{0}} & & & \gate{H} & \measureD{Z} & \ctrl{-1} \cw \cwx
+}
+$
+
+\vspace{4mm}
+
+$
+\Qcircuit @C=0.5em @R=.7em {
+   & \lstick{\ket{a}} & \ctrl{2} & \qw & \rstick{\ket{a}} & & & \lstick{\ket{a}} & \ctrl{2} & \qw & \targ & \gate{T^{\dag}} & \targ & \qw & \qw & \qw & \rstick{\ket{a}} \\
+   & \lstick{\ket{b}} & \ctrl{1} & \qw & \rstick{\ket{b}} & & \push{\rule{1em}{0em}=\rule{1.5em}{0em}} & \lstick{\ket{b}} & \qw & \ctrl{1} & \targ & \gate{T^{\dag}} &  \targ & \qw & \qw & \qw & \rstick{\ket{b}} \\
+   & \lstick{\ket{0}} & \gate{X} & \qw & \rstick{\ket{ab}} & & & \lstick{\ket{T}} & \targ & \targ & \ctrl{-2} & \gate{T} & \ctrl{-2} & \gate{H} & \gate{S} & \qw & \rstick{\ket{ab}} 
+}
+$
+\caption{Simplified circuits given specific input states.}
+\label{one bit adder b}
+\end{subfigure}
+
+\label{one bit adder}
+\end{figure}
+
+Note that the gate exp$(i\theta \ket{1} \bra{1})^{\otimes n}$ acting on an n-qubit register in the computational basis state $\ket{w}$ gives $e^{i \theta \cdot hw(w)}\ket{w}$, where hw($w$) is the Hamming weight of the bit string $w$. With this we can compute the gate exp$(i\theta \ket{1}\bra{1})^{\otimes n}$ by just computing hw($w$) and storing it in a quantum register $\ket{x_k \ldots x_0}$, and for $j$ from 0 to $k$ apply exp($i2^j\theta \ket{1} \bra{1}$) to qubit j in the register. In Figure \ref{one bit adder} we use the adder circuit to compute the Hamming weight of the bit string $a, b,$ and $c$. For bit strings of length three the Hamming weight can be represented using two bits. The lower bit is the parity$a \oplus b \oplus c$ and the higher bit is the majority function $ab \oplus bc \oplus ac$. These are exactly the values computed by the adder. An important efficiency gain comes from the first circuit in Figure \ref{one bit adder b} where you can observe that the one qubit adder can be un-computed by using Clifford gates and single qubit Pauli measurements only. Using this trick, Figure \ref{one bit adder a} applies three $\sqrt{T}$ gates using only one $\sqrt{T}$, and either one $T$ and $CCX$ gate each, or five $T$ gates (if using the second circuit in Figure \ref{one bit adder b} instead).
+
+
+
+
+
+We now give an example that uses the above results to form a resource state conversion protocol: $\ket{\sqrt{T}} + 5.5\ket{T} \rightarrow 3\ket{\sqrt{T}}$. This protocol follows directly when $\ket{+}$ states are fed into Figure \ref{one bit adder a} when the $\sqrt{T}$ gate is implemented by injection of $\ket{\sqrt{T}}$, and when the third level Clifford gates are implemented with $\ket{T}$ resource states. We need to use 5$\ket{T}$ states to implement the first $CCX$ gate and the T gate in Figure \ref{one bit adder a}. The $\sqrt{T}$ gate is implemented with the injection circuit which requires an additional $T$ gate correction $50\%$ of the time, which adds $1/2$ to the number of $\ket{T}$ states consumed on average.
+
+The extra $T$ gate can be amortized to give the conversion $k\ket{CCZ} + (k+ \frac{1}{2})\ket{T} \xRightarrow{\ket{\sqrt{T}}} 2k\ket{\sqrt{T}}$ which is valid for any positive integer $k$. We see that asymptotically $\ket{\sqrt{T}}$ state costs half of $\ket{\sqrt{T}}$ state plus half of $\ket{CCZ}$ state. Using the circuit on Figure \ref{one bit adder a} we can reduce the parallel application of $2k+1 \sqrt{T}$ gates to the parallel application of $2k-1 \sqrt{T}$ gates for any positive integer k. We use the circuit on Figure \ref{one bit adder a} to execute the first three out of $2k+1 \sqrt{T}$ gates by only using one $\sqrt{T}$ gate. Then we observe that the rest of the $2k-2 \sqrt{T}$ gates can be executed in parallel with the newly introduced $\sqrt{T}$ gate. The main observation here is that the cost of applying $\sqrt{T}^3$ gate is the same as the cost of applying $\sqrt{T}$. Figure \ref{conversion example} applies this to show how to reduce the parallel application of five $\sqrt{T}$ gates to only three.
+
+\begin{figure}[H]
+\caption{Conversion example of $k\ket{CCZ} + 1\frac{1}{2}\ket{T} + \ket{\sqrt{T}}$ for k=2}
+\label{conversion example}
+$
+\Qcircuit @C=0.5em @R=.7em {
+   & \lstick{\ket{+}} & \gate{\sqrt{T}} & \qw & & & \ctrl{2} & \qw & \qw & \qw & \qw & \ctrl{3} & \qw & \qw & \qw & \qw & \qw & \ctrl{3} & \qw & \qw & \ctrl{2} & \qw & \rstick{\ket{\sqrt{T}}} \\
+   & \lstick{\ket{+}} & \gate{\sqrt{T}} & \qw & & & \targ & \qw & \qw & \qw & \ctrl{2} & \targ & \ctrl{1} & \qw & \qw & \qw & \ctrl{1} & \targ & \ctrl{2} & \qw & \targ & \qw & \rstick{\ket{\sqrt{T}}} \\
+   & \lstick{\ket{+}} & \gate{\sqrt{T}} & \qw & \push{\rule{1em}{0em}=\rule{1em}{0em}} & & \targ & \qw & \qw & \qw & \ctrl{1} & \qw & \targ & \qswap & \gate{T} & \qswap & \targ & \qw & \ctrl{1} & \qw & \targ & \qw & \rstick{\ket{\sqrt{T}}} \\
+   & & & & & & & & & \lstick{\ket{0}} & \gate{X} & \targ & \qw & \qswap \qwx & \gate{\sqrt{T}} & \qswap \qwx & \qw & \targ & \gate{X} & \qw & \rstick{\ket{0}}  \\
+   & \lstick{\ket{+}} & \gate{\sqrt{T}} & \qw & & & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \gate{\sqrt{T}} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \rstick{\ket{\sqrt{T}}} \\
+   & \lstick{\ket{+}} & \gate{\sqrt{T}} & \qw & & & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \gate{\sqrt{T}} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \rstick{\ket{\sqrt{T}}}
+}
+$
+\end{figure}
+
+\subsection{Conversion Bounds}
+\label{ConvBounds}
+Suppose we can identify a monotone $\mathcal{M}$ such that $\mathcal{M}(\ket{\psi})$ is real for any state $\ket{\psi}$, and is non-increasing under stabilizer operations. We call such a function a \textit{monotone}, and use it to bound conversion precesses since for example, a resource state $\ket{A}$ cannot be used to produce a resource state $\ket{B}$ with stabilizer operations if $\mathcal{M}(\ket{A}) < \mathcal{M}(\ket{B})$, so we have: $\mathcal{M}(\ket{A}) < \mathcal{M}(\ket{B}) \implies \ket{A} \not \longrightarrow \ket{B} $
+
+Furthermore, if $\mathcal{M}(\ket{\psi} \otimes \ket{\phi}) = \mathcal{M}(\ket{\psi}) + \mathcal{M}(\ket{\phi})$ for all $\ket{\psi}$ and $\ket{\phi}$, then we can say even more. First, we can rule out catalyzed conversions since $\mathcal{M}(\ket{A} \otimes \ket{cat.}) < \mathcal{M}(\ket{B})$ implies that $\mathcal{M}(\ket{B} \otimes \ket{cat.})$ for any catalyzing state $\ket{cat.}$. Tensor powers of states simplify, allowing us to make asymptotic implications, i.e., 
+\begin{center}
+$\mathcal{M}(\ket{A}) < \alpha \cdot \mathcal{M}(\ket{B}) \implies \ket{A}^{\otimes n} \not \Longrightarrow \ket{B}^{\otimes \alpha n} \hspace{2mm} \forall n$.
+\end{center}
+
+In other words this would put an upper bound of $\alpha$ on the catalytic rate of conversion from $\ket{A}$ to $\ket{B}$. Note that equivalent implications hold if the monotone is \textit{multiplicative} rather than additive.
+For example, consider the states $\ket{T}$ and $\ket{CCZ}$ for which the best known conversion algorithms are:
+\begin{center}
+$4\ket{T} \rightarrow \ket{CCZ}$
+\end{center}
+\begin{center}
+$\ket{CCZ} \xRightarrow{\ket{T}} 2\ket{T}$
+\end{center}
+Clearly these algorithms would have loss if feeding the output of one into the other. The best possible conversion algorithms have (for any n and any catalyst) the minimum $r$ and maximum $r'$ in 
+\begin{center}
+$rn\ket{T} \Rightarrow n\ket{CCZ}$,
+\end{center}
+\begin{center}
+$n\ket{CCZ} r'n\ket{T}$.
+\end{center}
+
+Now, since the stabilizer nullity and extent are monotone functions, we can use them to find $r$ and $r'$ values. By straightforward computation, we have that $\nu (\ket{T}) = 1$ and $\nu(\ket{CCZ}) = 3$. Since $\nu$ is additive we can use the above equations to deduce that $r \geq 3$ and $r' \leq 3$. While not straightforward, it is also possible to compute the extent values $\xi (\ket{T}) = 1.17157$ and $\xi (\ket{CCZ}) = 1.7778$. Moreover, $\texttt{log} \xi$ is an additive monotone with respect to collections of $\ket{T}$ states and $\ket{CCZ}$ states (which satisfies Lemma \ref{stabextent}) and therefore $r \geq \texttt{log}[1.77778]/\texttt{log}[1.17157] = 3.63356$ and $r' \leq \texttt{log}[1.77778]/\texttt{log}[1.17157] = 3.63356$ (which implies $r' \leq 3$).
+
+
+
+\begin{comment}
+%\section{Lower Bounds for approximate unitary synthesis}
 In this section, we lower bound the number of resource states needed to approximate an arbitrary single-qubit unitary using Clifford gates and Pauli measurements. Unlike the previously known lower bounds, our bounds: allow for Pauli measurements; allow measurement outcomes to affect the subsequent parts of the protocol; and do not depend on the number of ancillary qubits used in the protocol.
 There are some subtleties to be addressed when analysing a protocol containing measurements that can affect the operations applied in subsequent parts of the protocol. In particular, the state the protocol outputs and the number of resource states it consumes are random variables, which depend on the sequence of measurement outcomes obtained. The following definition is convenient for formulating lower bounds in this setting.
 
@@ -1396,7 +1437,7 @@ First note that setting $p=1$ on the right hand side of the inequalities in Lemm
 
 
 
-\subsection{Lower Bounds for Resource State Conversion}
+%\subsection{Lower Bounds for Resource State Conversion}
 In other sections, we have introduced protocols for catalysis assisted conversion of $\ket{CCZ}$ states into states $\ket{\pi j /2^d}$. We have found that for odd $j$ and integer $d \geq 2$, asymptotically, one can create one $\ket{\pi j /2^d}$ state at the cost of $1 - 1/2^{d-1}$ $\ket{CCZ}$ states. Using the dyadic monotone we can show that this is optimal when only Pauli measurements with probability $50 \% $ are allowed.
 
 
@@ -1406,8 +1447,11 @@ Consider a protocol that uses stabilizer operations with measurements probabilit
 \begin{proof}
 Let $\ket{cat}$ be a state used as a catalyst, then $\mu_2$ for the input of our protocol is $\mu_2 \ket{cat} + k$ and for the output the value of $\mu_2$ is $n(1-1/2^{d-1}) + \mu_2\ket{cat}$. This is because for odd $j$ and integer $d \geq 2$, $\mu_2 \ket{\pi j/2^d} = 1 - 1/2^{d-1}$. Above implies that $k \geq n(1 - 1/2^d)$.
 \end{proof}
+\end{comment}
 
-\chapter{Main Points of Section 6}
+
+\begin{comment}
+%\chapter{Main Points of Section 6}
 The section is based around the dyadic monotone below. For this monotone function, we only consider states that have entries in the ring $\mathbb{Z}[i, 1/2] = \big\{\frac{a+ib}{2^k}: a, b, k, \in \mathbb{Z} \big\}$, and note that Pauli's and Clifford unitaries take states with entries in this ring too states with entries still in this ring.
 
 
@@ -1465,7 +1509,10 @@ The following are three possibly relevant results/theorems:
 
 \item Consider a protocol that uses stabilizer operations with measurements probability $50 \% $, $\ket{CCZ}$ states and a multi-qubit state as a catalyst. The catalyst has entries in $\mathcal{R}_{d'}$ for some $d'$. Suppose that such a circuit uses $k$ $\ket{CCZ}$ states and produces $n$ states $\ket{\pi j/2^d}$ for odd $j$ and integer $d \geq 2$, then $k \geq n(1-1/2^{d-1})$. Asymptotically, at least $1 - 1/2^{d-1}$ copies of $\ket{CCZ}$ state are needed to produce state $\ket{\pi j/2^d}$.
 \end{enumerate}
+\end{comment}
 \chapter{Conclusion}
+\cite{Aaronson_2004}
+\cite{beverland2019lower}
 
 Did it!
 
