@@ -790,14 +790,24 @@ We have the following properties for monotones:
 
 
 \begin{definition}[Stabilizer Nullity]
-Let $\ket{\psi}$ be a non-zero n-qubit state. The \emph{Stabilizer Nullity} of $\ket{\psi}$ is $\nu(\ket{\psi}) = n - log_2 |\text{Stab}\ket{\psi}|$.
+Let $\ket{\psi}$ be a non-zero n-qubit state. The \emph{Stabilizer Nullity} of $\ket{\psi}$ is $\nu(\ket{\psi}) = n - \log_2 |\text{Stab}\ket{\psi}|$.
 \end{definition}
 
 \begin{proposition}
 The stabilizer nullity is an additive monotone.
 \end{proposition}
 \begin{proof}
-...
+This follows from the properties of the stabilizer. To show the $\nu$ is a monotone, recall that for a Clifford unitary $C$ and a state $\ket{\psi}$, $\Stab(C\ket{\psi}) = \Stab\ket{\psi}$. Thus $\nu(C\ket{\psi}) = n - \log_2|\Stab(C\ket{\psi})| = n - \log_2|\Stab\ket{\psi}| = \nu(\ket{\psi})$. If $\ket{\psi}$ is a stabilizer state, then $\Stab\ket{\psi} = 2^n$, so $\nu(\ket{\psi}) = n - \log_2(\Stab\ket{\psi}) =  n - \log_2(2^n) = 0$. Finally, note that $\Stab\ket{\psi}$ is never more than $2^n$, which means $\nu$ is always a positive integer, making it a real valued function.
+
+For the additive part, recall that the stabilizer is multiplicative under tensor products, i.e. $|\Stab(\ket{\psi} \ket{\phi})| = |\Stab\ket{\psi}| \cdot |\Stab{\ket{\phi}}|$. Letting $\ket{\psi}$ and $\ket{\phi}$ be size $n$ and $m$ vectors respectively, we have that 
+\begin{equation*}
+\begin{split}
+\nu (\ket{\psi}\ket{\phi}) & = n + m - \log_2 |\Stab (\ket{\psi}\ket{\phi})| \\
+& = n + m - \log_2 |\Stab \ket{\psi}| - \log_2|\Stab|\ket{\phi}| \\
+& = \nu(\ket{\psi}) + \nu (\ket{\phi}).
+\end{split}
+\end{equation*}
+
 \end{proof}
 
 \begin{proposition}
@@ -813,9 +823,7 @@ The second alternative is when $P$ anti-commutes with some element $Q \in$ Stab$
 \begin{corollary}
 The stabilizer nullity is non-increasing under Pauli measurements, i.e. for a state $\ket{\psi}$ and it's post measurement state $\ket{\phi}$ we have that $\nu(\ket{\phi}) \leq \nu(\ket{\psi})$.
 \end{corollary}
-\begin{proof}
-...
-\end{proof}
+
 
 
 \begin{definition}[Pauli Spectrum]
@@ -1160,7 +1168,7 @@ The $C^n Z$ gate is a gate worth considering in detail since it is used in many 
 
 \begin{proposition}
 \label{prop4.2}
-For all $n \geq 3$, the Pauli spectrum of the state $\ket{C^n Z}$ is: $\{ 1 \hspace{2mm} (1)$, $0 \hspace{2mm} (-1 +2^{n-1} + 2^{2n-1})$, $1-2^{2-n} \hspace{2mm} (2^n-1)$, $2^{2-n}  \hspace{2mm} (1-3 \cdot 2^{n-1} + 2^{2n-1}) \}$.
+For all $n \geq 3$, the Pauli spectrum of the state $\ket{C^n Z}$ is: $\{ 1 \hspace{2mm} (1)$, $0 \hspace{2mm} (-1 +2^{n} + 2^{2n+1})$, $1-2^{1-n} \hspace{2mm} (2^n)$, $2^{1-n}  \hspace{2mm} (1-3 \cdot 2^{n} + 2^{2n+1}) \}$.
 \end{proposition}
 
 \begin{proof}
@@ -1253,7 +1261,7 @@ The above lower bound can be improved when measurements are restricted.
 We have the following dyadic monotone values: $\mu_2 (\ket{T}) = 1/2$, $\mu_2 (\ket{CS}) = 1$, $\mu_2 (\ket{CCZ}) = 1$, and $\mu_2 (\ket{C^n(z)}) = n-1$.
 \end{corollary}
 \begin{proof}
-These all follow from direct calculation.
+The first three follow from direct calculation. For the $\ket{C^nZ}$ state, Proposition \ref{prop4.2} gives us all of its possible values for the Pauli spectrum. Thus to get the dyadic monotone, we simply take the $p$-adic valuation of these values, negate it and take the maximum, which gives $n-1$ as desired.
 \end{proof}
 
 \begin{lemma}
