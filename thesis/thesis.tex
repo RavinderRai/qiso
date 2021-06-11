@@ -775,7 +775,7 @@ Recall that S is the collection of all states. We say that a collection of state
 %$\mathcal{S}$ is the set of $n$-qubit (pure) states $\mathcal{S} = \cup_n \mathcal{S}(n)$.
 
 \begin{definition}
-Let $\mathcal{J} \subseteq \mathcal{S}$ and suppose that $\mathcal{J}$ is closed under tensor products and the action of stabilizers. A \emph{monotone} for $\mathcal{J}$ is a function $M: \mathcal{J} \rightarrow \mathbb{R}^{\geq 0}$ such that $M(\ket{\phi}) = 0$ if $\ket{\phi}$ is a stabilizer state and if $C$ is a stabilizer operator then $M(C\ket{\phi}) \leq M(\ket{\phi})$ for all $\ket{\phi} \in \mathcal{J}$. Also, $M(\ket{\phi}) \geq 0$ and $M(\ket{\phi}) = 0 \Leftrightarrow \ket{\phi} \in Stab(\phi)$.
+Let $\mathcal{J} \subseteq \mathcal{S}$ and suppose that $\mathcal{J}$ is closed under tensor products and the action of stabilizers. A \emph{monotone} for $\mathcal{J}$ is a function $M: \mathcal{J} \rightarrow \mathbb{R}^{\geq 0}$ such that $M(\ket{\phi}) = 0$ if $\ket{\phi}$ is a stabilizer state and if $C$ is a stabilizer operator then $M(C\ket{\phi}) \leq M(\ket{\phi})$ for all $\ket{\phi} \in \mathcal{J}$. Also, $M(\ket{\phi}) \geq 0$ and $M(\ket{\phi}) = 0 \Leftrightarrow \ket{\phi} \in Stab(\ket{\phi})$.
 \end{definition}
 
 \begin{definition} 
@@ -798,16 +798,21 @@ We have the following properties for monotones:
 
 
 \begin{definition}[Stabilizer Nullity]
-Let $\ket{\psi}$ be a non-zero n-qubit state. The \emph{Stabilizer Nullity} of $\ket{\psi}$ is $\nu(\ket{\psi}) = n - \log_2 |\text{Stab}\ket{\psi}|$.
+Let $\ket{\psi}$ be a non-zero $n$-qubit state. The \emph{stabilizer nullity} of $\ket{\psi}$ is denoted by $\nu(\ket{\psi})$ and is defined as $\nu(\ket{\psi}) = n - \log_2 |\text{Stab}\ket{\psi}|$.
 \end{definition}
 
 \begin{proposition}
-The stabilizer nullity is an additive monotone.
+The stabilizer nullity is a monotone.
 \end{proposition}
 \begin{proof}
-This follows from the properties of the stabilizer. To show the $\nu$ is a monotone, recall that for a Clifford unitary $C$ and a state $\ket{\psi}$, $\Stab(C\ket{\psi}) = \Stab\ket{\psi}$. Thus $\nu(C\ket{\psi}) = n - \log_2|\Stab(C\ket{\psi})| = n - \log_2|\Stab\ket{\psi}| = \nu(\ket{\psi})$. If $\ket{\psi}$ is a stabilizer state, then $\Stab\ket{\psi} = 2^n$, so $\nu(\ket{\psi}) = n - \log_2(\Stab\ket{\psi}) =  n - \log_2(2^n) = 0$. Finally, note that $\Stab\ket{\psi}$ is never more than $2^n$, which means $\nu$ is always a positive integer, making it a real valued function.
+First, by Proposition \ref{stabilizerfacts}, for any $n$-qubit state $\ket{\psi}$ we have $|\Stab \ket{\psi}| \leq 2^n$. Hence, $\nu (\ket{\psi})$ is always a positive integer and so $\nu$ is a (nonnegative) real valued function. Again, by Proposition \ref{stabilizerfacts} recall that for a Clifford unitary $C$ and a state $\ket{\psi}$ we have that $|\Stab(C\ket{\psi})| = |\Stab\ket{\psi}|$. Thus $\nu(C\ket{\psi}) = n - \log_2|\Stab(C\ket{\psi})| = n - \log_2|\Stab\ket{\psi}| = \nu(\ket{\psi})$. Finally, if $\ket{\psi}$ is a stabilizer state, then $|\Stab\ket{\psi}| = 2^n$ by Proposition \ref{stabilizerfacts}, so $\nu(\ket{\psi}) = n - \log_2(\Stab\ket{\psi}) =  n - \log_2(2^n) = 0$. 
+\end{proof}
 
-For the additive part, recall that the stabilizer is multiplicative under tensor products, i.e. $|\Stab(\ket{\psi} \ket{\phi})| = |\Stab\ket{\psi}| \cdot |\Stab{\ket{\phi}}|$. Letting $\ket{\psi}$ and $\ket{\phi}$ be size $n$ and $m$ vectors respectively, we have that 
+\begin{proposition}
+The stabilizer nullity is additive.
+\end{proposition}
+\begin{proof}
+Let $\ket{\psi}$ and $\ket{\phi}$ be an $n$-qubit state and an $m$-qubit state respectively. By Proposition \ref{stabilizerfacts} we have $|\Stab(\ket{\psi} \ket{\phi})| = |\Stab\ket{\psi}| \cdot |\Stab{\ket{\phi}}|$. Hence:
 \begin{equation*}
 \begin{split}
 \nu (\ket{\psi}\ket{\phi}) & = n + m - \log_2 |\Stab (\ket{\psi}\ket{\phi})| \\
@@ -815,12 +820,12 @@ For the additive part, recall that the stabilizer is multiplicative under tensor
 & = \nu(\ket{\psi}) + \nu (\ket{\phi}).
 \end{split}
 \end{equation*}
-
 \end{proof}
 
-\begin{proposition}
-Let $\ket{\psi}$ be a non-zero n-qubit state and let $P$ be an n-qubit Pauli matrix and suppose that the probability of a $+1$ outcome when measuring $P$ on $\ket{\psi}$ is non-zero. Then there are two alternatives for the state $\ket{\phi}$ after measurement: either $|\text{Stab}\ket{\phi}| = |\text{Stab}\ket{\psi}|$ or $|\text{Stab}\ket{\phi}| \geq 2|\text{Stab}\ket{\psi}|$, both of which satisfy $\nu(\ket{\phi}) \leq \nu(\ket{\psi})$.
-\end{proposition}
+\begin{lemma}
+\label{nullity outcome}
+Let $\ket{\psi}$ be a non-zero n-qubit state and let $P$ be an n-qubit Pauli matrix. Assume that the probability of a $+1$ outcome when measuring $P$ on $\ket{\psi}$ is non-zero and let $\ket{\phi}$ be the state after measurement. Then $|\text{Stab}\ket{\phi}| = |\text{Stab}\ket{\psi}|$ or $|\text{Stab}\ket{\phi}| \geq 2|\text{Stab}\ket{\psi}|$.
+\end{lemma}
 
 \begin{proof}
 First consider the simple case when $P$ is in Stab$\ket{\psi}$. In this case, the "+1" measurement outcome occurs with probability $1$ and $\ket{\psi}$ is unchanged. When $P$ is not in Stab$\ket{\psi}$ we consider two alternatives. The first alternative is that $P$ commutes with all elements of Stab$\ket{\psi}$. Recall we have the post-measurement state $\ket{\phi} = \frac{P\ket{\psi}}{\sqrt{\bra{\psi}P^{\dag}P\ket{\psi}}} = \frac{P\ket{\psi}}{\sqrt{\bra{\psi}\ket{\psi}}}$, and let $Q \in \text{Stab}\ket{\psi}$. Then $Q\ket{\phi} = \frac{QP\ket{\psi}}{\sqrt{\bra{\psi}\ket{\psi}}} = \frac{PQ\ket{\psi}}{\sqrt{\bra{\psi}\ket{\psi}}} = \frac{P\ket{\psi}}{\sqrt{\bra{\psi}\ket{\psi}}} = \ket{\phi}$. Note also that Stab$\ket{\phi}$ also contains $P$Stab$\ket{\psi}$, and thus Stab$\ket{\phi}$ contains Stab$\ket{\psi}$ $\cup$ $P$Stab$\ket{\psi}$ and thus its size is at least $2| \text{Stab}\ket{\psi}|$.
@@ -829,33 +834,42 @@ The second alternative is when $P$ anti-commutes with some element $Q \in$ Stab$
 \end{proof}
 
 \begin{corollary}
-The stabilizer nullity is non-increasing under Pauli measurements, i.e. for a state $\ket{\psi}$ and it's post measurement state $\ket{\phi}$ we have that $\nu(\ket{\phi}) \leq \nu(\ket{\psi})$.
+The stabilizer nullity is non-increasing under Pauli measurements.
 \end{corollary}
+\begin{proof}
+Let $\ket{\psi}$ be a nonzero $n$-qubit state, let $P$ be an $n$-qubit Pauli operator, and let $\ket{\phi}$ be the state after measuring $P$ on $\ket{\psi}$. By Lemma \ref{nullity outcome}, we have $|\Stab\ket{\phi}| = |\Stab\ket{\psi}|$ or $|\Stab\ket{\phi}| \geq 2|\Stab\ket{\phi}|$. Either way, $|\Stab\ket{\phi}| \geq |\Stab\ket{\psi}|$ so that $\log_2|\Stab\ket{\phi}| \geq \log_2|\Stab\ket{\psi}|$. Hence 
+\begin{equation*}
+\begin{split}
+\nu (\ket{\phi}) & = n - \log_2|\Stab\ket{\phi}| \\
+& \leq n - \log_2|\Stab|\ket{\psi}| \\
+& = \nu(\ket{\psi}).
+\end{split}
+\end{equation*}
 
+\end{proof}
 
+We finish this section with a notion that will be helpful in computing the stabilizer nullity of states. We write multisets using $\{|$ and $|\}$. Moreover, we sometimes indicate the multiplicity of an element in brackets. For example the multiset $\{| a, a, b |\}$ will sometimes be written as $\{| a (2), b (1) |\}$.
 
 \begin{definition}[Pauli Spectrum]
-Let $\ket{\psi}$ be a non-zero n-qubit state. The Pauli spectrum Spec$\ket{\psi}$ of $\psi$ is:
-\begin{equation}
-\text{Spec}\ket{\psi} = \left\{ \frac{|\bra{\psi}P\ket{\psi}|}{\braket{\psi|\psi}}, \forall P \in \{I, X, Y, Z\}^{\otimes n} \right\}
-\end{equation}
-The Pauli spectrum is a list of $4^n$ real numbers each between 0 and 1 which is invariant under Clifford gates. Consider the following example.
+Let $\ket{\psi}$ be a non-zero $n$-qubit state. The \emph{Pauli spectrum} of $\ket{\psi}$ is denoted by Spec$\ket{\psi}$ and is defined as:
+\begin{equation*}
+\text{Spec}\ket{\psi} = \left\{ \bigg| \frac{|\bra{\psi}P\ket{\psi}|}{\braket{\psi|\psi}}, P \in \{I, X, Y, Z\}^{\otimes n} \bigg| \right\}.
+\end{equation*}
 \end{definition}
 
-\begin{proposition}
-The Pauli spectrum of the state $\ket{\theta} = (\ket{0} + e^{i\theta}\ket{1})/\sqrt{2}$ is $\{1, cos\theta, sin\theta, 0\}$. The state $\ket{\theta}$ is therefore a stabilizer state only for $\theta = m \pi/2$ for some integer m.
-\end{proposition}
-\begin{proof}
-First note that $\ket{\theta}$ is normalized so $\bra{\theta}\ket{\theta} = 1$. Now by direct computation, we have:
+The Pauli spectrum is a multiset with $4^n$ elements. These elements are real numbers between 0 and 1. Note that the number of $1$'s in the Pauli spectrum of $\ket{\psi}$ is $|\text{Stab}\ket{\psi}|$. Hence the Pauli spectrum can be useful in computing the stabilizer nullity.
+
+\begin{example}
+Let $\theta \in \mathbb{R}$ and consider the state $\ket{\theta} = (\ket{0} + e^{i\theta}\ket{1})/\sqrt{2}$. To calculate the Pauli spectrum, first note that $\ket{\theta}$ is normalized so $\bra{\theta}\ket{\theta} = 1$, then by direct computation we have:
 \begin{itemize}
 \item $\bra{\theta}I\ket{\theta} = \braket{\theta|\theta} = 1$
-\item $\bra{\theta}X\ket{\theta} = (\bra{1}e^{-i\theta} + \bra{0})(\ket{1} + e^{i\theta}\ket{0})/2 = (e^{-i\theta} + e^{i\theta})/2 = cos\theta$
-\item $\bra{\theta}Y\ket{\theta} = (\bra{1}e^{-i\theta} + \bra{0})(i\ket{1} - ie^{i\theta}\ket{0})/2 = i(e^{-i\theta} - e^{i\theta})/2 = i(-2sin\theta)/2 = sin\theta$
+\item $\bra{\theta}X\ket{\theta} = (\bra{1}e^{-i\theta} + \bra{0})(\ket{1} + e^{i\theta}\ket{0})/2 = (e^{-i\theta} + e^{i\theta})/2 = \cos\theta$
+\item $\bra{\theta}Y\ket{\theta} = (\bra{1}e^{-i\theta} + \bra{0})(i\ket{1} - ie^{i\theta}\ket{0})/2 = i(e^{-i\theta} - e^{i\theta})/2 = i(-2i\sin\theta)/2 = \sin\theta$
 \item $\bra{\theta}Z\ket{\theta} = (\bra{1}e^{-i\theta} + \bra{0})(\ket{0} - e^{i\theta}\ket{1})/2 = 1 - 1 = 0$
 \end{itemize} 
-Moreover, if $\theta = 2k\pi /2$ for some integer $k$, then $X \in \text{Stab}\ket{\theta}$, and if $\theta = (2k+1)\pi /2$, then $Y \in \text{Stab}\ket{\theta}$. Observe that $\forall \theta$, $I \in \text{Stab}\ket{\theta}$ and $Z \not\in \text{Stab}\ket{\theta}$, thus $|\text{Stab}\ket{\theta}| = 2$ if and only if either $X$ or $Y \in \text{Stab}\ket{\theta}$, or more generally if $\theta = m \pi /2$, for some integer $m$.
-\end{proof}
-Note that the number of 1s in the Pauli spectrum of $\ket{\psi}$ is $|\text{Stab}\ket{\psi}|$. Hence the Pauli spectrum can be useful in computing the stabilizer nullity.
+Thus, the Pauli spectrum of is $\{1, \cos\theta, \sin\theta, 0\}$. Moreover, if $\theta = 2k\pi /2$ for some integer $k$, then $X \in \text{Stab}\ket{\theta}$, and if $\theta = (2k+1)\pi /2$, then $Y \in \text{Stab}\ket{\theta}$. Observe that $\forall \theta$, $I \in \text{Stab}\ket{\theta}$ and $Z \not\in \text{Stab}\ket{\theta}$, thus $|\text{Stab}\ket{\theta}| = 2$ if and only if either $X$ or $Y \in \text{Stab}\ket{\theta}$, or more generally if $\theta = m \pi /2$, for some integer $m$. The state $\ket{\theta}$ is therefore a stabilizer state only for $\theta = m \pi/2$ for some integer m.
+\end{example}
+
 
 %\section{Stabilizer Extent}
 %\begin{definition}
