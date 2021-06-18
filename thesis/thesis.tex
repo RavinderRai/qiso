@@ -908,18 +908,17 @@ Remark: Let $q \in \mathbb{Q}$ be in reduced form as above. Then we have three d
 \item $n \equiv_2 1, d \equiv_2 0 \Rightarrow -\bar{v}_2(q)$ is the largest power, $k$, of $2$ such that $2^k|d$.
 \end{enumerate}
 
-\begin{proposition}
-
-\begin{enumerate}
+\begin{proposition} \hspace{10mm}
+\begin{itemize}
 \item $\bar{v}_2(\pm 1) = 0$
 \item $\bar{v}_2 (-q) = \bar{v}_2 (q)$
 \item $\bar{v}_2(q_1q_2) = \bar{v}_2 (q_1) + \bar{v}_2 (q_2)$
-\end{enumerate}
+\end{itemize}
 \end{proposition}
 
 Now, we wish to extend $\bar{v}_2$ to the real subsets of $\mathcal{R}_d = \mathbb{Z}[\zeta_{2^{d+1}}, 1/2]$, where $\zeta_{2^{d+1}}$ is the $d+1$ primitive root of unity. To do this, we need the field norm of a cyclotomic field, which is defined as $N_d: \mathbb{Q}(\zeta_{2^{d+1}}) \longrightarrow \mathbb{Q}$ for a positive integer $d$, where $N_d (\alpha) = \prod_{\sigma \in Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q}} \sigma (\alpha)$. 
 
-For a cyclotomic field, each $\sigma \in Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q})$ sends $\zeta_{2^{d+1}}$ to one of it's conjugates, so that we can define the $\sigma$'s in the following way: $\sigma_k (\zeta_{2^{d+1}}) = \zeta_{2^{d+1}}^k$. Note that $Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q} \cong (\mathbb{Z}/n\mathbb{Z})^x$, and that elements in $Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q}$ are precisely the $\sigma_k$'s where $gcd(k, 2^{d+1}) = 1$. This means that $k$ must be odd, so that:
+For a cyclotomic field, each $\sigma \in Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q})$ sends $\zeta_{2^{d+1}}$ to one of it's conjugates, so that we can define the $\sigma$'s in the following way: $\sigma_k (\zeta_{2^{d+1}}) = \zeta_{2^{d+1}}^k$. Note that $Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q}) \cong (\mathbb{Z}/n\mathbb{Z})^x$, and that elements in $Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q}$ are precisely the $\sigma_k$'s where $gcd(k, 2^{d+1}) = 1$. This means that $k$ takes only odd values, so that:
 
 \begin{equation}
 N_d(\alpha) = \prod_{k-odd} \sigma_k (\alpha) = \prod_{k=0}^{2^d - 1} \sigma_{2k+1} (\alpha)
@@ -937,7 +936,7 @@ Let $d$ be a positive integer. Then $N_d$ is multiplicative.
 
 Note: $\cup \mathbb{Q}(e^{i\cdot \pi / 2^{j}}) = \mathbb{R}$
 \begin{definition}
-Define $v_2: \mathbb{R} \longrightarrow \mathbb{Q}$ by 
+The valuation function $v_2: \mathbb{R} \longrightarrow \mathbb{Q}$ is defined as 
 \begin{equation}
 v_2 (x) = \frac{\bar{v}_2 (N_d (x))}{2^d}
 \end{equation}
@@ -955,7 +954,24 @@ If $x \in \mathbb{Q}$ then $v_2 (x) = \bar{v}_2 (x)$.
 If $x, x' \in \mathbb{R}$ then $v_2 (x \cdot x') = v_2 (x) + v_2 (x')$.
 \end{proposition}
 
-
+\begin{proposition}
+\label{prop6.4}
+For arbitrary rational numbers $a, b$ the following inequality holds
+\begin{center}
+$v_2 (a_1 + a_2) \geq min(v_2 (a_1), v_2(a_2))$.
+\end{center} 
+\end{proposition}
+\begin{proof}
+Let us first prove the inequality for non-zero $a_1, a_2$. Rewrite $a_j = 2^{k_j}p_j/q_j$ for integer $k_j$ and odd integers $p_j$ and $q_j$ such that
+\begin{center}
+$a_1 + a_2 = 2^{min(k_1, k_2)} \big( 2^{k_1 - min(k_1, k_2)} p_1q_2 + 2^{k_2 - min(k_1, k_2)}p_2q_1 \big) /q_1q_2$.
+\end{center}
+Since $q_1$ and $q_2$ are odd, $v_2 (a_1 + a_2)$ is equal to
+\begin{center}
+min$(k_1, k_2) + v_2 \big( 2^{k_1 - min(k_1, k_2)} p_1q_2 + 2^{k_2 - min(k_1, k_2)}p_2q_1 \big)$
+\end{center}
+by the multiplicative property of $v_2$. Since $2^{k_1 - min(k_1, k_2)} p_1q_2 + 2^{k_2 - min(k_1, k_2)}p_2q_1$ is an integer, its value of $v_2$ is non-negative. Finally, the case when at least one of $a_j$ is zero follows from the fact that min$(x, +\infty) = x$.
+\end{proof}
 
 
 The power of $2$ in the denominator of the Pauli expectation gives us a sense of how non-stabilizer the state is. The definition of the dyadic monotone below gives us an intuition for this sort of measure. 
@@ -974,7 +990,7 @@ Let $\ket{\psi}$ be an $n$-qubit state with entries in $\mathbb{Z}[i, 1/2]$, the
 $\mu_2 \ket{\psi} = \texttt{max} \big\{-v_2(\braket{\psi | P | \psi}): P \in \{I, X, Y, Z \}^{\otimes n} \big\}$.
 \end{center}
 \end{definition}
-The dyadic monotone basically is the maximum power of two in the denominator over the Pauli spectrum. Now note that it is invariant under Clifford unitaries because they map the set of all multi-qubit Pauli matrices to the set of all of all Pauli matrices up to a sign and $v_2$ is insensitive to the sign of its argument. Moreover, Clifford unitaries map states with entries in $\mathbb{Z}[i, 1/2]$ to states with entries in $\mathbb{Z}[i, 1/2]$ because all Clifford unitaries can be written as matrices with entries in $\mathbb{Z}[i, 1/2]$ up to a global phase. The next proposition shows a similarity between the stabilizer nullity $\nu$ and $\mu_2$, namely the nice behaviour under tensor products.
+The dyadic monotone basically is the maximum power of two in the denominator over the Pauli spectrum. Now note that it is invariant under Clifford unitaries because they map the set of all multi-qubit Pauli matrices to the set of all of all Pauli matrices up to a sign and $v_2$ is insensitive to the sign of its argument. Moreover, Clifford unitaries map states with entries in $\mathbb{Z}[i, 1/2]$ to states with entries in $\mathbb{Z}[i, 1/2]$ because all Clifford unitaries can be written as matrices with entries in $\mathbb{Z}[i, 1/2]$ up to a global phase. The next proposition shows a similarity between $\nu$ and $\mu_2$, namely the additive property under tensor products.
 
 \begin{proposition}
 Let $\ket{\phi}$ and $\ket{\psi}$ be states with entries in $\mathbb{Z}[i, 1/2]$, then 
@@ -1002,30 +1018,9 @@ $1 = \braket{\psi | \psi}^2 = \frac{1}{2^n} \sum\limits_{P \in \{ I, X, Y, Z \}^
 which implies that the size of Stab$\ket{\psi}$ is $2^n$ and therefore that $\ket{\psi}$ is a stabilizer state.
 \end{proof}
 
-We will now need the fact that Pauli measurements with probability half take states with entries in $\mathbb{Z}[i, 1/2]$ to states with entries in $\mathbb{Z}[i, 1/2]$ (allowing the dyadic monotone to be evaluated). To see this, recall that measuring a $\pm 1$ eigenvalue of a Pauli observable $P$ with probability $1/2$ is equivalent to multiplying the state by the matrix $(I \pm P)/\sqrt{2}$ which is equal to $(1 + i)(I \pm P)/2$ up to a global phase. The matrix $(1 + i)(I \pm P)/2$ has entries in the ring $\mathbb{Z}[i, 1/2]$ and therefore the resulting state will also have entries in $\mathbb{Z}[i, 1/2]$.
+We will now need the fact that Pauli measurements with probability half take states with entries in $\mathbb{Z}[i, 1/2]$ to states with entries in $\mathbb{Z}[i, 1/2]$ (allowing the dyadic monotone to be evaluated). To see this, recall that measuring a $\pm 1$ eigenvalue of a Pauli observable $P$ with probability $1/2$ is equivalent to multiplying the state by the matrix $(I \pm P)/\sqrt{2}$ which is equal to $(1 + i)(I \pm P)/2$ up to a global phase. The matrix $(1 + i)(I \pm P)/2$ has entries in the ring $\mathbb{Z}[i, 1/2]$ and therefore the resulting state will also have entries in $\mathbb{Z}[i, 1/2]$. The next goal is to show that $\mu_2$ in non-increasing under these measurements, using Proposition \ref{prop6.4}.
 
-The next goal is to show that $\mu_2$ in non-increasing under these measurements, but to do this we will require another property of the function $v_2$ as seen in the next proposition:
 
-\begin{proposition}
-\label{prop6.4}
-For arbitrary rational numbers $a, b$ the following inequality holds
-\begin{center}
-$v_2 (a_1 + a_2) \geq min(v_2 (a_1), v_2(a_2))$.
-\end{center} 
-\end{proposition}
-\begin{proof}
-Let us first prove the inequality for non-zero $a_1, a_2$. Rewrite $a_j = 2^{k_j}p_j/q_j$ for integer $k_j$ and odd integers $p_j$ and $q_j$ such that
-\begin{center}
-$a_1 + a_2 = 2^{min(k_1, k_2)} \big( 2^{k_1 - min(k_1, k_2)} p_1q_2 + 2^{k_2 - min(k_1, k_2)}p_2q_1 \big) /q_1q_2$.
-\end{center}
-Since $q_1$ and $q_2$ are odd, $v_2 (a_1 + a_2)$ is equal to
-\begin{center}
-min$(k_1, k_2) + v_2 \big( 2^{k_1 - min(k_1, k_2)} p_1q_2 + 2^{k_2 - min(k_1, k_2)}p_2q_1 \big)$
-\end{center}
-by the multiplicative property of $v_2$. Since $2^{k_1 - min(k_1, k_2)} p_1q_2 + 2^{k_2 - min(k_1, k_2)}p_2q_1$ is an integer, its value of $v_2$ is non-negative. Finally, the case when at least one of $a_j$ is zero follows from the fact that min$(x, +\infty) = x$.
-\end{proof}
-
-Next we use this to prove what we initially wanted to show.
 \begin{proposition}
 \label{dyadic is monotone}
 Let $\ket{\psi}$ be a state with entries in $\mathbb{Z}[i, 1/2]$, let $P$ be a Pauli observable such that measuring its eigenvalue $+1$ has probability $1/2$ and let $\ket{\psi_+}$ be the normalized result of that measurement. Then $\mu_2\ket{\psi} \geq \mu_2\ket{\psi_+}$. 
