@@ -496,6 +496,7 @@ Let $U' = CU$, then by the inductive step, $U' \in \mathcal{C}(n)$. Next we repe
 Both Lemma \ref{ConjX} and Lemma \ref{ConjZ} can be generalized to show that the Clifford group is the normalizer of the Pauli group.
 
 \begin{proposition}
+\label{CliffordPtoP}
 If $P \in \mathcal{P}(n)$ and $C \in \mathcal{C}(n)$ then $CPC^{\dag} \in \mathcal{P}(n)$.
 \end{proposition}
 \begin{proof}
@@ -822,15 +823,72 @@ Let $\ket{\psi}$ and $\ket{\phi}$ be an $n$-qubit state and an $m$-qubit state r
 \end{equation*}
 \end{proof}
 
+Now we want to show that $\nu$ is non-increasing under Pauli measurements, but before we do this we need the following Proposition.
+
+\begin{proposition}
+\label{ClifUnitary}
+If $P$ and $Q$ are Hermitian Pauli operators and $PQ = - QP$ then 
+\begin{equation*}
+C = \frac{I -PQ}{\sqrt{2}}
+\end{equation*}
+is a Clifford.
+\end{proposition}
+\begin{proof}
+Let $U$ be a Pauli. Then 
+\begin{equation*}
+CUC^\dag = \frac{U-U(PQ)^\dag - (PQ)U + (PQ)U(PQ)^\dag}{2}.
+\end{equation*}
+We have two cases now, the first being if $PQU = UPQ$ (i.e. $PQ$ and $U$ commute). Then 
+\begin{equation*}
+\begin{split}
+CUC^\dag & = \frac{2U - (U(PQ)^\dag + UPQ)}{2} \\
+& = \frac{2U - (UQP + UPQ)}{2} \\
+& = \frac{2U - (-UPQ + UPQ)}{2} \\
+& = U.
+\end{split}
+\end{equation*}
+Naturally the second case is when $PQU = -UPQ$ (i.e. $PQ$ anti-commutes with $U$). Then
+\begin{equation*}
+\begin{split}
+CUC^\dag & = \frac{U - U(PQ)^\dag - UPQ - U)}{2} \\
+& = \frac{-UQP + UPQ}{2} \\
+& = \frac{-UQP - UQP}{2} \\
+& = \frac{-2UPQ}{2} \\
+& = -UPQ.
+\end{split}
+\end{equation*}
+In either case, $CUC^\dag$ is a Pauli, so $C$ is a Clifford by Proposition \ref{CliffordPtoP}.
+\end{proof}
+
 \begin{lemma}
 \label{nullity outcome}
-Let $\ket{\psi}$ be a non-zero n-qubit state and let $P$ be an n-qubit Pauli matrix. Assume that the probability of a $+1$ outcome when measuring $P$ on $\ket{\psi}$ is non-zero and let $\ket{\phi}$ be the state after measurement. Then $|\text{Stab}\ket{\phi}| = |\text{Stab}\ket{\psi}|$ or $|\text{Stab}\ket{\phi}| \geq 2|\text{Stab}\ket{\psi}|$.
+Let $\ket{\psi}$ be a non-zero n-qubit state and let $P$ be an n-qubit Pauli matrix. Assume that the probability of a $+1$ outcome when measuring $P$ on $\ket{\psi}$ is non-zero and let $\ket{\phi}$ be the state after measurement. Then $|\text{Stab}\ket{\phi}| = |\text{Stab}\ket{\psi}|$ or $|\text{Stab}\ket{\phi}| \geq |\text{Stab}\ket{\psi}|$.
 \end{lemma}
 
 \begin{proof}
-First consider the simple case when $P$ is in Stab$\ket{\psi}$. In this case, the "+1" measurement outcome occurs with probability $1$ and $\ket{\psi}$ is unchanged. When $P$ is not in Stab$\ket{\psi}$ we consider two alternatives. The first alternative is that $P$ commutes with all elements of Stab$\ket{\psi}$. Recall we have the post-measurement state $\ket{\phi} = \frac{P\ket{\psi}}{\sqrt{\bra{\psi}P^{\dag}P\ket{\psi}}} = \frac{P\ket{\psi}}{\sqrt{\bra{\psi}\ket{\psi}}}$, and let $Q \in \text{Stab}\ket{\psi}$. Then $Q\ket{\phi} = \frac{QP\ket{\psi}}{\sqrt{\bra{\psi}\ket{\psi}}} = \frac{PQ\ket{\psi}}{\sqrt{\bra{\psi}\ket{\psi}}} = \frac{P\ket{\psi}}{\sqrt{\bra{\psi}\ket{\psi}}} = \ket{\phi}$. Note also that Stab$\ket{\phi}$ also contains $P$Stab$\ket{\psi}$, and thus Stab$\ket{\phi}$ contains Stab$\ket{\psi}$ $\cup$ $P$Stab$\ket{\psi}$ and thus its size is at least $2| \text{Stab}\ket{\psi}|$.
+Let $P$ be a $n$-qubit Pauli and $\ket{\psi}$ an $n$-qubit state. Note that for any Pauli $P$, only two eigenvalues occur, namely the $-1$ eigenvalue and the $+1$ eigenvalue, where $P_{\pm 1}$ are projectors for their corresponding eigenspaces. Then by the spectral decomposition, $P = (+1)P_{+1} + (-1)P_{-1}$, and $I = P_{+1} + P_{-1}$. Also, recall that for a Pauli measurement on $P$ the probability of a $+1$ outcome is $\braket{\psi | P_{+1} | \psi}$, with post measurement state $\ket{\phi} = \frac{P_{+1} \ket{\psi}}{\sqrt{\braket{\psi | P_{+1} | \psi}}}$. Now observe that $P_{+1} = \frac{I+P}{2}$, so that $\ket{\phi} = \frac{(I+P) \ket{\psi}}{2 \sqrt{\braket{\psi | P_{+1} | \psi}}}$.
 
-The second alternative is when $P$ anti-commutes with some element $Q \in$ Stab$\ket{\psi}$. Note that $Q\ket{\psi} = \ket{\psi}$ and $QPQ = -P$, so the probability of the $+1$ outcome is $\bra{\psi}(I+P)\ket{\psi}/2 = \bra{\psi}Q(I+P)Q\ket{\psi}/2 = \bra{\psi}(I-P)\ket{\psi}/2$, which is the probability of the $-1$ outcome. Thus the probability of the $+1$ outcome is $1/2$. Then $\ket{\phi} = (I+P)/\sqrt{2}\ket{\psi}$ where we fixed the normalization condition such that $\braket{\phi} = \braket{\psi}$. Also, observe that we can write $\ket{\phi} = (I+PQ)/\sqrt{2}\ket{\psi}$. Since $(I+PQ)/\sqrt{2}$ is a Clifford unitary equal to exp($i\pi P'/4)$ for $P' = iPQ$, we see that $\ket{\phi}$ and $\ket{\psi}$ differ by a Clifford and therefore $|$Stab$\ket{\psi}| = |$Stab$\ket{\phi}|$.
+With this, we have three different cases to consider. First is the simple case when $P$ is in $\Stab\ket{\psi}$. Here we have: 
+\begin{equation*}
+\ket{\phi} = \frac{I+P \ket{\psi}}{2\braket{\psi | P_{+1} | \psi}} = \frac{\ket{\psi}}{2\braket{\psi |P_{+1}| \psi}}.
+\end{equation*}
+Since $\ket{\psi}$ and $\ket{\phi}$ differ by a phase, $|\Stab\ket{\phi}| = |\Stab\ket{\psi}|$.
+
+Next consider when $P$ is not in $\Stab{\ket{\psi}}$. Then we have two alternative possibilities. The first alternative is when $P$ commutes with all elements of $\Stab\ket{\psi}$. Let $Q \in \Stab{\ket{\psi}}$ so that $PQ = QP$. Then 
+\begin{equation*}
+Q\ket{\phi} = \frac{Q(I+P) \ket{\psi}}{2\braket{\psi | P_{+1} | \psi}} = \frac{(I+P)Q\ket{\psi}}{2\braket{\psi |P_{+1}| \psi}} = \frac{(I+P)\ket{\psi}}{2\braket{\psi |P_{+1}| \psi}} = \ket{\phi}.
+\end{equation*}
+Thus $Q \in \Stab\ket{\phi}$ and so $|\text{Stab}\ket{\phi}| \supseteq |\text{Stab}\ket{\psi}|$ which implies that $|\text{Stab}\ket{\phi}| \geq |\text{Stab}\ket{\psi}|$.
+
+Finally the second alternative is when there exists at least one $Q \in \Stab\ket{\psi}$ such that $Q$ and $P$ anti-commute. Note this means that $Q\ket{\psi} = \ket{\psi}$ and $QPQ = -P$, so the probability of the $+1$ outcome is $\bra{\psi}(I+P)\ket{\psi}/2 = \bra{\psi}Q(I+P)Q\ket{\psi}/2 = \bra{\psi}(I-P)\ket{\psi}/2$, which is the probability of the $-1$ outcome. Since these two probabilities must add up to be $1$, the probability of both the $+1$ and $-1$ outcome is $1/2$. Then the post measurement state becomes:
+\begin{equation*}
+\ket{\phi} = \frac{(I+P) \ket{\psi}}{2\braket{\psi | P_{+1} | \psi}} = \frac{(I+P)\ket{\psi}}{2\sqrt{1/2}} = \frac{(I+P)\ket{\psi}}{\sqrt{2}},
+\end{equation*}
+where we fixed the normalization condition such that $\braket{\phi | \phi} = \braket{\psi | \psi}$. Also, observe that we can write $\ket{\phi} = (I+PQ)/\sqrt{2}\ket{\psi}$ since $Q$ stabilizes $\ket{\phi}$. Since $(I+PQ)/\sqrt{2}$ is a Clifford unitary by Proposition \ref{ClifUnitary}, we see that $\ket{\phi}$ and $\ket{\psi}$ differ by a Clifford and therefore $\Stab\ket{\psi}| = |\Stab\ket{\phi}|$.
+
+% the $+1$ measurement outcome occurs with probability $1$ and $\ket{\psi}$ is unchanged. When $P$ is not in Stab$\ket{\psi}$ we consider two alternatives. The first alternative is that  Recall we have the post-measurement state $\ket{\phi} = \frac{P\ket{\psi}}{\sqrt{\bra{\psi}P^{\dag}P\ket{\psi}}} = \frac{P\ket{\psi}}{\sqrt{\bra{\psi}\ket{\psi}}}$, and let $Q \in \text{Stab}\ket{\psi}$. Then $Q\ket{\phi} = \frac{QP\ket{\psi}}{\sqrt{\bra{\psi}\ket{\psi}}} = \frac{PQ\ket{\psi}}{\sqrt{\bra{\psi}\ket{\psi}}} = \frac{P\ket{\psi}}{\sqrt{\bra{\psi}\ket{\psi}}} = \ket{\phi}$. Note also that Stab$\ket{\phi}$ also contains $P$Stab$\ket{\psi}$, and thus Stab$\ket{\phi}$ contains Stab$\ket{\psi}$ $\cup$ $P$Stab$\ket{\psi}$ and thus its size is at least $2| \text{Stab}\ket{\psi}|$.
+
+
 \end{proof}
 
 \begin{corollary}
@@ -916,9 +974,12 @@ Remark: Let $q \in \mathbb{Q}$ be in reduced form as above. Then we have three d
 \end{itemize}
 \end{proposition}
 
-Now, we wish to extend $\bar{v}_2$ to the real subsets of $\mathcal{R}_d = \mathbb{Z}[\zeta_{2^{d+1}}, 1/2]$, where $\zeta_{2^{d+1}}$ is the $d+1$ primitive root of unity. To do this, we need the field norm of a cyclotomic field, which is defined as $N_d: \mathbb{Q}(\zeta_{2^{d+1}}) \longrightarrow \mathbb{Q}$ for a positive integer $d$, where $N_d (\alpha) = \prod_{\sigma \in Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q}} \sigma (\alpha)$. 
+Now, we wish to extend $\bar{v}_2$ to the real subsets of $\mathcal{R}_d = \mathbb{Z}[\zeta_{2^{d+1}}, 1/2]$, where $\zeta_{2^{d+1}}$ is the $d+1$ primitive root of unity. To do this, first recall that the Galois group of a field extension is a set of automorphisms that fixes the bases field, and forms a group under the operation of function composition. We denote the Galois group of a field extension $F$ over its' base field $E$ by $Gal(F/E)$, and elements in this group are commonly denoted by $\sigma$. Now we need the field norm of a cyclotomic field, which is defined as $N_d: \mathbb{Q}(\zeta_{2^{d+1}}) \longrightarrow \mathbb{Q}$ for a positive integer $d$, where
+\begin{equation*}
+N_d (\alpha) = \prod\limits_{\sigma \in Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q})} \sigma (\alpha). 
+\end{equation*} 
 
-For a cyclotomic field, each $\sigma \in Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q})$ sends $\zeta_{2^{d+1}}$ to one of it's conjugates, so that we can define the $\sigma$'s in the following way: $\sigma_k (\zeta_{2^{d+1}}) = \zeta_{2^{d+1}}^k$. Note that $Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q}) \cong (\mathbb{Z}/n\mathbb{Z})^x$, and that elements in $Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q}$ are precisely the $\sigma_k$'s where $gcd(k, 2^{d+1}) = 1$. This means that $k$ takes only odd values, so that:
+Note that for a field extension $F$ and base field $E$, there is an alternative definition of the Galois group that comes from a polynomial $f \in E[x]$. Here $f$ factors as a product of linear polynomials in $F[x]$, and more importantly, all automorphisms $\sigma \in Gal(F/E)$ are defined by mapping a root to other roots. The roots in such a polynomial are called conjugates. Now for a cyclotomic field, each $\sigma \in Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q})$ sends $\zeta_{2^{d+1}}$ to one of it's conjugates, so that we can define the $\sigma$'s in the following way: $\sigma_k (\zeta_{2^{d+1}}) = \zeta_{2^{d+1}}^k$. Note that $Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q}) \cong (\mathbb{Z}/n\mathbb{Z})^x$, and that elements in $Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q})$ are precisely the $\sigma_k$'s where $gcd(k, 2^{d+1}) = 1$. This means that $k$ takes only odd values, so that:
 
 \begin{equation}
 N_d(\alpha) = \prod_{k-odd} \sigma_k (\alpha) = \prod_{k=0}^{2^d - 1} \sigma_{2k+1} (\alpha)
