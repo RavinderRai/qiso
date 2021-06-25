@@ -110,7 +110,7 @@ a_{21}b_{21} & a_{21}b_{22} & a_{22}b_{21} & a_{22}b_{22}
 A basis for a tensor product of vector spaces can be obtained as the tensor product of the basis elements of the individual vector spaces. For example if $\{ a_1, a_2 \}$ and $\{ b_1 , b_2  \}$ are two bases for $\mathbb{C}^2$, then $\{ a_1 \otimes b_1, a_1 \otimes b_2, a_2 \otimes b_1, a_2 \otimes b_2 \}$ is a basis for $\mathbb{C}^4$. Note that not all elements of $\mathbb{C}^4$ are of the form $a \otimes b$ with $a, b \in \mathbb{C}^2$.
 
 \subsection{The Dirac Notation}
-In quantum computing, we make use of the \emph{Dirac notation} to represent vectors and operations. In Dirac notation we write a column vector $v$ as a \emph{ket}, denoted by $\ket{v}$. The adjoint of a column vector $u$ is written as a \emph{bra}, denoted by $\bra{u}$. The inner product between two vectors $\ket{v}$ and $\bra{u}$ is then written as a \emph{braket}, denoted by $\braket{u|v}$. for example, the inner product of $\bra{0}$ and $\ket{1}$ is $\braket{0|1}$.
+In quantum computing, we make use of the \emph{Dirac notation} to represent vectors and operations. In Dirac notation we write a column vector $v$ as a \emph{ket}, denoted by $\ket{v}$. The adjoint of a column vector $u$ is written as a \emph{bra}, denoted by $\bra{u}$. The inner product between two vectors $\ket{v}$ and $\bra{u}$ is then written as a \emph{braket}, denoted by $\braket{u|v}$. for example, the inner product of $\bra{0}$ and $\ket{1}$ is $\braket{0|1}$. The outer product between two vectors is written in the opposite manner, i.e. $\ket{v} \bra{u}$. Note this is simple matrix multiplication, where the inner product results in a scalar, and the outer product produces a matrix. In some sense the outer product scales a vector, since for a vector $\ket{w}$, we have $\ket{v}\bra{u} \ket{w} = \braket{u|w}\ket{v}$ where $\braket{u|w}$ is just a scalar.
 
 Consider the standard basis vectors $[1, 0]^{\dag}$ and $[0, 1]^{\dag}$. We denote them $\ket{0}$ and $\ket{1}$ respectively. In quantum computing, the basis of $\mathcal{C}^2$ formed by $\{ \ket{0} , \ket{1} \}$ in is known as the \emph{computational basis}. As mentioned before, one can get a basis for higher dimensional vector spaces by taking tensor products of $\ket{0}$ and $\ket{1}$. For example, a basis for $\mathbb{C}^4$ is $\{ \ket{0} \otimes \ket{0}, \ket{0} \otimes \ket{1}, \ket{1} \otimes \ket{0}, \ket{1} \otimes \ket{1} \}$. For brevity, the symbol $\otimes$ is often omitted for elements of the higher dimensional computational bases. For example, $\ket{0} \otimes \ket{0}$ is written as $\ket{00}$ and $\ket{0} \otimes \ket{1}$ is written as $\ket{01}$. In this way, the $j-th$ basis vector of $\mathcal{C}^{2n}$ is denoted $\ket{b_1 b_2 \cdots b_n}$ where $b_1, b_2, \cdots , b_n \in \mathcal{Z}_2$ and $b_1 b_2 \cdots b_n$ is the binary expansion of $j$.
 
@@ -197,6 +197,8 @@ Aside from unitary transformations, we can also act on a quantum state by measur
 More formally, quantum measurements are described by a collection of \emph{measurement operators} $\{ M_m \}$ \cite{nielsen00}. The index $m$ refers to its corresponding outcome. When measuring some state $\ket{\phi}$ the probability that the result $m$ occurs is $p(m) = \braket{\phi | M^{\dag}_m M_m | \phi}$ and the post-measurement state is $\frac{M_m \ket{\phi}}{\sqrt{\braket{\phi | M^{\dag}_m M_m | \phi}}}$. In the computational basis for $\mathcal{C}^2$, we have $M_0 = \ket{0} \bra{0}$ and $M_1 = \ket{1} \bra{1}$. Note measuring the state $\ket{\psi}$ above with these formal terms will give the same result as before. 
 
 Measurement is of course not restricted to just a single qubit. This formal method can describe measurement on multiple qubits. Consider an $n$-qubit system described by the state $\ket{\Psi}$. Then measuring in the computational basis, the probability of observing the outcome $j$ is still just $\braket{\Psi | M^{\dag}_j M_j | \Psi}$, where $M_j = \ket{j} \bra{j}$ and $j$ is taken to be in binary form. For example, when $n=3$ one possible outcome could be $\ket{001}$ as this is one of the computational basis states in $\mathcal{C}^4$. Then $M_{001} = \ket{001}\bra{001}$ is used to find the probability of that the measurement outcome will be $\ket{001}$. Note one can also measure an $m$ qubit state in an $n$ qubit system for $m \leq n$, i.e. one can measure only part of a quantum system.
+
+The type of measurement that we are interested in is Pauli measurement. Let $P$ be a $n$-qubit Pauli and $\ket{\psi}$ an $n$-qubit state. Note that for any Pauli $P$, only two eigenvalues occur, namely the $-1$ eigenvalue and the $+1$ eigenvalue. Recall that by the spectral decomposition theorem, we have matrices $P_{\pm 1}$ which are projectors for their corresponding eigenspaces. These matrices satisfy the following equations: $P = (+1)P_{+1} + (-1)P_{-1}$, and $I = P_{+1} + P_{-1}$. Now for a Pauli measurement on $P$ the probability of a $+1$ outcome is $\braket{\psi | P_{+1} | \psi}$, with post measurement state $\ket{\phi} = \frac{P_{+1} \ket{\psi}}{\sqrt{\braket{\psi | P_{+1} | \psi}}}$. Finally, observe that $P_{+1} = \frac{I+P}{2}$, so that $\ket{\phi} = \frac{(I+P) \ket{\psi}}{2 \sqrt{\braket{\psi | P_{+1} | \psi}}}$.
 
 
 \section{Quantum Circuits}
@@ -866,9 +868,7 @@ Let $\ket{\psi}$ be a non-zero n-qubit state and let $P$ be an n-qubit Pauli mat
 \end{lemma}
 
 \begin{proof}
-Let $P$ be a $n$-qubit Pauli and $\ket{\psi}$ an $n$-qubit state. Note that for any Pauli $P$, only two eigenvalues occur, namely the $-1$ eigenvalue and the $+1$ eigenvalue, where $P_{\pm 1}$ are projectors for their corresponding eigenspaces. Then by the spectral decomposition, $P = (+1)P_{+1} + (-1)P_{-1}$, and $I = P_{+1} + P_{-1}$. Also, recall that for a Pauli measurement on $P$ the probability of a $+1$ outcome is $\braket{\psi | P_{+1} | \psi}$, with post measurement state $\ket{\phi} = \frac{P_{+1} \ket{\psi}}{\sqrt{\braket{\psi | P_{+1} | \psi}}}$. Now observe that $P_{+1} = \frac{I+P}{2}$, so that $\ket{\phi} = \frac{(I+P) \ket{\psi}}{2 \sqrt{\braket{\psi | P_{+1} | \psi}}}$.
-
-With this, we have three different cases to consider. First is the simple case when $P$ is in $\Stab\ket{\psi}$. Here we have: 
+Let $P$ be a $n$-qubit Pauli and $\ket{\psi}$ an $n$-qubit state. Recall that for a Pauli measurement on $P$ the probability of a $+1$ outcome is $\braket{\psi | P_{+1} | \psi}$, with post measurement state $\ket{\phi} = \frac{P_{+1} \ket{\psi}}{\sqrt{\braket{\psi | P_{+1} | \psi}}} =  \frac{(I+P) \ket{\psi}}{2 \sqrt{\braket{\psi | P_{+1} | \psi}}}$. With this, we have three different cases to consider. First is the simple case when $P$ is in $\Stab\ket{\psi}$. Here we have: 
 \begin{equation*}
 \ket{\phi} = \frac{I+P \ket{\psi}}{2\braket{\psi | P_{+1} | \psi}} = \frac{\ket{\psi}}{2\braket{\psi |P_{+1}| \psi}}.
 \end{equation*}
@@ -985,19 +985,40 @@ Note that for a field extension $F$ and base field $E$, there is an alternative 
 N_d(\alpha) = \prod_{k-odd} \sigma_k (\alpha) = \prod_{k=0}^{2^d - 1} \sigma_{2k+1} (\alpha)
 \end{equation}
 
-Remark if $d \leq d'$ then $\mathbb{Q}(e^{i\cdot \pi / 2^d}) \subseteq \mathbb{Q}(e^{i\cdot \pi / 2^{d'}})$.
+Remark if $d \leq d'$ then $\mathbb{Q}(e^{i\cdot \pi / 2^d}) \subseteq \mathbb{Q}(e^{i\cdot \pi / 2^{d'}})$. Note the following few propositions about $N_d$.
 
 \begin{proposition}
-Consider $N_{d+1}: \mathbb{Q}(e^{i\cdot \pi / 2^{d+1}}) \longrightarrow \mathbb{Q}$. Then when restricting $N_{d+1}$ to $\mathbb{Q}(e^{i\cdot \pi / 2^{d}})$ we have $N_{d+1} = N_d^2$.
+$N_0$ is trivial, meaning $N_0(x) = x$.
 \end{proposition}
+\begin{proof}
+$N_0 (x) = \sigma_1 (x)$, and since $\sigma_1 (x)$ is trivial, so is $N_0 (x)$.
+\end{proof}
 
 \begin{proposition}
 Let $d$ be a positive integer. Then $N_d$ is multiplicative.
 \end{proposition}
+\begin{proof}
+This follows from $\sigma_k$ being multiplicative.
+\end{proof}
 
-Note: $\cup \mathbb{Q}(e^{i\cdot \pi / 2^{j}}) = \mathbb{R}$
+\begin{proposition}
+Consider $N_{d+1}: \mathbb{Q}(e^{i\cdot \pi / 2^{d+1}}) \longrightarrow \mathbb{Q}$. Then when restricting $N_{d+1}$ to $\mathbb{Q}(e^{i\cdot \pi / 2^{d}})$ we have $N_{d+1} = N_d^2$.
+\end{proposition}
+\begin{proof}
+For $x \in \mathbb{Q}(e^{i\cdot \pi / 2^{d}})$, we have:
+\begin{equation*}
+\begin{split}
+N_{d+1}(\alpha) & = \prod_{k=0}^{2^{d+1} - 1} \sigma_{2k+1} (\alpha) \\
+& = \prod_{k=0}^{2^{d} - 1} \sigma_{2k+1} (\alpha) \prod_{k=2^{d}}^{2^{d+1} - 1} \sigma_{2k+1} (\alpha) \\
+& = \prod_{k=0}^{2^{d} - 1} \sigma_{2k+1} (\alpha) \prod_{k=0}^{2^{d} - 1} \sigma_{2k+1} (\alpha) \\
+& = N_d^2 (\alpha).
+\end{split}
+\end{equation*}
+This follows from the fact that $\sigma_{2\cdot (2^d+i) + 1} = \sigma_{1+2i}$ for $i \in \{0, ..., 2^d - 1\}$, since $\zeta_{2^{d+1}}^{2\cdot (2^d+i) + 1} = \zeta_{2^{d+1}}^{1+2i}$.
+\end{proof}
+
 \begin{definition}
-The valuation function $v_2: \mathbb{R} \longrightarrow \mathbb{Q}$ is defined as 
+The valuation function $v_2: \mathcal{R}_d \longrightarrow \mathbb{Q}$ is defined as 
 \begin{equation}
 v_2 (x) = \frac{\bar{v}_2 (N_d (x))}{2^d}
 \end{equation}
@@ -1010,10 +1031,27 @@ Then we have that $\frac{\bar{v}_2 (N_d (x))}{2^d} = \frac{\bar{v}_2 (N_{d'} (x)
 \begin{proposition}
 If $x \in \mathbb{Q}$ then $v_2 (x) = \bar{v}_2 (x)$.
 \end{proposition}
+\begin{proof}
+If $x \in \mathbb{Q}$ then $d=0$ and $N_d(x) = N_0(x) = x$,  
+\begin{equation*}
+v_2 (x) = \frac{\bar{v}_2 (N_d (x))}{2^d} = \frac{\bar{v}_2 (x)}{2^0} = \bar{v}_2 (x).
+\end{equation*}
+\end{proof}
 
 \begin{proposition}
-If $x, x' \in \mathbb{R}$ then $v_2 (x \cdot x') = v_2 (x) + v_2 (x')$.
+If $x, x' \in \mathcal{R}_d$ then $v_2 (x \cdot x') = v_2 (x) + v_2 (x')$.
 \end{proposition}
+\begin{proof}
+First we prove this for $\bar{v}_2$. If in their prime decomposition $x$ and $x'$ have factors $2^k$ and $2^{k'}$, respectively, then $x \cdot x'$ has a factor $2^{k + k'}$. Thus $\bar{v}_2 (x \cdot x') = k+k'$. Now, since $N_d$ is multiplicative, we have:
+\begin{equation*}
+\begin{split}
+v_2 (x \cdot x') & = \frac{\bar{v}_2 (N_d (x \cdot x'))}{2^d} \\
+& = \frac{\bar{v}_2 (N_d (x) \cdot N_d(x'))}{2^d} \\
+& = \frac{\bar{v}_2 (N_d(x)) + \bar{v}_2 (N_d(x'))}{2^d} \\ 
+& = v_2 (x) + v_(x').
+\end{split}
+\end{equation*}
+\end{proof}
 
 \begin{proposition}
 \label{prop6.4}
@@ -1046,15 +1084,17 @@ The power of $2$ in the denominator of the Pauli expectation gives us a sense of
 
 
 \begin{definition}
-Let $\ket{\psi}$ be an $n$-qubit state with entries in $\mathbb{Z}[i, 1/2]$, the dyadic monotone is 
+Let $\ket{\psi}$ be an $n$-qubit state with entries in $\mathcal{R}_d$, the dyadic monotone is 
 \begin{center}
 $\mu_2 \ket{\psi} = \texttt{max} \big\{-v_2(\braket{\psi | P | \psi}): P \in \{I, X, Y, Z \}^{\otimes n} \big\}$.
 \end{center}
 \end{definition}
-The dyadic monotone basically is the maximum power of two in the denominator over the Pauli spectrum. Now note that it is invariant under Clifford unitaries because they map the set of all multi-qubit Pauli matrices to the set of all of all Pauli matrices up to a sign and $v_2$ is insensitive to the sign of its argument. Moreover, Clifford unitaries map states with entries in $\mathbb{Z}[i, 1/2]$ to states with entries in $\mathbb{Z}[i, 1/2]$ because all Clifford unitaries can be written as matrices with entries in $\mathbb{Z}[i, 1/2]$ up to a global phase. The next proposition shows a similarity between $\nu$ and $\mu_2$, namely the additive property under tensor products.
+The dyadic monotone basically is the maximum power of two in the denominator over the Pauli spectrum. Now note that it is invariant under Clifford unitaries because they map the set of all multi-qubit Pauli matrices to the set of all of all Pauli matrices up to a sign and $v_2$ is insensitive to the sign of its argument. The next proposition shows a similarity between $\nu$ and $\mu_2$, namely the additive property under tensor products.
+
+%Moreover, Clifford unitaries map states with entries in $\mathbb{Z}[i, 1/2]$ to states with entries in $\mathbb{Z}[i, 1/2]$ because all Clifford unitaries can be written as matrices with entries in $\mathbb{Z}[i, 1/2]$ up to a global phase.
 
 \begin{proposition}
-Let $\ket{\phi}$ and $\ket{\psi}$ be states with entries in $\mathbb{Z}[i, 1/2]$, then 
+Let $\ket{\phi}$ and $\ket{\psi}$ be states with entries in $\mathcal{R}_d$, then 
 \begin{center}
 $\mu_2 (\ket{\phi} \otimes \ket{\psi}) = \mu_2 \ket{\phi} + \mu_2 \ket{\psi}$
 \end{center}
@@ -1084,7 +1124,7 @@ We will now need the fact that Pauli measurements with probability half take sta
 
 \begin{proposition}
 \label{dyadic is monotone}
-Let $\ket{\psi}$ be a state with entries in $\mathbb{Z}[i, 1/2]$, let $P$ be a Pauli observable such that measuring its eigenvalue $+1$ has probability $1/2$ and let $\ket{\psi_+}$ be the normalized result of that measurement. Then $\mu_2\ket{\psi} \geq \mu_2\ket{\psi_+}$. 
+Let $\ket{\psi}$ be a state with entries in $\mathcal{R}_d$, let $P$ be a Pauli observable such that measuring its eigenvalue $+1$ has probability $1/2$ and let $\ket{\psi_+}$ be the normalized result of that measurement. Then $\mu_2\ket{\psi} \geq \mu_2\ket{\psi_+}$. 
 \end{proposition}
 \begin{proof}
 Let us bound the value of $v_2$ for some Pauli operator $Q$ evaluated on the expectation $\braket{\psi_+ | Q |\psi_+}$. The normalized state is $\ket{\psi_+} = \frac{I + P}{\sqrt{2}}\ket{\psi}$. The expectation of $Q$ is therefore equal to:
@@ -1093,7 +1133,7 @@ $\braket{\psi_+ | Q |\psi_+} = \braket{\psi | (I + P)Q(I + P) | \psi}/2$.
 \end{center}
 If $P$ and $Q$ anti-commute, the expectation is zero and does not contribute to the calculation of $\mu_2$. When $P$ and $Q$ commute, the expectation is equal to $\braket{\psi | Q | \psi} + \braket{\psi |PQ |\psi}$. Next we use the inequality from Proposition \ref{prop6.4} to see that:
 \begin{center}
-$v_2(\braket{\psi |Q| \psi} + \braket{\psi |PQ| \psi}) \geq \texttt{min}(\braket{\psi |Q|\psi}, \braket{\psi |pQ|\psi}) \geq -\mu_2\ket{\psi}$.
+$v_2(\braket{\psi |Q| \psi} + \braket{\psi |PQ| \psi}) \geq \texttt{min}(\braket{\psi |Q|\psi}, \braket{\psi |PQ|\psi}) \geq -\mu_2\ket{\psi}$.
 \end{center}
 Now recall that $v_2(\braket{\psi |Q| \psi} + \braket{\psi |PQ| \psi}) = v_2(\braket{\psi_+ |Q| \psi_+})$ which is exactly equal to $\mu_2\ket{\psi_+}$ given our choice of $Q$. So finally by multiplying by $-1$, we have the result: $\mu_2\ket{\psi} \geq \mu_2\ket{\psi_+}$
 \end{proof}
