@@ -1039,6 +1039,7 @@ v_2 (x) = \frac{\bar{v}_2 (N_d (x))}{2^d} = \frac{\bar{v}_2 (x)}{2^0} = \bar{v}_
 \end{proof}
 
 \begin{proposition}
+\label{v2additive}
 If $x, x' \in \mathcal{R}_d$ then $v_2 (x \cdot x') = v_2 (x) + v_2 (x')$.
 \end{proposition}
 \begin{proof}
@@ -1054,23 +1055,74 @@ v_2 (x \cdot x') & = \frac{\bar{v}_2 (N_d (x \cdot x'))}{2^d} \\
 \end{proof}
 
 \begin{proposition}
-\label{prop6.4}
-For arbitrary rational numbers $a, b$ the following inequality holds
+\label{propA.22}
+Let $x'$ be an element of $\mathbb{Z}[\zeta_{2^{d+1}}]$. Then $v_2(x') \geq 0$ and for $k=2^d v_2(x)$, $x'$ can be written as $x''(1-\zeta_{2^{d+1}})^k$ for $x''$ in $\mathbb{Z}[\zeta_{2^{d+1}}]$ such that $v_2(x'') = 0$.
+\end{proposition}
+
+\begin{proposition}
+For arbitrary rational numbers $x, y$ the following inequality holds
 \begin{center}
-$v_2 (a_1 + a_2) \geq min(v_2 (a_1), v_2(a_2))$.
+$v_2 (x + y) \geq min(v_2 (x), v_2(y))$.
 \end{center} 
 \end{proposition}
 \begin{proof}
-Let us first prove the inequality for non-zero $a_1, a_2$. Rewrite $a_j = 2^{k_j}p_j/q_j$ for integer $k_j$ and odd integers $p_j$ and $q_j$ such that
-\begin{center}
-$a_1 + a_2 = 2^{min(k_1, k_2)} \big( 2^{k_1 - min(k_1, k_2)} p_1q_2 + 2^{k_2 - min(k_1, k_2)}p_2q_1 \big) /q_1q_2$.
-\end{center}
-Since $q_1$ and $q_2$ are odd, $v_2 (a_1 + a_2)$ is equal to
-\begin{center}
-min$(k_1, k_2) + v_2 \big( 2^{k_1 - min(k_1, k_2)} p_1q_2 + 2^{k_2 - min(k_1, k_2)}p_2q_1 \big)$
-\end{center}
-by the multiplicative property of $v_2$. Since $2^{k_1 - min(k_1, k_2)} p_1q_2 + 2^{k_2 - min(k_1, k_2)}p_2q_1$ is an integer, its value of $v_2$ is non-negative. Finally, the case when at least one of $a_j$ is zero follows from the fact that min$(x, +\infty) = x$.
+Note that for $x$ and $y \in \mathbb{Q}(exp(i\pi / 2^d))$ there always exists an integer $C$ such that $x' = Cx$ and $y' = Cy$ are both in $\mathbb{Z}(exp(i\pi / 2^d))$. Then 
+\begin{equation*}
+v_2(x+y) = v_2((1/C)(x' + y')) = v_2(x' + y') + v_2(1/C).
+\end{equation*}
+Now by Proposition \ref{propA.22}, we can write $x'$ as $x''(1-\zeta_{2^{d+1}})^{k_x}$ and $y'$ as $y''(1-\zeta_{2^{d+1}})^{k_y}$ for $k_x = 2^dv_2(x')$ and $k_y = 2^dv_2(y')$. Note this also means that $x''$ and $y''$ are in $\mathbb{Z}[\zeta_{2^{d+1}}]$ and $v_2(x'') = v_2(y'') = 0$. Moreover, let $k = \min(k_x, k_y)$. This way we can write:
+\begin{equation*}
+\begin{split}
+x'+y' & = x''(1-\zeta_{2^{d+1}})^{k_x} + y''(1-\zeta_{2^{d+1}})^{k_y} \\
+& = (1-\zeta_{2^{d+1}})^k (x''(1-\zeta_{2^{d+1}})^{k_x - k} + y''(1-\zeta_{2^{d+1}})^{k_y - k}).
+\end{split}
+\end{equation*}
+Now by Proposition \ref{v2additive}, 
+\begin{equation*}
+v_2(x' + y') = v_2\big( 1-\zeta_{2^{d+1}})^k) + v_2(x''(1-\zeta_{2^{d+1}})^{k_x - k} + y''(1-\zeta_{2^{d+1}})^{k_y - k} \big).
+\end{equation*}
+Since $x''$ and $y''$ are in $\mathbb{Z}[\zeta_{2^{d+1}}]$, $x''(1-\zeta_{2^{d+1}})^{k_x - k} + y''(1-\zeta_{2^{d+1}})^{k_y - k} \in \mathbb{Z}[\zeta_{2^{d+1}}]$ and thus it is also $\geq 0$ by Proposition \ref{propA.22}. Hence $v_2(x'+y') \geq v_2(1-\zeta_{2^{d+1}})^k$. Note that $N_d (1-\zeta_{2^{d+1}}) = 2$ and recall that $N_d$ is multiplicative. Then we get the following:
+\begin{equation*}
+\begin{split}
+v_2(1-\zeta_{2^{d+1}})^k & = \frac{\bar{v}_2 (N_d((1-\zeta_{2^{d+1}})^k))}{2^d} \\
+& = \frac{\bar{v}_2 ((N_d(1-\zeta_{2^{d+1}}))^k)}{2^d} \\
+& = \frac{\bar{v}_2 (2^k)}{2^d} \\
+& = \frac{k}{2^d} \\
+& = \frac{2^d \cdot \min (v_2(x'), v_2 (y'))}{2^d} \\
+& = \min (v_2(x'), v_2 (y')).
+\end{split}
+\end{equation*}
+Finally, putting it all together we arrive with:
+\begin{equation*}
+\begin{split}
+v_2 (x + y) & = v_2(x' + y') + v_2(1/C) \\
+& \geq v_2(1-\zeta_{2^{d+1}})^k + v_2(1/C) \\
+& = \min (v_2(x'), v_2 (y')) + v_2 (1/C) \\
+& = \min (v_2(x'/C), v_2 (y'/C)) \\
+& = \min (v_2(x), v_2 (y)).
+\end{split}
+\end{equation*}
 \end{proof}
+
+
+%\begin{proposition}
+%\label{prop6.4}
+%For arbitrary rational numbers $a, b$ the following inequality holds
+%\begin{center}
+%$v_2 (a_1 + a_2) \geq min(v_2 (a_1), v_2(a_2))$.
+%\end{center} 
+%\end{proposition}
+%\begin{proof}
+%Let us first prove the inequality for non-zero $a_1, a_2$. Rewrite $a_j = 2^{k_j}p_j/q_j$ for integer $k_j$ and odd integers $p_j$ and $q_j$ such that
+%\begin{center}
+%$a_1 + a_2 = 2^{min(k_1, k_2)} \big( 2^{k_1 - min(k_1, k_2)} p_1q_2 + 2^{k_2 - min(k_1, k_2)}p_2q_1 \big) /q_1q_2$.
+%\end{center}
+%Since $q_1$ and $q_2$ are odd, $v_2 (a_1 + a_2)$ is equal to
+%\begin{center}
+%min$(k_1, k_2) + v_2 \big( 2^{k_1 - min(k_1, k_2)} p_1q_2 + 2^{k_2 - min(k_1, k_2)}p_2q_1 \big)$
+%\end{center}
+%by the multiplicative property of $v_2$. Since $2^{k_1 - min(k_1, k_2)} p_1q_2 + 2^{k_2 - min(k_1, k_2)}p_2q_1$ is an integer, its value of $v_2$ is non-negative. Finally, the case when at least one of $a_j$ is zero follows from the fact that min$(x, +\infty) = x$.
+%\end{proof}
 
 
 The power of $2$ in the denominator of the Pauli expectation gives us a sense of how non-stabilizer the state is. The definition of the dyadic monotone below gives us an intuition for this sort of measure. 
