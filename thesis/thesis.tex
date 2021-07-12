@@ -219,15 +219,16 @@ Multiqubit gates are also boxes but with multiple wires connecting to it. Contro
 The circuit representation for a multiply controlled gate is written in this fashion also but with multiple controlled qubits.
 
 
-Quantum circuits are read from left to right, and can be read by tracking what the operations do to the input state. It is worth noting that if two circuits give the same output on a general input state then they are equivalent circuits. In fact, the following example is a circuit that acts exactly as a $CCZ$ gate on qubits $c_1$, $c_2$, and $c_3$, and will be used later on in Section \ref{Upper Bounds for C^nZ}.
-\begin{equation*}
+Quantum circuits are read from left to right, and can be read by tracking what the operations do to the input state. It is worth noting that if two circuits give the same output on a general input state then they are equivalent circuits. In fact, the following example is a circuit from \cite{Jones_2013} that acts exactly as a $CCZ$ gate on qubits $c_1$, $c_2$, and $c_3$, and will be used later on in Section \ref{Upper Bounds for C^nZ}.
+\begin{equation}
+\label{CCZcircuit}
 \Qcircuit @C=0.5em @R=.7em {
    & \lstick{\ket{c_1}} & \ctrl{2} & \qw & \qw & \qw & \multigate{1}{CZ} & \qw \\
    & \lstick{\ket{c_2}} & \ctrl{1} & \qw & \qw & \qw & \ghost{CZ} & \qw \\
    & \lstick{\ket{0}} & \gate{X} & \ctrl{1} & \gate{H} & \meter & \ctrl{-1} \cw \cwx \\
    & \lstick{\ket{c_3}} & \qw & \targ & \qw & \qw & \qw & \qw
 }
-\end{equation*}
+\end{equation}
 Tracking from left to right starting with the input state, we get the following steps:
 \begin{itemize}
 \item[] $\ket{c_1}\ket{c_2}\ket{0}\ket{c_3}$
@@ -1518,10 +1519,10 @@ We have
 \begin{center}
 $\ket{C^n Z} = \C^n Z \ket{+}^{\otimes n} = \frac{1}{\sqrt{2^n}} \sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} \ket{b}$
 \end{center}
-We want to compute the Pauli expectation $\braket{\Lambda_n (Z)|X^xZ^z|\Lambda_n (Z)}$ where $x$ and $z$ are bit strings. Note that we need not consider the Pauli matrix $Y$ since $Y = iXZ$, and the phase will vanish once we take the absolute value as in the definition of the Pauli spectrum. For one-bit bit strings $i$ and $j$, observe that $Z^i \ket{j} = \ket{j}$ if $i=j=0$ or $i \neq j$, and $Z^i \ket{j} = -\ket{j}$ if $i=j=1$. So in general $Z^z \ket{b} = (-1)^{z \cdot b}\ket{b}$. Furthermore, $X^i \ket{j} = \ket{i \oplus j}$, where $\oplus$ is addition modulo 2, so for arbitrary bit strings it follows that $X^x\ket{b} = \ket{b \oplus x}$, where $b \oplus x$ is extended component-wise. We can now directly calculate as follows:
+We want to compute the Pauli expectation $\braket{C^n Z|X^xZ^z|C^n Z}$ where $x$ and $z$ are bit strings. Note that we need not consider the Pauli matrix $Y$ since $Y = iXZ$, and the phase will vanish once we take the absolute value as in the definition of the Pauli spectrum. For one-bit bit strings $i$ and $j$, observe that $Z^i \ket{j} = \ket{j}$ if $i=j=0$ or $i \neq j$, and $Z^i \ket{j} = -\ket{j}$ if $i=j=1$. So in general $Z^z \ket{b} = (-1)^{z \cdot b}\ket{b}$. Furthermore, $X^i \ket{j} = \ket{i \oplus j}$, where $\oplus$ is addition modulo 2, so for arbitrary bit strings it follows that $X^x\ket{b} = \ket{b \oplus x}$, where $b \oplus x$ is extended component-wise. We can now directly calculate as follows:
 \begin{equation*}
 \begin{split}
-2^n\braket{\Lambda_n (Z)|X^xZ^z|\Lambda_n (Z)} & = \sum\limits_{b, b' \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{b'_1 \cdot b'_2 \cdots b'_n} \braket{b'|X^xZ^z|b} \\
+2^n\braket{C^n Z|X^xZ^z|C^n Z} & = \sum\limits_{b, b' \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{b'_1 \cdot b'_2 \cdots b'_n} \braket{b'|X^xZ^z|b} \\
 & = \sum\limits_{b, b' \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{b'_1 \cdot b'_2 \cdots b'_n} (-1)^{z \cdot b} \braket{b'|X^x|b} \\
 & = \sum\limits_{b, b' \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{b'_1 \cdot b'_2 \cdots b'_n} (-1)^{z \cdot b} \braket{b'|b \oplus x} \\
 & = \sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{(b_1 \oplus x_1) \cdot (b_2 \oplus x_2) \cdots (b_n \oplus x_n)} (-1)^{z \cdot b}.
@@ -1546,7 +1547,7 @@ $\sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{(b_1 + x_1
 Thus the terms in the sum over $b$ differ from $\sum_{b \in \{0, 1\}^n} (-1)^{z \cdot b}$ only for $b = \textbf{1}$ and $b = \textbf{1} + x$. Therefore, 
 \begin{equation*}
 \begin{split}
-2^n\braket{\Lambda_n (Z)|X^xZ^z|\Lambda_n (Z)} & = \sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{(b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_n + x_n)} (-1)^{z \cdot b} \\
+2^n\braket{C^n Z|X^xZ^z|C^n Z} & = \sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{(b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_n + x_n)} (-1)^{z \cdot b} \\
 & = - (-1)^{z \cdot 1^n} - (-1)^{z \cdot (1^n + x)} \hspace{2mm} + \sum\limits_{b \in \{0, 1\}^n \texttt{\textbackslash} \{1^n, 1^n + x \} } (-1)^{z \cdot b}  \\
 & = -2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot (1^n + x)} + \sum\limits_{b \in \{0, 1\}^n} (-1)^{z \cdot b}.
 \end{split}
@@ -1562,7 +1563,7 @@ When $z = 0^n$, this is simply $2^n - 4$. When $z \neq 0^n$, it is $-2(-1)^{z \c
 \end{equation*}
 and if $x \cdot z$ is even, then we have $-2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot 1^n} = -4(-1)^{z \cdot 1^n}$ instead, which simply becomes $4$ since the pauli spectrum requires we take the absolute value. We can now summarize:
 \begin{equation*}
-|\braket{\Lambda_n (Z)|X^xZ^z|\Lambda_n (Z)}| = \begin{cases}
+|\braket{C^n Z|X^xZ^z|C^n Z}| = \begin{cases}
 1 & \texttt{if } z = 0^n \texttt{ and } x = 0^n, \\
 1 - 2^{2-n} & \texttt{if } z = 0^n \texttt{ and } x \neq 0^n, \\
 0 & \texttt{if } z \neq 0^n \texttt{ and either } x = 0^n \texttt{ or } x \neq 0^n \texttt{ and } \\
@@ -1593,7 +1594,7 @@ For $n \geq 2$, the $C^n Z$ gate cannot be implemented with Clifford gates and m
 \end{proposition}
 
 \begin{proof}
-First note that proving that a bound holds for the state $\ket{\Lambda_n (Z)}$ implies that it holds for the gate $\Lambda_n (Z)$. Indeed, if we can perform a task with $k$ $T$ gates then we can also perform it with $k$ $\ket{T}$ states. Hence, any lower bound on the number of required states is a lower bound on the number of required gates. Now, $\nu (\ket{T}) = 1$ and $\nu (\ket{\Lambda_n (Z)}) = n+1$ by Corollary \ref{nu values}. Since $\nu$ is a monotone it is non-increasing under Clifford operations and measurements. This implies that at least $n+1$ $\ket{T}$ states are required to implement the $\ket{\Lambda_n (Z)}$ state and hence the $\Lambda_n (Z)$ gate. Similarly, since $\nu (\ket{CS}) = 2$ and $\nu (\ket{CCZ}) = 3$, we get that to implement the $C^n Z$ we need at least $(n+1)/2$ $\ket{CS}$ states or $(n+1)/3$ $\ket{CCZ}$ states.
+First note that proving that a bound holds for the state $\ket{C^n Z}$ implies that it holds for the gate $C^n Z$. Indeed, if we can perform a task with $k$ $T$ gates then we can also perform it with $k$ $\ket{T}$ states. Hence, any lower bound on the number of required states is a lower bound on the number of required gates. Now, $\nu (\ket{T}) = 1$ and $\nu (\ket{C^n Z}) = n+1$ by Corollary \ref{nu values}. Since $\nu$ is a monotone it is non-increasing under Clifford operations and measurements. This implies that at least $n+1$ $\ket{T}$ states are required to implement the $\ket{C^n Z}$ state and hence the $C^n Z$ gate. Similarly, since $\nu (\ket{CS}) = 2$ and $\nu (\ket{CCZ}) = 3$, we get that to implement the $C^n Z$ we need at least $(n+1)/2$ $\ket{CS}$ states or $(n+1)/3$ $\ket{CCZ}$ states.
 \end{proof}
 
 The above lower bound can be improved when measurements are restricted.
@@ -1621,7 +1622,7 @@ The next proposition provides reasoning as to why we do not need more than $n-1$
 
 \begin{proposition}
 \label{CCZ upperbound}
-Let $n \in \mathbb{Z}^{\geq 2}$. The $\Lambda_n (Z)$ gate can be implemented using $n-1$ $CCZ$ gates along with Clifford gates and measurements with probability $1/2$.
+Let $n \in \mathbb{Z}^{\geq 2}$. The $C^n Z$ gate can be implemented using $n-1$ $CCZ$ gates along with Clifford gates and measurements with probability $1/2$.
 \end{proposition}
 \begin{proof}
 In the proof, we use the $CCZ$ and the $CCX$ gates interchangeably because they are equivalent under a simple conjugation by a Hadamard gate)
@@ -1655,7 +1656,7 @@ Starting with the input state and tracking the state of this system step by step
 \pm \ket{c_1}\ket{c_2}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \mbox{if measurement is } \ket{1} \end{cases}$
 \item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{c_3} \cdots \ket{c_{n-1}}\ket{t \oplus (c_1 \cdots c_{n-1})}$
 \end{itemize}
-Hence, this circuit acts as the $C^nZ$ gate. Note that the uncomputation of the added toffoli gate follows from Figure 1 in \cite{Jones_2013}.
+Hence, this circuit acts as the $C^nZ$ gate. Note that the uncomputation of the added toffoli gate follows from the circuit in equation \ref{CCZcircuit}.
 \end{proof}
 
 
@@ -2113,7 +2114,7 @@ After giving the fundamental tools required to find lower bounds of certain reso
 
 Ideally for any circuit/gate, we would want the same lower bounds and upper bounds for the resource of interest, along with a circuit to represent such a bound. This would mean that we have the best circuit in terms of using the least amount of the expensive resources of interest. In fact, we did find this in the lower and upper bounds for the $C^nZ$ gate where the resource was the $CCZ$ gate, however this was the only case where this was discovered. Finally, introducing the Quantum Fourier Transform allows us to present lower bounds for the adder circuit, which is of interest as it performs basic arithmetic operations in quantum computations. Again, we get tighter lower bounds when using the dyadic monotone, but with the restriction of needing measurement probabilities to be $1/2$.
 
-An obvious extension of this work would be to consider other circuits of interest, but something else worth considering is another monotone. Since not all circuits/gates considered here had the same lower and upper bounds, perhaps another monotone could result in tighter lower bounds so that we would know what the optimal number of required resources is. Of course, this is no trivial task, but one possible way to achieve this is might be to make a slight modification to the definition of one of the monotones presented here. Other monotones that are already known could also be explored, for example there is a monotone called the stabilizer extent, introduced in \cite{beverland2019lower}. And finally, another noteworthy question is can we achieve the tighter lower bounds that the dyadic monotone gave us without the requirement of only using measurements with probability $1/2$.
+An obvious extension of this work would be to consider other circuits of interest, but something else worth considering is another monotone. Since not all circuits/gates considered here had the same lower and upper bounds, perhaps another monotone could result in tighter lower bounds so that we would know what the optimal number of required resources is. Of course, this is no trivial task, but one possible way to achieve this is might be to make a slight modification to the definition of one of the monotones presented here. An example of this can be seen in \cite{jiang2021lower}, where they defined the stabilizer nullity on Unitary's instead of states, calling it the unitary stabilizer nullity. Other monotones that are already known could also be explored, for example there is a monotone called the stabilizer extent, introduced in \cite{beverland2019lower}. Moreover, defining new monotones could be another way to discovering tighter lower bounds. Furthermore, discovering better upper bounds by realizing new circuits could also help to match lower and upper bounds. In fact, \cite{gidney2021cccz} has discovered a better way to implement a $CCCZ$ gate with less $T$ gates than presented here, though it does not yet match the lower bound. And finally, another noteworthy question is can we achieve the tighter lower bounds that the dyadic monotone gave us without the requirement of only using measurements with probability $1/2$.
 
 \bibliographystyle{plain}
 \bibliography{thesis}
