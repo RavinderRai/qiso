@@ -974,18 +974,68 @@ Remark: Let $q \in \mathbb{Q}$ be in reduced form as above. Then we have three d
 \end{itemize}
 \end{proposition}
 
-Now, we wish to extend $\bar{v}_2$ to the real subsets of $\mathcal{R}_d = \mathbb{Z}[\zeta_{2^{d+1}}, 1/2]$, where $\zeta_{2^{d+1}}$ is the $d+1$ primitive root of unity. To do this, first recall that the Galois group of a field extension is a set of automorphisms that fixes the bases field, and forms a group under the operation of function composition. We denote the Galois group of a field extension $F$ over its' base field $E$ by $Gal(F/E)$, and elements in this group are commonly denoted by $\sigma$. Now we need the field norm of a cyclotomic field, which is defined as $N_d: \mathbb{Q}(\zeta_{2^{d+1}}) \longrightarrow \mathbb{Q}$ for a positive integer $d$, where
+Now, we wish to extend $\bar{v}_2$ to the real subsets of $\mathcal{R}_d = \mathbb{Z}[\zeta_{2^{d+1}}, 1/2]$, where $\zeta_{2^{d+1}}$ is the $d+1$ primitive root of unity. To do this, first recall that the Galois group of a field extension is a set of automorphisms that fixes the bases field, and forms a group under the operation of function composition. We denote the Galois group of a field extension $F$ over its' base field $E$ by $Gal(F/E)$, and elements in this group are commonly denoted by $\sigma$. Note we are only concerned with field extensions over the field $\mathbb{Q}$, which are called algebraic number fields. Next we need the field norm for an algebraic number field $F$. This is denoted as $N: F \longrightarrow \mathbb{Q}$ where
 \begin{equation*}
-N_d (\alpha) = \prod\limits_{\sigma \in Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q})} \sigma (\alpha). 
+N (\alpha) = \prod\limits_{\sigma \in Gal(F)/\mathbb{Q})} \sigma (\alpha). 
 \end{equation*} 
 
-Note that for a field extension $F$ and base field $E$, there is an alternative definition of the Galois group that comes from a polynomial $f \in E[x]$. Here $f$ factors as a product of linear polynomials in $F[x]$, and more importantly, all automorphisms $\sigma \in Gal(F/E)$ are defined by mapping a root to other roots. The roots in such a polynomial are called conjugates. Now for a cyclotomic field, each $\sigma \in Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q})$ sends $\zeta_{2^{d+1}}$ to one of it's conjugates, so that we can define the $\sigma$'s in the following way: $\sigma_k (\zeta_{2^{d+1}}) = \zeta_{2^{d+1}}^k$. Note that $Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q}) \cong (\mathbb{Z}/n\mathbb{Z})^x$, and that elements in $Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q})$ are precisely the $\sigma_k$'s where $gcd(k, 2^{d+1}) = 1$. This means that $k$ takes only odd values, so that:
+In fact, for a field extension $F$ and base field $E$, there is an alternative definition of the Galois group that comes from a polynomial $f \in E[x]$, which is typically called the minimal polynomial. Here $f$ factors as a product of linear polynomials in $F[x]$, and more importantly, all automorphisms $\sigma \in Gal(F/E)$ are defined by mapping a root to other roots. The roots in such a polynomial are called conjugates. 
+
+Recall a cyclotomic field extension of $\mathbb{Q}$ is the field $\mathbb{Q}$ adjoined with a primitive root of unity, which we denote as $\zeta_q$. Note in this paper we are only concerned with $\zeta_q$ when $q = 2^{d+1}$. Now, for a cyclotomic field the minimal polynomial is 
+\begin{equation}
+\label{cycpoly}
+\Phi_{2^{d+1}} = \prod\limits_{\substack{k = 0 \\ \gcd (k, 2^{d+1}) = 1}}^{2^{d+1}} (x-\zeta_{2^{d+1}}^k).
+\end{equation}
+Each $\sigma \in Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q})$ sends $\zeta_{2^{d+1}}$ to one of it's conjugates, and by Equation \ref{cycpoly} above these are just $\zeta_{2^{d+1}}^k$'s where $\gcd (k, 2^{d+1})$. This means that the $\sigma$'s are defined in the following way: $\sigma_k (\zeta_{2^{d+1}}) = \zeta_{2^{d+1}}^k$. The next few propositions provide some basic properties of $\sigma_k$.
+
+\begin{proposition}
+For all $x \in \mathbb{Q}[\zeta_{2^{d+1}}]$, $\sigma_j(\sigma_k (x)) = \sigma_{k\cdot j}(x)$.
+\end{proposition}
+\begin{proof}
+This follows immediately from the fact the definition of $\sigma_k$ and it simply raising $\zeta_{2^{d+1}}$ to the power of $k$.
+\end{proof}
+
+\begin{proposition}
+\label{sigmaperiod}
+For all $x \in \mathbb{Q}[\zeta_{2^{d+1}}]$ and all odd $k$, $\sigma_{k+2^{d+1}}(x) = \sigma_{k \mod 2^{d+1}}(x) = \sigma_k (x)$.
+\end{proposition}
+\begin{proof}
+This follows from the periodicity of $\zeta_{2^{d+1}}$.
+\end{proof}
+
+\begin{proposition}
+\label{sigmaration}
+$x \in \mathbb{Q}[\zeta_{2^{d+1}}]$ is rational if and only if for all odd $k$ $\sigma_k(x) = x$.
+\end{proposition}
+\begin{proof}
+We prove the backwards direction as the forward direction follows immediately from the definition of $\sigma_k$. Consider $x = \sum\limits_{j=0}^{2^d-1} a_j \zeta_{2^{d+1}}^j \in \mathbb{Q}[\zeta_{2^{d+1}}]$ and suppose that $\sigma_{2^d+1} (x) = x$. Observe that for all odd $j$, $\sigma_{2^d+1} (\zeta_{2^{d+1}}) = -\zeta_{2^{d+1}}$. Applying this to each term in the summand of $x$ we get that $a_j = - a_j$ which implies $a_j = 0$. Then every non-zero term left in the summand of $x$ has an even $j$, thus having a factor of $2$ which implies that $x \in \mathbb{Q}[\zeta_{2^{d}}]$. Thus repeatedly applying this argument gives us that $x \in \mathbb{Q}$.
+\end{proof}
+
+\begin{proposition}
+For all $x$ and $y \in \mathbb{Q}[\zeta_{2^{d+1}}]$, $\sigma_k (x\cdot y) = \sigma_k(x) \cdot \sigma_k (y)$ and $\sigma_k (x + y) = \sigma_k(x) + \sigma_k (y)$.
+\end{proposition}
+\begin{proof}
+Additivity comes directly from the definition of $\sigma_k$, so we focus on multiplicativity. First note that for rational $a$ and $x \in \mathbb{Q}[\zeta_{2^{d+1}}]$, $\sigma_k(a) = a$ comes from Proposition \ref{sigmaration} and $\sigma_k(a\cdot x) = a\cdot \sigma_k(x)$  follows easily from the definition. Now to show that $\sigma_k (x\cdot y) = \sigma_k (x) \cdot \sigma_k (y)$ for $x = \sum\limits_{j=0}^{2^d-1} a_j \zeta_{2^{d+1}}^j$ and $y = \sum\limits_{j=0}^{2^d-1} a_j \zeta_{2^{d+1}}^{j'}$, it is sufficient to show that $\sigma_k(a\zeta_{2^{d+1}}^{j} \cdot b\zeta_{2^{d+1}}^{j'})$ is multiplicative and then the result follows from additivity. Thus multiplicativity can be realized by the following:
+\begin{equation}
+\begin{split}
+\sigma_k(a\zeta_{2^{d+1}}^{j} \cdot b\zeta_{2^{d+1}}^{j'}) & = \sigma_k(ab\zeta_{2^{d+1}}^{j+j'}) \\
+& = ab (\zeta_{2^{d+1}}^{j+j'})^k \\
+& = ab \zeta_{2^{d+1}}^{kj+kj'} \\
+& = a \zeta_{2^{d+1}}^{kj} \cdot b\zeta_{2^{d+1}}^{kj'} \\
+& = \sigma_k(a\zeta_{2^{d+1}}^{j}) \cdot \sigma_k( b\zeta_{2^{d+1}}^{j'})
+\end{split}
+\end{equation}
+\end{proof}
+
+
+
+Note also that from the Fundamental Theorem of Galois one can obtain the isomorphism $Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q}) \cong (\mathbb{Z}/n\mathbb{Z})^x$, which means that elements in $Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q})$ are precisely the $\sigma_k$'s where $gcd(k, 2^{d+1}) = 1$. Thus $k$ takes only odd values, so that:
 
 \begin{equation}
 N_d(\alpha) = \prod_{k-odd} \sigma_k (\alpha) = \prod_{k=0}^{2^d - 1} \sigma_{2k+1} (\alpha)
 \end{equation}
 
-Remark if $d \leq d'$ then $\mathbb{Q}(e^{i\cdot \pi / 2^d}) \subseteq \mathbb{Q}(e^{i\cdot \pi / 2^{d'}})$. Note the following few propositions about $N_d$.
+Remark if $d \leq d'$ then $\mathbb{Q}(e^{i\cdot \pi / 2^d}) \subseteq \mathbb{Q}(e^{i\cdot \pi / 2^{d'}})$. Note the following propositions about $N_d$.
 
 \begin{proposition}
 $N_0$ is trivial, meaning $N_0(x) = x$.
@@ -999,6 +1049,23 @@ Let $d$ be a positive integer. Then $N_d$ is multiplicative.
 \end{proposition}
 \begin{proof}
 This follows from $\sigma_k$ being multiplicative.
+\end{proof}
+
+\begin{proposition}
+\label{N_dRation}
+The value of $N_d$ is always rational.
+\end{proposition}
+\begin{proof}
+Observe the following:
+\begin{equation*}
+\begin{split}
+\sigma_j (N_d(x)) & = \prod\limits_{k \in \{1, 3, \dots , 2^d-1\}} \sigma_j (\sigma_k (x)) \\
+& = \prod\limits_{k \in \{1, 3, \dots , 2^d-1\}} \sigma_{j\cdot k \mod 2^{d+1}} (x) \\
+& = \prod\limits_{k \in \{1, 3, \dots , 2^d-1\}} \sigma_{j\cdot k} (x) \\
+& = N_d(x).
+\end{split}
+\end{equation*}
+The final equality comes from the fact that despite the different index variables we are computing the product for the same odd valued indices. Thus by Proposition \ref{sigmaration} $N_d(x)$ is rational.
 \end{proof}
 
 \begin{proposition}
@@ -1054,19 +1121,86 @@ v_2 (x \cdot x') & = \frac{\bar{v}_2 (N_d (x \cdot x'))}{2^d} \\
 \end{equation*}
 \end{proof}
 
+The following propositions are required building blocks to be able to prove another important property of $v_2$ in Proposition \ref{v_2min}.
+
+\begin{proposition}
+\label{N_d=2}
+$N_d(1- \zeta_{2^d+1}) = 2$
+\end{proposition}
+\begin{proof}
+We proceed by induction on $d$. For $d=0$ we have $N_0(x) = \sigma_1(x) = x$, so it is trivial, and thus $N_0(1-\zeta_{2^{0+1}}) = 1- \zeta_{2} = 1 - (-1) = 2$. Now suppose the statement is true for $d$, that is $N_d (1- \zeta_{2^{d+1}}) = 2$. Recall that $\sigma_k (\zeta_{2^{d+1}}) = \zeta_{2^{d+1}}^k$ so that $\sigma_{2j+1}(1-\zeta_{2^{d+1}}) = (1-\zeta_{2^{d+1}}^{2j+1})$. Also observe that $\zeta_{2^{d+1}}^{2^d} = -1$ and $\zeta_{2^{d+1}}^{2} = \zeta_{2^d}$. Now by making the appropriate pairings we finish by showing that $N_{d+1}((1-\zeta_{2^{d+2}}) = N_{d}(1-\zeta_{2^{d+1}})$ in the following way:
+\begin{equation*}
+\begin{split}
+N_{d+1}(1-\zeta_{2^{d+1}}) & = \prod_{j=0}^{2^{d+1}+1} (1-\zeta_{2^{d+2}}^{2j+1}) \\
+& = \prod_{j=0}^{2^{d}-1} (1-\zeta_{2^{d+2}}^{2j+1})(1-\zeta_{2^{d+2}}^{2j+1 +2^{d}}) \\
+& = \prod_{j=0}^{2^{d}-1} (1-\zeta_{2^{d+2}}^{2j+1} - \zeta_{2^{d+2}}^{2j+1 + 2^{d+1}} + \zeta_{2^{d+2}}^{4j+2+2^{d+1}}) \\
+& = \prod_{j=0}^{2^{d}-1} \big( 1-\zeta_{2^{d+1}}^{2j+1} - (\zeta_{2^{d+2}}^{2j+1} - \zeta_{2^{d+2}}^{2j+1}) \big) \\
+& = \prod_{j=0}^{2^{d}-1} (1-\zeta_{2^{d+1}}^{2j+1}) \\
+& = N_d(1-\zeta_{2^{d+1}}). 
+\end{split}
+\end{equation*}
+\end{proof}
+
+\begin{proposition}
+\label{N_dint}
+Let $x \in \mathbb{Z}[\zeta_{2^{d+1}}]$, then $N_d(x)$ is an integer. If $x'$ is an element of $\mathcal{R}_d$ then $N_d(x') = a/2^K$ for integers $a$ and $K$.
+\end{proposition}
+\begin{proof}
+The first statement of this proposition can be realized by applying the same arguments in Propositions \ref{sigmaration} and \ref{N_dRation} but for $x \in \mathbb{Z}[\zeta_{2^{d+1}}]$ instead.
+
+Now for $x' \in \mathcal{R}_d$, write it as $x' = x/2^k$ for some $x \in \mathbb{Z}[\zeta_{2^{d+1}}]$ and some integer $k$. Since $N_d(x)$ is multiplicative and $N_d(1/2^k) = (1/2^k)^{2^d}$, we have that $N_d(x') = N_d(x)/2^K$ for $K = 2^d\cdot k$. Since $N_d(x)$ is an integer, we can write $N_d(x') = a/2^K$ for some integer $a$.
+\end{proof}
+
+To complete the proof of the next proposition, recall the geometric formula:
+\begin{equation}
+\label{geoform}
+\frac{1-x^{n}}{1-x} = \sum\limits_{k=0}^{n-1} x^k.
+\end{equation}
+
+\begin{proposition}
+\label{unit}
+$u_j = \big( 1 - \zeta_{2^{d+1}}^{2j - 1} \big)/ \big( 1 - \zeta_{2^{d+1}} \big)$ is a unit in $\mathbb{Z}[\zeta_{2^{d+1}}]$. 
+\end{proposition}
+\begin{proof}
+Recall that if $u_j$ is a unit then both $u_j$ and $u_j^{-1}$ are in $\mathbb{Z}[\zeta_{2^{d+1}}]$. Note that $1-x^{2j+1}$ is divisible by $(1-x)$, so the geometric formula in Equation \ref{geoform} then gives us that:
+\begin{equation*}
+\frac{1-x^{2j-1}}{1-x} = \sum\limits_{k=0}^{2j-2} x^k.
+\end{equation*}
+Substituting $x$ with $\zeta_{2^{d+1}}$ gives us that $u_j = \sum\limits_{k=0}^{2j-2} \zeta_{2^{d+1}}^k$, and thus $u_j \in \mathbb{Z}[\zeta_{2^{d+1}}]$. To show that $u_j^{-1} \in \mathbb{Z}[\zeta_{2^{d+1}}]$, observe that $(2j-1)$ and $2^{d+1}$ are coprime, so by the extended Euclidean algorithm there exists a $j'$ such that $j'(2j-1) = 1 \mod 2^{d+1}$. Using the geometric formula again, but for $j'$ instead, we have:
+\begin{equation*}
+\frac{1-x^{j'}}{1-x} = \sum\limits_{k=0}^{j'-1} x^k.
+\end{equation*}
+This time by substituting $x$ with $\zeta_{2^{d+1}}^{2j-1}$ we get $\big( 1 - \zeta_{2^{d+1}}^{(2j - 1)j'} \big)/ \big( 1 - \zeta_{2^{d+1}}^{2j-1} \big) \in \mathbb{Z}[\zeta_{2^{d+1}}]$. Indeed, by direct calculation we have that $u_j \cdot \big( 1 - \zeta_{2^{d+1}}^{(2j - 1)j'} \big)/ \big( 1 - \zeta_{2^{d+1}}^{2j-1} \big) = 1$ so that $u_j^{-1} = \big( 1 - \zeta_{2^{d+1}}^{(2j - 1)j'} \big)/ \big( 1 - \zeta_{2^{d+1}}^{2j-1} \big)$.
+\end{proof}
+
+\begin{proposition}
+\label{alphaprime}
+$\alpha_d = 1 - \zeta_{2^{d+1}}$ is a prime element of $\mathbb{Z}[\zeta_{2^{d+1}}]$.
+\end{proposition}
+\begin{proof}
+Recall from number theory that elements of the ring of integers of a number field with a prime norm is a prime element of that ring of integers. In this case the number field is $\mathbb{Q}[\zeta_{2^{d+1}}]$ with ring of integers $\mathbb{Z}[\zeta_{2^{d+1}}]$. Since $N_d(\alpha_d) = 2$ which is a prime number, we get that $\alpha_d$ is a prime element.
+\end{proof}
+
+
 \begin{proposition}
 \label{propA.22}
 Let $x'$ be an element of $\mathbb{Z}[\zeta_{2^{d+1}}]$. Then $v_2(x') \geq 0$ and for $k=2^d v_2(x)$, $x'$ can be written as $x''(1-\zeta_{2^{d+1}})^k$ for $x''$ in $\mathbb{Z}[\zeta_{2^{d+1}}]$ such that $v_2(x'') = 0$.
 \end{proposition}
+\begin{proof}
+Denote $1-\zeta_{2^{d+1}}$ as $\alpha_d$ and choose $k$ to be the biggest power of $\alpha_d$ that divides $x'$. Then we can write $x' = \alpha_d^k x''$ such that $x''$ is from $\mathbb{Z}[\zeta_{2^{d+1}}]$ and $\alpha_d$ does not divide $x''$. If $2$ does not divide $N_d(x'')$ then this will imply that $v_2(x'') = 0$ and $v_2(x') = kv_2(\alpha_d) = k/2^d$.
+
+We proceed by finding a contradiction. By Proposition \ref{N_dint}, we know that $N_d(x'')$ is an integer for any $x''$ from $\mathbb{Z}[\zeta_{2^{d+1}}]$. Suppose now that $2$ divides $N_d(x'')$. Then by Proposition \ref{N_d=2} this implies that $\alpha_d$ divides $N_d(x'')$. Because $\alpha_d$ is prime by Proposition \ref{alphaprime}, $\alpha_d$ must divide $\sigma_{2k+1}(x'')$ for some $k$. Note there exists $j$ such that $(2j+1)(2k+1) \mod 2^{d+1} \equiv 1$ and $\sigma_{2j+1}(\sigma_{2k+1}(x')) = x'$. Then, applying $\sigma_{2j+1}$ to $\alpha_d$ and $\sigma_{2k+1}(x'')$ we get that $\sigma_{2j+1}(\alpha_d)$ divides $x''$. However, by Proposition \ref{unit} $\alpha_d$ divides $\sigma_{2j+1}(\alpha_d) = 1 - \zeta_{2^{d+1}}^{2j+1}$ and therefore it divides $x''$ which is a contradiction.
+\end{proof}
 
 \begin{proposition}
-For arbitrary rational numbers $x, y$ the following inequality holds
+\label{v_2min}
+For $x$ and $y \in \mathbb{Q}[\zeta_{2^{d+1}}]$ the following inequality holds
 \begin{center}
 $v_2 (x + y) \geq min(v_2 (x), v_2(y))$.
 \end{center} 
 \end{proposition}
 \begin{proof}
-Note that for $x$ and $y \in \mathbb{Q}(exp(i\pi / 2^d))$ there always exists an integer $C$ such that $x' = Cx$ and $y' = Cy$ are both in $\mathbb{Z}(exp(i\pi / 2^d))$. Then 
+Note that for $x$ and $y \in \mathbb{Q}[\zeta_{2^{d+1}}]$ there always exists an integer $C$ such that $x' = Cx$ and $y' = Cy$ are both in $\mathbb{Z}[exp(i\pi / 2^d)]$. Then 
 \begin{equation*}
 v_2(x+y) = v_2((1/C)(x' + y')) = v_2(x' + y') + v_2(1/C).
 \end{equation*}
@@ -1159,19 +1293,57 @@ $v_2 (\bra{\phi} \otimes \bra{\psi} (P \otimes Q) \ket{\phi} \otimes \ket{\psi})
 \end{center}
 \end{proof}
 
-Another important property is that the dyadic monotone is minimal for stabilizer states:
+Another important property is that the dyadic monotone is minimal for stabilizer states, of which we will need the following proposition to show.
+
 \begin{proposition}
-Let $\ket{\psi}$ be a state in $\mathbb{Z}[i, 1/2]$, then $\mu_2 \ket{\psi} \geq 0$ with equality achieved if and only if $\ket{\psi}$ is a stabilizer state.
+\label{sigmak}
+Let $x$ be an element of $\mathcal{R}_d$ such that for all odd $k$, $|\sigma_k (x)| \leq 1$. Then $v_2(x) \leq 0$ and the equality is achieved if and only if $x = \pm 1$.
 \end{proposition}
 \begin{proof}
-Consider a non-zero Pauli expectation $\braket{\psi |P| \psi}$ and write it as $a/2^k$ for some odd integer $a$. Note that $k$ must be non-negative because $|\braket{\psi |P| \psi}| \leq 1$. This shows that $\mu_2 (\ket{\psi}) \geq 0$. For stabilizer states, the only non-zero expectations can be $\pm 1$ and therefore $\mu_2$ is zero. It remains to show that $\mu_2 (\ket{\psi}) = 0$ implies that $\ket{\psi}$ is a stabilizer state. First note that $\mu_2 (\ket{\psi}) = 0$ implies that all non-zero Pauli expectations are odd integers. Together with the condition $|\braket{\psi |P| \psi}| \leq 1$ this implies that the expectations can only be $\pm 1$, in other words either $P$ or $-P$ is in Stab$\ket{\psi}$. Suppose that $\ket{\psi}$ is an $n$-qubit state and let us compute the size of Stab$\ket{\psi}$. Note that the set $\{ I, X, Y, Z \}^{\otimes n}$ is an orthogonal basis of the space of matrices with respect to the inner product $\langle A, B \rangle = \texttt{Tr} AB^{\dag}$. The norm squared of the density matrix $\ket{\psi} \bra{\psi}$ is given be the following expression:
-\begin{center}
-$1 = \braket{\psi | \psi}^2 = \frac{1}{2^n} \sum\limits_{P \in \{ I, X, Y, Z \}^{\otimes n}} |\texttt{Tr}(\ket{\psi}\bra{\psi}P)|^2$
-\end{center}
-which implies that the size of Stab$\ket{\psi}$ is $2^n$ and therefore that $\ket{\psi}$ is a stabilizer state.
+The condition that $|\sigma_k (x)| \leq 1$ for all odd $k$ implies that $N_d(x) \leq 1$. Because $x \in \mathcal{R}_d$ we can write it as $z/2^k$ for $z \in \mathbb{Z}[\zeta_{2^{d+1}}]$, and since $N_d$ is rational, $N_d(z) = n$ must be an integer so that $N_d(x) = n/2^k$. Thus $|N_d(x)| \leq 1$ which implies that $\bar{v}_2 (n/2^k)$ is non-positive so that $v_2(x)$ is also. Now, since $n$ is an integer, $v_2(x) = 0$ if and only if $N_d(x) = n/2^k = \pm 1$. Because $|\sigma_k (x)| \leq 1$ for all $k$, $N_d(x) = \pm 1$ only when $\sigma_k (x) = x = 1$.
 \end{proof}
 
-We will now need the fact that Pauli measurements with probability half take states with entries in $\mathbb{Z}[i, 1/2]$ to states with entries in $\mathbb{Z}[i, 1/2]$ (allowing the dyadic monotone to be evaluated). To see this, recall that measuring a $\pm 1$ eigenvalue of a Pauli observable $P$ with probability $1/2$ is equivalent to multiplying the state by the matrix $(I \pm P)/\sqrt{2}$ which is equal to $(1 + i)(I \pm P)/2$ up to a global phase. The matrix $(1 + i)(I \pm P)/2$ has entries in the ring $\mathbb{Z}[i, 1/2]$ and therefore the resulting state will also have entries in $\mathbb{Z}[i, 1/2]$. The next goal is to show that $\mu_2$ in non-increasing under these measurements, using Proposition \ref{prop6.4}.
+\begin{proposition}
+Let $\ket{\psi}$ be a state in $\mathcal{R}_d$, then $\mu_2\ket{\psi} \geq 0$ with equality achieved if and only if $\ket{\psi}$ is a stabilizer state. 
+\end{proposition}
+\begin{proof}
+Consider a Pauli $P$ expectation $\alpha = \braket{\psi |P| \psi}$. Because $P$ has eigenvalues $\pm 1$, $|\braket{\psi |P| \psi}| \leq 1$. For odd $k$ consider $\sigma_k(\alpha)$ and recall that $\sigma_k$ respects addition, multiplication, and conjugation. Thus we can write $\alpha_k$ as the expectation $\braket{\psi_k |P_k| \psi_k}$ where $\ket{\psi_k}$ and $P_k$ are obtained by applying $\sigma_k$ to $\ket{\psi}$ and $P$ element-wise. It follows that $\alpha_k = \braket{\psi_k |P_k| \psi_k} = \sigma_k (\braket{\psi |P| \psi}) = \sigma_k (\alpha)$ and so $|\alpha_k| \leq 1$ since $\sigma_k$ takes rational numbers to rational numbers. Then by Proposition \ref{sigmak}, $v_2(\alpha) \leq 0$ which implies that $\mu_2$ is always non-negative. 
+
+Also, equality is achieved if and only if $\alpha = \pm 1$,  meaning if and only if all non-zero Pauli expectations of $\ket{\psi}$ are $\pm 1$. Since $|\braket{\psi |P| \psi}| \leq 1$, we must have that either $P$ or $-P$ is in $\Stab\ket{\psi}$. Note that the set $\{ I, X, Y, Z \}^{\otimes n}$, denoted by $T(n)$, is an orthogonal basis of the space of matrices with respect to the inner product $\langle A, B \rangle = \texttt{Tr} AB^{\dag}$. This means that we can write $\ket{\psi} \bra{\psi}$ as a linear combination of the basis elements, that is as $\sum\limits_{P\in T(n)} \alpha_PP $. It follows that $\texttt{Tr}(\ket{\psi}\bra{\psi}P) = \sum\limits_{Q\in T(n)} \alpha_Q \texttt{Tr}(QP) = \alpha_P \cdot 2^n$ since the trace of a Pauli is zero aside from $I$, in which case it is $2^n$. Noting also that $1 = \braket{\psi |\psi} = \texttt{Tr}(\ket{\psi}\bra{\psi})$, observe the following:
+\begin{equation}
+\begin{split}
+\texttt{Tr}(\ket{\psi}\bra{\psi}) & = \texttt{Tr}(\ket{\psi}\bra{\psi}\ket{\psi}\bra{\psi}) \\
+& = \texttt{Tr} \Big( \sum\limits_{P\in T(n)} \alpha_PP \big( \sum\limits_{Q\in T(n)} \alpha_QQ \big) \Big) \\
+& =  \Big( \sum\limits_{P\in T(n)} \alpha_P \big( \sum\limits_{Q\in T(n)} \alpha_Q \texttt{Tr}(PQ) \big) \Big) \\
+& = \sum\limits_{P\in T(n)} \alpha_P \big( \alpha_P \cdot 2^n \big) \\
+& = \sum\limits_{P\in T(n)} (\alpha_P \cdot 2^n)^2/2^n \\
+& = \frac{1}{2^n} \sum\limits_{P\in T(n)} \big( \texttt{Tr}(\ket{\psi}\bra{\psi}P) \big)^2
+\end{split}
+\end{equation}
+Since $P$ is either $0$ or $\pm 1$ we can write $|\Stab\ket{\psi}| = \sum\limits_{P\in T(n)} \braket|{\psi |P|\psi}|^2$. Also, since the trace is cyclic, $\texttt{Tr}(\ket{\psi}\bra{\psi}P) = \texttt{Tr}(\braket{\psi | P | \psi}) = \braket{\psi | P | \psi}$. Putting this together we arrive with $1 = \frac{1}{2^n} |\Stab\ket{\psi}|$, which means that the size of Stab$\ket{\psi}$ is $2^n$ and therefore $\ket{\psi}$ is a stabilizer state.
+
+\end{proof}
+
+
+%\begin{proposition}
+%Let $\ket{\psi}$ be a state in $\mathbb{Z}[i, 1/2]$, then $\mu_2 \ket{\psi} \geq 0$ with equality achieved if and only if $\ket{\psi}$ is a stabilizer state.
+%\end{proposition}
+%\begin{proof}
+%Consider a non-zero Pauli expectation $\braket{\psi |P| \psi}$ and write it as $a/2^k$ for some odd integer $a$. Note that $k$ must be non-negative because $|\braket{\psi |P| \psi}| \leq 1$. This shows that $\mu_2 (\ket{\psi}) \geq 0$. For stabilizer states, the only non-zero expectations can be $\pm 1$ and therefore $\mu_2$ is zero. It remains to show that $\mu_2 (\ket{\psi}) = 0$ implies that $\ket{\psi}$ is a stabilizer state. First note that $\mu_2 (\ket{\psi}) = 0$ implies that all non-zero Pauli expectations are odd integers. Together with the condition $|\braket{\psi |P| \psi}| \leq 1$ this implies that the expectations can only be $\pm 1$, in other words either $P$ or $-P$ is in Stab$\ket{\psi}$. Suppose that $\ket{\psi}$ is an $n$-qubit state and let us compute the size of Stab$\ket{\psi}$. Note that the set $\{ I, X, Y, Z \}^{\otimes n}$, denoted by $T(n)$, is an orthogonal basis of the space of matrices with respect to the inner product $\langle A, B \rangle = \texttt{Tr} AB^{\dag}$. This means that we can write $\ket{\psi} \bra{\psi}$ as a linear combination of the basis elements, that is as $\sum\limits_{P\in T(n)} \alpha_PP $. It follows that $\texttt{Tr}(\ket{\psi}\bra{\psi}P) = \sum\limits_{Q\in T(n)} \alpha_Q \texttt{Tr}(QP) = \alpha_P \cdot 2^n$ since the trace of a Pauli is zero aside from $I$, in which case it is $2^n$. Noting also that $1 = \braket{\psi |\psi} = \texttt{Tr}(\ket{\psi}\bra{\psi})$, observe the following:
+%\begin{equation}
+%\begin{split}
+%\texttt{Tr}(\ket{\psi}\bra{\psi}) & = \texttt{Tr}(\ket{\psi}\bra{\psi}\ket{\psi}\bra{\psi}) \\
+%& = \texttt{Tr} \Big( \sum\limits_{P\in T(n)} \alpha_PP \big( \sum\limits_{Q\in T(n)} \alpha_QQ \big) \Big) \\
+%& =  \Big( \sum\limits_{P\in T(n)} \alpha_P \big( \sum\limits_{Q\in T(n)} \alpha_Q \texttt{Tr}(PQ) \big) \Big) \\
+%& = \sum\limits_{P\in T(n)} \alpha_P \big( \alpha_P \cdot 2^n \big) \\
+%& = \sum\limits_{P\in T(n)} (\alpha_P \cdot 2^n)^2/2^n \\
+%& = \frac{1}{2^n} \sum\limits_{P\in T(n)} \big( \texttt{Tr}(\ket{\psi}\bra{\psi}P) \big)^2
+%\end{split}
+%\end{equation}
+%Since $P$ is either $0$ or $\pm 1$ we can write $|\Stab\ket{\psi}| = \sum\limits_{P\in T(n)} \braket{\psi |P|\psi}^2$. Also, since the trace is cyclic, $\texttt{Tr}(\ket{\psi}\bra{\psi}P) = \texttt{Tr}(\braket{\psi | P | \psi}) = \braket{\psi | P | \psi}$. Putting this together we arrive with $1 = \frac{1}{2^n} |\Stab\ket{\psi}|$, which means that the size of Stab$\ket{\psi}$ is $2^n$ and therefore that $\ket{\psi}$ is a stabilizer state.
+%\end{proof}
+
+%We will now need the fact that Pauli measurements with probability half take states with entries in $\mathbb{Z}[i, 1/2]$ to states with entries in $\mathbb{Z}[i, 1/2]$ (allowing the dyadic monotone to be evaluated). To see this, recall that measuring a $\pm 1$ eigenvalue of a Pauli observable $P$ with probability $1/2$ is equivalent to multiplying the state by the matrix $(I \pm P)/\sqrt{2}$ which is equal to $(1 + i)(I \pm P)/2$ up to a global phase. The matrix $(1 + i)(I \pm P)/2$ has entries in the ring $\mathbb{Z}[i, 1/2]$ and therefore the resulting state will also have entries in $\mathbb{Z}[i, 1/2]$. The next goal is to show that $\mu_2$ in non-increasing under these measurements, using Proposition \ref{prop6.4}.
 
 
 \begin{proposition}
@@ -1183,7 +1355,7 @@ Let us bound the value of $v_2$ for some Pauli operator $Q$ evaluated on the exp
 \begin{center}
 $\braket{\psi_+ | Q |\psi_+} = \braket{\psi | (I + P)Q(I + P) | \psi}/2$.
 \end{center}
-If $P$ and $Q$ anti-commute, the expectation is zero and does not contribute to the calculation of $\mu_2$. When $P$ and $Q$ commute, the expectation is equal to $\braket{\psi | Q | \psi} + \braket{\psi |PQ |\psi}$. Next we use the inequality from Proposition \ref{prop6.4} to see that:
+If $P$ and $Q$ anti-commute, the expectation is zero and does not contribute to the calculation of $\mu_2$. When $P$ and $Q$ commute, the expectation is equal to $\braket{\psi | Q | \psi} + \braket{\psi |PQ |\psi}$. Next we use the inequality from Proposition \ref{v_2min} to see that:
 \begin{center}
 $v_2(\braket{\psi |Q| \psi} + \braket{\psi |PQ| \psi}) \geq \texttt{min}(\braket{\psi |Q|\psi}, \braket{\psi |PQ|\psi}) \geq -\mu_2\ket{\psi}$.
 \end{center}
@@ -1483,7 +1655,7 @@ Starting with the input state and tracking the state of this system step by step
 \pm \ket{c_1}\ket{c_2}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \mbox{if measurement is } \ket{1} \end{cases}$
 \item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{c_3} \cdots \ket{c_{n-1}}\ket{t \oplus (c_1 \cdots c_{n-1})}$
 \end{itemize}
-Hence, this circuit acts as the $C^nZ$ gate. Note that the uncomputation of the added toffoli gate follows from \ref{one bit adder b}.
+Hence, this circuit acts as the $C^nZ$ gate. Note that the uncomputation of the added toffoli gate follows from Figure 1 in \cite{Jones_2013}.
 \end{proof}
 
 
@@ -1609,7 +1781,7 @@ A \big(\ket{QFT_n^a} \ket{QFT_n^b} \big) & = \frac{1}{2^n} \sum\limits_{y=0}^{2^
 \end{split}
 \end{equation}
 
-Setting $a=0$ gives $A(\ket{+}^{\otimes n} \ket{QFT_n^b}) = \ket{QFT_n^{-b}}\ket{QFT_n^b}$, as desired. Finally, to calculate $\nu \ket{QFT_n^{-b}}$, we use the sum of the stabilizer nullity for each state in the tensor product. From the tensor product variant of the definition of the $\ket{QFT_n^b}$ in equation \ref{QFTdef} the first two terms will have $\nu = 0$, since they will be computational basis states. The rest of the terms all have a relative phase ($\neq i$), and for a single qubit it is easy to verify that this results in a trivial stabilizer, thus giving $\nu = 1$. Since the stabilizer nullity is additive, we have that $\nu(\ket{QFT_n^{-1}}) = n-2$. Then considering the following possible implications: $r\ket{T} \Longrightarrow \ket{QFT_n^{-1}}$, $r\ket{CS} \Longrightarrow \ket{QFT_n^{-1}}$, and $r\ket{CCZ} \Longrightarrow \ket{QFT_n^{-1}}$, and the respective stabilizer nullity values: $\nu (\ket{T}) = 1$, $\nu (\ket{CS}) = 2$ and $\nu (\ket{CCZ}) = 3$, we get the final results above using methods from section \ref{ConvBounds}.
+Setting $a=0$ gives $A(\ket{+}^{\otimes n} \ket{QFT_n^b}) = \ket{QFT_n^{-b}}\ket{QFT_n^b}$, as desired. Finally, to calculate $\nu \ket{QFT_n^{-b}}$, we use the sum of the stabilizer nullity for each state in the tensor product. From the tensor product variant of the definition of the $\ket{QFT_n^b}$ in equation \ref{QFTdef} the first two terms will have $\nu = 0$, since they will be computational basis states. The rest of the terms all have a relative phase ($\neq i$), and for a single qubit it is easy to verify that this results in a trivial stabilizer, thus giving $\nu = 1$. Since the stabilizer nullity is additive, we have that $\nu(\ket{QFT_n^{-1}}) = n-2$. Then considering the following possible implications: $r\ket{T} \Longrightarrow \ket{QFT_n^{-1}}$, $r\ket{CS} \Longrightarrow \ket{QFT_n^{-1}}$, and $r\ket{CCZ} \Longrightarrow \ket{QFT_n^{-1}}$, and the respective stabilizer nullity values: $\nu (\ket{T}) = 1$, $\nu (\ket{CS}) = 2$ and $\nu (\ket{CCZ}) = 3$, where the implications mean that we can apply a Clifford circuit to the resource state to get the inverse quantum Fourier state, we get the final results above using the fact that the stabilizer nullity is non-increasing under Clifford operations.
 \end{proof}
 
 Note the calculation of $\nu(\ket{QFT_n^{-1}}) = \nu(\ket{QFT_n^{1}}) = n-2$ above also implies that the Quantum Fourier Transform on $n$ qubits can not be performed using fewer than $n-2$ copies of $\ket{T}$.
@@ -1937,10 +2109,11 @@ Recall that by applying a circuit for modular adder $\ket{+}^{\otimes n} \otimes
 %\end{enumerate}
 
 \chapter{Conclusion}
-\cite{Aaronson_2004}
-\cite{beverland2019lower}
+After giving the fundamental tools required to find lower bounds of certain resources, we have explicitly demonstrated some how to find these bounds for certain gates of interest. This required the use of monotonic functions, namely the stabilizer nullity and the dyadic monotone.  The difference between these two is apparent in the final lower bounds given, where the stabilizer nullity gives less tight lower bounds than the dyadic monotone, but also has less restrictions in not needing measurement probabilities to be $1/2$. Applying these monotones gave us lower bounds for certain resources required to apply the multiply-controlled $Z$ gate. These resources were the $T$, $CS$, and $CCZ$ gates, which are of interest as these are commonly used non-Clifford gates. Moreover, upper bounds were also given to compare and contrast these lower bounds. 
 
-Did it!
+Ideally for any circuit/gate, we would want the same lower bounds and upper bounds for the resource of interest, along with a circuit to represent such a bound. This would mean that we have the best circuit in terms of using the least amount of the expensive resources of interest. In fact, we did find this in the lower and upper bounds for the $C^nZ$ gate where the resource was the $CCZ$ gate, however this was the only case where this was discovered. Finally, introducing the Quantum Fourier Transform allows us to present lower bounds for the adder circuit, which is of interest as it performs basic arithmetic operations in quantum computations. Again, we get tighter lower bounds when using the dyadic monotone, but with the restriction of needing measurement probabilities to be $1/2$.
+
+An obvious extension of this work would be to consider other circuits of interest, but something else worth considering is another monotone. Since not all circuits/gates considered here had the same lower and upper bounds, perhaps another monotone could result in tighter lower bounds so that we would know what the optimal number of required resources is. Of course, this is no trivial task, but one possible way to achieve this is might be to make a slight modification to the definition of one of the monotones presented here. Other monotones that are already known could also be explored, for example there is a monotone called the stabilizer extent, introduced in \cite{beverland2019lower}. And finally, another noteworthy question is can we achieve the tighter lower bounds that the dyadic monotone gave us without the requirement of only using measurements with probability $1/2$.
 
 \bibliographystyle{plain}
 \bibliography{thesis}
