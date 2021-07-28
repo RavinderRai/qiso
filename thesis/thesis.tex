@@ -33,7 +33,7 @@
 % Month and Year of Defence
 \defencemonth{August}\defenceyear{2021}
 
-\dedicate{\ldots}
+%\dedicate{\ldots}
 
 % This sample thesis contains no tables nor figures, so there is no
 % need to include lists of tables and figures in the front matter:
@@ -58,61 +58,69 @@ We first provide a detailed presentation of two recently introduced monotes: the
 
 \chapter{Introduction}
 
-\begin{itemize}
-\item quantum computing uses quantum circuits
-\item circuits have a cost
-\item standard cost: clifford = cheap, non-Clifford = expensive
-\item because Clifford non-universal (explain: can't do all things) so expensive gates are necessary
-\item common choices: T, CS, CCZ
-\item the goal in designing quantum cicuits is thus to lower the number of these resources
-\item Much work has been done in this direction (cite: Ross-Selinger optimal Clifford+T approximations; Kliuchnikiv Maslov and Mosca efficient Clifford+T approximations; Matt Amy optimization papers, Glaudell Ross and Taylor optimal two qubit, some papers by Robert Wille, and Martin Roetteler, Amy ross the phase state duality; klicuhnikov et al an algorithm for the T count) [a bunch of papers on optimizing non-Clifford resources]
-\item somtimes these optimizations are optimal (e.g., Ross-Selinger; Glaudell Ross and Taylo; Kliuchnikov et al an algorithm for the T count) but in most cases these optimizations are heuristic (we don't know how far from optimal these optimized circuits are)
-\item This has prompted recent efforts in finding lower bounds for non-Clifford resources (Beverland et al, Su and Wilde quantifying hte magic of quantum channels, roetteler and others the role of multiplicative complexity in compiling low T count oracles)
-\item lower bounds help us understand how much more effort to put into optimizing circuits. They are the focus of this thesis.
-\item we focus on lower bounds that can be derived from monotones which are...
-\item This follows the work of Beverland and others which provides the main reference for the thesis.
-\item the thesis does (repeat contents from abstract)
-\item the thesis is organized as follows (make sure to use
-    hyperlinks for referencing chapters (usingthe ``ref'' or the
-    ``cref'' command.
-\end{itemize}
+%\begin{itemize}
+%\item quantum computing uses quantum circuits
+%\item circuits have a cost
+%\item standard cost: clifford = cheap, non-Clifford = expensive
+%\item because Clifford non-universal (explain: can't do all things) so expensive gates are necessary
+%\item common choices: T, CS, CCZ
+%\item the goal in designing quantum cicuits is thus to lower the number of these resources
+%\item Much work has been done in this direction (cite: Ross-Selinger optimal Clifford+T approximations; Kliuchnikiv Maslov and Mosca efficient Clifford+T approximations; Matt Amy optimization papers, Glaudell Ross and Taylor optimal two qubit, some papers by Robert Wille, and Martin Roetteler, Amy ross the phase state duality; klicuhnikov et al an algorithm for the T count) [a bunch of papers on optimizing non-Clifford resources]
+%\item somtimes these optimizations are optimal (e.g., Ross-Selinger; Glaudell Ross and Taylo; Kliuchnikov et al an algorithm for the T count) but in most cases these optimizations are heuristic (we don't know how far from optimal these optimized circuits are)
+%\item This has prompted recent efforts in finding lower bounds for non-Clifford resources (Beverland et al, Su and Wilde quantifying hte magic of quantum channels, roetteler and others the role of multiplicative complexity in compiling low T count oracles)
+%\item lower bounds help us understand how much more effort to put into optimizing circuits. They are the focus of this thesis.
+%\item we focus on lower bounds that can be derived from monotones which are...
+%\item This follows the work of Beverland and others which provides the main reference for the thesis.
+%\item the thesis does (repeat contents from abstract)
+%\item the thesis is organized as follows (make sure to use
+%    hyperlinks for referencing chapters (usingthe ``ref'' or the
+%    ``cref'' command.
+%\end{itemize}
 
-In quantum computing, computational tasks are represented by quantum circuits. Quantum circuits have gates that represent operators, which transform the state of one or many qubits. Applying these gates comes at a cost, so minimizing this cost is of particular interest. Certain gates and operations are considered cheap, those being the gates in the Clifford group. It is well known that the Clifford group is not universal for quantum computing, however, but also that adding just one non-Clifford operation gives universality. Since non-Clifford operations are expensive, it becomes sensible to consider them a resource whose use is to be minimized, and thus gives reason to study lower and upper bounds for such resources.
+In quantum computing, computational tasks are represented by quantum circuits. Quantum circuits are composed of gates that represent operators and wires that represent qubits. These gates transform the state of one or many qubits. Applying these gates comes at a cost, so minimizing this cost is of particular interest. Certain gates and operations are considered cheap, those typically being the gates in the Clifford group, while non-Clifford gates are considered expensive. It is well known that the Clifford group is not universal for quantum computing, which means that not all operations in quantum computing can be performed with just Clifford gates. But, adding just one non-Clifford operation gives the desired universality, making expensive gates necessary. Some common expensive gates used in quantum computing are the $T$, $CS$, and $CCZ$ gates. Naturally, the goal in designing quantum circuits is to use the least number of these resources.
 
-Finding such upper bounds comes more easily as it can be simply done by observing best known circuits that use a particular resource. Finding lower bounds tends to be a more challenging task and requires the use of monotonic functions. These monotonic functions, or monotones, are real-valued functions with state vectors as inputs, and are monotone under Clifford operations. Considering a state and a transformed version of that state under some Clifford operation, one can obtain a lower bound for a certain resource. Two monotones are introduced, the first called the Stabilizer Nullity, and the second the Dyadic monotone. Some of the resources considered here are the $C^nZ$ gate, the $T$ gate, and the $S$ gate. The results are lower bounds giving how many of these gates are needed using the first monotone, with tighter lower bounds using the second monotone, though with further restrictions. Well-known upper bounds are provided for contrast as well, and even match the lower bound for one particular gate. Lower and upper bounds being equal is ideal, and to continue pursuing this for other gates is the natural next step. Moreover, to achieve this other monotones may be worth considering to relax restrictions on their use.
+Much work has been done in this direction, as seen in \cite{ross2016optimal, selinger2014efficient, Amy_2019, glaudell2021optimal, haner2018optimizing, amy2021phasestate, gosset2013algorithm}. Sometimes the optimizations are optimal, like in \cite{ross2016optimal, glaudell2021optimal, gosset2013algorithm}, but in most cases they are heuristic. This has prompted recent efforts in finding lower bounds for non-Clifford resources \cite{beverland2019lower, Wang_2019, meuli2019role}. Lower bounds help us understand how much more effort to put into optimizing circuits. Upper bounds are easier to obtain as they come from the best circuit constructions currently known, hence, lower bounds are the focus of this thesis. The challenge in finding lower bounds comes from needing monotones, which are monotonic functions, meaning they are real-valued functions. Moreover, monotones take state vectors as inputs and are monotone under Clifford operations. When considering a state and a transformed version of that state under some Clifford operation, one can obtain a lower bound for a certain resource. This follows the work of Beverland and others \cite{beverland2019lower} which provides the main reference for this thesis. 
+
+This thesis focuses on two monotones, namely the Stabilizer Nullity and the Dyadic monotone. The resources considered are the previously mentioned $T$, $CS$, and $CCZ$ gates. The results are lower bounds giving how many of these resources are needed. In fact, there are two sets of lower bounds, one derived from the Stabilizer Nullity and another derived from the Dyadic monotone. The Dyadic monotone gives tighter lower bounds, but with further restrictions. Some well-known upper bounds are provided for contrast as well, and in some cases even match the lower bounds. This is the ideal sought-after scenario as it means we have achieved the optimal number of resources needed to perform the circuit in question. 
+
+The thesis is organized as follows: first we begin with a brief overview of the necessary background information needed in Chapter \ref{foundations}. Then, In chapter \ref{chap Stab} we introduce the stabilizer formalism, which is the backbone of our methods to realizing lower bounds for resources. We start with some basic definitions regarding what is known as the Pauli matrices, to then get into the definition of the stabilizer of a state. The stabilizer relies on these Pauli matrices, but more importantly, the monotonic functions that we introduce relies on this stabilizer. In Chapter \ref{monotones} the monotones are introduced in detail, along with some their important properties. Chapter \ref{monotones} is also where the aforementioned restriction of the Dyadic monotone first appears, as it is needed to prove some of its' properties. Then, it is in Chapter \ref{Applications} where we use them to derive lower bounds for the $T$, $CS$, and the $CCZ$ gates. There are two circuits in which we calculate lower bounds for, namely the $C^nZ$ circuit and the modular adder circuit. The lower bounds for each gate will be derived by both monotones, with tighter lower bounds but more restrictive lower bounds for the Dyadic monotone. Finally, the main takeaways are briefly described in Chapter \ref{Conclusion}, along with open problems for further work.
+
+%Finding such upper bounds comes more easily as it can be simply done by observing best known circuits that use a particular resource. Finding lower bounds tends to be a more challenging task and requires the use of monotonic functions. These monotonic functions, or monotones, are real-valued functions with state vectors as inputs, and are monotone under Clifford operations. Considering a state and a transformed version of that state under some Clifford operation, one can obtain a lower bound for a certain resource. Two monotones are introduced, the first called the Stabilizer Nullity, and the second the Dyadic monotone. Some of the resources considered here are the $C^nZ$ gate, the $T$ gate, and the $S$ gate. The results are lower bounds giving how many of these gates are needed using the first monotone, with tighter lower bounds using the second monotone, though with further restrictions. Well-known upper bounds are provided for contrast as well, and even match the lower bound for one particular gate. Lower and upper bounds being equal is ideal, and to continue pursuing this for other gates is the natural next step. Moreover, to achieve this other monotones may be worth considering to relax restrictions on their use.
 
 %\section{Motivation}
-In Quantum information theory there are certain computational tasks that are expensive to perform. These tasks come in the form of operators, and finding upper and lower bounds on them to perform larger scale computational tasks is of particular interest. In this paper we explore methods using stabilizer operations to do so. To find upper bounds on an expensive gate needed to perform a computational task, one need only state explicitly a quantum circuit to show that it can be done with no more than the upper bound. As such, upper bounds are less interesting as, for commonly used expensive gate, there upper bounds are already well known. Regardless, it is still of interest to compare and contrast them to lower bounds, there more interesting counterpart. 
-
-The focus here is mostly on the new discovery of lower bounds, and the stabilizer operations used to acquire them. Lower bounds are more challenging to find due to the need to first study monotonic functions. These monotonic functions take the state of a quantum system to give real-valued outputs, and in the end can give the lower bounds of interest in this paper. The potential in their use is yet to be fully explored, as defining new monotones can give different, and possibly tighter, lower bounds. 
+%In Quantum information theory there are certain computational tasks that are expensive to perform. These tasks come in the form of operators, and finding upper and lower bounds on them to perform larger scale computational tasks is of particular interest. In this paper we explore methods using stabilizer operations to do so. To find upper bounds on an expensive gate needed to perform a computational task, one need only state explicitly a quantum circuit to show that it can be done with no more than the upper bound. As such, upper bounds are less interesting as, for commonly used expensive gate, there upper bounds are already well known. Regardless, it is still of interest to compare and contrast them to lower bounds, there more interesting counterpart. 
+%
+%The focus here is mostly on the new discovery of lower bounds, and the stabilizer operations used to acquire them. Lower bounds are more challenging to find due to the need to first study monotonic functions. These monotonic functions take the state of a quantum system to give real-valued outputs, and in the end can give the lower bounds of interest in this paper. The potential in their use is yet to be fully explored, as defining new monotones can give different, and possibly tighter, lower bounds. 
 
 %\section{The Stabilizer and Monotonic Functions}
-In chapter \ref{chap Stab} we introduce the stabilizer formalism, which is the backbone of our methods to realizing lower bounds for resources (where resources here refers to either an expensive gate or circuit). We start with some basic definitions regarding the Pauli matrices, to then get into the definition of the stabilizer of a state. The stabilizer relies on these Pauli matrices, but more importantly, the monotonic functions that we introduce relies on this stabilizer. 
-Monotonic functions are non-increasing functions, and in our case they are non-increasing under Clifford operations and Pauli measurements (where Clifford operations can be thought of as inexpensive resources, thus negligible in cost). In this paper, there are two important monotones that we discuss. The first one is called the stabilizer nullity, which we use first to get lower bounds for our circuits discussed later on. The stabilizer nullity gives us more general lower bounds, and is easier to compute as well, making it the easier one to deal with. 
-The second monotone that we discuss is called the dyadic monotone. This function however us only non-increasing under Clifford operations and Pauli measurements when the Pauli measurements are restricted to having probability $1/2$. Fortunately, with this added restriction comes tighter lower bounds, thus meaning that we can perform certain computational expensive tasks with fewer resources given that our measurements are done with probability $1/2$ only. Since this restriction may not always be feasible, we still have the stabilizer nullity lower bounds regardless. 
-A nice observation to make is the comparison between upper and lower bounds, which is precisely what we did for the $C^nZ$ gate, which is the $n$-controlled $Z$ gate. In the case that the lower bound and upper bounds are the same for a given resource, then we know for certain what the optimal number of said resource is required to perform the task at hand. This case only arises once in this paper, and in the other cases having different lower and upper bounds means that we still do not know if we can do better. 
+
+%Monotonic functions are non-increasing functions, and in our case they are non-increasing under Clifford operations and Pauli measurements (where Clifford operations can be thought of as inexpensive resources, thus negligible in cost). In this paper, there are two important monotones that we discuss. The first one is called the stabilizer nullity, which we use first to get lower bounds for our circuits discussed later on. The stabilizer nullity gives us more general lower bounds, and is easier to compute as well, making it the easier one to deal with. 
+%The second monotone that we discuss is called the dyadic monotone. This function however us only non-increasing under Clifford operations and Pauli measurements when the Pauli measurements are restricted to having probability $1/2$. Fortunately, with this added restriction comes tighter lower bounds, thus meaning that we can perform certain computational expensive tasks with fewer resources given that our measurements are done with probability $1/2$ only. Since this restriction may not always be feasible, we still have the stabilizer nullity lower bounds regardless. 
+%A nice observation to make is the comparison between upper and lower bounds, which is precisely what we did for the $C^nZ$ gate, which is the $n$-controlled $Z$ gate. In the case that the lower bound and upper bounds are the same for a given resource, then we know for certain what the optimal number of said resource is required to perform the task at hand. This case only arises once in this paper, and in the other cases having different lower and upper bounds means that we still do not know if we can do better. 
 
 %\section{Conversion Examples}
-When we refer to a conversion it means we are applying a Clifford or non-Clifford circuit to some gate or circuit to get an equivalence to some other gate or circuit of interest. For example for some circuit $D$ there is some other Clifford circuit $C$ such that $C \otimes D = E$, where $E$ is another circuit of interest. In the case of $C$ not being Clifford, then we call it a catalyst, where we will instead have $C \otimes D = E \otimes D$. As explained above, we are interested in the number of a certain resource required to use this equivalences, and the stabilizer nullity and dyadic monotones both give us this answer. 
-
-The first main conversion is looking at going from the $T$, $CS$, and $CCZ$ gates to the $C^nZ$ gate. All three of these conversions do not require a catalyst, so a Clifford circuit is all that is required. Thus in this case the only expensive resource to consider is the one of interest, being either the $T$, $CS$, or $CCZ$ gate. First we provide and prove lower bounds using the stabilizer nullity, and then the dyadic monotone. For example, using the stabilizer nullity we find that at least $n+1$ $T$ gates are needed to perform a $C^nZ$ gate, but then get that only $2\cdot (n+1)$ $T$ gates are needed when using the dyadic monotone, and similar values are obtained for the other gates. Following this, we show the best known circuit to show these equivalences, explicitly giving upper bounds.
-
-Next we introduce the quantum Fourier transform which allows us to give bounds for the modular adder circuit later on. Here a similar result is proven, where lower bounds for the $T$, $CS$, and $CCZ$ gates are given in order to perform the modular adder circuit. The stabilizer nullity monotone is used first to do this, and then the dyadic monotone next to provide the final result.
+%When we refer to a conversion it means we are applying a Clifford or non-Clifford circuit to some gate or circuit to get an equivalence to some other gate or circuit of interest. For example for some circuit $D$ there is some other Clifford circuit $C$ such that $C \otimes D = E$, where $E$ is another circuit of interest. In the case of $C$ not being Clifford, then we call it a catalyst, where we will instead have $C \otimes D = E \otimes D$. As explained above, we are interested in the number of a certain resource required to use this equivalences, and the stabilizer nullity and dyadic monotones both give us this answer. 
+%
+%The first main conversion is looking at going from the $T$, $CS$, and $CCZ$ gates to the $C^nZ$ gate. All three of these conversions do not require a catalyst, so a Clifford circuit is all that is required. Thus in this case the only expensive resource to consider is the one of interest, being either the $T$, $CS$, or $CCZ$ gate. First we provide and prove lower bounds using the stabilizer nullity, and then the dyadic monotone. For example, using the stabilizer nullity we find that at least $n+1$ $T$ gates are needed to perform a $C^nZ$ gate, but then get that only $2\cdot (n+1)$ $T$ gates are needed when using the dyadic monotone, and similar values are obtained for the other gates. Following this, we show the best known circuit to show these equivalences, explicitly giving upper bounds.
+%
+%Next we introduce the quantum Fourier transform which allows us to give bounds for the modular adder circuit later on. Here a similar result is proven, where lower bounds for the $T$, $CS$, and $CCZ$ gates are given in order to perform the modular adder circuit. The stabilizer nullity monotone is used first to do this, and then the dyadic monotone next to provide the final result.
 
 
 \chapter{Foundational Quantum Computing}
 \label{foundations}
+
+In this chapter, we provide the necessary prerequisites to this paper. In particular, we introduce quantum states, unitary evolutions, measurements, and quantum circuits.
 \section{Preliminaries}
 \subsection{Vectors and Matrices}
-Let $\mathbb{C}$ be the set of complex numbers. We write $\mathbb{C}^n$ to represent the space of $n$-dimensional column vectors, and we write $\mathbb{C}^{n \times m}$ for the space of matrices with $n$ rows and $m$ columns. Matrices can be multiplies in the usual way. 
+Let $\mathbb{C}$ be the set of complex numbers. We write $\mathbb{C}^n$ to represent the space of $n$-dimensional column vectors, and we write $\mathbb{C}^{n \times m}$ for the space of matrices with $n$ rows and $m$ columns. Matrices can be multiplied in the usual way. 
 
-The complex conjugate of a scalar $c \in \mathbb{C}$ is denoted $\bar{c}$, and the adjoint of a matrix $M = (c_{ij}) \in \mathbb{C}^{n \times m}$ is $M^\dag = (\bar{c}_{ji}) \in \mathbb{C}^{m \times n}$. The trace of a matrix $M$, denoted $tr(M)$, is the sum of its diagonal entries. Note that $tr(BA) = tr(BA)$. 
+The \emph{complex conjugate} of a scalar $c \in \mathbb{C}$ is denoted $\bar{c}$, and the \emph{adjoint} of a matrix $M = (c_{ij}) \in \mathbb{C}^{n \times m}$ is $M^\dag = (\bar{c}_{ji}) \in \mathbb{C}^{m \times n}$. The \emph{trace} of a matrix $M$, denoted $tr(M)$, is the sum of its diagonal entries. Note that $tr(BA) = tr(BA)$. 
 
-For a vector $v \in \mathbb{C}^n$, the norm of $v$ is $||v|| = \sqrt{v^\dag v}$. The vector $v$ is called a unit vector if $||v|| = 1$. A matrix $U \in \mathbb{C}^{n \times n}$ is \emph{unitary} if $U^{-1} = U^\dag$ and \emph{hermitian} if  $A = A^\dag$.
+For a vector $v \in \mathbb{C}^n$, the \textit{norm} of $v$ is $||v|| = \sqrt{v^\dag v}$. The vector $v$ is called a \textit{unit vector} if $||v|| = 1$. A matrix $U \in \mathbb{C}^{n \times n}$ is \emph{unitary} if $U^{-1} = U^\dag$ and \emph{hermitian} if  $A = A^\dag$.
 
 \subsection{Tensor Products}
 \label{tensor products}
-The \emph{tensor product} is defined as usual and is denoted by $\otimes$. When a basis is fixed, the tensor product can be computed as the \emph{kronecker product}: the tensor product $w = u \otimes v \in \mathbb{C}^{nm}$ of two vectors is defined by $w_{(i, j)} = u_iv_j$. Similarly the tensor product $C = A \otimes B \in \mathbb{C}^{nm \times nm}$ of two matrices is defined by $c_{(i, j)(i', j')} = a_{ii'}b_{jj'}$, with pairs $(i, j)$ ordered lexicographically. Note that $\mathbb{C}^n \otimes \mathbb{C}^m = \mathbb{C}^{nm}$ and $\mathbb{C}^{n \times n} \otimes \mathbb{C}^{m \times m} = \mathbb{C}^{nm \times nm}$. For example, the kronecker product between two $2 \times 2$ matrices looks like:
+The \emph{tensor product} is defined as usual and is denoted by $\otimes$. When a basis is fixed, the tensor product can be computed as the \emph{Kronecker product}: the tensor product $w = u \otimes v \in \mathbb{C}^{nm}$ of two vectors is defined by $w_{(i, j)} = u_iv_j$. Similarly, the tensor product $C = A \otimes B \in \mathbb{C}^{nm \times nm}$ of two matrices is defined by $c_{(i, j)(i', j')} = a_{ii'}b_{jj'}$, with pairs $(i, j)$ ordered lexicographically. Note that $\mathbb{C}^n \otimes \mathbb{C}^m = \mathbb{C}^{nm}$ and $\mathbb{C}^{n \times n} \otimes \mathbb{C}^{m \times m} = \mathbb{C}^{nm \times nm}$. For example, the Kronecker product between two $2 \times 2$ matrices looks like:
 \begin{equation*}
 \begin{pmatrix}
 a_{11} & a_{12} \\
@@ -133,17 +141,17 @@ a_{21}b_{21} & a_{21}b_{22} & a_{22}b_{21} & a_{22}b_{22}
 \end{equation*}
 
 
-A basis for a tensor product of vector spaces can be obtained as the tensor product of the basis elements of the individual vector spaces. For example if $\{ a_1, a_2 \}$ and $\{ b_1 , b_2  \}$ are two bases for $\mathbb{C}^2$, then $\{ a_1 \otimes b_1, a_1 \otimes b_2, a_2 \otimes b_1, a_2 \otimes b_2 \}$ is a basis for $\mathbb{C}^4$. Note that not all elements of $\mathbb{C}^4$ are of the form $a \otimes b$ with $a, b \in \mathbb{C}^2$.
+A basis for a tensor product of vector spaces can be obtained as the tensor product of the basis elements of the individual vector spaces. For example, if $\{ a_1, a_2 \}$ and $\{ b_1 , b_2  \}$ are two bases for $\mathbb{C}^2$, then $\{ a_1 \otimes b_1, a_1 \otimes b_2, a_2 \otimes b_1, a_2 \otimes b_2 \}$ is a basis for $\mathbb{C}^4$. Note that not all elements of $\mathbb{C}^4$ are of the form $a \otimes b$ with $a, b \in \mathbb{C}^2$.
 
 \subsection{The Dirac Notation}
-In quantum computing, we make use of the \emph{Dirac notation} to represent vectors and operations. In Dirac notation we write a column vector $v$ as a \emph{ket}, denoted by $\ket{v}$. The adjoint of a column vector $u$ is written as a \emph{bra}, denoted by $\bra{u}$. The inner product between two vectors $\ket{v}$ and $\bra{u}$ is then written as a \emph{braket}, denoted by $\braket{u|v}$. for example, the inner product of $\bra{0}$ and $\ket{1}$ is $\braket{0|1}$. The outer product between two vectors is written in the opposite manner, i.e. $\ket{v} \bra{u}$. Note this is simple matrix multiplication, where the inner product results in a scalar, and the outer product produces a matrix. In some sense the outer product scales a vector, since for a vector $\ket{w}$, we have $\ket{v}\bra{u} \ket{w} = \braket{u|w}\ket{v}$ where $\braket{u|w}$ is just a scalar.
+In quantum computing, we make use of the \emph{Dirac notation} to represent vectors and operations. In Dirac notation, we write a column vector $v$ as a \emph{ket}, denoted by $\ket{v}$. The adjoint of a column vector $u$ is written as a \emph{bra}, denoted by $\bra{u}$. The inner product between two vectors $\ket{v}$ and $\ket{u}$ is then written as a \emph{braket}, denoted by $\braket{u|v}$. For example, the inner product of $\bra{0}$ and $\ket{1}$ is $\braket{0|1}$. The outer product between two vectors is written in the opposite manner, i.e. $\ket{v} \bra{u}$. Note this is simple matrix multiplication, where the inner product results in a scalar, and the outer product produces a matrix. In some sense the outer product scales a vector, since for a vector $\ket{w}$, we have $\ket{v}\bra{u} \ket{w} = \braket{u|w}\ket{v}$ where $\braket{u|w}$ is just a scalar.
 
-Consider the standard basis vectors $[1, 0]^{\dag}$ and $[0, 1]^{\dag}$. We denote them $\ket{0}$ and $\ket{1}$ respectively. In quantum computing, the basis of $\mathcal{C}^2$ formed by $\{ \ket{0} , \ket{1} \}$ in is known as the \emph{computational basis}. As mentioned before, one can get a basis for higher dimensional vector spaces by taking tensor products of $\ket{0}$ and $\ket{1}$. For example, a basis for $\mathbb{C}^4$ is $\{ \ket{0} \otimes \ket{0}, \ket{0} \otimes \ket{1}, \ket{1} \otimes \ket{0}, \ket{1} \otimes \ket{1} \}$. For brevity, the symbol $\otimes$ is often omitted for elements of the higher dimensional computational bases. For example, $\ket{0} \otimes \ket{0}$ is written as $\ket{00}$ and $\ket{0} \otimes \ket{1}$ is written as $\ket{01}$. In this way, the $j-th$ basis vector of $\mathcal{C}^{2n}$ is denoted $\ket{b_1 b_2 \cdots b_n}$ where $b_1, b_2, \cdots , b_n \in \mathcal{Z}_2$ and $b_1 b_2 \cdots b_n$ is the binary expansion of $j$.
+Consider the standard basis vectors $[1, 0]^{\dag}$ and $[0, 1]^{\dag}$. We denote them $\ket{0}$ and $\ket{1}$ respectively. In quantum computing, the basis of $\mathbb{C}^2$ formed by $\{ \ket{0} , \ket{1} \}$ is known as the \emph{computational basis}. As mentioned before, one can get a basis for higher dimensional vector spaces by taking tensor products of $\ket{0}$ and $\ket{1}$. For example, a basis for $\mathbb{C}^4$ is $\{ \ket{0} \otimes \ket{0}, \ket{0} \otimes \ket{1}, \ket{1} \otimes \ket{0}, \ket{1} \otimes \ket{1} \}$. For brevity, the symbol $\otimes$ is often omitted for elements of the higher dimensional computational bases. For example, $\ket{0} \otimes \ket{0}$ is written as $\ket{00}$ and $\ket{0} \otimes \ket{1}$ is written as $\ket{01}$. In this way, the $j-th$ basis vector of $\mathbb{C}^{2n}$ is denoted $\ket{b_1 b_2 \cdots b_n}$ where $b_1, b_2, \cdots , b_n \in \mathbb{Z}_2$ and $b_1 b_2 \cdots b_n$ is the binary expansion of $j$.
 
 \subsection{Quantum Bits}
-The fundamental unit of information in classical computing is the \emph{bit}. In quantum computing the basic unit of information is called a \emph{quantum bit} or \emph{qubit} for short. In classical computing the classical bit can be in the \emph{states} $0$ or $1$, but in quantum computing the state of a qubit is a unit vector in $\mathcal{C}^2$. Hence, the state of a qubit can be any complex linear combination $\alpha \ket{0} + \beta \ket{1}$, where $\alpha , \beta \in \mathbb{C}$ and satisfy $|\alpha | + |\beta | = 1$. The complex numbers $\alpha$ and $\beta$ are called the \emph{amplitudes} of the state. Note that $\ket{0}$ and $\ket{1}$ are valid states, corresponding to $\alpha = 1$ and $\beta = 0$, and to $\alpha = 0$ and $\beta = 1$ respectively. We sometimes call these states \emph{classical}. A state whose amplitudes are both nonzero is said to be a state in \emph{superposition}. For example, a qubit in the state \[ \frac{\ket{0} + \ket{1}}{\sqrt{2}} \] is in (equal) superposition.
+The fundamental unit of information in classical computing is the \emph{bit}. In quantum computing the basic unit of information is called a \emph{quantum bit} or \emph{qubit} for short. In classical computing the classical bit can be in the \emph{states} $0$ or $1$, but in quantum computing the state of a qubit is a unit vector in $\mathbb{C}^2$. Hence, the state of a qubit can be any complex linear combination $\alpha \ket{0} + \beta \ket{1}$, where $\alpha , \beta \in \mathbb{C}$ and satisfy $|\alpha | + |\beta | = 1$. The complex numbers $\alpha$ and $\beta$ are called the \emph{amplitudes} of the state. Note that $\ket{0}$ and $\ket{1}$ are valid states, corresponding to $\alpha = 1$ and $\beta = 0$, and to $\alpha = 0$ and $\beta = 1$ respectively. We sometimes call these states \emph{classical}. A state whose amplitudes are both nonzero is said to be a state in \emph{superposition}. For example, a qubit in the state \[ \frac{\ket{0} + \ket{1}}{\sqrt{2}} \] is in (equal) superposition.
 
-Similarly, the state of a collection of $n$ qubits (sometimes called a \emph{register}) is described by a unit vector in $\mathcal{C}^2 \otimes \cdots \otimes \mathcal{C}^2 = \mathcal{C}^{2n}$. For example, a $2$-qubit system could be in the state \[ \frac{\ket{00} + \ket{01} + \ket{10} + \ket{11}}{2}. \]
+Similarly, the state of a collection of $n$ qubits (sometimes called a \emph{register}) is described by a unit vector in $\mathbb{C}^2 \otimes \cdots \otimes \mathbb{C}^2 = \mathcal{C}^{2^n}$. For example, a $2$-qubit system could be in the state \[ \frac{\ket{00} + \ket{01} + \ket{10} + \ket{11}}{2}. \]
 
 Interestingly, the state of a multi-qubit system cannot always be expressed as the tensor product of the states of the qubits composing the system. Consider for example the $2$-qubit state \[ \frac{\ket{00} + \ket{11}}{\sqrt{2}}. \]
 It can be verified using the definition of the tensor product given in Section \ref{tensor products} that there are no single-qubit states $\ket{v}$ and $\ket{w}$ such that \[ \ket{v} \otimes \ket{w} = \frac{\ket{00} + \ket{11}}{\sqrt{2}}. \]
@@ -188,7 +196,7 @@ and the others are
 \end{equation*}
 Note that the $X$ gate is synonymous with the $Not$ gate, which can be though of as a simple bit flip gate, i.e. $X\ket{0} = \ket{1}$ and $X\ket{1} = \ket{0}$.
 
-For any unitary $U$ a $CU$ gate represents a controlled-$U$ gate, which means that there will be a single qubit that will act as a controlled qubit so that the $U$ gate will only be applied to other qubits depending on the state of the controlled qubit. The qubits that $U$ will act on are called the target qubits. Note that gates can be multi-controlled as well. Knowing this, there are also important multiqubit gates that will be used later in great detail. They are the $CS$ gate, $CNOT$ gate, and the Toffoli gate (denoted $CCX$), and they have matrices:
+If $U$ is an $n$-qubit unitary, we write $CU$ for the $(n+1)$-qubit unitary whose action on basis states is defined as $CU\ket{c}\ket{t} = \ket{c}U^c\ket{t}$, for $c \in \mathbb{Z}_2$ and $t \in \mathbb{Z}_2^n$. The gate $CU$ is called a \emph{controlled-$U$ gate}. The intuition is that there is a single qubit that acts as a \emph{control} qubit so that the $U$ gate is only applied to the other qubits depending on the state of the control qubit. The qubits that $U$ acts on are called the \emph{target} qubits. Gates can be multiply-controlled as well. We write $C^nU$ for the multiply-controlled $U$ gate with $n$ controls. Its action on the computational basis is given by $C^nU\ket{c_1}\ldots \ket{c_n}\ket{t} = \ket{c_1}\ldots \ket{c_n}U^{c_1\cdots c_n} \ket{t}$, where $c_1, \cdots c_n$ is the product of the bits $c_1, \ldots , c_n$ in $\mathbb{Z}_2$. Knowing this, there are important controlled gates that will be used later in great detail. They are the $CS$ gate, $CNOT$ (or $CX$) gate, and the Toffoli gate (or $CCX$), and they have matrices:
 \begin{equation*}
   CS = \begin{bmatrix}
   1 & 0 & 0 & 0 \\
@@ -218,35 +226,35 @@ and
 \end{equation*}
 
 \subsection{Measurement}
-Aside from unitary transformations, we can also act on a quantum state by measuring it. Measurement is a probabilistic process, and we say it is like observing the state. We also say that the quantum state collapses due to measurement, and if you were to measure it again you will always get the same result. Measurement itself can be done on different bases of $\mathcal{C}^n$, but for this paper the main important basis is the computational basis. So, say we have a qubit in the state $\ket{\psi} = \alpha \ket{0} + \beta \ket{1}$, and we measure it in the computational basis. Then the post-measurement state will be $\ket{0}$ with probability $|\alpha |^2$ or $\ket{1}$ with probability $|\beta |^2$. 
+Aside from unitary transformations, we can also act on a quantum state by \emph{measuring} it. Measurement is a probabilistic process, and we think of it as observing the state. A quantum state collapses due to a measurement, and if you were to measure it again this would yield the same result. Measurements can be performed on different bases of $\mathbb{C}^j$. In this thesis, an important basis is the computational basis. If a qubit is in the state $\ket{\psi} = \alpha \ket{0} + \beta \ket{1}$, and it is measured it in the computational basis, then the post-measurement state will be $\ket{0}$ with probability $|\alpha |^2$ or $\ket{1}$ with probability $|\beta |^2$. 
 
-More formally, quantum measurements are described by a collection of \emph{measurement operators} $\{ M_m \}$ \cite{nielsen00}. The index $m$ refers to its corresponding outcome. When measuring some state $\ket{\phi}$ the probability that the result $m$ occurs is $p(m) = \braket{\phi | M^{\dag}_m M_m | \phi}$ and the post-measurement state is $\frac{M_m \ket{\phi}}{\sqrt{\braket{\phi | M^{\dag}_m M_m | \phi}}}$. In the computational basis for $\mathcal{C}^2$, we have $M_0 = \ket{0} \bra{0}$ and $M_1 = \ket{1} \bra{1}$. Note measuring the state $\ket{\psi}$ above with these formal terms will give the same result as before. 
+More formally, quantum measurements are described by a collection of \emph{measurement operators} $\{ M_m \}$ \cite{nielsen00}. These operators are Hermitian, idempotent, and satisfy the completion rule: $\sum\limits_{m} M^{\dag}M = I$. The index $m$ refers to the corresponding measurement outcome. When measuring some state $\ket{\phi}$ the probability that the outcome $m$ occurs is $p(m) = \braket{\phi | M^{\dag}_m M_m | \phi}$ and in this case the post-measurement state is $\frac{M_m \ket{\phi}}{\sqrt{\braket{\phi | M^{\dag}_m M_m | \phi}}}$. Naturally, these probabilities sum to $1$, which can also be seen from the completeness equation: $1 = \sum\limits_{m} p(m) = \sum\limits_{m} \braket{\psi |M^{\dag}M| \psi}$. Moreover, in the computational basis for $\mathbb{C}^2$, we have $M_0 = \ket{0} \bra{0}$ and $M_1 = \ket{1} \bra{1}$. Measuring the state $\ket{\psi}$ above with these formal terms will give the same result as before. 
 
-Measurement is of course not restricted to just a single qubit. This formal method can describe measurement on multiple qubits. Consider an $n$-qubit system described by the state $\ket{\Psi}$. Then measuring in the computational basis, the probability of observing the outcome $j$ is still just $\braket{\Psi | M^{\dag}_j M_j | \Psi}$, where $M_j = \ket{j} \bra{j}$ and $j$ is taken to be in binary form. For example, when $n=3$ one possible outcome could be $\ket{001}$ as this is one of the computational basis states in $\mathcal{C}^4$. Then $M_{001} = \ket{001}\bra{001}$ is used to find the probability of that the measurement outcome will be $\ket{001}$. Note one can also measure an $m$ qubit state in an $n$ qubit system for $m \leq n$, i.e. one can measure only part of a quantum system.
+Measurement is of course not restricted to just a single qubit. This formal method can describe measurement on multiple qubits. Consider an $n$-qubit system described by the state $\ket{\Psi}$. Then measuring in the computational basis, the probability of observing the outcome $j$ is still just $\braket{\Psi | M^{\dag}_j M_j | \Psi}$, where $M_j = \ket{j} \bra{j}$ and $j$ is taken to be in binary form. For example, on $3$ qubits one possible outcome is $\ket{001}$ as this is one of the computational basis states in $\mathbb{C}^4$. Then $M_{001} = \ket{001}\bra{001}$ is used to find the probability that the measurement outcome will be $\ket{001}$. One can also measure an $m$ qubit state in an $n$ qubit system for $m \leq n$, i.e. one can measure only part of a quantum system.
 
-The type of measurement that we are interested in is Pauli measurement. Let $P$ be a $n$-qubit Pauli and $\ket{\psi}$ an $n$-qubit state. Note that for any Pauli $P$, only two eigenvalues occur, namely the $-1$ eigenvalue and the $+1$ eigenvalue. Recall that by the spectral decomposition theorem, we have matrices $P_{\pm 1}$ which are projectors for their corresponding eigenspaces. These matrices satisfy the following equations: $P = (+1)P_{+1} + (-1)P_{-1}$, and $I = P_{+1} + P_{-1}$. Now for a Pauli measurement on $P$ the probability of a $+1$ outcome is $\braket{\psi | P_{+1} | \psi}$, with post measurement state $\ket{\phi} = \frac{P_{+1} \ket{\psi}}{\sqrt{\braket{\psi | P_{+1} | \psi}}}$. Finally, observe that $P_{+1} = \frac{I+P}{2}$, so that $\ket{\phi} = \frac{(I+P) \ket{\psi}}{2 \sqrt{\braket{\psi | P_{+1} | \psi}}}$.
+A type of measurement that we will be especially interested in is \emph{Pauli measurement}. Recall that $X$, $Y$, and $Z$ are the Pauli matrices defined above. An $n$-qubit Pauli operator is obtained by taking a tensor product of $n$ elements of $\{ I, X, Y, Z \}$. An $n$-qubit Pauli can be decomposed as a sum of measurement operators. Let $P$ be a $n$-qubit Pauli and $\ket{\psi}$ an $n$-qubit state. Note that for any Pauli $P$, only two eigenvalues occur, namely the $-1$ eigenvalue and the $+1$ eigenvalue. Recall that by the spectral decomposition theorem, we have matrices $P_{\pm 1}$ which are projectors for their corresponding eigenspaces. These matrices satisfy the following equations: $P = (+1)P_{+1} + (-1)P_{-1}$, and $I = P_{+1} + P_{-1}$. Now for a Pauli measurement on $P$ the probability of a $+1$ outcome is $\braket{\psi | P_{+1} | \psi}$, with post measurement state $\ket{\phi} = \frac{P_{+1} \ket{\psi}}{\sqrt{\braket{\psi | P_{+1} | \psi}}}$. Finally, from the above equations we get that $P_{-1} = P_{+1}-P$ and $P_{-1} = I -P_{+1}$, so by subtracting these equations we eliminate $P_{-1}$ and get that $P_{+1} = \frac{I+P}{2}$. Hence, we now can write the post measurement state as $\ket{\phi} = \frac{(I+P) \ket{\psi}}{2 \sqrt{\braket{\psi | P_{+1} | \psi}}}$.
 
 
 \section{Quantum Circuits}
-A quantum circuit describes a sequence of operations acting on a register of qubits. Quantum circuits are made of (horizontal) wires and boxes, where each wire represents a qubit and each box represents a gate. Typically the boxes that represent gates have their corresponding letter inside to indicate what gate it is. Explicitly, letting $U$ be any single qubit gate, a circuit with one qubit and $U$ gate would look like
+A \emph{quantum circuit} describes a sequence of operations acting on a register of qubits. Quantum circuits are made of (horizontal) wires and boxes, where each wire represents a qubit and each box represents a gate. Typically the boxes that represent gates have a label indicating what gate it is. Explicitly, letting $U$ be any single qubit gate, a circuit with one qubit and $U$ gate would look like
 \begin{equation*}
 \Qcircuit @C=0.9em @R=.9em {
    & \gate{U} & \rstick{.} \qw 
 }
 \end{equation*}
 
-Multiqubit gates are also boxes but with multiple wires connecting to it. Controlled operations are represented with a open or closed circle on the controlled qubit with a vertical wire connecting it to a box on the target qubit. A controlled operation with an closed circle on a wire, and such the controlled qubit, means apply the controlled operation/gate to the other qubits only if the controlled qubit is in the $\ket{1}$ state. An open circle on a controlled qubit means apply the gate if the controlled qubit is in the state $\ket{0}$. The circuit for a controlled operation $CU$ where $U$ is any unitary is
+Multi-qubit gates are also boxes but with multiple wires connecting to it. There is a special representation for controlled gates. Controlled operations are represented with a open or closed circle on the control qubit with a vertical wire connecting it to a box on the target qubit. A controlled operation with a closed circle on its controll qubit, means apply the controlled gate to the target qubits only if the control qubit is in the $\ket{1}$ state. An open circle on the control qubit means apply the gate if the control qubit is in the state $\ket{0}$. The circuit for a controlled operation $CU$ where $U$ is a single-qubit unitary is
 \begin{equation*}
 \Qcircuit @C=0.9em @R=.9em {
    & \ctrl{1} & \qw \\
    & \gate{U} & \rstick{.} \qw
 }
 \end{equation*}
-The circuit representation for a multiply controlled gate is written in this fashion also but with multiple controlled qubits.
+The circuit representation for a multiply controlled gate is written in this fashion also but with multiple control qubits.
 
 
-Quantum circuits are read from left to right, and can be read by tracking what the operations do to the input state. It is worth noting that if two circuits give the same output on a general input state then they are equivalent circuits. In fact, the following example is a circuit from \cite{Jones_2013} that acts exactly as a $CCZ$ gate on qubits $c_1$, $c_2$, and $c_3$, and will be used later on in Section \ref{Upper Bounds for C^nZ}.
-\begin{equation}
+Quantum circuits are read from left to right, and can be applied by tracking what the operations do to the input state. It is worth noting that if two circuits give the same output on a general input state then they are equivalent circuits. In fact, the following example is a circuit from \cite{Jones_2013} that acts exactly as a $CCZ$ gate on qubits $c_1$, $c_2$, and $c_3$, and will be used later on in Section \ref{Upper Bounds for C^nZ}.
+\begin{equation*}
 \label{CCZcircuit}
 \Qcircuit @C=0.5em @R=.7em {
    & \lstick{\ket{c_1}} & \ctrl{2} & \qw & \qw & \qw & \multigate{1}{CZ} & \qw \\
@@ -254,24 +262,29 @@ Quantum circuits are read from left to right, and can be read by tracking what t
    & \lstick{\ket{0}} & \gate{X} & \ctrl{1} & \gate{H} & \meter & \ctrl{-1} \cw \cwx \\
    & \lstick{\ket{c_3}} & \qw & \targ & \qw & \qw & \qw & \qw
 }
-\end{equation}
-Tracking from left to right starting with the input state, we get the following steps:
+\end{equation*}
+The $\oplus$ symbol in the bottom wire denotes the $X$ gate, making this controlled gate a CNOT or CX gate. The final $CZ$ gate is a measurement gate, represented by the double line attached to it from the third qubit. Measurement gates work by only being applied to its qubits if the measurement outcome of the other qubit it is attached to is $\ket{1}$. Also, the third qubit is called an \emph{ancilla}. It is used as "scratch space" during the computation, and a circuit with no ancillas is said to be \emph{ancilla free}. Now, tracking from left to right starting with the input state, we get the following steps:
 \begin{itemize}
 \item[] $\ket{c_1}\ket{c_2}\ket{0}\ket{c_3}$
 \item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{c_1 \cdot c_2}\ket{c_3}$
 \item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{c_1 \cdot c_2}\ket{c_3 \oplus c_1 \cdot c_2}$
 \item[$\mapsto$] $\begin{cases} \ket{c_1}\ket{c_2}\ket{+}\ket{c_3 \oplus c_1 \cdot c_2} & \mbox{if } c_1 \cdot c_2 = 0, \\
 \ket{c_1}\ket{c_2}\ket{-}\ket{c_3 \oplus c_1 \cdot c_2} & \mbox{if } c_1 \cdot c_2 = 1 \end{cases}$
-\item[$\mapsto$] $\begin{cases} \ket{c_1}\ket{c_2}\ket{c_3 \oplus c_1 \cdot c_2} & \mbox{if measurement is } \ket{0} , \\
-\pm \ket{c_1}\ket{c_2}\ket{c_3 \oplus c_1 \cdot c_2} & \mbox{if measurement is } \ket{1} \end{cases}$
+\item[$\mapsto$] $\begin{cases} \ket{c_1}\ket{c_2}\ket{c_3 \oplus c_1 \cdot c_2} & \mbox{if the measurement outcome is } \ket{0} , \\
+(-1)^{c_1 \cdot c_2} \ket{c_1}\ket{c_2}\ket{c_3 \oplus c_1 \cdot c_2} & \mbox{if the measurement outcome is } \ket{1} \end{cases}$
 \item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{c_3 \oplus c_1 \cdot c_2}$
 \end{itemize}
-Note that the open circle on the wire for $c_3$ is used interchangeably with the $X$ gate, making this s CNOT or CX gate. Also, the fourth step follows from the fact that $H\ket{0} = \ket{+}$ and $H\ket{1} = \ket{-}$, which can be verified by direct computation. Finally, the last step comes from the fact that $CZ$ here is only applied when the measurement is $\ket{1}$, which then takes care of the $\pm$ giving the result.
+The first few steps follow naturally by applying the gates one-by-one, while the rest are less trivial. In particular, the fourth step follows from the fact that $H\ket{0} = \ket{+}$ and $H\ket{1} = \ket{-}$, which can be verified by direct computation. The fifth step comes after we measure the third qubit, so if $c_1 \cdot c_2$ then we get $\ket{c_1}\ket{c_2}\ket{c_3 \oplus c_1 \cdot c_2}$ whether we observe $\ket{0}$ or $\ket{1}$. On the other hand, if $c_1 \cdot c_2 = 1$, then we get $\ket{c_1}\ket{c_2}\ket{c_3 \oplus c_1 \cdot c_2}$ if we observe $\ket{0}$ and $-\ket{c_1}\ket{c_2}\ket{c_3 \oplus c_1 \cdot c_2}$ if we observe $\ket{1}$. Thus we can then rewrite this case as $(-1)^{c_1 \cdot c_2} \ket{c_1}\ket{c_2}\ket{c_3 \oplus c_1 \cdot c_2}$. Finally, the last step comes from the fact that $CZ$ here is only applied when the measurement is $\ket{1}$, which then introduces another multiplicative factor of $(-1)^{c_1 \cdot c_2}$, cancelling the other one out and giving us the result.
+
+A circuit that does not contain any measurements can be straightforwardly interpreted as a matrix by interpreting the horizontal composition of gates as matrix multiplication and the vertical composition of gates as tensor products. 
  
 
 \chapter{The Clifford Group and Its Universal Extensions}
 \label{chap Stab}
-\section{The Pauli Operator}
+
+In this chapter, we introduce Clifford curcuits, discuss their computational power, and present several universal extensions of the Clifford group.
+
+\section{The Pauli Operators}
 %To begin, we need to introduce and develop the formalism of stabilizer operators and its related quantities, but first some  basic definitions, starting with the Pauli matrices.
 
 Recall the \emph{Pauli matrices} X, Y, and Z from Chapter \ref{foundations}:
@@ -290,7 +303,7 @@ Recall the \emph{Pauli matrices} X, Y, and Z from Chapter \ref{foundations}:
   \end{bmatrix}.
   \]
 
-If $\mathcal{S}$ is a set of matrices then $\mathcal{S}^{\otimes n}$ is the set of matrices comprised of tensor products of elements in $\mathcal{S}$.
+If $S$ is a set of matrices then $S^{\otimes n}$ is the set of matrices comprised of tensor products of elements in $S$.
 
 \begin{definition}
 \label{PauliGroup}
@@ -309,7 +322,7 @@ By induction, first let $n=1$. Then from definition \ref{PauliGroup} we see that
 \end{proof}
 
 \section{The Clifford Operators}
-Recall the gates $H$, $S$, and CNOT defined in Chapter \ref{foundations}.:
+Recall the gates $H$, $S$, and CNOT defined in Chapter \ref{foundations}:
   \[
   H = \frac{1}{\sqrt{2}} \begin{bmatrix}
   1 & 1 \\
@@ -335,20 +348,32 @@ We use these gates to define the \emph{Clifford} group.
 The Clifford group on $n$ qubits $\mathcal{C}(n)$ consists of the matrices that can be represented by an ancilla-free circuit on $n$ qubits over the gate set $\{H, S, CNOT\}$.
 \end{definition}
 
+Clifford operators are sometimes referred to as \emph{Stabilizer} operators.
+
 \begin{proposition}
 $H$ and $S$ act on Paulis as follows:
 \begin{center}
 $HXH^{\dag} = Z$ and $HZH^{\dag} = X$, $SXS^{\dag} = Y$ and $SZS^{\dag} = Z$.
 \end{center}
-Note that we need not specify the action on $Y$ since $Y = iXZ$, so the action on $X$ and $Z$ gives and fixes the action on $Y$.
 \end{proposition}
 
+Note that we need not specify the action on $Y$ since $Y = iXZ$, so the action on $X$ and $Z$ gives and fixes the action on $Y$.
 
-The state $\ket{0}$ is stabilized by $Z$, and after applying the Hadamard to $\ket{0}$ to get the new state $\ket{+}$, we see that it is now stabilized by $X$. The power in this example can be seen once you consider the general $n$ qubit case. Consider the state $\ket{0}^{\otimes n}$ whose stabilizer is $\langle Z_1, Z_2, \dots , Z_n \rangle$. Then applying the Hadamard to each of of the $n$ qubits gives a state with stabilizer $\langle X_1 , X_2, \dots , X_n \rangle $. Now, observe that the final state vector here requires $2^n$ amplitudes to be specified, compared with the description provided by the generators: $\langle X_1, \dots , X_n \rangle$, which is linear in $n$. 
+\begin{proposition}
+\label{CliffordPtoP}
+If $P \in \mathcal{P}(n)$ and $C \in \mathcal{C}(n)$ then $CPC^{\dag} \in \mathcal{P}(n)$.
+\end{proposition}
+\begin{proof}
+By computation.
+\end{proof}
 
-You can see that there is no entanglement in the quantum computer here, after applying the Hadamard to each qubit. This may lead to thinking that this stabilizer formalism is not so useful, however this changes when you see that there is an efficient description of the controlled-NOT gate, which together with the Hadamard gate can create entanglement. 
+%The state $\ket{0}$ is stabilized by $Z$, and after applying the Hadamard to $\ket{0}$ to get the new state $\ket{+}$, we see that it is now stabilized by $X$. The power in this example can be seen once you consider the general $n$ qubit case. Consider the state $\ket{0}^{\otimes n}$ whose stabilizer is $\langle Z_1, Z_2, \dots , Z_n \rangle$. Then applying the Hadamard to each of of the $n$ qubits gives a state with stabilizer $\langle X_1 , X_2, \dots , X_n \rangle $. Now, observe that the final state vector here requires $2^n$ amplitudes to be specified, compared with the description provided by the generators: $\langle X_1, \dots , X_n \rangle$, which is linear in $n$. 
+%
+%You can see that there is no entanglement in the quantum computer here, after applying the Hadamard to each qubit. This may lead to thinking that this stabilizer formalism is not so useful, however this changes when you see that there is an efficient description of the controlled-NOT gate, which together with the Hadamard gate can create entanglement. 
+%
+%It turns out that any unitary in the Clifford group can be composed of Hadamard, phase and controlled-NOT gates. Before we prove this, we need the following two lemma's.
 
-It turns out that any unitary in the Clifford group can be composed of Hadamard, phase and controlled-NOT gates. Before we prove this, we need the following two lemma's.
+The previous proposition shows that Cliffords map Paulis to Paulis under conjugation. We now show that, in fact, any unitary operator that maps Paulis to Paulis under conjugation is an element of the Clifford group (up to a scalar). Our proof follows from \cite{nielsen00}.
 
 \begin{lemma}
 \label{ConjX}
@@ -382,7 +407,7 @@ To prove this we simply list all possible $D$ circuits required for each $Q$:
 
 \begin{theorem}
 \label{HSCNOT}
-Let $U \in \mathcal{C}(2)$, then up to a global phase $U$ may be composed of $H$, $S$, and $CNOT$ gates.
+Let $U$ be a unitary operator that maps Paulis to Paulis under conjugation. Then, up to a global phase, $U$ may be composed of $H$, $S$, and $CNOT$ gates.
 \end{theorem}
 \begin{proof}
 We proceed by induction on $n$, the number of qubits.
@@ -393,18 +418,17 @@ For the base case, let $U$ be a single qubit unitary operator that maps $\mathca
 Now, let $UXU^\dag = Q$ and $UZU^\dag = R$. Then let $F = V^\dag U$, where $V$ comes from Lemma \ref{ConjX} (so $VXV^\dag = Q$). Then $FXF^\dag = X$ and $FZF^\dag = V^\dag R V = R'$ for some $R' \in \mathcal{P}(1)$. Moreover, by Lemma \ref{ConjZ}, there exists a $G$ such that $GR'G^\dag = Z$ and $GXG^\dag = X$. So:
 \[ 
 G FXF^\dag G^\dag = G XG^\dag = X  \quad \mbox{ and } \quad
-G FZF^\dag G^\dag = G R' G^\dag = Z 
-\].
+G FZF^\dag G^\dag = G R' G^\dag = Z.
+\]
 Note $\mathcal{P}(1)$ is generated by $X$, $Z$, and $i$, and neither $Q$, nor $R$ can be $i$ since $U$ is an automorphism. Thus we know how $U$ acts on the generators of $\mathcal{P}(1)$, so $U = VG^\dag$. From this $U$ is comprised of only $H$ and $S$ gates as desired.
 
-Now, suppose $U$ is an $n+1$ qubit gate in $N(G_{n+1})$ such that $UZ_1U^{\dag} = X \otimes g$ and $UX_1U^{\dag} = Z \otimes g'$ for some $g, g' \in G_n$.
-Define a circuit $C$ as:
+Now, suppose $U$ is an $n+1$ qubit unitary that maps Paulis to Paulis under conjugation and suppose that $UZ_1U^{\dag} = X \otimes g$ and $UX_1U^{\dag} = Z \otimes g'$ for some $g, g' \in \mathcal{P}_n$. Here $X_1$ is the gate $X \otimes P_n$ where $P_n \in \mathcal{P}_n$, meaning that $X$ is applied to the first qubit and some other Pauli $P_n$ is applied to the rest. Now, define a circuit $C$ as:
 \begin{center}
 $
 \Qcircuit @C=0.5em @R=.7em {
    & \qw & \qw & \ctrl{1} & \qw & \gate{H} & \qw & \ctrl{1} & \qw  \\
    & {/} \qw & \qw & \gate{g'} & \qw & \qw & \qw & \gate{g} & \qw  
-   }
+   }.
 $
 \end{center}
 
@@ -436,10 +460,8 @@ CZ_1C^\dag = \hspace{2mm} & \Qcircuit @C=0.5em @R=.7em {
    & \qw & \gate{g} & \qw 
    } 
 \end{align*}
-
-
 Note that $g$ and $g'$ commute, as can be seen below:
-\begin{align}
+\begin{align*}
 XZ \otimes gg' &= (X \otimes g)(Z \otimes g') \\
  &= UZ_1U^{\dag}UX_1U^{\dag} \\ 
  &= -UX_1Z_1U^\dag \\
@@ -447,13 +469,13 @@ XZ \otimes gg' &= (X \otimes g)(Z \otimes g') \\
  &= -(Z \otimes g')(X \otimes g) \\
  &= -(ZX \otimes g'g) \\
  &= XZ \otimes g'g \\
-\end{align}
+\end{align*}
 Then we have that $I \otimes gg' = I \otimes g'g$, so applying the inverse of $I \otimes gg'$ to both sides, we have:
-\begin{align}
+\begin{align*}
 I_{n+1} &= (I \otimes g'g)(I \otimes gg')^{-1} \\
  &= (I \otimes g'g)(I \otimes g'^{-1}g^{-1}) \\ 
  &= I \otimes g'gg'^{-1}g^{-1} \\
-\end{align}
+\end{align*}
 where $I_{n+1}$ is the identity on $n+1$ qubits. This implies that $g'gg'^{-1}g^{-1} = I_n$, thus $g'g = gg'$.
 
 Now we make use of this commutation to show that $CX_1C^\dag = Z_1 \otimes g'$:
@@ -487,16 +509,16 @@ CX_1C^\dag = \hspace{2mm} & \Qcircuit @C=0.5em @R=.7em {
 \end{align*}
 
 
-Consider $U':= C^\dag U$. Then 
+Note here that $g$ and $g'$ are multiqubit gates, and the wire it is on is representing $n$ wires or $n$ qubits. Now, consider $U':= C^\dag U$. Then 
 \begin{center}
 $U'X_1U'^\dag = C^\dag U X_1 U^\dag C = C^\dag (Z \otimes g') C = X_1$
 \end{center} and 
 \begin{center}
 $U'Z_1U'^\dag = C^\dag U Z_1 U^\dag C = C^\dag (X \otimes g) C = Z_1$
 \end{center}
-so $U' \in \mathcal{C}(2)$.
+so $U' \in \mathcal{C}(1)$.
 
-Now let $U \in \mathcal{C}(n+1)$ so $UX_1U^\dag = P$ and $UZ_1U^\dag = Q$ for some $P, Q \in \mathcal{P}(n+1)$. Then we can write $P = A \otimes g$ and $Q = B \otimes g'$ for $g, g' \in \mathcal{P}(n)$. From the inductive step, we can conjugate $UX_1U^\dag = P$ with some circuit $C$, which is comprised of only Hadamards and phase gates, such that 
+Now let $U \in \mathcal{C}(n+1)$ so $UX_1U^\dag = P$ and $UZ_1U^\dag = Q$ for some $P, Q \in \mathcal{P}(n+1)$. Then we can write $P = A \otimes g$ and $Q = B \otimes g'$ for $g, g' \in \mathcal{P}(n)$ and $A, B \in \mathcal{P}(1)$. From the inductive step, we can conjugate $UX_1U^\dag = P$ with some circuit $C$, which is comprised of only Hadamards and phase gates, such that 
 \begin{center}
 $CUX_1U^\dag C^\dag = CPC^\dag = C(A \otimes g)C^\dag = Z \otimes g$
 \end{center}
@@ -522,20 +544,15 @@ Let $U' = CU$, then by the inductive step, $U' \in \mathcal{C}(n)$. Next we repe
 %To prove this theorem, we need the following two lemma's.
 %
 
-Both Lemma \ref{ConjX} and Lemma \ref{ConjZ} can be generalized to show that the Clifford group is the normalizer of the Pauli group.
-
-\begin{proposition}
-\label{CliffordPtoP}
-If $P \in \mathcal{P}(n)$ and $C \in \mathcal{C}(n)$ then $CPC^{\dag} \in \mathcal{P}(n)$.
-\end{proposition}
-\begin{proof}
-By computation.
-\end{proof}
+The above theorem, together with Corollary \ref{CliffordPtoP}, shows that up to a scalar the Clifford group is the normalizer of the Pauli group.
 
 
 
-\section{Universal extensions of the Clifford gates}
-We can do many interesting things with the Clifford circuits, namely creating  superpositions and entanglement of states. A superposition is a linear combination of single ket vectors, so simply applying $H$ to $\ket{0}$ would give $\ket{+}=(\ket{0}+\ket{1})/\sqrt{2}$. To achieve entanglement means to find some circuit that when applied to some un-entangled qubits the output state is an entangled state. As an example, consider the entangled state $\frac{\ket{00}+\ket{11}}{\sqrt{1}}$, then the following circuit with input $\ket{00}$ with output the entangled state.
+
+
+
+\section{Universal Extensions of the Clifford Gates}
+We can do many interesting things with Clifford circuits. In particular, we can create superpositions and entanglement of states. A superposition is a linear combination of single ket vectors, so simply applying $H$ to $\ket{0}$ would give $\ket{+}=(\ket{0}+\ket{1})/\sqrt{2}$. To achieve entanglement means to find some circuit that when applied to some un-entangled qubits the output state is an entangled state. As an example, consider the entangled state $\frac{\ket{00}+\ket{11}}{\sqrt{1}}$, then the following circuit with input $\ket{00}$ with output the entangled state.
 
 \begin{equation*}
 \Qcircuit @C=0.8em @R=.8em {
@@ -545,17 +562,17 @@ We can do many interesting things with the Clifford circuits, namely creating  s
 \end{equation*}
 
 
-Note the Clifford group is finite. This comes from the fact that it maps Pauli's to Pauli's under conjugation, effectively meaning that Clifford circuits act as permutations of the Pauli group. Since there are $4^{n+1}$ Pauli's, consider a fixed Pauli. Then there are $|\mathcal{P}(n)| = 4^{n+1}$ Clifford circuits that permute this Pauli into all other possible Pauli's. Repeat this for each Pauli to get $|\mathcal{C}(n)| \leq 4^{(n+1)^{4^{n+1}}}$. And in fact this simplifies to ...
+Note that the Clifford group is finite. This comes from the fact that it maps Paulis to Paulis under conjugation, effectively meaning that Clifford circuits act as permutations of the Pauli group. Hence, since there are $4^{n+1}$ Paulis, there are at most $(4^{(n+1)^{(n+1)}}$ Cliffords. That is $|\mathcal{C}(n)| \leq 4^{(n+1)^{4^{n+1}}}$. In fact, the exact cardinality of the Clifford group is well known  and is $8 \cdot \prod\limits_{i=1}^n 2(4^i - 1)4^i$ \cite{Selinger_gen}. 
 
-Moreover, the Gottesman Knill theorem shows a relation in power between the quantum computer and classical computer.
+Moreover, the Gottesman-Knill theorem shows a relation in power between the quantum computer and classical computer.
 
-\begin{theorem}[Gottesman-Knill theorem]
+\begin{theorem}[Gottesman-Knill Theorem]
 Suppose a quantum computation is performed which involves only the following elements: state preparations in the computational basis, Hadamard gates, phase gates, controlled-NOT gates, Pauli gates, and measurements of observables in the Pauli group, together with the possibility of classical control conditioned on the outcome of such measurements. Such a computation may be efficiently simulated on a classical computer.
 \end{theorem}
 
-In short, the Gottesman-Knill theorem essentially states that stabilizer operations can be classically simulated efficiently, meaning in polynomial time. There is an algorithm to do this on a classical computer with $O(n^2m)$ operations, called the Tableau algorithm. It works by keeping track of the generators of the stabilizer, and continuing to update it as various operations are performed throughout the computation. 
+In short, the Gottesman-Knill theorem states that stabilizer operations can be classically simulated efficiently (in polynomial time). There is an algorithm to do this on a classical computer with $O(n^2m)$ operations, called the Tableau algorithm. 
 
-This means they are not universal, so there are quantum computations that cannot be simulated effectively with just the Clifford group and measurements. The next theorem provides a fix for this, so we state it here without proof.
+The Gottesman-Knill theorem (and the finiteness of the Clifford group) means that stabilizer operations are not \emph{universal}. That is, there are quantum computations that cannot be simulated effectively with just the Clifford group and measurements. The next theorem, which is proved in (cite Nebe), provides a fix for this.
 
 \begin{theorem}
 If $G$ is a non-Clifford gate then $\{ H, S, CNOT, G \}$ is universal for quantum computing.
@@ -592,7 +609,7 @@ CCZ =
 0 & 0 & 0 & 0 & 0 & 0 & 0 & -1 
 \end{bmatrix}.
 \end{equation*}
-Note the $CCZ$ gate is used interchangeably with the Toffoli or $CCX$ gate as they are equal upon simple conjugation by a $H$ gate on the target qubit. Unfortunately analysing quantum circuits that include these gates via the stabilizer formalism is rather inconvenient. To see why these gates are not in the Clifford group, simply observe the following example conjugation calculations from \cite{beverland2019lower}:
+Note the $CCZ$ gate is used interchangeably with the Toffoli or $CCX$ gate as they are equal upon simple conjugation by a $H$ gate on the target qubit. To see why these gates are not in the Clifford group, simply observe the following example conjugation calculations from \cite{beverland2019lower}:
 \begin{center}
 $TXT^{\dag} = \frac{X+Y}{\sqrt{2}}$
 \end{center}
@@ -602,11 +619,11 @@ $UX_1U^{\dag} = CNOT_{1,2}S_1S_2^{\dag}CNOT_{1, 2}X_1$
 \begin{center}
 $VX_1V^{\dag} = X_1 \otimes \frac{I + Z_2 +X_3 -Z_2X_3}{2}$
 \end{center}
-where we let $U$ and $V$ be the $CS$ and Toffoli or $CCX$ gates respectively, where qubit $1$ is the control and qubit $2$ is the target for the $CS$ gate, and qubits $1$ and $2$ are controls and qubit $3$ is the target for the $CCX$ gate. Fortunately, we are still able to make use of the stabilizer formalism and relate it to these gates, particularly to the $T$ gate, later on.
+where we let $U$ and $V$ be the $CS$ and Toffoli or $CCX$ gates respectively, where qubit $1$ is the control and qubit $2$ is the target for the $CS$ gate, and qubits $1$ and $2$ are controls and qubit $3$ is the target for the $CCX$ gate. 
 
 This naturally gives the sense that non-Clifford gates are a resource that enables full quantum computing, meaning that each non-Clifford gate is an expensive commodity that ideally is used as little as possible. This is also corroborated by the fact that in fault-tolerant quantum computing Clifford gates are typically cheap whereas non-Clifford gates are typically expensive. Thus this is the motivation behind attempting to limit the number of non-Clifford gates used. Finding lower bounds and upper bounds also gives an idea as to whether or not more or less of a certain non-Clifford gate can be used. If there is a circuit the uses the same number of non-Clifford gate as the calculated lower bound, then we know cannot do any better.
 
-\section{Computing with states}
+\section{Computing With States}
 Instead of using non-Clifford gates to perform universal quantum computing, one can use a special kind of state to \emph{inject} the desired gate into a circuit. The useful states for this purpose are defined below.
 
 \begin{definition}
@@ -616,32 +633,93 @@ We define the following resource states:
 \end{equation*}
 \end{definition}
 
-The above states can be used to apply the corresponding gates using the injection circuits given below.
+The above states can be used to apply the corresponding gates using the injection circuits from \cite{beverland2019lower}. We provide them here for reference.
 
+\begin{figure}[H]
+\caption{Injection circuits}
+\begin{subfigure}[h]{\textwidth}
+\centering
+$
+\Qcircuit @C=0.5em @R=.8em {
+   & & & \targ & \qw & \qw & \meter & \cw & \cw & \ctrl{4} \cw \cwx[4]  \\
+   & & & \qw & \targ & \qw & \meter & \ctrl{3} \cw \cwx[3] & \cw & \cw & \cw & \ctrl{2} \cw \cwx[2] & \cw & \ctrl{3} \cw \cwx[3] \\
+   & & & \qw & \qw & \targ & \meter & \cw & \ctrl{3} \cw \cwx[3] & \cw & \cw & \cw & \cw & \cw & \cw & \cw & \cw & \ctrl{1.5} \cw \cwx[1] & \ctrl{2} \cw \cwx[2] \inputgroupv{1}{3}{0.5em}{2.1em}{\ket{CCZ} \hspace{3mm}} \\
+   & & & \ctrl{-3} & \qw & \qw & \qw & \qw & \qw & \qw & \qswap & \gate{X} & \qw & \qw & \qswap & \qw & \qswap & \gate{X} & \qw & \qswap & \qw & & & \raisebox{-12ex}{\hspace{4mm} $\Bigg\} CZZ \ket{\alpha} $} \\
+   & & & \qw & \ctrl{-3} & \qw & \qw & \gate{X} & \qw & \multigate{1}{CZ} & \qswap \qwx & \qw  & \qw & \multigate{1}{CZ} & \qswap \qwx & \qw & \qw & \qw & \multigate{1}{CZ} & \qw & \qw & \\
+   & & & \qw & \qw & \ctrl{-3} & \qw & \qw & \gate{X} & \ghost{CZ} & \qw & \qw & \qw & \ghost{CZ} & \qw & \qw & \qswap \qwx[-2] & \qw & \ghost{CZ} & \qswap \qwx[-2] & \qw \inputgroupv{4}{6}{0.5em}{1.9em}{\ket{\alpha}}
+   } 
+$
+\vspace{3mm}
+\caption{Injection circuit for the CCZ gate}
+\end{subfigure}
 
+\vspace{6mm}
 
+\begin{subfigure}[h]{\textwidth}
+\centering
+$
+\Qcircuit @C=0.8em @R=.8em {
+   \raisebox{-8ex}{$\ket{CS} \Bigg\{ $} & & & \qw & \targ & \qw & \meter & \ctrl{2} \cw \cwx[2] & \cw & \cw & \ctrl{2} \cw \cwx[2] \\
+   & & & \qw & \qw & \targ & \meter & \cw & \ctrl{2} \cw \cwx[2] & \cw & \cw & \cw & \ctrl{1} \cw \cwx[1] \\
+   \raisebox{-8ex}{$\ket{\alpha} \Bigg\{ $} & & & \qw & \ctrl{-2} & \qw & \qw & \gate{X} & \qw & \qw & \multigate{1}{Fix_{CS}} & \qswap & \multigate{1}{Fix_{CS}} & \qswap & \qw & & \raisebox{-8ex}{$\Bigg\} CS \ket{\alpha} $} \\
+   & & & \qw & \qw & \ctrl{-2} & \qw & \qw & \gate{X} & \qw & \ghost{Fix_{CS}} & \qswap \qwx  & \ghost{Fix_{CS}} & \qswap \qwx & \qw
+   } 
+$
+\vspace{3mm}
+\caption{Injection circuit for the CS gate}
+\end{subfigure}
+
+\vspace{6mm}
+
+\begin{subfigure}[h]{\textwidth}
+\centering
+$
+\Qcircuit @C=0.8em @R=.8em {
+   \lstick{\ket{T}} & \qw & \targ & \meter & \ctrl{1} \cw \cwx[1] \\
+   \lstick{\ket{\alpha}} & \qw & \ctrl{-1} & \qw & \gate{S} & \qw & \rstick{T\ket{\alpha}}
+   } 
+$
+\vspace{3mm}
+\caption{Injection circuit for the T gate}
+\end{subfigure}
+\end{figure}
+
+The $Fix_{CS}$ gate in the circuit for the $\ket{CS}$ state is
+
+\begin{equation*}
+\Qcircuit @C=0.8em @R=.8em {
+   & \qw & \ctrl{1} & \gate{X} & \ctrl{1} & \qw \\
+   & \qw & \gate{S^{\dag}} & \qw & \gate{S}  & \qw
+   }
+\end{equation*}
+
+and 
+\begin{equation*}
+\Qcircuit @C=0.8em @R=.8em {
+   &  \qswap & \qw \\
+   &  \qswap \qwx & \qw
+   } 
+\end{equation*}
+represents a SWAP gate, which simply exchanges the two inputs for each other.
 
 In contrast to resource states, we also define a \emph{stabilizer state}.
 
 \begin{definition}
-A \emph{stabilizer state} is a state of the form $\ket{\phi} = C \ket{0}^{\otimes n}$ for some Clifford unitary C. 
+A \emph{stabilizer state} is a state of the form $\ket{\phi} = C \ket{0}^{\otimes n}$ for some Clifford unitary $C$. 
 \end{definition}
+
 
 \begin{definition}
-Let $\ket{\psi}$ be a quantum state and $U$ be an operator, then we say that $\ket{\psi}$ is \emph{stabilized} by $U$ if $U\ket{\psi} = \ket{\psi}$. 
-\end{definition}
-
-\begin{definition}[Stabilizer]
-Let $\ket{\psi}$ be a non-zero $n$-qubit state. The \emph{stabilizer} of $\ket{\psi}$ is the subgroup $\mathcal{P}(n)$ for which $\ket{\psi}$ is a $+1$ eigenstate, and is denoted by Stab$\ket{\psi}$. 
+Let $\ket{\psi}$ be a non-zero $n$-qubit state and $U$ be an operator. Then we say that $\ket{\psi}$ is \emph{stabilized} by $U$ if $U\ket{\psi} = \ket{\psi}$. The \emph{stabilizer} of $\ket{\psi}$ is the subgroup $\mathcal{P}(n)$ consisting of the Paulis that stabilize $\ket{\psi}$. It is denoted by Stab$\ket{\psi}$. 
 \end{definition}
 
 This means that Stab$\ket{\psi}$ = $\{P \in \mathcal{P}(n) \: P \ket{\psi} = \ket{\psi} \}$. States for which the stabilizer contains only the identity matrix are said to have a trivial stabilizer. 
 
-\begin{definition}[Stabilizer States]
-Let $\ket{\psi}$ be a state for which the size of its stabilizer is $2^n$. The we call $\ket{\psi}$ a stabilizer state.
-\end{definition}
+%\begin{definition}[Stabilizer States]
+%Let $\ket{\psi}$ be a state for which the size of its stabilizer is $2^n$. The we call $\ket{\psi}$ a stabilizer state.
+%\end{definition}
 
-The reason behind using this stabilizer formalism is that we can easily describe many quantum states by working with operators that stabilize them, rather than by explicitly working with the states themselves. A key component to making use of the stabilizer formalism lies in the Pauli group $\mathcal{P}(n)$ defined above. Next are a few propositions regarding the stabilizer.
+The reason behind using this stabilizer formalism is that we can easily describe many quantum states by working with operators that stabilize them, rather than by explicitly working with the states themselves. Next are a few propositions regarding the stabilizer.
 
 \begin{proposition}
 \label{stabilizerfacts}
@@ -658,41 +736,42 @@ Let $\ket{\psi}$ be a non-zero n qubit state. Then we have the following facts a
 \begin{proof}
 \hspace{20mm}
 \begin{enumerate}
-\item If $\-I \in \text{Stab}\ket{\psi}$, then $-\ket{\psi} =-I\ket{\psi} = \ket{\psi}$, which of course is not true for non-zero states.
+\item If $-I \in \text{Stab}\ket{\psi}$, then $-\ket{\psi} =-I\ket{\psi} = \ket{\psi}$, which of course is not true for non-zero states.
 
-\item First note that for any two Pauli's $P, Q$, they either commute or anti-commute. Now suppose $P, Q \in \text{Stab}\ket{\psi}$ anti-commute. Then $\ket{\psi} = PQ\ket{\psi} = -QP\ket{\psi} = -\ket{\psi}$. This implies that $-I \in \text{Stab}\ket{\psi}$, which from above can't be true, so $P$ and $Q$ must commute.
+\item First note that for any two Paulis $P, Q$, they either commute or anti-commute. Now suppose $P, Q \in \text{Stab}\ket{\psi}$ anti-commute. Then $\ket{\psi} = PQ\ket{\psi} = -QP\ket{\psi} = -\ket{\psi}$. This implies that $-I \in \text{Stab}\ket{\psi}$, which from above can't be true, so $P$ and $Q$ must commute.
 
-\item It is known that the Pauli group's cardinality is a power of two, and since $\text{Stab}\ket{\psi}$ is a subgroup of the Pauli group, $|\text{Stab}\ket{\psi}|$ must divide a power of two, thus it must also be a power of two.
+\item It is known that the cardinality of the Pauli group is a power of two, and since $\text{Stab}\ket{\psi}$ is a subgroup of the Pauli group, $|\text{Stab}\ket{\psi}|$ must divide a power of two, thus it must also be a power of two.
 
-\item First note that Clifford unitaries normalize pauli matrices, i.e. for some Clifford unitary $C$, and some pauli $P$, $CPC^{\dag} = P'$, where $P'$ is also a pauli. Now let $P \in \text{Stab}\ket{\psi}$ and let $C$ be some Clifford unitary. Then $P'C\ket{\psi} = CPC^{\dag}C\ket{\psi} = CP\ket{\psi} = C\ket{\psi}$, so $P' \in \text{Stab}(C\ket{\psi})$. Now consider the map $\theta_C : \text{Stab}\ket{\psi} \rightarrow \text{Stab}(C\ket{\psi})$ which takes elements $P \mapsto CPC^{\dag} = P'$. This map has an inverse, $\theta_{C^\dag}: \text{Stab}(C\ket{\psi}) \longrightarrow \text{Stab}(C^{\dag}C\ket{\psi})$, which takes elements $P' \mapsto C^{\dag}P'C$ (where we note that $\text{Stab}(C^{\dag}C\ket{\psi}) = \text{Stab}\ket{\psi}$). Thus $\theta_C$ is a bijection, and so we have that $|\text{Stab}\ket{\psi}| = |\text{Stab}(C\ket{\psi})|$.
+\item Recall that Clifford unitaries normalize Ppauli matrices. Now let $P \in \text{Stab}\ket{\psi}$ and let $C$ be some Clifford unitary. Then $CPC^{\dag}C\ket{\psi} = CP\ket{\psi} = C\ket{\psi}$, so $CPC^{\dag} \in \text{Stab}(C\ket{\psi})$. Now consider the map $\theta_C : \text{Stab}\ket{\psi} \rightarrow \text{Stab}(C\ket{\psi})$ which acts as $P \mapsto CPC^{\dag}$. This map has an inverse, $\theta_{C^\dag}: \text{Stab}(C\ket{\psi}) \longrightarrow \text{Stab}(C^{\dag}C\ket{\psi})$, which acts as $P' \mapsto C^{\dag}P'C$ (where we note that $\text{Stab}(C^{\dag}C\ket{\psi}) = \text{Stab}\ket{\psi}$). Thus $\theta_C$ is a bijection, and so we have that $|\text{Stab}\ket{\psi}| = |\text{Stab}(C\ket{\psi})|$.
 
-\item Let $\ket{\phi}$ be another non-zero state on n qubits, and let $P \in \text{Stab}\ket{\psi}$ and $Q \in \text{Stab}\ket{\phi}$. Then $P \otimes Q \ket{\psi}\ket{\phi} = P\ket{\psi} \otimes Q\ket{\phi} = \ket{\psi}\ket{\phi}$. So $P \otimes Q \in \text{Stab}\ket{\psi}\ket{\phi}$. Now let $R \in \text{Stab}\ket{\psi}\ket{\phi}$. Then since $R$ is a Pauli, we can write $R = R_1 \otimes R_2$, and $R\ket{\psi}\ket{\phi} = \ket{\psi}\ket{\phi} = R_1 \otimes R_2 \ket{\psi}\ket{\phi} = R_1\ket{\psi} \otimes R_2\ket{\phi}$. Now let $\ket{\psi '} = R_1\ket{\psi}$ and $\ket{\phi '} = R_2\ket{\phi}$, and since $R_1$ and $R_2$ are both Clifford unitaries, fact 4 gives us that $|\text{Stab}\ket{\psi '}| = |\text{Stab}(R_1\ket{\psi})|$ and $|\text{Stab}\ket{\phi '}| = |\text{Stab}(R_2\ket{\phi})|$. We also have that $|\text{Stab}(R\ket{\psi}\ket{\phi})| = |\text{Stab}\ket{\psi '}\ket{\phi '}|$.
-
+\item Let $\ket{\phi}$ be another non-zero state on $n$ qubits, and let $P \in \text{Stab}\ket{\psi}$ and $Q \in \text{Stab}\ket{\phi}$. Then $P \otimes Q \ket{\psi}\ket{\phi} = P\ket{\psi} \otimes Q\ket{\phi} = \ket{\psi}\ket{\phi}$. So $P \otimes Q \in \text{Stab}\ket{\psi}\ket{\phi}$. Now let $R \in \text{Stab}\ket{\psi}\ket{\phi}$. Then since $R$ is a Pauli, we can write $R = R_1 \otimes R_2$, and $R\ket{\psi}\ket{\phi} = \ket{\psi}\ket{\phi} = R_1 \otimes R_2 \ket{\psi}\ket{\phi} = R_1\ket{\psi} \otimes R_2\ket{\phi}$. Now let $\ket{\psi '} = R_1\ket{\psi}$ and $\ket{\phi '} = R_2\ket{\phi}$, and since $R_1$ and $R_2$ are both Clifford unitaries, fact 4 gives us that $|\text{Stab}\ket{\psi '}| = |\text{Stab}(R_1\ket{\psi})|$ and $|\text{Stab}\ket{\phi '}| = |\text{Stab}(R_2\ket{\phi})|$. We also have that $|\text{Stab}(R\ket{\psi}\ket{\phi})| = |\text{Stab}\ket{\psi '}\ket{\phi '}|$.
 
  So every element in $\text{Stab}\ket{\psi}\ket{\phi}$ is of the form $R_1 \otimes R_2$ as above, thus $\text{Stab}\ket{\psi}\ket{\phi} = \text{Stab}\ket{\psi} \otimes \text{Stab}\ket{\phi}$. Then we have a bijection (from the direct product) $\theta:\text{Stab}\ket{\psi} \times \text{Stab}\ket{\phi} \longrightarrow  \text{Stab}\ket{\psi} \otimes \text{Stab}\ket{\phi}$, which gives us $|\text{Stab}\ket{\psi}\ket{\phi}| = |\text{Stab}\ket{\psi} \otimes \text{Stab}\ket{\phi}| = |\text{Stab}\ket{\psi}| \cdot |\text{Stab}\ket{\phi}|$.
+ \qedhere
 \end{enumerate}
 \end{proof}
 
 
 
-An example of a stabilizer state is the $\ket{0}$ state, since there are $2^1$ pauli's that stabilize it, namely $I$ and $Z$. Note that, from fact 4 in Proposition \ref{stabilizerfacts}, for any Clifford $C$, $|\text{Stab}\ket{0}| = |Stab(C\ket{0})| = 2^1 \implies C\ket{0}$ is a stabilizer state. And an example of a non-stabilizer state is $\ket{\psi} = \frac{1}{\sqrt{2}}(\ket{00} + \frac{i}{2} \ket{11})$, which through computation one can find that it has the following stabilizers: $I \otimes I$ and $Z \otimes Z$. Since there are only $2$ stabilizers, and $2 \neq 2^2$, $\ket{\psi}$ cannot be a stabilizer state.
-
-\begin{corollary}
-The computational basis state $\ket{00 \dots 0}$ on n-qubits is a stabilizer state. If $\ket{\psi}$ is a basis state, then it is a stabilizer state. 
-\end{corollary}
-\begin{proof}
-First we prove that $\ket{00 \dots 0}$ is a stabilizer state by induction, where the base case is the $\ket{0}$ state which we know is a stabilizer state from above (and $|\text{Stab}\ket{0}| = 2^1$). Now assume that $\ket{00 \dots 0}$ is a stabilizer state on n-qubits with $|\text{Stab}\ket{00 \dots 0}| = 2^n$. Let $P \in \text{Stab}\ket{0}$ and $Q \in \text{Stab}\ket{00 \dots 0}$, then $(P \otimes Q)\ket{0}\ket{00 \dots 0} = P\ket{0} \otimes Q\ket{00 \dots 0} = \ket{0}\ket{00 \dots 0} = \ket{00 \dots 00}$ (n+1 qubits). So $P \otimes Q \in \text{Stab}\ket{00 \dots 00}$, and from above arguments we know that every element in $\text{Stab}\ket{00 \dots 00}$ is of this form, thus there are $2^{n+1}$ elements in $\text{Stab}\ket{00 \dots 00}$, making it a stabilizer state.
-
-
-Next, if $\ket{\psi}$ is an $n$-qubit basis state, then it differs from the $n$-qubit computational basis state $\ket{00 \ldots 0}$ by only a Clifford unitary, i.e. $C\ket{00 \ldots 0} = \ket{\psi}$ for some Clifford circuit C. Then as remarked above, it follows that $\ket{\psi}$ is a stabilizer state.
-\end{proof}
+%\begin{corollary}
+%The computational basis state $\ket{00 \dots 0}$ on n-qubits is a stabilizer state. If $\ket{\psi}$ is a basis state, then it is a stabilizer state. 
+%\end{corollary}
+%\begin{proof}
+%First we 
+%\end{proof}
 
 \begin{theorem}
-If $\ket{\psi}$ is a stabilizer state, then there is a circuit $C$ such that $C\ket{\psi} = \ket{00 \dots 0}$.
+Let $\ket{\psi}$ be a non-zero $n$-qubit state. Then $\ket{\psi}$ is a stabilizer state if and only if $|\Stab \ket{\psi}| = 2^n$. 
 \end{theorem}
 \begin{proof}
-By Theorem 8 in \cite{}, every stabilizer state can be represented by a tableau, which can then be converted into a tableau that represents the $\ket{00 \dots 0}$ state using only Clifford operations. Applying these Clifford operators is equivalently applying Clifford operators to the appropriate qubits of $\ket{\psi}$, thus resulting in a Clifford circuit $C$ such that $C\ket{\psi} = \ket{00 \dots 0}$. 
+For the left-to-right direction, we first prove that $\ket{00 \dots 0}$ is a stabilizer state by induction. The base case is the $\ket{0}$ state which we know is a stabilizer state since $|\text{Stab}\ket{0}| = 2^1$. Now assume that $\ket{00 \dots 0}$ is a stabilizer state on $n$-qubits with $|\text{Stab}\ket{00 \dots 0}| = 2^n$. Let $P \in \text{Stab}\ket{0}$ and $Q \in \text{Stab}\ket{00 \dots 0}$, then $(P \otimes Q)\ket{0}\ket{00 \dots 0} = P\ket{0} \otimes Q\ket{00 \dots 0} = \ket{0}\ket{00 \dots 0} = \ket{00 \dots 00}$ (n+1 qubits). So $P \otimes Q \in \text{Stab}\ket{00 \dots 00}$, and from above arguments we know that every element in $\text{Stab}\ket{00 \dots 00}$ is of this form, thus there are $2^{n+1}$ elements in $\text{Stab}\ket{00 \dots 00}$, making it a stabilizer state.
+
+Next, if $\ket{\psi}$ is an $n$-qubit basis state, then it differs from the $n$-qubit computational basis state $\ket{00 \ldots 0}$ by only a Clifford unitary, i.e. $C\ket{00 \ldots 0} = \ket{\psi}$ for some Clifford circuit C. Then by point $4$ in Proposition \ref{stabilizerfacts}, it follows that $\ket{\psi}$ is a stabilizer state.
+
+For the other direction we use methods in \cite{Aaronson_2004}. In this paper,  Theorem 8 states that every stabilizer state can be represented by a tableau, which can then be converted into a tableau that represents the $\ket{00 \dots 0}$ state using only Clifford operations. Applying these Clifford operators is equivalently applying Clifford operators to the appropriate qubits of $\ket{\psi}$, thus resulting in a Clifford circuit $C$ such that $C\ket{\psi} = \ket{00 \dots 0}$. 
 \end{proof}
+
+An example of a non-stabilizer state is $\ket{\psi} = \frac{1}{\sqrt{2}}(\ket{00} + \frac{i}{2} \ket{11})$, which through computation one can find that it has the following stabilizers: $I \otimes I$ and $Z \otimes Z$. Since there are only $2$ stabilizers, and $2 \neq 2^2$, $\ket{\psi}$ cannot be a stabilizer state.
 
 \begin{theorem}
 If $\ket{\psi}$ is an $n$-qubit stabilizer state, then $\textit{Stab}\ket{\psi}$ uniquely determines $\ket{\psi}$.
@@ -701,19 +780,19 @@ If $\ket{\psi}$ is an $n$-qubit stabilizer state, then $\textit{Stab}\ket{\psi}$
 First note that each $P \in \textit{Stab}\ket{\psi}$ imposes the linear constraint that $P\ket{\psi} = \ket{\psi}$ on the $2^n$-dimensional vector space. The subspace of vectors that satisfy this constraint has half of this space, meaning that it has dimension $2^{n-1}$. Let gen($\ket{\psi}$) be the set of generators for $\textit{Stab}\ket{\psi}$, where we add independent generators to gen($\ket{\psi}$) one by one. This way we subsequently half the dimension of the vector subspace that satisfies all the linear constraints, and since $|\textit{gen}(\ket{\psi})| = n$, this dimension reduces to $1$. Thus there is only one possible vector and so $\ket{\psi}$ is uniquely determined.
 \end{proof}
 
-\begin{definition}
-Let $S$ be a subgroup of $\mathcal{P}(n)$, and let $V_S$ be the set of $n$ qubit states which are fixed by every element of $S$. $V_S$ is the vector space stabilized by $S$, and we call $S$ the stabilizer of the space $V_S$. 
-\end{definition}
-
-We can also make use of the Pauli groups generators, where to check if a particular vector is stabilized by a group $S$, checking if the generators stabilize it will be sufficient.
-
-
-\begin{proposition}
-Let $S$ be a subgroup of $\mathcal{P}(n)$ and $V_S$ its associated vector space stabilized by $S$. Then if $V_S$ is not trivial $S$ is a commutative group that does not contain $-I$.
-\end{proposition}
-\begin{proof}
-Consider the subgroup $\{\pm I, \pm X \}$ of $\mathcal{P}(1)$. Obviously the only solution to $(-I)\ket{\psi} = \ket{\psi}$ is $\ket{\psi} = 0$, and so $\{\pm I, \pm X \}$ stabilizes the trivial vector space. An immediate consequence of this is that we need $-I$ to not be an element of $S$. Furthermore, all elements of $S$ must commute, because if they did not then they would anti-commute, so $-I$ would necessarily be an element of the group.
-\end{proof}
+%\begin{definition}
+%Let $S$ be a subgroup of $\mathcal{P}(n)$, and let $V_S$ be the set of $n$ qubit states which are fixed by every element of $S$. $V_S$ is the vector space stabilized by $S$, and we call $S$ the stabilizer of the space $V_S$. 
+%\end{definition}
+%
+%We can also make use of the Pauli groups generators, where to check if a particular vector is stabilized by a group $S$, checking if the generators stabilize it will be sufficient.
+%
+%
+%\begin{proposition}
+%Let $S$ be a subgroup of $\mathcal{P}(n)$ and $V_S$ its associated vector space stabilized by $S$. Then if $V_S$ is not trivial $S$ is a commutative group that does not contain $-I$.
+%\end{proposition}
+%\begin{proof}
+%Consider the subgroup $\{\pm I, \pm X \}$ of $\mathcal{P}(1)$. Obviously the only solution to $(-I)\ket{\psi} = \ket{\psi}$ is $\ket{\psi} = 0$, and so $\{\pm I, \pm X \}$ stabilizes the trivial vector space. An immediate consequence of this is that we need $-I$ to not be an element of $S$. Furthermore, all elements of $S$ must commute, because if they did not then they would anti-commute, so $-I$ would necessarily be an element of the group.
+%\end{proof}
 
 
 
@@ -797,7 +876,8 @@ Consider the subgroup $\{\pm I, \pm X \}$ of $\mathcal{P}(1)$. Obviously the onl
 
 
 \chapter{Monotones}
-In this chapter, we introduce \emph{monotones}, which are real-valued functions of states. In the next chapter, we will use these monotones to derive lower bounds for quantum circuits. 
+\label{monotones}
+In this chapter, we introduce \emph{monotones}, which are real-valued functions of states. In the next chapter, we will use these monotones to derive lower bounds for quantum circuits.  
 
 \section{Abstract Monotones}
 Recall that S is the collection of all states. We say that a collection of states $I \subseteq S$ is \emph{closed under tensor products} if $\ket{\phi}, \ket{\psi} \in I$ implies $\ket{\phi} \otimes \ket{\psi} \in I$. Similarly, we say that I is \emph{closed under the action of stabilizers} if $\ket{\phi} \in I$ and $C \in \mathcal{C}(n)$ implies $C\ket{\phi} \in I$.
@@ -824,7 +904,7 @@ We have the following properties for monotones:
 %
 %We make note here that the stabilizer nullity has properties $1-6$ except $5$, the stabilizer has property $4$ for certain states, and the dyadic monotone has properties $1, 2, 3, 4, 6$ and a version of property $5$ for certain measurements. Also, observe that if a monotone has property $1$ and $3$, then it immediately has property $6$.
 
-\section{Stabilizer Nullity}
+\section{The Stabilizer Nullity}
 
 
 \begin{definition}[Stabilizer Nullity]
@@ -975,7 +1055,7 @@ Thus, the Pauli spectrum of is $\{1, \cos\theta, \sin\theta, 0\}$. Moreover, if 
 %\end{enumerate}
 %\end{lemma}
 
-\section{Dyadic Monotone}
+\section{The Dyadic Monotone}
 Consider quantum states the have entries in $\mathbb{Z}[i, 1/2] = \big\{\frac{a+ib}{2^k}: a, b, k, \in \mathbb{Z} \big\}$ when written in the computational basis. Indeed, $\ket{C^nZ}$ can be written as vectors with entries in the above set. We have a few note worthy facts to observe here:
 \begin{itemize}
 \item The set $\mathbb{Z}[i, 1/2]$ is a ring since it is closed under addition, negation, multiplication and contains $0$ and $1$.
@@ -1438,7 +1518,8 @@ Now recall that $v_2(\braket{\psi |Q| \psi} + \braket{\psi |PQ| \psi}) = v_2(\br
 
 
 \chapter{Applications}
-Suppose we can identify a monotone $\mathcal{M}$ such that $\mathcal{M}(\ket{\psi})$ is real for any state $\ket{\psi}$, and is non-increasing under stabilizer operations. We call such a function a \textit{monotone}, and use it to bound conversion precesses since for example, a resource state $\ket{A}$ cannot be used to produce a resource state $\ket{B}$ with stabilizer operations if $\mathcal{M}(\ket{A}) < \mathcal{M}(\ket{B})$, so we have: $\mathcal{M}(\ket{A}) < \mathcal{M}(\ket{B}) \implies \ket{A} \not \longrightarrow \ket{B} $
+\label{Applications}
+%Suppose we can identify a monotone $\mathcal{M}$ such that $\mathcal{M}(\ket{\psi})$ is real for any state $\ket{\psi}$, and is non-increasing under stabilizer operations. We call such a function a \textit{monotone}, and use it to bound conversion precesses since for example, a resource state $\ket{A}$ cannot be used to produce a resource state $\ket{B}$ with stabilizer operations if $\mathcal{M}(\ket{A}) < \mathcal{M}(\ket{B})$, so we have: $\mathcal{M}(\ket{A}) < \mathcal{M}(\ket{B}) \implies \ket{A} \not \longrightarrow \ket{B} $
 %\section{Conversions}
 %\begin{theorem}
 %\label{min number of T gates}
@@ -1532,7 +1613,7 @@ Suppose we can identify a monotone $\mathcal{M}$ such that $\mathcal{M}(\ket{\ps
 
 
 \section{The $C^nZ$ gate}
-\subsection{Lower Bounds for the $C^nZ$ gate}
+%\subsection{Lower Bounds for the $C^nZ$ gate}
 The $C^n Z$ gate is a gate worth considering in detail since it is used in many important algorithms, like the Grover's search algorithm. We start by computing the Pauli spectrum of $\ket{\C^nZ}$. Lower bounds on the resources required for this gate follow after this proposition.
 
 \begin{proposition}
@@ -1641,10 +1722,10 @@ For $n \geq 2$, the $C^n Z$ gate cannot be implemented with Clifford gates and m
 We reason as in the proof of Proposition \ref{nullity(C^nZ) LB} but using the dyadic monotone which is also non-increasing under Clifford operations, but with measurements of probability one half, as seen in \ref{dyadic is monotone}. This time the values in Corollary \ref{dyadic values} are used.
 \end{proof}
 
-\subsection{Upper Bounds for the $C^nZ$ gate}
+%\subsection{Upper Bounds for the $C^nZ$ gate}
 \label{Upper Bounds for C^nZ}
 
-The next proposition provides reasoning as to why we do not need more than $n-1$ $CCZ$ gates by showing a specific circuit construction.
+We now move on to upper bounds for the $C^nZ$ gate. The next proposition provides reasoning as to why we do not need more than $n-1$ $CCZ$ gates by showing a specific circuit construction.
 
 \begin{proposition}
 \label{CCZ upperbound}
@@ -1732,7 +1813,7 @@ Again, since we used $n-1$ $CCZ$ gates in proposition \ref{CCZ upperbound}, we c
 
 \end{proof}
 
-\section{Quantum Fourier Transform}
+\section{The Modular Adder}
 
 %To establish lower bounds for adder circuits we will use the fact that adder can create a complex conjugate copy of a Fourier state. Our strategy is to generalize $\mu_2$ to be defined on a wider set of states including Fourier states. This is achieved by extending the domain of $v_2$ to a wider set of values. Now we will list and discuss properties of $v_2$ needed for the lower-bound proof and prove the lower bound for the adder using them. 
 %
@@ -1751,9 +1832,9 @@ Again, since we used $n-1$ $CCZ$ gates in proposition \ref{CCZ upperbound}, we c
 %For example, using above we see that $\mu_2\ket{T} = 1/2$ because $v_2(1/\sqrt{2}) = -1/2$. We can immediately conclude that the $C^nZ$ gate requires at least $2(n-2)\ket{T}$ states. Next we proceed to calculate $\mu_2$ for Fourier states.
 
 
-Now we introduce the Quantum Fourier Transform so that later we can establish lower bounds for the adder circuit. We will use the fact that the adder can create a complex conjugate copy of a Fourier state, but first note some explicit values of $v_2$ that we will need to compute $\mu_2$ for Fourier states:
+Before we can establish lower bounds for the modular adder circuit, we will need some properties and propositions regarding the Quantum Fourier Transform. We will use the fact that the adder can create a complex conjugate copy of a Fourier state, but first note some explicit values of $v_2$ that we will need to compute $\mu_2$ for Fourier states:
 \begin{equation}
-\mbox{For all odd integers } k \mbox{, integers } d \geq 2: v_2(cos(\pi k/2^d)) = v_2(sin(\pi k /2^d)) = \frac{1}{2^{d-1}} - 1
+\mbox{For all odd integers } k \mbox{, integers } d \geq 2: v_2(cos(\pi k/2^d)) = v_2(sin(\pi k /2^d)) = \frac{1}{2^{d-1}} - 1.
 \end{equation}
 
 \begin{proposition}
@@ -1779,8 +1860,8 @@ $\mu_2 (\ket{QFT_n^a}) = \sum\limits_{k=2}^n \big( 1-1/2^{k-2}) = n-3 + 1/2^{n-2
 \end{proof}
 
 
-\section{Modular adder}
-\subsection{Lower Bounds for the modular adder}
+
+%\subsection{Lower Bounds for the modular adder}
 The adder circuit is a fundamental quantum operation because it implements basic arithmetic, being addition, on pairs of registers in superposition. We can lower bound the resources required to implement it as follows:
 
 \begin{proposition}
@@ -2136,11 +2217,10 @@ Recall that by applying a circuit for modular adder $\ket{+}^{\otimes n} \otimes
 %\end{enumerate}
 
 \chapter{Conclusion}
-In this thesis, following the work of (cite: Beverland), we studied lower bounds on the number of non-Clifford gates in quantum circuits. The non-Clifford gates we focused on were the $T$ gate, the $CS$ gate, and the $CCZ$ gate. After giving the fundamental tools required to define lower bounds, we explicitly demonstrated how to find lower bounds for certin protocols of interest. Moreover, upper bounds were also given to compare and contrast these lower bounds. The lower bounds discussed in the thesis required the use of monotonic functions: the stabilizer nullity and the dyadic monotone.  The difference between these two approaches is apparent in the resulting lower bounds. Indeed, the stabilizer nullity yields looser  bounds than the dyadic monotone. However, the stabilizer nullity is also subject to fewer restrictions in not needing measurement probabilities to be $1/2$ and is therefore more widely applicable.
+\label{Conclusion}
+In this thesis, following the work of \cite{beverland2019lower}, we studied lower bounds on the number of non-Clifford gates in quantum circuits. The non-Clifford gates we focused on were the $T$ gate, the $CS$ gate, and the $CCZ$ gate. After giving the fundamental tools required to define lower bounds, we explicitly demonstrated how to find lower bounds for certain protocols of interest. Moreover, upper bounds were also given to compare and contrast these lower bounds. The lower bounds discussed in this thesis required the use of monotonic functions: the stabilizer nullity and the dyadic monotone.  The difference between these two approaches is apparent in the resulting lower bounds. Indeed, the stabilizer nullity yields looser  bounds than the dyadic monotone. However, the stabilizer nullity is also subject to fewer restrictions in not needing measurement probabilities to be $1/2$ and is therefore more widely applicable.
 
-There are many avenues for future work on this topic.
-
-Ideally for any circuit or gate, we would want the same lower bounds and upper bounds for the resource of interest, along with a circuit to represent such a bound. This would mean that we have the best circuit in terms of using the least amount of the expensive resources of interest. This is the case for the $C^nZ$ gate, where the resource was the $CCZ$ gate (and measurements are restricted to have probability 1/2). It would be of great interest to have a construction matching the lower bound for other resources. It was recently shown in \cite{gidney2021cccz} that a $CCCZ$ gate can be implemented with less $T$ gates than presented here, though this new construction does not yet match the lower bound. Another noteworthy question is deciding whether we can achieve the tighter lower bounds afforded by the dyadic monotone without the requirement of only using measurements with probability $1/2$.
+There are many avenues for future work on this topic. Ideally for any circuit or gate, we would want the same lower bounds and upper bounds for the resource of interest, along with a circuit to represent such a bound. This would mean that we have the best circuit in terms of using the least amount of the expensive resources of interest. This is the case for the $C^nZ$ gate, where the resource was the $CCZ$ gate (and measurements are restricted to have probability 1/2). It would be of great interest to have a construction matching the lower bound for other resources. It was recently shown in \cite{gidney2021cccz} that a $CCCZ$ gate can be implemented with less $T$ gates than presented here, though this new construction does not yet match the lower bound. Another noteworthy question is deciding whether we can achieve the tighter lower bounds afforded by the dyadic monotone without the requirement of only using measurements with probability $1/2$.
 
 Instead of lowering the upper bounds by providing improved circuit constructions, one could also try to improve the lower bounds. A possibility for doing this is considering another monotone. Since not all circuits or gates considered here had the same lower and upper bounds, perhaps another monotone could result in tighter lower bounds so that we would know what the optimal number of required resources is. Of course, this is no trivial task, but one possible way to achieve this is might be to make a slight modification to the definition of one of the monotones presented here. An example of this can be seen in \cite{jiang2021lower}, where they defined the stabilizer nullity on unitaries rather than states, calling it the unitary stabilizer nullity. Other monotones that are already known could also be explored, for example the stabilizer extent, introduced in \cite{beverland2019lower}.
 
