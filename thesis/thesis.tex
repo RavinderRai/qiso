@@ -868,24 +868,24 @@ We have the following properties for monotones:
 
 %Note: for the above properties to hold, $\mathcal{J}$ must contain Stabilizer states, measurements, and be closed under Clifford operations and tensor products.
 %
-%We make note here that the stabilizer nullity has properties $1-6$ except $5$, the stabilizer has property $4$ for certain states, and the dyadic monotone has properties $1, 2, 3, 4, 6$ and a version of property $5$ for certain measurements. Also, observe that if a monotone has property $1$ and $3$, then it immediately has property $6$.
+%We make note here that the stabilizer nullity has properties $1-6$ except $5$, the stabilizer has property $4$ for certain states, and the Dyadic monotone has properties $1, 2, 3, 4, 6$ and a version of property $5$ for certain measurements. Also, observe that if a monotone has property $1$ and $3$, then it immediately has property $6$.
 
 \section{The Stabilizer Nullity}
 
 
 \begin{definition}[Stabilizer Nullity]
-Let $\ket{\psi}$ be a non-zero $n$-qubit state. The \emph{stabilizer nullity} of $\ket{\psi}$ is denoted by $\nu(\ket{\psi})$ and is defined as $\nu(\ket{\psi}) = n - \log_2 |\text{Stab}\ket{\psi}|$.
+Let $\ket{\psi}$ be a non-zero $n$-qubit state. The \emph{Stabilizer Nullity} of $\ket{\psi}$ is denoted by $\nu(\ket{\psi})$ and is defined as $\nu(\ket{\psi}) = n - \log_2 |\text{Stab}\ket{\psi}|$.
 \end{definition}
 
 \begin{proposition}
-The stabilizer nullity is a monotone.
+The Stabilizer Nullity is a monotone.
 \end{proposition}
 \begin{proof}
 First, by Proposition \ref{stabilizerfacts}, for any $n$-qubit state $\ket{\psi}$ we have $|\Stab \ket{\psi}| \leq 2^n$. Hence, $\nu (\ket{\psi})$ is always a positive integer and so $\nu$ is a (nonnegative) real valued function. Again, by Proposition \ref{stabilizerfacts} recall that for a Clifford unitary $C$ and a state $\ket{\psi}$ we have that $|\Stab(C\ket{\psi})| = |\Stab\ket{\psi}|$. Thus $\nu(C\ket{\psi}) = n - \log_2|\Stab(C\ket{\psi})| = n - \log_2|\Stab\ket{\psi}| = \nu(\ket{\psi})$. Finally, if $\ket{\psi}$ is a stabilizer state, then $|\Stab\ket{\psi}| = 2^n$ by Proposition \ref{stabilizerfacts}, so $\nu(\ket{\psi}) = n - \log_2(\Stab\ket{\psi}) =  n - \log_2(2^n) = 0$. 
 \end{proof}
 
 \begin{proposition}
-The stabilizer nullity is additive.
+The Stabilizer Nullity is additive.
 \end{proposition}
 \begin{proof}
 Let $\ket{\psi}$ and $\ket{\phi}$ be an $n$-qubit state and an $m$-qubit state respectively. By Proposition \ref{stabilizerfacts} we have $|\Stab(\ket{\psi} \ket{\phi})| = |\Stab\ket{\psi}| \cdot |\Stab{\ket{\phi}}|$. Hence:
@@ -965,7 +965,7 @@ where we fixed the normalization condition such that $\braket{\phi | \phi} = \br
 \end{proof}
 
 \begin{corollary}
-The stabilizer nullity is non-increasing under Pauli measurements.
+The Stabilizer Nullity is non-increasing under Pauli measurements.
 \end{corollary}
 \begin{proof}
 Let $\ket{\psi}$ be a nonzero $n$-qubit state, let $P$ be an $n$-qubit Pauli operator, and let $\ket{\phi}$ be the state after measuring $P$ on $\ket{\psi}$. By Lemma \ref{nullity outcome}, we have $|\Stab\ket{\phi}| = |\Stab\ket{\psi}|$ or $|\Stab\ket{\phi}| \geq 2|\Stab\ket{\phi}|$. Either way, $|\Stab\ket{\phi}| \geq |\Stab\ket{\psi}|$ so that $\log_2|\Stab\ket{\phi}| \geq \log_2|\Stab\ket{\psi}|$. Hence 
@@ -979,7 +979,7 @@ Let $\ket{\psi}$ be a nonzero $n$-qubit state, let $P$ be an $n$-qubit Pauli ope
 
 \end{proof}
 
-We finish this section with a notion that will be helpful in computing the stabilizer nullity of states. We write multisets using $\{|$ and $|\}$. Moreover, we sometimes indicate the multiplicity of an element in brackets. For example the multiset $\{| a, a, b |\}$ will sometimes be written as $\{| a (2), b (1) |\}$.
+We finish this section with a notion that will be helpful in computing the Stabilizer Nullity of states. We write multisets using $\{|$ and $|\}$. Moreover, we sometimes indicate the multiplicity of an element in brackets. For example the multiset $\{| a, a, b |\}$ will sometimes be written as $\{| a (2), b (1) |\}$.
 
 \begin{definition}[Pauli Spectrum]
 Let $\ket{\psi}$ be a non-zero $n$-qubit state. The \emph{Pauli spectrum} of $\ket{\psi}$ is denoted by Spec$\ket{\psi}$ and is defined as:
@@ -988,7 +988,7 @@ Let $\ket{\psi}$ be a non-zero $n$-qubit state. The \emph{Pauli spectrum} of $\k
 \end{equation*}
 \end{definition}
 
-The Pauli spectrum is a multiset with $4^n$ elements. These elements are real numbers between 0 and 1. Note that the number of $1$'s in the Pauli spectrum of $\ket{\psi}$ is $|\text{Stab}\ket{\psi}|$. Hence the Pauli spectrum can be useful in computing the stabilizer nullity.
+The Pauli spectrum is a multiset with $4^n$ elements. These elements are real numbers between 0 and 1. Note that the number of $1$'s in the Pauli spectrum of $\ket{\psi}$ is $|\text{Stab}\ket{\psi}|$. Hence the Pauli spectrum can be useful in computing the Stabilizer Nullity.
 
 \begin{example}
 Let $\theta \in \mathbb{R}$ and consider the state $\ket{\theta} = (\ket{0} + e^{i\theta}\ket{1})/\sqrt{2}$. To calculate the Pauli spectrum, first note that $\ket{\theta}$ is normalized so $\bra{\theta}\ket{\theta} = 1$, then by direct computation we have:
@@ -1340,7 +1340,7 @@ v_2 (x + y) & = v_2(x' + y') + v_2(1/C) \\
 %\end{proof}
 
 
-The power of $2$ in the denominator of the Pauli expectation gives us a sense of how non-stabilizer the state is. The definition of the dyadic monotone below gives us an intuition for this sort of measure. 
+The power of $2$ in the denominator of the Pauli expectation gives us a sense of how non-stabilizer the state is. The definition of the Dyadic monotone below gives us an intuition for this sort of measure. 
 
 %Firstly, let $q$ be a non-zero rational number. It can be written as a product of integer powers of prime numbers in a unique way:
 %\begin{center}
@@ -1351,12 +1351,12 @@ The power of $2$ in the denominator of the Pauli expectation gives us a sense of
 
 
 \begin{definition}
-Let $\ket{\psi}$ be an $n$-qubit state with entries in $\mathcal{R}_d$, the dyadic monotone is 
+Let $\ket{\psi}$ be an $n$-qubit state with entries in $\mathcal{R}_d$, the Dyadic monotone is 
 \begin{center}
 $\mu_2 \ket{\psi} = \texttt{max} \big\{-v_2(\braket{\psi | P | \psi}): P \in \{I, X, Y, Z \}^{\otimes n} \big\}$.
 \end{center}
 \end{definition}
-The dyadic monotone basically is the maximum power of two in the denominator over the Pauli spectrum. Now note that it is invariant under Clifford unitaries because they map the set of all multi-qubit Pauli matrices to the set of all of all Pauli matrices up to a sign and $v_2$ is insensitive to the sign of its argument. The next proposition shows a similarity between $\nu$ and $\mu_2$, namely the additive property under tensor products.
+The Dyadic monotone basically is the maximum power of two in the denominator over the Pauli spectrum. Now note that it is invariant under Clifford unitaries because they map the set of all multi-qubit Pauli matrices to the set of all of all Pauli matrices up to a sign and $v_2$ is insensitive to the sign of its argument. The next proposition shows a similarity between $\nu$ and $\mu_2$, namely the additive property under tensor products.
 
 %Moreover, Clifford unitaries map states with entries in $\mathbb{Z}[i, 1/2]$ to states with entries in $\mathbb{Z}[i, 1/2]$ because all Clifford unitaries can be written as matrices with entries in $\mathbb{Z}[i, 1/2]$ up to a global phase.
 
@@ -1374,7 +1374,7 @@ $v_2 (\bra{\phi} \otimes \bra{\psi} (P \otimes Q) \ket{\phi} \otimes \ket{\psi})
 \end{center}
 \end{proof}
 
-Another important property is that the dyadic monotone is minimal for stabilizer states, of which we will need the following proposition to show.
+Another important property is that the Dyadic monotone is minimal for stabilizer states, of which we will need the following proposition to show.
 
 \begin{proposition}
 \label{sigmak}
@@ -1424,7 +1424,7 @@ Since $P$ is either $0$ or $\pm 1$ we can write $|\Stab\ket{\psi}| = \sum\limits
 %Since $P$ is either $0$ or $\pm 1$ we can write $|\Stab\ket{\psi}| = \sum\limits_{P\in T(n)} \braket{\psi |P|\psi}^2$. Also, since the trace is cyclic, $\texttt{Tr}(\ket{\psi}\bra{\psi}P) = \texttt{Tr}(\braket{\psi | P | \psi}) = \braket{\psi | P | \psi}$. Putting this together we arrive with $1 = \frac{1}{2^n} |\Stab\ket{\psi}|$, which means that the size of Stab$\ket{\psi}$ is $2^n$ and therefore that $\ket{\psi}$ is a stabilizer state.
 %\end{proof}
 
-%We will now need the fact that Pauli measurements with probability half take states with entries in $\mathbb{Z}[i, 1/2]$ to states with entries in $\mathbb{Z}[i, 1/2]$ (allowing the dyadic monotone to be evaluated). To see this, recall that measuring a $\pm 1$ eigenvalue of a Pauli observable $P$ with probability $1/2$ is equivalent to multiplying the state by the matrix $(I \pm P)/\sqrt{2}$ which is equal to $(1 + i)(I \pm P)/2$ up to a global phase. The matrix $(1 + i)(I \pm P)/2$ has entries in the ring $\mathbb{Z}[i, 1/2]$ and therefore the resulting state will also have entries in $\mathbb{Z}[i, 1/2]$. The next goal is to show that $\mu_2$ in non-increasing under these measurements, using Proposition \ref{prop6.4}.
+%We will now need the fact that Pauli measurements with probability half take states with entries in $\mathbb{Z}[i, 1/2]$ to states with entries in $\mathbb{Z}[i, 1/2]$ (allowing the Dyadic monotone to be evaluated). To see this, recall that measuring a $\pm 1$ eigenvalue of a Pauli observable $P$ with probability $1/2$ is equivalent to multiplying the state by the matrix $(I \pm P)/\sqrt{2}$ which is equal to $(1 + i)(I \pm P)/2$ up to a global phase. The matrix $(1 + i)(I \pm P)/2$ has entries in the ring $\mathbb{Z}[i, 1/2]$ and therefore the resulting state will also have entries in $\mathbb{Z}[i, 1/2]$. The next goal is to show that $\mu_2$ in non-increasing under these measurements, using Proposition \ref{prop6.4}.
 
 
 \begin{proposition}
@@ -1658,7 +1658,7 @@ We can count the number of each subset of binary vectors $x$ and $z$ to find mul
 
 \begin{corollary}
 \label{nu values}
-We have the following stabilizer nullity values: 
+We have the following Stabilizer Nullity values: 
 \[
 \nu (\ket{T}) = 1, \quad \nu (\ket{CS}) = 2, \quad \nu (\ket{CCZ}) = 3, \quad \mbox{and} \quad \nu (\ket{C^n Z}) = n+1.
 \]
@@ -1685,10 +1685,10 @@ The above lower bound can be improved when measurements are restricted.
 
 \begin{corollary}
 \label{dyadic values}
-We have the following dyadic monotone values: $\mu_2 (\ket{T}) = 1/2$, $\mu_2 (\ket{CS}) = 1$, $\mu_2 (\ket{CCZ}) = 1$, and $\mu_2 (\ket{C^n(z)}) = n-1$.
+We have the following Dyadic monotone values: $\mu_2 (\ket{T}) = 1/2$, $\mu_2 (\ket{CS}) = 1$, $\mu_2 (\ket{CCZ}) = 1$, and $\mu_2 (\ket{C^n(z)}) = n-1$.
 \end{corollary}
 \begin{proof}
-The first three follow from direct calculation. For the $\ket{C^nZ}$ state, Proposition \ref{prop4.2} gives us all of its possible values for the Pauli spectrum. Thus to get the dyadic monotone, we simply take the $p$-adic valuation of these values, negate it and take the maximum, which gives $n-1$ as desired.
+The first three follow from direct calculation. For the $\ket{C^nZ}$ state, Proposition \ref{prop4.2} gives us all of its possible values for the Pauli spectrum. Thus to get the Dyadic monotone, we simply take the $p$-adic valuation of these values, negate it and take the maximum, which gives $n-1$ as desired.
 \end{proof}
 
 \begin{lemma}
@@ -1696,7 +1696,7 @@ The first three follow from direct calculation. For the $\ket{C^nZ}$ state, Prop
 For $n \geq 2$, the $C^n Z$ gate cannot be implemented with Clifford gates and measurements with probability one half using fewer than $2n-2$ $T$ gates, or $n-1$ $CS$ gates, or $n-1$ $CCZ$ gates.
 \end{lemma}
 \begin{proof}
-We reason as in the proof of Proposition \ref{nullity(C^nZ) LB} but using the dyadic monotone which is also non-increasing under Clifford operations, but with measurements of probability one half, as seen in \ref{dyadic is monotone}. This time the values in Corollary \ref{dyadic values} are used.
+We reason as in the proof of Proposition \ref{nullity(C^nZ) LB} but using the Dyadic monotone which is also non-increasing under Clifford operations, but with measurements of probability one half, as seen in \ref{dyadic is monotone}. This time the values in Corollary \ref{dyadic values} are used.
 \end{proof}
 
 %\subsection{Upper Bounds for the $C^nZ$ gate}
@@ -1801,7 +1801,7 @@ Again, since we used $n-1$ $CCZ$ gates in proposition \ref{CCZ upperbound}, we c
 %\end{center}
 %Note that $\mathcal{R}_d$ is closed under addition, negation, and multiplication making it a ring, and furthermore that it is closed under taking complex conjugates. Also note that $\mathcal{R}_1 = \mathbb{Z}[i, 1/2]$ and $\mathcal{R}_d \subset \mathcal{R}_{d+1}$ for all positive $d$.
 %
-%We extend the domain of $v_2$ so it is defined on values of Pauli expectations of Fourier states, and so $v_2$ must be defined at least on the real subsets of $\mathcal{R}_d$. The proof of the lower bound for multiply-controlled-$Z$ gate relied on additivity for a tensor product of states and monotonicity under measurements with probability $1/2$ of dyadic monotone $\mu_2$. In turn, our proofs of the mentioned properties of $\mu_2$ relied on the properties: $v_2(a \cdot b) = v_2(a) + v_2(b)$ and $v_2(a+b) \geq \texttt{min}(v_2(a), v_2(b))$. All these properties also hold for the extension of $v_2$, and now note some explicit values of $v_2$ that we will need to compute $\mu_2$ for Fourier states:
+%We extend the domain of $v_2$ so it is defined on values of Pauli expectations of Fourier states, and so $v_2$ must be defined at least on the real subsets of $\mathcal{R}_d$. The proof of the lower bound for multiply-controlled-$Z$ gate relied on additivity for a tensor product of states and monotonicity under measurements with probability $1/2$ of Dyadic monotone $\mu_2$. In turn, our proofs of the mentioned properties of $\mu_2$ relied on the properties: $v_2(a \cdot b) = v_2(a) + v_2(b)$ and $v_2(a+b) \geq \texttt{min}(v_2(a), v_2(b))$. All these properties also hold for the extension of $v_2$, and now note some explicit values of $v_2$ that we will need to compute $\mu_2$ for Fourier states:
 %\begin{equation}
 %\mbox{For all odd integers } k \mbox{, integers } d \geq 2: v_2(cos(\pi k/2^d)) = v_2(sin(\pi k /2^d)) = \frac{1}{2^{d-1}} - 1
 %\end{equation}
@@ -1850,7 +1850,7 @@ with $i + j$ evaluated modulo $2^n$. It is not possible to implement the adder c
 \end{proposition}
 
 \begin{proof}
-We proceed in two steps. First, we show that the adder circuit $A$ acting on the $n$-qubit quantum Fourier state $\ket{QFT_n^b}$ and the stabilizer state $\ket{+}^{\otimes n}$ has the action $A(\ket{+}^{\otimes n} \ket{QFT_n^b}) = \ket{QFT_n^{-b}}\ket{QFT_n^b}$. This tells us that if $A$ is implemented by a set of Clifford gates and Pauli measurements along with some input resource state $\ket{\psi}$, it must be that $\nu (\ket{\psi} \ket{QFT_n^b}) \geq \nu(\ket{QFT_n^{-b}} \ket{QFT_n^b})$ which implies that $\nu (\ket{\psi}) \geq \nu(\ket{QFT_n^{-b}})$ since the stabilizer nullity is additive. Second we show that $\nu(\ket{QFT_n^{-1}}) = n-2$, which then directly implies our bounds since if the bounds are not satisfied, $\nu(\ket{\psi}) \geq \nu(\ket{QFT_n^{-1}})$ would not be satisfied.
+We proceed in two steps. First, we show that the adder circuit $A$ acting on the $n$-qubit quantum Fourier state $\ket{QFT_n^b}$ and the stabilizer state $\ket{+}^{\otimes n}$ has the action $A(\ket{+}^{\otimes n} \ket{QFT_n^b}) = \ket{QFT_n^{-b}}\ket{QFT_n^b}$. This tells us that if $A$ is implemented by a set of Clifford gates and Pauli measurements along with some input resource state $\ket{\psi}$, it must be that $\nu (\ket{\psi} \ket{QFT_n^b}) \geq \nu(\ket{QFT_n^{-b}} \ket{QFT_n^b})$ which implies that $\nu (\ket{\psi}) \geq \nu(\ket{QFT_n^{-b}})$ since the Stabilizer Nullity is additive. Second we show that $\nu(\ket{QFT_n^{-1}}) = n-2$, which then directly implies our bounds since if the bounds are not satisfied, $\nu(\ket{\psi}) \geq \nu(\ket{QFT_n^{-1}})$ would not be satisfied.
 
 First recall the family of quantum Fourier states for each integer $a = 0, 1, \dots, 2^n - 1$:
 \begin{equation}
@@ -1866,12 +1866,12 @@ A \big(\ket{QFT_n^a} \ket{QFT_n^b} \big) & = \frac{1}{2^n} \sum\limits_{y=0}^{2^
 \end{split}
 \end{equation}
 
-Setting $a=0$ gives $A(\ket{+}^{\otimes n} \ket{QFT_n^b}) = \ket{QFT_n^{-b}}\ket{QFT_n^b}$, as desired. Finally, to calculate $\nu \ket{QFT_n^{-b}}$, we use the sum of the stabilizer nullity for each state in the tensor product. From the tensor product variant of the definition of the $\ket{QFT_n^b}$ in equation \ref{QFTdef} the first two terms will have $\nu = 0$, since they will be computational basis states. The rest of the terms all have a relative phase ($\neq i$), and for a single qubit it is easy to verify that this results in a trivial stabilizer, thus giving $\nu = 1$. Since the stabilizer nullity is additive, we have that $\nu(\ket{QFT_n^{-1}}) = n-2$. Then considering the following possible implications: $r\ket{T} \Longrightarrow \ket{QFT_n^{-1}}$, $r\ket{CS} \Longrightarrow \ket{QFT_n^{-1}}$, and $r\ket{CCZ} \Longrightarrow \ket{QFT_n^{-1}}$, and the respective stabilizer nullity values: $\nu (\ket{T}) = 1$, $\nu (\ket{CS}) = 2$ and $\nu (\ket{CCZ}) = 3$, where the implications mean that we can apply a Clifford circuit to the resource state to get the inverse quantum Fourier state, we get the final results above using the fact that the stabilizer nullity is non-increasing under Clifford operations.
+Setting $a=0$ gives $A(\ket{+}^{\otimes n} \ket{QFT_n^b}) = \ket{QFT_n^{-b}}\ket{QFT_n^b}$, as desired. Finally, to calculate $\nu \ket{QFT_n^{-b}}$, we use the sum of the Stabilizer Nullity for each state in the tensor product. From the tensor product variant of the definition of the $\ket{QFT_n^b}$ in equation \ref{QFTdef} the first two terms will have $\nu = 0$, since they will be computational basis states. The rest of the terms all have a relative phase ($\neq i$), and for a single qubit it is easy to verify that this results in a trivial stabilizer, thus giving $\nu = 1$. Since the Stabilizer Nullity is additive, we have that $\nu(\ket{QFT_n^{-1}}) = n-2$. Then considering the following possible implications: $r\ket{T} \Longrightarrow \ket{QFT_n^{-1}}$, $r\ket{CS} \Longrightarrow \ket{QFT_n^{-1}}$, and $r\ket{CCZ} \Longrightarrow \ket{QFT_n^{-1}}$, and the respective Stabilizer Nullity values: $\nu (\ket{T}) = 1$, $\nu (\ket{CS}) = 2$ and $\nu (\ket{CCZ}) = 3$, where the implications mean that we can apply a Clifford circuit to the resource state to get the inverse quantum Fourier state, we get the final results above using the fact that the Stabilizer Nullity is non-increasing under Clifford operations.
 \end{proof}
 
 Note the calculation of $\nu(\ket{QFT_n^{-1}}) = \nu(\ket{QFT_n^{1}}) = n-2$ above also implies that the Quantum Fourier Transform on $n$ qubits can not be performed using fewer than $n-2$ copies of $\ket{T}$.
 
-Now we give lower bounds using the dyadic monotone.
+Now we give lower bounds using the Dyadic monotone.
 
 
 \begin{lemma}
@@ -2121,7 +2121,7 @@ Recall that by applying a circuit for modular adder $\ket{+}^{\otimes n} \otimes
 %
 %
 %%\subsection{Lower Bounds for Resource State Conversion}
-%In other sections, we have introduced protocols for catalysis assisted conversion of $\ket{CCZ}$ states into states $\ket{\pi j /2^d}$. We have found that for odd $j$ and integer $d \geq 2$, asymptotically, one can create one $\ket{\pi j /2^d}$ state at the cost of $1 - 1/2^{d-1}$ $\ket{CCZ}$ states. Using the dyadic monotone we can show that this is optimal when only Pauli measurements with probability $50 \% $ are allowed.
+%In other sections, we have introduced protocols for catalysis assisted conversion of $\ket{CCZ}$ states into states $\ket{\pi j /2^d}$. We have found that for odd $j$ and integer $d \geq 2$, asymptotically, one can create one $\ket{\pi j /2^d}$ state at the cost of $1 - 1/2^{d-1}$ $\ket{CCZ}$ states. Using the Dyadic monotone we can show that this is optimal when only Pauli measurements with probability $50 \% $ are allowed.
 %
 %
 %\begin{lemma}
@@ -2135,12 +2135,12 @@ Recall that by applying a circuit for modular adder $\ket{+}^{\otimes n} \otimes
 
 
 %\chapter{Main Points of Section 6}
-%The section is based around the dyadic monotone below. For this monotone function, we only consider states that have entries in the ring $\mathbb{Z}[i, 1/2] = \big\{\frac{a+ib}{2^k}: a, b, k, \in \mathbb{Z} \big\}$, and note that Pauli's and Clifford unitaries take states with entries in this ring too states with entries still in this ring.
+%The section is based around the Dyadic monotone below. For this monotone function, we only consider states that have entries in the ring $\mathbb{Z}[i, 1/2] = \big\{\frac{a+ib}{2^k}: a, b, k, \in \mathbb{Z} \big\}$, and note that Pauli's and Clifford unitaries take states with entries in this ring too states with entries still in this ring.
 %
 %
 %
 %\begin{definition}
-%Let $\ket{\psi}$ be an $n$-qubit state with entries in $\mathbb{Z}[i, 1/2]$, the dyadic monotone is 
+%Let $\ket{\psi}$ be an $n$-qubit state with entries in $\mathbb{Z}[i, 1/2]$, the Dyadic monotone is 
 %\begin{center}
 %$\mu_2 \ket{\psi} = \texttt{max} \big\{-v_2(\braket{\psi | P | \psi}): P \in \{I, X, Y, Z \}^{\otimes n} \big\}$.
 %\end{center}
@@ -2195,11 +2195,11 @@ Recall that by applying a circuit for modular adder $\ket{+}^{\otimes n} \otimes
 
 \chapter{Conclusion}
 \label{Conclusion}
-In this thesis, following the work of \cite{beverland2019lower}, we studied lower bounds on the number of non-Clifford gates in quantum circuits. The non-Clifford gates we focused on were the $T$ gate, the $CS$ gate, and the $CCZ$ gate. After giving the fundamental tools required to define lower bounds, we explicitly demonstrated how to find lower bounds for certain protocols of interest. Moreover, upper bounds were also given to compare and contrast these lower bounds. The lower bounds discussed in this thesis required the use of monotonic functions: the stabilizer nullity and the dyadic monotone.  The difference between these two approaches is apparent in the resulting lower bounds. Indeed, the stabilizer nullity yields looser  bounds than the dyadic monotone. However, the stabilizer nullity is also subject to fewer restrictions in not needing measurement probabilities to be $1/2$ and is therefore more widely applicable.
+In this thesis, following the work of \cite{beverland2019lower}, we studied lower bounds on the number of non-Clifford gates in quantum circuits. The non-Clifford gates we focused on were the $T$ gate, the $CS$ gate, and the $CCZ$ gate. After giving the fundamental tools required to define lower bounds, we explicitly demonstrated how to find lower bounds for certain protocols of interest. Moreover, upper bounds were also given to compare and contrast these lower bounds. The lower bounds discussed in this thesis required the use of monotonic functions: the Stabilizer Nullity and the Dyadic monotone.  The difference between these two approaches is apparent in the resulting lower bounds. Indeed, the Stabilizer Nullity yields looser  bounds than the Dyadic monotone. However, the Stabilizer Nullity is also subject to fewer restrictions in not needing measurement probabilities to be $1/2$ and is therefore more widely applicable.
 
-There are many avenues for future work on this topic. Ideally for any circuit or gate, we would want the same lower bounds and upper bounds for the resource of interest, along with a circuit to represent such a bound. This would mean that we have the best circuit in terms of using the least amount of the expensive resources of interest. This is the case for the $C^nZ$ gate, where the resource was the $CCZ$ gate (and measurements are restricted to have probability 1/2). It would be of great interest to have a construction matching the lower bound for other resources. It was recently shown in \cite{gidney2021cccz} that a $CCCZ$ gate can be implemented with less $T$ gates than presented here, though this new construction does not yet match the lower bound. Another noteworthy question is deciding whether we can achieve the tighter lower bounds afforded by the dyadic monotone without the requirement of only using measurements with probability $1/2$.
+There are many avenues for future work on this topic. Ideally for any circuit or gate, we would want the same lower bounds and upper bounds for the resource of interest, along with a circuit to represent such a bound. This would mean that we have the best circuit in terms of using the least amount of the expensive resources of interest. This is the case for the $C^nZ$ gate, where the resource was the $CCZ$ gate (and measurements are restricted to have probability 1/2). It would be of great interest to have a construction matching the lower bound for other resources. It was recently shown in \cite{gidney2021cccz} that a $CCCZ$ gate can be implemented with less $T$ gates than presented here, though this new construction does not yet match the lower bound. Another noteworthy question is deciding whether we can achieve the tighter lower bounds afforded by the Dyadic monotone without the requirement of only using measurements with probability $1/2$.
 
-Instead of lowering the upper bounds by providing improved circuit constructions, one could also try to improve the lower bounds. A possibility for doing this is considering another monotone. Since not all circuits or gates considered here had the same lower and upper bounds, perhaps another monotone could result in tighter lower bounds so that we would know what the optimal number of required resources is. Of course, this is no trivial task, but one possible way to achieve this is might be to make a slight modification to the definition of one of the monotones presented here. An example of this can be seen in \cite{jiang2021lower}, where they defined the stabilizer nullity on unitaries rather than states, calling it the unitary stabilizer nullity. Other monotones that are already known could also be explored, for example the stabilizer extent, introduced in \cite{beverland2019lower}.
+Instead of lowering the upper bounds by providing improved circuit constructions, one could also try to improve the lower bounds. A possibility for doing this is considering another monotone. Since not all circuits or gates considered here had the same lower and upper bounds, perhaps another monotone could result in tighter lower bounds so that we would know what the optimal number of required resources is. Of course, this is no trivial task, but one possible way to achieve this is might be to make a slight modification to the definition of one of the monotones presented here. An example of this can be seen in \cite{jiang2021lower}, where they defined the Stabilizer Nullity on unitaries rather than states, calling it the unitary Stabilizer Nullityyyyy. Other monotones that are already known could also be explored, for example the stabilizer extent, introduced in \cite{beverland2019lower}.
 
 \bibliographystyle{plain}
 \bibliography{thesis}
