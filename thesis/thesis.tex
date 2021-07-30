@@ -64,7 +64,7 @@ Much work has been done to try to reduce the number of non-Clifford gates in qua
 
 Upper bounds are often obtained from explicit circuit constructions. In contrast, non-trivial lower bounds are notoriously hard to find. In this thesis, we focus on lower bounds that are obtained from monotones, which are real-valued functions of quantum states that are non-increasing under Clifford operations. This follows the work of Beverland and others \cite{beverland2019lower} which provides the main reference for this thesis. 
 
-The thesis focuses on two monotones, namely the Stabilizer Nullity and the Dyadic monotone. The resources considered are the previously mentioned $T$, $CS$, and $CCZ$ gates. These monotones are leveraged to provide lower bounds for important quantum operations: the multiply-controlled Pauli $Z$ gate and the modular adder. Two sets of lower bounds are provided, one derived from the Stabilizer Nullity and another derived from the Dyadic monotone. The Dyadic monotone gives tighter lower bounds, but with further restrictions. Some well-known upper bounds are provided for contrast as well. In some cases, the upper ounds match the lower bounds, showing that the circuit constructions are optimal. 
+The thesis focuses on two monotones, namely the Stabilizer Nullity and the Dyadic monotone. The resources considered are the previously mentioned $T$, $CS$, and $CCZ$ gates. These monotones are leveraged to provide lower bounds for important quantum operations: the multiply-controlled Pauli $Z$ gate and the modular adder. Two sets of lower bounds are provided, one derived from the Stabilizer Nullity and another derived from the Dyadic monotone. The Dyadic monotone gives tighter lower bounds, but with further restrictions. Some well-known upper bounds are provided for contrast as well. In some cases, the upper bounds match the lower bounds, showing that the circuit constructions are optimal. 
 
 The thesis is organized as follows: first we begin with a brief overview of the necessary background information needed in Chapter~\ref{foundations}. Then, In Chapter~\ref{chap Stab}, we introduce the stabilizer formalism, which is the backbone of our methods to realizing lower bounds for resources. The central concept in this chapter is the stabilizer of a state. In Chapter~\ref{monotones}, monotones are introduced in detail, along with some their important properties, leveraging the stabilizer defined in the previous chapter. Chapter \ref{monotones} is also where the aforementioned restriction of the Dyadic monotone first appears, as it is needed to prove some of its properties. In Chapter~\ref{Applications}, we use both monotones to derive lower bounds, considering the $T$, $CS$, and the $CCZ$ gates as resources. We calculate lower bounds for two circuits, namely the $C^nZ$ circuit and the modular adder circuit. Finally, the main takeaways of the thesis are briefly stated in Chapter~\ref{Conclusion}, along with open problems for further work.
 
@@ -205,7 +205,7 @@ A \emph{quantum circuit} describes a sequence of operations acting on a register
 }
 \end{equation*}
 
-Multi-qubit gates are also boxes but with multiple wires connecting to it. There is a special representation for controlled gates. Controlled operations are represented with a open or closed circle on the control qubit with a vertical wire connecting it to a box on the target qubit. A controlled operation with a closed circle on its controll qubit, means apply the controlled gate to the target qubits only if the control qubit is in the $\ket{1}$ state. An open circle on the control qubit means apply the gate if the control qubit is in the state $\ket{0}$. The circuit for a controlled operation $CU$ where $U$ is a single-qubit unitary is
+Multi-qubit gates are also boxes but with multiple wires connecting to it. There is a special representation for controlled gates. Controlled operations are represented with a open or closed circle on the control qubit with a vertical wire connecting it to a box on the target qubit. A controlled operation with a closed circle on its control qubit, means apply the controlled gate to the target qubits only if the control qubit is in the $\ket{1}$ state. An open circle on the control qubit means apply the gate if the control qubit is in the state $\ket{0}$. The circuit for a controlled operation $CU$ where $U$ is a single-qubit unitary is
 \begin{equation*}
 \Qcircuit @C=0.9em @R=.9em {
    & \ctrl{1} & \qw \\
@@ -244,7 +244,7 @@ A circuit that does not contain any measurements can be straightforwardly interp
 \chapter{The Clifford Group and Its Universal Extensions}
 \label{chap Stab}
 
-In this chapter, we introduce Clifford curcuits, discuss their computational power, and present several universal extensions of the Clifford group.
+In this chapter, we introduce Clifford circuits, discuss their computational power, and present several universal extensions of the Clifford group.
 
 \section{The Pauli Operators}
 %To begin, we need to introduce and develop the formalism of stabilizer operators and its related quantities, but first some  basic definitions, starting with the Pauli matrices.
@@ -382,7 +382,7 @@ G FZF^\dag G^\dag = G R' G^\dag = Z.
 \]
 Note $\mathcal{P}(1)$ is generated by $X$, $Z$, and $i$, and neither $Q$, nor $R$ can be $i$ since $U$ is an automorphism. Thus we know how $U$ acts on the generators of $\mathcal{P}(1)$, so $U = VG^\dag$. From this $U$ is comprised of only $H$ and $S$ gates as desired.
 
-Now, suppose $U$ is an $n+1$ qubit unitary that maps Paulis to Paulis under conjugation and suppose that $UZ_{(1)}U^{\dag} = X \otimes g$ and $UX_{(1)}U^{\dag} = Z \otimes g'$ for some $g, g' \in \mathcal{P}_n$. Here $Z_{(1)}$ is the gate $Z \otimes I_{2^n}$, meaning that $Z$ is applied to the first qubit and the identityis applied to the rest. The gate $X_{(1)}$ is defined similarly. Now, define a circuit $C$ as:
+Now, suppose $U$ is an $n+1$ qubit unitary that maps Paulis to Paulis under conjugation and suppose that $UZ_{(1)}U^{\dag} = X \otimes g$ and $UX_{(1)}U^{\dag} = Z \otimes g'$ for some $g, g' \in \mathcal{P}_n$. Here $Z_{(1)}$ is the gate $Z \otimes I_{2^n}$, meaning that $Z$ is applied to the first qubit and the identity is applied to the rest. The gate $X_{(1)}$ is defined similarly. Now, define a circuit $C$ as:
 \[
 \Qcircuit @C=0.5em @R=.7em {
    & \qw & \qw & \ctrl{1} & \qw & \gate{H} & \qw & \ctrl{1} & \qw  \\
@@ -687,7 +687,7 @@ Let $\ket{\psi}$ be a non-zero n qubit state. Then we have the following facts a
 
 \item It is known that the cardinality of the Pauli group is a power of two, and since $\text{Stab}\ket{\psi}$ is a subgroup of the Pauli group, $|\text{Stab}\ket{\psi}|$ must divide a power of two, thus it must also be a power of two.
 
-\item Recall that Clifford unitaries normalize Ppauli matrices. Now let $P \in \text{Stab}\ket{\psi}$ and let $C$ be some Clifford unitary. Then $CPC^{\dag}C\ket{\psi} = CP\ket{\psi} = C\ket{\psi}$, so $CPC^{\dag} \in \text{Stab}(C\ket{\psi})$. Now consider the map $\theta_C : \text{Stab}\ket{\psi} \rightarrow \text{Stab}(C\ket{\psi})$ which acts as $P \mapsto CPC^{\dag}$. This map has an inverse, $\theta_{C^\dag}: \text{Stab}(C\ket{\psi}) \longrightarrow \text{Stab}(C^{\dag}C\ket{\psi})$, which acts as $P' \mapsto C^{\dag}P'C$ (where we note that $\text{Stab}(C^{\dag}C\ket{\psi}) = \text{Stab}\ket{\psi}$). Thus $\theta_C$ is a bijection, and so we have that $|\text{Stab}\ket{\psi}| = |\text{Stab}(C\ket{\psi})|$.
+\item Recall that Clifford unitaries normalize Pauli matrices. Now let $P \in \text{Stab}\ket{\psi}$ and let $C$ be some Clifford unitary. Then $CPC^{\dag}C\ket{\psi} = CP\ket{\psi} = C\ket{\psi}$, so $CPC^{\dag} \in \text{Stab}(C\ket{\psi})$. Now consider the map $\theta_C : \text{Stab}\ket{\psi} \rightarrow \text{Stab}(C\ket{\psi})$ which acts as $P \mapsto CPC^{\dag}$. This map has an inverse, $\theta_{C^\dag}: \text{Stab}(C\ket{\psi}) \longrightarrow \text{Stab}(C^{\dag}C\ket{\psi})$, which acts as $P' \mapsto C^{\dag}P'C$ (where we note that $\text{Stab}(C^{\dag}C\ket{\psi}) = \text{Stab}\ket{\psi}$). Thus $\theta_C$ is a bijection, and so we have that $|\text{Stab}\ket{\psi}| = |\text{Stab}(C\ket{\psi})|$.
 
 \item Let $\ket{\phi}$ be another non-zero state on $n$ qubits, and let $P \in \text{Stab}\ket{\psi}$ and $Q \in \text{Stab}\ket{\phi}$. Then $P \otimes Q \ket{\psi}\ket{\phi} = P\ket{\psi} \otimes Q\ket{\phi} = \ket{\psi}\ket{\phi}$. So $P \otimes Q \in \text{Stab}\ket{\psi}\ket{\phi}$. Now let $R \in \text{Stab}\ket{\psi}\ket{\phi}$. Then since $R$ is a Pauli, we can write $R = R_1 \otimes R_2$, and $R\ket{\psi}\ket{\phi} = \ket{\psi}\ket{\phi} = R_1 \otimes R_2 \ket{\psi}\ket{\phi} = R_1\ket{\psi} \otimes R_2\ket{\phi}$. Now let $\ket{\psi '} = R_1\ket{\psi}$ and $\ket{\phi '} = R_2\ket{\phi}$, and since $R_1$ and $R_2$ are both Clifford unitaries, fact 4 gives us that $|\text{Stab}\ket{\psi '}| = |\text{Stab}(R_1\ket{\psi})|$ and $|\text{Stab}\ket{\phi '}| = |\text{Stab}(R_2\ket{\phi})|$. We also have that $|\text{Stab}(R\ket{\psi}\ket{\phi})| = |\text{Stab}\ket{\psi '}\ket{\phi '}|$.
 
@@ -864,7 +864,7 @@ Let $\ket{\psi}$ be a non-zero $n$-qubit state. The \emph{Stabilizer Nullity} of
 The Stabilizer Nullity is a monotone.
 \end{proposition}
 \begin{proof}
-First, by Proposition \ref{stabilizerfacts}, for any $n$-qubit state $\ket{\psi}$ we have $|\Stab \ket{\psi}| \leq 2^n$. Hence, $\nu (\ket{\psi})$ is always a positive integer and so $\nu$ is a (nonnegative) real valued function. Again, by Proposition \ref{stabilizerfacts} recall that for a Clifford unitary $C$ and a state $\ket{\psi}$ we have that $|\Stab(C\ket{\psi})| = |\Stab\ket{\psi}|$. Thus $\nu(C\ket{\psi}) = n - \log_2|\Stab(C\ket{\psi})| = n - \log_2|\Stab\ket{\psi}| = \nu(\ket{\psi})$. Finally, if $\ket{\psi}$ is a stabilizer state, then $|\Stab\ket{\psi}| = 2^n$ by Proposition \ref{stabilizerfacts}, so $\nu(\ket{\psi}) = n - \log_2(\Stab\ket{\psi}) =  n - \log_2(2^n) = 0$. 
+First, by Proposition \ref{stabilizerfacts}, for any $n$-qubit state $\ket{\psi}$ we have $|\Stab \ket{\psi}| \leq 2^n$. Hence, $\nu (\ket{\psi})$ is always a positive integer and so $\nu$ is a (non-negative) real valued function. Again, by Proposition \ref{stabilizerfacts} recall that for a Clifford unitary $C$ and a state $\ket{\psi}$ we have that $|\Stab(C\ket{\psi})| = |\Stab\ket{\psi}|$. Thus $\nu(C\ket{\psi}) = n - \log_2|\Stab(C\ket{\psi})| = n - \log_2|\Stab\ket{\psi}| = \nu(\ket{\psi})$. Finally, if $\ket{\psi}$ is a stabilizer state, then $|\Stab\ket{\psi}| = 2^n$ by Proposition \ref{stabilizerfacts}, so $\nu(\ket{\psi}) = n - \log_2(\Stab\ket{\psi}) =  n - \log_2(2^n) = 0$. 
 \end{proof}
 
 \begin{proposition}
@@ -920,7 +920,7 @@ In either case, $CUC^\dag$ is a Pauli, so $C$ is a Clifford by Proposition \ref{
 
 \begin{lemma}
 \label{nullity outcome}
-Let $\ket{\psi}$ be a non-zero n-qubit state and let $P$ be an n-qubit Pauli matrix. Assume that the probability of a $+1$ outcome when measuring $P$ on $\ket{\psi}$ is non-zero and let $\ket{\phi}$ be the state after measurement. Then $|\text{Stab}\ket{\phi}| = |\text{Stab}\ket{\psi}|$ or $|\text{Stab}\ket{\phi}| \geq |\text{Stab}\ket{\psi}|$.
+Let $\ket{\psi}$ be a non-zero $n$-qubit state and let $P$ be an $n$-qubit Pauli matrix. Assume that the probability of a $+1$ outcome when measuring $P$ on $\ket{\psi}$ is non-zero and let $\ket{\phi}$ be the state after measurement. Then $|\text{Stab}\ket{\phi}| = |\text{Stab}\ket{\psi}|$ or $|\text{Stab}\ket{\phi}| \geq |\text{Stab}\ket{\psi}|$.
 \end{lemma}
 
 \begin{proof}
