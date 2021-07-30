@@ -746,7 +746,11 @@ Let $\ket{\psi}$ be a non-zero n qubit state. Then we have the following facts a
 
 \item Let $\ket{\phi}$ be another non-zero state on $n$ qubits, and let $P \in \text{Stab}\ket{\psi}$ and $Q \in \text{Stab}\ket{\phi}$. Then $P \otimes Q \ket{\psi}\ket{\phi} = P\ket{\psi} \otimes Q\ket{\phi} = \ket{\psi}\ket{\phi}$. So $P \otimes Q \in \text{Stab}\ket{\psi}\ket{\phi}$. Now let $R \in \text{Stab}\ket{\psi}\ket{\phi}$. Then since $R$ is a Pauli, we can write $R = R_1 \otimes R_2$, and $R\ket{\psi}\ket{\phi} = \ket{\psi}\ket{\phi} = R_1 \otimes R_2 \ket{\psi}\ket{\phi} = R_1\ket{\psi} \otimes R_2\ket{\phi}$. Now let $\ket{\psi '} = R_1\ket{\psi}$ and $\ket{\phi '} = R_2\ket{\phi}$, and since $R_1$ and $R_2$ are both Clifford unitaries, fact 4 gives us that $|\text{Stab}\ket{\psi '}| = |\text{Stab}(R_1\ket{\psi})|$ and $|\text{Stab}\ket{\phi '}| = |\text{Stab}(R_2\ket{\phi})|$. We also have that $|\text{Stab}(R\ket{\psi}\ket{\phi})| = |\text{Stab}\ket{\psi '}\ket{\phi '}|$.
 
- So every element in $\text{Stab}\ket{\psi}\ket{\phi}$ is of the form $R_1 \otimes R_2$ as above, thus $\text{Stab}\ket{\psi}\ket{\phi} = \text{Stab}\ket{\psi} \otimes \text{Stab}\ket{\phi}$. Then we have a bijection (from the direct product) $\theta:\text{Stab}\ket{\psi} \times \text{Stab}\ket{\phi} \longrightarrow  \text{Stab}\ket{\psi} \otimes \text{Stab}\ket{\phi}$, which gives us $|\text{Stab}\ket{\psi}\ket{\phi}| = |\text{Stab}\ket{\psi} \otimes \text{Stab}\ket{\phi}| = |\text{Stab}\ket{\psi}| \cdot |\text{Stab}\ket{\phi}|$.
+ So every element in $\text{Stab}\ket{\psi}\ket{\phi}$ is of the form $R_1 \otimes R_2$ as above, thus 
+ \[
+ \text{Stab}\ket{\psi}\ket{\phi} = \text{Stab}\ket{\psi} \otimes \text{Stab}\ket{\phi}.
+ \]
+ Then we have a bijection (from the direct product) $\theta:\text{Stab}\ket{\psi} \times \text{Stab}\ket{\phi} \longrightarrow  \text{Stab}\ket{\psi} \otimes \text{Stab}\ket{\phi}$, which gives us $|\text{Stab}\ket{\psi}\ket{\phi}| = |\text{Stab}\ket{\psi} \otimes \text{Stab}\ket{\phi}| = |\text{Stab}\ket{\psi}| \cdot |\text{Stab}\ket{\phi}|$.
  \qedhere
 \end{enumerate}
 \end{proof}
@@ -1136,7 +1140,15 @@ Additivity comes directly from the definition of $\sigma_k$, so we focus on mult
 
 
 
-Note also that from the Fundamental Theorem of Galois one can obtain the isomorphism $Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q}) \cong (\mathbb{Z}/n\mathbb{Z})^x$, which means that elements in $Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q})$ are precisely the $\sigma_k$'s where $gcd(k, 2^{d+1}) = 1$. Thus $k$ takes only odd values, so that:
+From the Fundamental Theorem of Galois one obtains the isomorphism 
+\[
+Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q}) \cong (\mathbb{Z}/n\mathbb{Z})^x,
+\]
+which means that elements in $Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q})$ are precisely the $\sigma_k$'s where 
+\[
+gcd(k, 2^{d+1}) = 1.
+\]
+Thus $k$ takes only odd values, so that:
 
 \begin{equation}
 N_d(\alpha) = \prod_{k-odd} \sigma_k (\alpha) = \prod_{k=0}^{2^d - 1} \sigma_{2k+1} (\alpha)
@@ -1612,7 +1624,7 @@ Now recall that $v_2(\braket{\psi |Q| \psi} + \braket{\psi |PQ| \psi}) = v_2(\br
 
 
 
-\section{The $C^nZ$ gate}
+\section{The \texorpdfstring{$C^nZ$}{CnZ} gate}
 %\subsection{Lower Bounds for the $C^nZ$ gate}
 The $C^n Z$ gate is a gate worth considering in detail since it is used in many important algorithms, like the Grover's search algorithm. We start by computing the Pauli spectrum of $\ket{\C^nZ}$. Lower bounds on the resources required for this gate follow after this proposition.
 
@@ -1655,7 +1667,7 @@ Thus the terms in the sum over $b$ differ from $\sum_{b \in \{0, 1\}^n} (-1)^{z 
 \begin{equation*}
 \begin{split}
 2^n\braket{C^n Z|X^xZ^z|C^n Z} & = \sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{(b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_n + x_n)} (-1)^{z \cdot b} \\
-& = - (-1)^{z \cdot 1^n} - (-1)^{z \cdot (1^n + x)} \hspace{2mm} + \sum\limits_{b \in \{0, 1\}^n \texttt{\textbackslash} \{1^n, 1^n + x \} } (-1)^{z \cdot b}  \\
+& = - (-1)^{z \cdot 1^n} - (-1)^{z \cdot (1^n + x)} \hspace{2mm} + \sum\limits_{b \in \{0, 1\}^n \setminus \{1^n, 1^n + x \} } (-1)^{z \cdot b}  \\
 & = -2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot (1^n + x)} + \sum\limits_{b \in \{0, 1\}^n} (-1)^{z \cdot b}.
 \end{split}
 \end{equation*}
@@ -1673,8 +1685,8 @@ and if $x \cdot z$ is even, then we have $-2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot 
 |\braket{C^n Z|X^xZ^z|C^n Z}| = \begin{cases}
 1 & \texttt{if } z = 0^n \texttt{ and } x = 0^n, \\
 1 - 2^{2-n} & \texttt{if } z = 0^n \texttt{ and } x \neq 0^n, \\
-0 & \texttt{if } z \neq 0^n \texttt{ and either } x = 0^n \texttt{ or } x \neq 0^n \texttt{ and } \\
-& x \cdot z \texttt{ is odd} \\
+0 & \texttt{if } z \neq 0^n \texttt{ and either } x = 0^n \texttt{ or } x \neq 0^n \\
+& \texttt{ and }x \cdot z \texttt{ is odd} \\
 2^{2-n} & \texttt{if } z \neq 0^n \texttt{ and } x \neq 0^n
  \texttt{ and } x \cdot z \texttt{ is even}
 \end{cases}
@@ -1684,7 +1696,10 @@ We can count the number of each subset of binary vectors $x$ and $z$ to find mul
 
 \begin{corollary}
 \label{nu values}
-We have the following stabilizer nullity values: $\nu (\ket{T}) = 1$, $\nu (\ket{CS}) = 2$, $\nu (\ket{CCZ}) = 3$, $\nu (\ket{C^n Z}) = n+1$
+We have the following stabilizer nullity values: 
+\[
+\nu (\ket{T}) = 1, \quad \nu (\ket{CS}) = 2, \quad \nu (\ket{CCZ}) = 3, \quad \mbox{and} \quad \nu (\ket{C^n Z}) = n+1.
+\]
 \end{corollary}
 \begin{proof}
 
