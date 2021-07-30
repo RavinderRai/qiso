@@ -1389,44 +1389,39 @@ Again, since we used $n-1$ $CCZ$ gates in proposition \ref{CCZ upperbound}, we c
 
 \section{The Modular Adder}
 
-Before we can establish lower bounds for the modular adder circuit, we will need some properties and propositions regarding the Quantum Fourier Transform. We will use the fact that the adder can create a complex conjugate copy of a Fourier state, but first note some explicit values of $v_2$ that we will need to compute $\mu_2$ for Fourier states:
-\begin{equation}
-\mbox{For all odd integers } k \mbox{, integers } d \geq 2: v_2(cos(\pi k/2^d)) = v_2(sin(\pi k /2^d)) = \frac{1}{2^{d-1}} - 1.
-\end{equation}
+In this final section, we provide lower bounds on circuits for the
+modular adder. The modular adder is an important part of many quantum
+algorithms.
+
+\begin{definition}
+  \label{def:adder}
+  A circuit $C$ on $2n$ qubits implements the modular adder if it acts
+  on basis states as
+  \[
+  C\ket{i}\ket{j} = \ket{i}\ket{i+j}
+  \]
+  where $i+j$ is evaluated modulo $2^n$.
+\end{definition}
+
+Note that the adder defined in Definition~\ref{def:adder} is an
+``in-place'' adder: the result of the addition of the integers
+contained in the two input registers is stored in the second register.
+
+In order to establish bounds for the modular adder, we will rely on
+so-called \emph{Fourrier states}.
+
+\begin{definition}
+  The \emph{Fourrier state} [Todo: define]
+\end{definition}
 
 \begin{proposition}
-Consider Fourier state
-\begin{center}
-$\ket{QFT_n^a} = \sum\limits_{y=o}^{2^n-1} \texttt{exp}\Big[ \frac{i2\pi ay}{2^n} \Big] \ket{y} = \otimes_{k=1}^n \big( \ket{0} + e^{i2\pi a/2^k}\ket{1}\big)$,
-\end{center}
-For all odd $a$, $\mu_2\ket{QFT_n^a} = n-3 +(1/2)^{n-2}$.
-\end{proposition}
-\begin{proof}
-Recall that Pauli expectations of $(\ket{0} + e^{i2\pi a/2^k}\ket{1})/\sqrt{2}$ are
-\begin{center}
-$\{ 0, cos(2\pi a/2^k), sin(2\pi a/2^k), 1 \}$.
-\end{center}
-So for $k \geq 2$ we have:
-\begin{center}
-$\mu_2 \big( (\ket{0} + e^{i2\pi a/2^k} \ket{1}/\sqrt{2} \big) = v_2 \big( sin(\pi a/2^{k-1}) \big) = 1 - 1/2^{k-2}$
-\end{center}
-Using the multiplicative property of $\mu_2$ we get:
-\begin{center}
-$\mu_2 (\ket{QFT_n^a}) = \sum\limits_{k=2}^n \big( 1-1/2^{k-2}) = n-3 + 1/2^{n-2}$
-\end{center}
-\end{proof}
-
-The adder circuit is a fundamental quantum operation because it implements basic arithmetic, being addition, on pairs of registers in superposition. We can lower bound the resources required to implement it as follows:
-
-\begin{proposition}
-An adder circuit on two n-qubit registers acts on basis states as 
-\begin{center}
-$A(\ket{i} \ket{j}) = \ket{i} \ket{i+j}$
-\end{center}
-with $i + j$ evaluated modulo $2^n$. It is not possible to implement the adder circuit with Clifford gates and measurements using fewer than $(n-2) \ket{T}$ states, $(n-2)/2 \ket{CS}$ states or $(n-2)/3 \ket{CCZ}$ states.
+The modular adder cannot be implemented with Clifford gates and
+measurements using fewer than $(n-2) \ket{T}$ gates, $(n-2)/2 \ket{CS}$
+gates, or $(n-2)/3 \ket{CCZ}$ gates.
 \end{proposition}
 
 \begin{proof}
+  As in the previous section, we reason with states rather than with gates.
 We proceed in two steps. First, we show that the adder circuit $A$ acting on the $n$-qubit quantum Fourier state $\ket{QFT_n^b}$ and the stabilizer state $\ket{+}^{\otimes n}$ has the action $A(\ket{+}^{\otimes n} \ket{QFT_n^b}) = \ket{QFT_n^{-b}}\ket{QFT_n^b}$. This tells us that if $A$ is implemented by a set of Clifford gates and Pauli measurements along with some input resource state $\ket{\psi}$, it must be that $\nu (\ket{\psi} \ket{QFT_n^b}) \geq \nu(\ket{QFT_n^{-b}} \ket{QFT_n^b})$ which implies that $\nu (\ket{\psi}) \geq \nu(\ket{QFT_n^{-b}})$ since the Stabilizer Nullity is additive. Second we show that $\nu(\ket{QFT_n^{-1}}) = n-2$, which then directly implies our bounds since if the bounds are not satisfied, $\nu(\ket{\psi}) \geq \nu(\ket{QFT_n^{-1}})$ would not be satisfied.
 
 First recall the family of quantum Fourier states for each integer $a = 0, 1, \dots, 2^n - 1$:
@@ -1446,16 +1441,36 @@ A \big(\ket{QFT_n^a} \ket{QFT_n^b} \big) & = \frac{1}{2^n} \sum\limits_{y=0}^{2^
 Setting $a=0$ gives $A(\ket{+}^{\otimes n} \ket{QFT_n^b}) = \ket{QFT_n^{-b}}\ket{QFT_n^b}$, as desired. Finally, to calculate $\nu \ket{QFT_n^{-b}}$, we use the sum of the Stabilizer Nullity for each state in the tensor product. From the tensor product variant of the definition of the $\ket{QFT_n^b}$ in equation \ref{QFTdef} the first two terms will have $\nu = 0$, since they will be computational basis states. The rest of the terms all have a relative phase ($\neq i$), and for a single qubit it is easy to verify that this results in a trivial stabilizer, thus giving $\nu = 1$. Since the Stabilizer Nullity is additive, we have that $\nu(\ket{QFT_n^{-1}}) = n-2$. Then considering the following possible implications: $r\ket{T} \Longrightarrow \ket{QFT_n^{-1}}$, $r\ket{CS} \Longrightarrow \ket{QFT_n^{-1}}$, and $r\ket{CCZ} \Longrightarrow \ket{QFT_n^{-1}}$, and the respective Stabilizer Nullity values: $\nu (\ket{T}) = 1$, $\nu (\ket{CS}) = 2$ and $\nu (\ket{CCZ}) = 3$, where the implications mean that we can apply a Clifford circuit to the resource state to get the inverse quantum Fourier state, we get the final results above using the fact that the Stabilizer Nullity is non-increasing under Clifford operations.
 \end{proof}
 
-Note the calculation of $\nu(\ket{QFT_n^{-1}}) = \nu(\ket{QFT_n^{1}}) = n-2$ above also implies that the Quantum Fourier Transform on $n$ qubits can not be performed using fewer than $n-2$ copies of $\ket{T}$.
-
-Now we give lower bounds using the Dyadic monotone.
-
+Finally, we give lower bounds using the Dyadic monotone.
 
 \begin{lemma}
-At least $n-2$ $\ket{CCZ}$ states are needed to implement the $n$-qubit modular adder for $n \geq 3$ by using stabilizer operations with measurement probabilities one half.
+  \label{lem:fourrierstate}
+Let $a$ be an odd integer. Then $\mu_2\ket{QFT_n^a} = n-3 +(1/2)^{n-2}$.
 \end{lemma}
+
 \begin{proof}
-Recall that by applying a circuit for modular adder $\ket{+}^{\otimes n} \otimes \ket{QFT_n^1}$ we can create a state $\ket{QFT_n^{-1}} \otimes \ket{QFT_n^1}$. If there existed a circuit that used $k$ $CCZ$ gates for $k < n-2$, we would be able to prepare states $\ket{QFT_n^{-1}}$ starting from $k \ket{CCZ}$ and then using Clifford unitaries and Pauli observable measurements with probability half by using $\ket{QFT_n^1}$ as a catalyst. Let us show that this is impossible. Indeed for the input state we would have value $\mu_2$ equal to $k + \mu_2 \ket{QFT_n^1}$ and for the output state we would have $\mu_2 \ket{QFT_n^{-1}} + \mu_2 \ket{QFT_n^1}$. We know that $\mu_2$ is non-increasing when we apply Clifford unitaries and measurements with probability $1/2$, therefore $k \geq \mu_2 \ket{QFT_n^{-1}} = n - 3 +(1/2)^{n-2}$ which implies that $k \geq n-2$.
+Recall that Pauli expectations of $(\ket{0} + e^{i2\pi a/2^k}\ket{1})/\sqrt{2}$ are
+\begin{center}
+$\{ 0, cos(2\pi a/2^k), sin(2\pi a/2^k), 1 \}$.
+\end{center}
+So for $k \geq 2$ we have:
+\begin{center}
+$\mu_2 \big( (\ket{0} + e^{i2\pi a/2^k} \ket{1}/\sqrt{2} \big) = v_2 \big( sin(\pi a/2^{k-1}) \big) = 1 - 1/2^{k-2}$
+\end{center}
+(Why is the above equality true?)Using the multiplicative property of $\mu_2$ we get:
+\[
+\mu_2 (\ket{QFT_n^a}) = \sum\limits_{k=2}^n \big( 1-1/2^{k-2}) = n-3 + 1/2^{n-2}.\qedhere
+\]
+\end{proof}
+
+\begin{proposition}
+Let $n\geq 3$. The modular adder cannot be implemented with Clifford
+gates and measurements with probability one half using fewer than
+$(n-2) \ket{CCZ}$ gates.
+\end{proposition}
+
+\begin{proof}
+Recall that by applying a circuit for modular adder $\ket{+}^{\otimes n} \otimes \ket{QFT_n^1}$ we can create a state $\ket{QFT_n^{-1}} \otimes \ket{QFT_n^1}$. If there existed a circuit that used $k$ $CCZ$ gates for $k < n-2$, we would be able to prepare states $\ket{QFT_n^{-1}}$ starting from $k \ket{CCZ}$ and then using Clifford unitaries and Pauli observable measurements with probability half by using $\ket{QFT_n^1}$ as a catalyst. Let us show that this is impossible. Indeed for the input state we would have value $\mu_2$ equal to $k + \mu_2 \ket{QFT_n^1}$ and for the output state we would have $\mu_2 \ket{QFT_n^{-1}} + \mu_2 \ket{QFT_n^1}$. We know that $\mu_2$ is non-increasing when we apply Clifford unitaries and measurements with probability $1/2$, therefore, by Lemma~\ref{lem:fourrierstate}, $k \geq \mu_2 \ket{QFT_n^{-1}} = n - 3 +(1/2)^{n-2}$ which implies that $k \geq n-2$.
 \end{proof}
 
 \chapter{Conclusion}
