@@ -89,7 +89,7 @@ A basis for a tensor product of vector spaces can be obtained as the tensor prod
 \subsection{The Dirac Notation}
 In quantum computing, we make use of the \emph{Dirac notation} to represent vectors and operations. In Dirac notation, we write a column vector $v$ as a \emph{ket}, denoted by $\ket{v}$. The adjoint of a column vector $u$ is written as a \emph{bra}, denoted by $\bra{u}$. The inner product between two vectors $\ket{v}$ and $\ket{u}$ is then written as a \emph{braket}, denoted by $\braket{u|v}$. For example, the inner product of $\bra{0}$ and $\ket{1}$ is $\braket{0|1}$. The outer product between two vectors is written in the opposite manner, i.e. $\ket{v} \bra{u}$. Note this is simple matrix multiplication, where the inner product results in a scalar, and the outer product produces a matrix. In some sense the outer product scales a vector, since for a vector $\ket{w}$, we have $\ket{v}\bra{u} \ket{w} = \braket{u|w}\ket{v}$ where $\braket{u|w}$ is just a scalar.
 
-Consider the standard basis vectors $[1, 0]^{\dag}$ and $[0, 1]^{\dag}$. We denote them $\ket{0}$ and $\ket{1}$ respectively. In quantum computing, the basis of $\mathbb{C}^2$ formed by $\{ \ket{0} , \ket{1} \}$ is known as the \emph{computational basis}. As mentioned before, one can get a basis for higher dimensional vector spaces by taking tensor products of $\ket{0}$ and $\ket{1}$. For example, a basis for $\mathbb{C}^4$ is $\{ \ket{0} \otimes \ket{0}, \ket{0} \otimes \ket{1}, \ket{1} \otimes \ket{0}, \ket{1} \otimes \ket{1} \}$. For brevity, the symbol $\otimes$ is often omitted for elements of the higher dimensional computational bases. For example, $\ket{0} \otimes \ket{0}$ is written as $\ket{00}$ and $\ket{0} \otimes \ket{1}$ is written as $\ket{01}$. In this way, the $j-th$ basis vector of $\mathbb{C}^{2n}$ is denoted $\ket{b_1 b_2 \cdots b_n}$ where $b_1, b_2, \cdots , b_n \in \mathbb{Z}_2$ and $b_1 b_2 \cdots b_n$ is the binary expansion of $j$.
+Consider the standard basis vectors $[1, 0]^{\dag}$ and $[0, 1]^{\dag}$. We denote them $\ket{0}$ and $\ket{1}$ respectively. In quantum computing, the basis of $\mathbb{C}^2$ formed by $\{ \ket{0} , \ket{1} \}$ is known as the \emph{computational basis}. As mentioned before, one can get a basis for higher dimensional vector spaces by taking tensor products of $\ket{0}$ and $\ket{1}$. For example, a basis for $\mathbb{C}^4$ is $\{ \ket{0} \otimes \ket{0}, \ket{0} \otimes \ket{1}, \ket{1} \otimes \ket{0}, \ket{1} \otimes \ket{1} \}$. For brevity, the symbol $\otimes$ is often omitted for elements of the higher dimensional computational bases. For example, $\ket{0} \otimes \ket{0}$ is written as $\ket{00}$ and $\ket{0} \otimes \ket{1}$ is written as $\ket{01}$. In this way, the $j-th$ basis vector of $\mathbb{C}^{2n}$ is denoted $\ket{b_1 b_2 \cdots b_n}$ where $b_1, b_2, \cdots , b_n \in \mathbb{Z}_2$ and $b_1 b_2 \cdots b_n$ is the binary expansion of $j$. Alternatively, we sometimes also write $j$ as an integer instead. For example, $\ket{3} = \ket{11} = \ket{1} \otimes \ket{1}$. These notations are all equivalent and interchangeable, thus we use whichever one is most convenient.
 
 \subsection{Quantum Bits}
 The fundamental unit of information in classical computing is the \emph{bit}. In quantum computing the basic unit of information is called a \emph{quantum bit} or \emph{qubit} for short. In classical computing the classical bit can be in the \emph{states} $0$ or $1$, but in quantum computing the state of a qubit is a unit vector in $\mathbb{C}^2$. Hence, the state of a qubit can be any complex linear combination $\alpha \ket{0} + \beta \ket{1}$, where $\alpha , \beta \in \mathbb{C}$ and satisfy $|\alpha | + |\beta | = 1$. The complex numbers $\alpha$ and $\beta$ are called the \emph{amplitudes} of the state. Note that $\ket{0}$ and $\ket{1}$ are valid states, corresponding to $\alpha = 1$ and $\beta = 0$, and to $\alpha = 0$ and $\beta = 1$ respectively. We sometimes call these states \emph{classical}. A state whose amplitudes are both nonzero is said to be a state in \emph{superposition}. For example, a qubit in the state \[ \frac{\ket{0} + \ket{1}}{\sqrt{2}} \] is in (equal) superposition.
@@ -790,7 +790,7 @@ Let $\ket{\psi}$ be a nonzero $n$-qubit state, let $P$ be an $n$-qubit Pauli ope
 & \leq n - \log_2|\Stab|\ket{\psi}| \\
 & = \nu(\ket{\psi}).
 \end{split}
-\end{equation*}
+\end{equation*} \qedhere
 \end{proof}
 
 We finish this section with a notion that will be helpful in computing the Stabilizer Nullity of states. We write multisets using $\{|$ and $|\}$. Moreover, we sometimes indicate the multiplicity of an element in brackets. For example the multiset $\{| a, a, b |\}$ will sometimes be written as $\{| a (2), b (1) |\}$.
@@ -805,6 +805,7 @@ Let $\ket{\psi}$ be a non-zero $n$-qubit state. The \emph{Pauli spectrum} of $\k
 The Pauli spectrum is a multiset with $4^n$ elements. These elements are real numbers between 0 and 1. Note that the number of $1$'s in the Pauli spectrum of $\ket{\psi}$ is $|\text{Stab}\ket{\psi}|$. Hence the Pauli spectrum can be useful in computing the Stabilizer Nullity.
 
 \begin{example}
+\label{PauliSpecEx}
 Let $\theta \in \mathbb{R}$ and consider the state $\ket{\theta} = (\ket{0} + e^{i\theta}\ket{1})/\sqrt{2}$. To calculate the Pauli spectrum, first note that $\ket{\theta}$ is normalized so $\bra{\theta}\ket{\theta} = 1$, then by direct computation we have:
 \begin{itemize}
 \item $\bra{\theta}I\ket{\theta} = \braket{\theta|\theta} = 1$
@@ -918,6 +919,7 @@ $N_0 (x) = \sigma_1 (x)$, and since $\sigma_1 (x)$ is trivial, so is $N_0 (x)$.
 \end{proof}
 
 \begin{proposition}
+\label{N_dMultiplicative}
 Let $d$ be a positive integer. Then $N_d$ is multiplicative.
 \end{proposition}
 \begin{proof}
@@ -1060,9 +1062,19 @@ Recall from number theory that elements of the ring of integers of a number fiel
 Let $x'$ be an element of $\mathbb{Z}[\zeta_{2^{d+1}}]$. Then $v_2(x') \geq 0$ and for $k=2^d v_2(x)$, $x'$ can be written as $x''(1-\zeta_{2^{d+1}})^k$ for $x''$ in $\mathbb{Z}[\zeta_{2^{d+1}}]$ such that $v_2(x'') = 0$.
 \end{proposition}
 \begin{proof}
-Denote $1-\zeta_{2^{d+1}}$ as $\alpha_d$ and choose $k$ to be the biggest power of $\alpha_d$ that divides $x'$. Then we can write $x' = \alpha_d^k x''$ such that $x''$ is from $\mathbb{Z}[\zeta_{2^{d+1}}]$ and $\alpha_d$ does not divide $x''$. If $2$ does not divide $N_d(x'')$ then this will imply that $v_2(x'') = 0$ and $v_2(x') = kv_2(\alpha_d) = k/2^d$.
+Let $\alpha_d = 1-\zeta_{2^{d+1}}$ and choose $k$ to be the biggest power of $\alpha_d$ that divides $x'$. Then we can write $x' = \alpha_d^k x''$ such that $x''$ is from $\mathbb{Z}[\zeta_{2^{d+1}}]$ and $\alpha_d$ does not divide $x''$. Since $N_d(x'')$ is an integer by Proposition~\ref{N_dint}, if $2$ does not divide $N_d(x'')$ then this will imply that $v_2(x'') = 0$. 
 
-We proceed by finding a contradiction. By Proposition \ref{N_dint}, we know that $N_d(x'')$ is an integer for any $x''$ from $\mathbb{Z}[\zeta_{2^{d+1}}]$. Suppose now that $2$ divides $N_d(x'')$. Then by Proposition \ref{N_d=2} this implies that $\alpha_d$ divides $N_d(x'')$. Because $\alpha_d$ is prime by Proposition \ref{alphaprime}, $\alpha_d$ must divide $\sigma_{2k+1}(x'')$ for some $k$. Note there exists $j$ such that $(2j+1)(2k+1) \mod 2^{d+1} \equiv 1$ and $\sigma_{2j+1}(\sigma_{2k+1}(x')) = x'$. Then, applying $\sigma_{2j+1}$ to $\alpha_d$ and $\sigma_{2k+1}(x'')$ we get that $\sigma_{2j+1}(\alpha_d)$ divides $x''$. However, by Proposition \ref{unit} $\alpha_d$ divides $\sigma_{2j+1}(\alpha_d) = 1 - \zeta_{2^{d+1}}^{2j+1}$ and therefore it divides $x''$ which is a contradiction.
+Let us now suppose that $2$ does indeed divide $N_d(x'')$, in an effort to find a contradiction. Then by Proposition~\ref{N_d=2}, together with the definition of $N_d$, $\alpha_d$ divides $2$ which implies that $\alpha_d$ divides $N_d(x'')$. Also, since $\alpha_d$ is prime by Proposition~\ref{alphaprime}, $\alpha_d$ must also divide $\sigma_{2k+1}(x'')$ for some $k$. Note there exists $j$ such that $(2j+1)(2k+1) \mod 2^{d+1} \equiv 1$ and $\sigma_{2j+1}(\sigma_{2k+1}(x')) = x'$. Then, applying $\sigma_{2j+1}$ to $\alpha_d$ and $\sigma_{2k+1}(x'')$ we get that $\sigma_{2j+1}(\alpha_d)$ divides $x''$. However, by Proposition \ref{unit} $\alpha_d$ divides $\sigma_{2j+1}(\alpha_d) = 1 - \zeta_{2^{d+1}}^{2j+1}$ and therefore it divides $x''$. This contradicts our initial description of $x'$, so $v_2(x'') = 0$. 
+
+Finally, we have that 
+\begin{align*}
+v_2 (x') & = v_2(\alpha_d^k \cdot x'') \\
+& = v_2 (\alpha_d^k) + v_2(x'') \\
+& = k \cdot v_2 (\alpha_d) \\
+& = k/2^d.
+\end{align*}
+Naturally we now have that $k = 2^d  v_2(x')$, as desired. \qedhere
+   
 \end{proof}
 
 \begin{proposition}
@@ -1129,20 +1141,24 @@ $\mu_2 (\ket{\phi} \otimes \ket{\psi}) = \mu_2 \ket{\phi} + \mu_2 \ket{\psi}$
 \end{proposition}
 
 \begin{proof}
-The results follows from the fact that for Pauli matrices $P$ and $Q$ such that the expectations $\braket{\phi | P |\phi}$ and $\braket{\psi | Q | \psi}$ are non-zero it is the case that:
-\begin{center}
-$v_2 (\bra{\phi} \otimes \bra{\psi} (P \otimes Q) \ket{\phi} \otimes \ket{\psi}) = v_2 (\braket{\phi | P | \phi}) + v_2(\braket{\psi | Q | \psi})$.
-\end{center}
+Note that for Pauli matrices $P$ and $Q$ the expectations $\braket{\phi | P |\phi}$ and $\braket{\psi | Q | \psi}$ are non-zero. Thus, using distributive properties of the tensor product and $v_2$, we get:
+\begin{align*}
+v_2 (\bra{\phi} \otimes \bra{\psi} (P \otimes Q) \ket{\phi} \otimes \ket{\psi}) & = v_2 ((\bra{\phi}P + \bra{\psi}Q) \otimes (\ket{\phi} \otimes \ket{\psi})) \\
+& = v_2 (\braket{\phi | P | \phi} \cdot \braket{\psi | Q | \psi}) \\
+& = v_2 (\braket{\phi | P | \phi}) + v_2(\braket{\psi | Q | \psi}).
+\end{align*} \qedhere
 \end{proof}
 
-Another important property is that the Dyadic monotone is minimal for stabilizer states, of which we will need the following proposition to show.
+Next, we want to show that that the Dyadic monotone is minimal for stabilizer states. To do this we will need the following proposition.
 
 \begin{proposition}
 \label{sigmak}
 Let $x$ be an element of $\mathcal{R}_d$ such that for all odd $k$, $|\sigma_k (x)| \leq 1$. Then $v_2(x) \leq 0$ and the equality is achieved if and only if $x = \pm 1$.
 \end{proposition}
 \begin{proof}
-The condition that $|\sigma_k (x)| \leq 1$ for all odd $k$ implies that $N_d(x) \leq 1$. Because $x \in \mathcal{R}_d$ we can write it as $z/2^k$ for $z \in \mathbb{Z}[\zeta_{2^{d+1}}]$, and since $N_d$ is rational, $N_d(z) = n$ must be an integer so that $N_d(x) = n/2^k$. Thus $|N_d(x)| \leq 1$ which implies that $\bar{v}_2 (n/2^k)$ is non-positive so that $v_2(x)$ is also. Now, since $n$ is an integer, $v_2(x) = 0$ if and only if $N_d(x) = n/2^k = \pm 1$. Because $|\sigma_k (x)| \leq 1$ for all $k$, $N_d(x) = \pm 1$ only when $\sigma_k (x) = x = 1$.
+The condition that $|\sigma_k (x)| \leq 1$ for all odd $k$ implies that $N_d(x) \leq 1$, since $N_d(x)$ is just the product of all these $\sigma$'s. Because $x \in \mathcal{R}_d$ we can write it as $z/2^k$ for $z \in \mathbb{Z}[\zeta_{2^{d+1}}]$. Then, since $N_d$ is multiplicative by Proposition~\ref{N_dMultiplicative}, $N_d (x) = N_d(z) \cdot N_d(2^k) = n/2^k$, where $N_d(z) = n$ is an integer by Proposition~\ref{N_dint}. This together with $|N_d(x)| \leq 1$ implies $\bar{v}_2 (n/2^k)$ is negative, which further implies that $v_2(x)$ is also. 
+
+Now, since $n$ is an integer and $|N_d(x)| \leq 1$, $v_2(x) = 0$ if and only if $N_d(x) = n/2^k = \pm 1$. Because $|\sigma_k (x)| \leq 1$ for all $k$, $N_d(x) = \pm 1$ only when $\sigma_k (x) = \pm 1$ for all $k$. Then by Proposition~\ref{sigmaration}, $x = \pm 1$.
 \end{proof}
 
 \begin{proposition}
@@ -1167,18 +1183,36 @@ Since $P$ is either $0$ or $\pm 1$ we can write $|\Stab\ket{\psi}| = \sum\limits
 
 \begin{proposition}
 \label{dyadic is monotone}
-Let $\ket{\psi}$ be a state with entries in $\mathcal{R}_d$, let $P$ be a Pauli observable such that measuring its eigenvalue $+1$ has probability $1/2$ and let $\ket{\psi_+}$ be the normalized result of that measurement. Then $\mu_2\ket{\psi} \geq \mu_2\ket{\psi_+}$. 
+Let $\ket{\psi}$ be a state with entries in $\mathcal{R}_d$, let $P$ be a Pauli observable such that measuring its $+1$ eigenvalue has probability $1/2$ and let $\ket{\psi_+}$ be the normalized result of that measurement. Then $\mu_2\ket{\psi} \geq \mu_2\ket{\psi_+}$, so $\mu_2$ is non-increasing under Pauli measurements. 
 \end{proposition}
 \begin{proof}
-Let us bound the value of $v_2$ for some Pauli operator $Q$ evaluated on the expectation $\braket{\psi_+ | Q |\psi_+}$. The normalized state is $\ket{\psi_+} = \frac{I + P}{\sqrt{2}}\ket{\psi}$. The expectation of $Q$ is therefore equal to:
-\begin{center}
-$\braket{\psi_+ | Q |\psi_+} = \braket{\psi | (I + P)Q(I + P) | \psi}/2$.
-\end{center}
-If $P$ and $Q$ anti-commute, the expectation is zero and does not contribute to the calculation of $\mu_2$. When $P$ and $Q$ commute, the expectation is equal to $\braket{\psi | Q | \psi} + \braket{\psi |PQ |\psi}$. Next we use the inequality from Proposition \ref{v_2min} to see that:
+We proceed by bounding the value of $v_2$ for some Pauli operator $Q$ evaluated on the expectation $\braket{\psi_+ | Q |\psi_+}$. Since the normalized state is just the post measurement state, and we know the probability of the $+1$ eigenvalue is $1/2$, we have that 
+\[
+\ket{\psi_+} = \frac{(I+P) \ket{\psi}}{2 \sqrt{\braket{\psi | P_{+1} | \psi}}} = \frac{(I+P) \ket{\psi}}{2 \sqrt{1/2}} = \frac{I + P}{\sqrt{2}}\ket{\psi}.
+\]
+The expectation of $Q$ is therefore equal to:
+\begin{equation*}
+\braket{\psi_+ | Q |\psi_+} = \frac{\braket{\psi | (I + P)Q(I + P) | \psi}}{2}.
+\end{equation*}
+If $P$ and $Q$ anti-commute then 
+\begin{align*}
+\braket{\psi_+ | Q |\psi_+} & = \frac{\braket{\psi | (IQ + PQ)(I + P) | \psi}}{2} \\
+& = \frac{\braket{\psi | (Q + -QP)(I + P) | \psi}}{2} \\
+& = \frac{\braket{\psi | Q(I + -P)(I + P) | \psi}}{2} \\
+& = 0.
+\end{align*}
+Thus the expectation does not contribute to the calculation of $\mu_2$. Similarly, when $P$ and $Q$ commute, 
+\begin{align*}
+\braket{\psi_+ | Q |\psi_+} & = \frac{\braket{\psi | Q(I + P)(I + P) | \psi}}{2} \\
+& = \frac{\braket{\psi | Q(I + 2P + P^2 | \psi}}{2} \\
+& = \frac{\braket{\psi | Q(2I+2P) | \psi}}{2} \\
+& = \braket{\psi | Q | \psi} + \braket{\psi |PQ |\psi}.
+\end{align*}
+Now we use the inequality from Proposition \ref{v_2min} to see that:
 \begin{center}
 $v_2(\braket{\psi |Q| \psi} + \braket{\psi |PQ| \psi}) \geq \texttt{min}(\braket{\psi |Q|\psi}, \braket{\psi |PQ|\psi}) \geq -\mu_2\ket{\psi}$.
 \end{center}
-Now recall that $v_2(\braket{\psi |Q| \psi} + \braket{\psi |PQ| \psi}) = v_2(\braket{\psi_+ |Q| \psi_+})$ which is exactly equal to $\mu_2\ket{\psi_+}$ given our choice of $Q$. So finally by multiplying by $-1$, we have the result: $\mu_2\ket{\psi} \geq \mu_2\ket{\psi_+}$
+Now recall that $v_2(\braket{\psi |Q| \psi} + \braket{\psi |PQ| \psi}) = v_2(\braket{\psi_+ |Q| \psi_+})$ which is equal to -$\mu_2\ket{\psi_+}$ given our choice of $Q$. So finally by multiplying by $-1$, we have the result: $\mu_2\ket{\psi} \geq \mu_2\ket{\psi_+}$
 \end{proof}
 
 \chapter{Applications}
@@ -1395,53 +1429,90 @@ algorithms.
 
 \begin{definition}
   \label{def:adder}
-  A circuit $C$ on $2n$ qubits implements the modular adder if it acts
+  A circuit $A$ on $2^n$ qubits implements the modular adder if it acts
   on basis states as
   \[
-  C\ket{i}\ket{j} = \ket{i}\ket{i+j}
+  A\ket{i}\ket{j} = \ket{i}\ket{i+j}
   \]
   where $i+j$ is evaluated modulo $2^n$.
 \end{definition}
 
 Note that the adder defined in Definition~\ref{def:adder} is an
 ``in-place'' adder: the result of the addition of the integers
-contained in the two input registers is stored in the second register.
-
-In order to establish bounds for the modular adder, we will rely on
-so-called \emph{Fourrier states}.
+contained in the two input registers is stored in the second register. In order to establish bounds for the modular adder, we will rely on the
+so-called \emph{Fourier states}. First, recall the definition of the Quantum Fourier Transform.
 
 \begin{definition}
-  The \emph{Fourrier state} [Todo: define]
+  The \emph{quantum Fourier transform} is an operator that maps the state $\ket{a} = \sum\limits_{x=0}^{2^n-1} a_x \ket{x}$ to $\ket{a'} = \sum\limits_{y=0}^{2^n-1} a'_y \ket{y}$ where $a'_y = \frac{1}{\sqrt{2^n}}\sum\limits_{x=0}^{2^n-1}a_x\omega_{2^n}^{xy}$ and $\omega_{2^n} = exp(2\pi i/2^n)$.
 \end{definition}
 
+\begin{definition}
+The quantum \emph{Fourier state} is the quantum Fourier transform applied to a basis vector $\ket{a}$. This means that there is only one non-zero $a_x$, which we call $l$. Hence, $a_l = 1$ necessarily,  so that $\ket{a} = \ket{l}$. Thus we have the following:
+\begin{equation}
+\label{QFTdef}
+\ket{QFT_n^l} = \frac{1}{\sqrt{2^n}} \sum\limits_{y=0}^{2^n-1} exp \Big[ \frac{i2 \pi l y}{2^n} \Big] \ket{y}
+\end{equation}
+\end{definition}
+In fact, as explained in \cite{nielsen00} we can rewrite this as: 
+\[
+\ket{QFT_n^l} = \otimes_{k=1}^n \frac{\ket{0} + e^{i2\pi l/2^k} \ket{1}}{\sqrt{2}},\] which will be useful for the next Lemma.
+
+\begin{lemma}
+\label{NullityQFT}
+$\nu (\ket{QFT_n^{-1}}) = n-2$.
+\end{lemma}
+\begin{proof}
+We make use of the Stabilizer Nullity's additive property. Utilizing the above equality, we have that:
+\begin{align*}
+\nu (\ket{QFT_n^{-1}}) & = \nu \bigg( \otimes_{k=1}^n \frac{\ket{0} + e^{-2\pi i /2^k} \ket{1}}{2^n}\bigg) \\
+& = \sum\limits_{k=1}^n \nu \bigg(\frac{\ket{0} + e^{-2\pi i /2^k} \ket{1}}{2^n}\bigg) \\
+& = \nu \bigg(\frac{\ket{0} + e^{-\pi i} \ket{1}}{2^n}\bigg) + \nu \bigg(\frac{\ket{0} + e^{-2\pi i /4} \ket{1}}{2^n}\bigg) + \sum\limits_{k=3}^n \nu \bigg(\frac{\ket{0} + e^{-2\pi i /2^k} \ket{1}}{2^n}\bigg) \\
+& = \nu \bigg(\frac{\ket{0} + \ket{1}}{2^n}\bigg) + \nu \bigg(\frac{\ket{0} + -i\ket{1}}{2^n}\bigg) + \sum\limits_{k=3}^n \nu \bigg(\frac{\ket{0} + e^{-2\pi i /2^k} \ket{1}}{2^n}\bigg)
+\end{align*}
+Observe that both $I$ and $X$ stabilize $\frac{\ket{0} + \ket{1}}{2^n}$ and both $I$ and $-Y$ stabilize $\frac{\ket{0} - i\ket{1}}{2^n}$, so the Stabilizer Nullity of both of these two terms is $0$. Now consider $k \geq 3$. In this case, $e^{-2\pi i /2^k} \not\in \mathbb{Q}[i]$. Because all entries of the Pauli matrices are in $\mathbb{Q}[i]$, it follows that $\frac{\ket{0} + e^{-2\pi i /2^k} \ket{1}}{2^n}$ has a trivial stabilizer, giving a Stabilizer Nullity value of $1$. Thus $\nu \bigg(\frac{\ket{0} + e^{-2\pi i /2^k} \ket{1}}{2^n}\bigg) = 1$. Putting this all together we have $\nu (\ket{QFT_n^{-1}}) = \sum\limits_{k=3}^n 1 = n-2$.
+\end{proof}
+
+
 \begin{proposition}
+\label{AdderNu}
 The modular adder cannot be implemented with Clifford gates and
 measurements using fewer than $(n-2) \ket{T}$ gates, $(n-2)/2 \ket{CS}$
 gates, or $(n-2)/3 \ket{CCZ}$ gates.
 \end{proposition}
 
 \begin{proof}
-  As in the previous section, we reason with states rather than with gates.
-We proceed in two steps. First, we show that the adder circuit $A$ acting on the $n$-qubit quantum Fourier state $\ket{QFT_n^b}$ and the stabilizer state $\ket{+}^{\otimes n}$ has the action $A(\ket{+}^{\otimes n} \ket{QFT_n^b}) = \ket{QFT_n^{-b}}\ket{QFT_n^b}$. This tells us that if $A$ is implemented by a set of Clifford gates and Pauli measurements along with some input resource state $\ket{\psi}$, it must be that $\nu (\ket{\psi} \ket{QFT_n^b}) \geq \nu(\ket{QFT_n^{-b}} \ket{QFT_n^b})$ which implies that $\nu (\ket{\psi}) \geq \nu(\ket{QFT_n^{-b}})$ since the Stabilizer Nullity is additive. Second we show that $\nu(\ket{QFT_n^{-1}}) = n-2$, which then directly implies our bounds since if the bounds are not satisfied, $\nu(\ket{\psi}) \geq \nu(\ket{QFT_n^{-1}})$ would not be satisfied.
-
-First recall the family of quantum Fourier states for each integer $a = 0, 1, \dots, 2^n - 1$:
-\begin{equation}
-\label{QFTdef}
-\ket{QFT_n^a} = \frac{1}{\sqrt{2^n}} \sum\limits_{y=0}^{2^n-1} exp \Big[ \frac{i2 \pi a y}{2^n} \Big] \ket{y} = \otimes_{k=1}^n \frac{\ket{0} + e^{i2\pi a/2^k} \ket{1}}{\sqrt{2^n}}
-\end{equation}
-where $\ket{y}$ is an $n$-qubit basis state (with $y$ expressed in binary), and note that $\ket{QFT_n^0} = \ket{+}^{\otimes n}$, and $\ket{QFT_n^a} = \ket{a + 2}$. Consider applying the adder to a pair of such states:
+  As in the previous section, we reason with states rather than with gates. Note that letting $l=0$ in Definition \ref{QFTdef}, we get that $\ket{QFT_n^0} = \ket{+}^{\otimes n}$. Now consider applying the Adder circuit $A$ to $\ket{QFT_n^l} \ket{QFT_n^m}$:
 \begin{equation}
 \begin{split}
-A \big(\ket{QFT_n^a} \ket{QFT_n^b} \big) & = \frac{1}{2^n} \sum\limits_{y=0}^{2^n-1} \sum\limits_{z=0}^{2^n-1} exp \Big[ \frac{i2 \pi (ay + bz)}{2^n} \Big] \ket{y}\ket{z+y} \\
-& = \frac{1}{2^n} \sum\limits_{y=0}^{2^n-1} \sum\limits_{x=0}^{2^n-1} exp \Big[ \frac{i2 \pi (ay + b(x-y))}{2^n} \Big] \ket{y}\ket{x} \\
-& = \ket{QFT_n^{a-b}}\ket{QFT_n^b}
+A \big(\ket{QFT_n^l} \ket{QFT_n^m} \big) 
+& = A \Big( \sum\limits_{y=0}^{2^n-1} exp \Big[ \frac{2 \pi i (ly)}{2^n} \Big] \ket{y} \sum\limits_{z=0}^{2^n-1} exp \Big[ \frac{2 \pi i (mz)}{2^n} \Big] \ket{z}  \Big) \\
+& = \frac{1}{2^n} \sum\limits_{y=0}^{2^n-1} \sum\limits_{z=0}^{2^n-1} exp \Big[ \frac{2 \pi i (ly + mz)}{2^n} \Big] \ket{y}\ket{z+y} \\
+& = \frac{1}{2^n} \sum\limits_{y=0}^{2^n-1} \sum\limits_{x=0}^{2^n-1} exp \Big[ \frac{2 \pi i (ly + m(x-y))}{2^n} \Big] \ket{y}\ket{x} \\
+& = \frac{1}{2^n} \sum\limits_{y=0}^{2^n-1} \sum\limits_{x=0}^{2^n-1} exp \Big[ \frac{2 \pi i ((l-m)y + mx)}{2^n} \Big] \ket{y}\ket{x} \\
+& = \ket{QFT_n^{l-m}}\ket{QFT_n^m}
 \end{split}
 \end{equation}
-
-Setting $a=0$ gives $A(\ket{+}^{\otimes n} \ket{QFT_n^b}) = \ket{QFT_n^{-b}}\ket{QFT_n^b}$, as desired. Finally, to calculate $\nu \ket{QFT_n^{-b}}$, we use the sum of the Stabilizer Nullity for each state in the tensor product. From the tensor product variant of the definition of the $\ket{QFT_n^b}$ in equation \ref{QFTdef} the first two terms will have $\nu = 0$, since they will be computational basis states. The rest of the terms all have a relative phase ($\neq i$), and for a single qubit it is easy to verify that this results in a trivial stabilizer, thus giving $\nu = 1$. Since the Stabilizer Nullity is additive, we have that $\nu(\ket{QFT_n^{-1}}) = n-2$. Then considering the following possible implications: $r\ket{T} \Longrightarrow \ket{QFT_n^{-1}}$, $r\ket{CS} \Longrightarrow \ket{QFT_n^{-1}}$, and $r\ket{CCZ} \Longrightarrow \ket{QFT_n^{-1}}$, and the respective Stabilizer Nullity values: $\nu (\ket{T}) = 1$, $\nu (\ket{CS}) = 2$ and $\nu (\ket{CCZ}) = 3$, where the implications mean that we can apply a Clifford circuit to the resource state to get the inverse quantum Fourier state, we get the final results above using the fact that the Stabilizer Nullity is non-increasing under Clifford operations.
+By letting $l = 0$ we now have $A(\ket{+}^{\otimes n} \ket{QFT_n^m}) = \ket{QFT_n^{-m}}\ket{QFT_n^m}$. Now, suppose $A$ is implemented with just Clifford gates, Pauli measurements, and some resource state $\ket{\psi}$. Then we can write $A(\ket{+}^{\otimes n} \ket{QFT_n^m}) = \nu (\ket{\psi} \ket{QFT_n^m})$, which implies that $\nu (\ket{\psi} \ket{QFT_n^m}) \geq \nu(\ket{QFT_n^{-m}} \ket{QFT_n^m})$, and since the Stabilizer Nullity is additive over tensor products, we have that $\nu (\ket{\psi}) \geq \nu(\ket{QFT_n^{-m}})$. Now letting $m=1$ we can use Lemma \ref{NullityQFT} and Corollary~\ref{nu values} to get the lower bounds, reasoning as in Proposition~\ref{nullity(C^nZ) LB}. \qedhere
+  
+  
+  
+%We proceed in two steps. First, we show that the adder circuit $A$ acting on the $n$-qubit quantum Fourier state $\ket{QFT_n^b}$ and the stabilizer state $\ket{+}^{\otimes n}$ has the action $A(\ket{+}^{\otimes n} \ket{QFT_n^b}) = \ket{QFT_n^{-b}}\ket{QFT_n^b}$. This tells us that if $A$ is implemented by a set of Clifford gates and Pauli measurements along with some input resource state $\ket{\psi}$, it must be that $\nu (\ket{\psi} \ket{QFT_n^b}) \geq \nu(\ket{QFT_n^{-b}} \ket{QFT_n^b})$ which implies that $\nu (\ket{\psi}) \geq \nu(\ket{QFT_n^{-b}})$ since the Stabilizer Nullity is additive. Second we show that $\nu(\ket{QFT_n^{-1}}) = n-2$, which then directly implies our bounds since if the bounds are not satisfied, $\nu(\ket{\psi}) \geq \nu(\ket{QFT_n^{-1}})$ would not be satisfied.
+%
+%First recall the family of quantum Fourier states for each integer $a = 0, 1, \dots, 2^n - 1$:
+%
+%where $\ket{y}$ is an $n$-qubit basis state (with $y$ expressed in binary), and note that $\ket{QFT_n^0} = \ket{+}^{\otimes n}$, and $\ket{QFT_n^a} = \ket{a + 2}$. Consider applying the adder to a pair of such states:
+%\begin{equation}
+%\begin{split}
+%A \big(\ket{QFT_n^a} \ket{QFT_n^b} \big) & = \frac{1}{2^n} \sum\limits_{y=0}^{2^n-1} \sum\limits_{z=0}^{2^n-1} exp \Big[ \frac{i2 \pi (ay + bz)}{2^n} \Big] \ket{y}\ket{z+y} \\
+%& = \frac{1}{2^n} \sum\limits_{y=0}^{2^n-1} \sum\limits_{x=0}^{2^n-1} exp \Big[ \frac{i2 \pi (ay + b(x-y))}{2^n} \Big] \ket{y}\ket{x} \\
+%& = \ket{QFT_n^{a-b}}\ket{QFT_n^b}
+%\end{split}
+%\end{equation}
+%
+%Setting $a=0$ gives $A(\ket{+}^{\otimes n} \ket{QFT_n^b}) = \ket{QFT_n^{-b}}\ket{QFT_n^b}$, as desired. Finally, to calculate $\nu \ket{QFT_n^{-b}}$, we use the sum of the Stabilizer Nullity for each state in the tensor product. From the tensor product variant of the definition of the $\ket{QFT_n^b}$ in equation \ref{QFTdef} the first two terms will have $\nu = 0$, since they will be computational basis states. The rest of the terms all have a relative phase ($\neq i$), and for a single qubit it is easy to verify that this results in a trivial stabilizer, thus giving $\nu = 1$. Since the Stabilizer Nullity is additive, we have that $\nu(\ket{QFT_n^{-1}}) = n-2$. Then considering the following possible implications: $r\ket{T} \Longrightarrow \ket{QFT_n^{-1}}$, $r\ket{CS} \Longrightarrow \ket{QFT_n^{-1}}$, and $r\ket{CCZ} \Longrightarrow \ket{QFT_n^{-1}}$, and the respective Stabilizer Nullity values: $\nu (\ket{T}) = 1$, $\nu (\ket{CS}) = 2$ and $\nu (\ket{CCZ}) = 3$, where the implications mean that we can apply a Clifford circuit to the resource state to get the inverse quantum Fourier state, we get the final results above using the fact that the Stabilizer Nullity is non-increasing under Clifford operations. 
 \end{proof}
 
-Finally, we give lower bounds using the Dyadic monotone.
+Finally, we give lower bounds using the Dyadic monotone. To do this, we will need the Dyadic monotone value of the Fourier state, given in the next Lemma.
 
 \begin{lemma}
   \label{lem:fourrierstate}
@@ -1449,17 +1520,32 @@ Let $a$ be an odd integer. Then $\mu_2\ket{QFT_n^a} = n-3 +(1/2)^{n-2}$.
 \end{lemma}
 
 \begin{proof}
-Recall that Pauli expectations of $(\ket{0} + e^{i2\pi a/2^k}\ket{1})/\sqrt{2}$ are
+Recall that from Example \ref{PauliSpecEx}, the Pauli expectations of $(\ket{0} + e^{i2\pi a/2^k}\ket{1})/\sqrt{2}$ are 
 \begin{center}
 $\{ 0, cos(2\pi a/2^k), sin(2\pi a/2^k), 1 \}$.
 \end{center}
-So for $k \geq 2$ we have:
+Observe that $-v_2(0) = -\inf$ and $-v_2(1) = 0$, so for $k \geq 2$ we have:
 \begin{center}
-$\mu_2 \big( (\ket{0} + e^{i2\pi a/2^k} \ket{1}/\sqrt{2} \big) = v_2 \big( sin(\pi a/2^{k-1}) \big) = 1 - 1/2^{k-2}$
+$\mu_2 \big( (\ket{0} + e^{i2\pi a/2^k} \ket{1}/\sqrt{2} \big) = -v_2 \big( sin(\pi a/2^{k-1}) \big)$
 \end{center}
-(Why is the above equality true?)Using the multiplicative property of $\mu_2$ we get:
+or
+\begin{center}
+$\mu_2 \big( (\ket{0} + e^{i2\pi a/2^k} \ket{1}/\sqrt{2} \big) = -v_2 \big(cos(\pi a/2^{k-1}) \big)$
+\end{center}
+
+Now, using the additive property of $v_2$, for odd $a$ we can write
+\begin{align*}
+v_2 \big( sin(\pi a/2^{k-1}) \big) & = v_2 \big( 2sin(\pi a/2^{k-1}) \big) + v_2(1/2) \\
+& = v_2 \big( exp(i\pi a/2^{k-1}) - exp(-i\pi a/2^{k-1}) \big) - 1 \\
+& = v_2 \big( 1 - exp(i\pi a/2^{k-2}) \big) - 1 \\
+& = \frac{\bar{v}_2 \big( N_{k-2}(1 - exp(i\pi a/2^{k-2})) \big)}{2^{k-2}} - 1 \\
+& = \frac{\bar{v}_2 (2)}{2^{k-2}} - 1 \\
+& = 1/2^{k-2} - 1.
+\end{align*}
+
+Note we used the fact that $N_{k-2}(1 - exp(i\pi a/2^{k-2})) = 2$ which comes from Proposition~\ref{N_d=2}. Furthermore, a similar calculation gives the same result for cosine, thus, using the multiplicative property of $\mu_2$ we get:
 \[
-\mu_2 (\ket{QFT_n^a}) = \sum\limits_{k=2}^n \big( 1-1/2^{k-2}) = n-3 + 1/2^{n-2}.\qedhere
+\mu_2 (\ket{QFT_n^a}) = \sum\limits_{k=2}^n \big( 1-1/2^{k-2}) = n-3 + 1/2^{n-2}.
 \]
 \end{proof}
 
@@ -1470,7 +1556,9 @@ $(n-2) \ket{CCZ}$ gates.
 \end{proposition}
 
 \begin{proof}
-Recall that by applying a circuit for modular adder $\ket{+}^{\otimes n} \otimes \ket{QFT_n^1}$ we can create a state $\ket{QFT_n^{-1}} \otimes \ket{QFT_n^1}$. If there existed a circuit that used $k$ $CCZ$ gates for $k < n-2$, we would be able to prepare states $\ket{QFT_n^{-1}}$ starting from $k \ket{CCZ}$ and then using Clifford unitaries and Pauli observable measurements with probability half by using $\ket{QFT_n^1}$ as a catalyst. Let us show that this is impossible. Indeed for the input state we would have value $\mu_2$ equal to $k + \mu_2 \ket{QFT_n^1}$ and for the output state we would have $\mu_2 \ket{QFT_n^{-1}} + \mu_2 \ket{QFT_n^1}$. We know that $\mu_2$ is non-increasing when we apply Clifford unitaries and measurements with probability $1/2$, therefore, by Lemma~\ref{lem:fourrierstate}, $k \geq \mu_2 \ket{QFT_n^{-1}} = n - 3 +(1/2)^{n-2}$ which implies that $k \geq n-2$.
+This proof follows similarly to the proof of Proposition~\ref{AdderNu}, but with the Dyadic monotone instead of the Stabilizer Nullity. Recall that if the Adder circuit is implemented with Clifford gates, Pauli measurements, and some resource state $\ket{\psi}$, then we can write $\mu_2 (\ket{\psi} \ket{QFT_n^m}) \geq \mu_2(\ket{QFT_n^{-m}} \ket{QFT_n^m})$. Letting $m=1$ and using the additive property of the Dyadic monotone, we get that $\mu_2 (\ket{\psi}) \geq \mu_2(\ket{QFT_n^{-1}})$. Then by Lemma~\ref{lem:fourrierstate} $\mu_2 (\ket{\psi}) \geq n - 3 + (1/2)^{n-2} \geq n-2$. Finally, reasoning as in Proposition~\ref{nullity(C^nZ) LB}, the result follows by using the Dyadic monotone value in Corollary~\ref{dyadic values}.
+
+%Recall that by applying a circuit for modular adder $\ket{+}^{\otimes n} \otimes \ket{QFT_n^1}$ we can create a state $\ket{QFT_n^{-1}} \otimes \ket{QFT_n^1}$. If there existed a circuit that used $k$ $CCZ$ gates for $k < n-2$, we would be able to prepare states $\ket{QFT_n^{-1}}$ starting from $k \ket{CCZ}$ and then using Clifford unitaries and Pauli observable measurements with probability half by using $\ket{QFT_n^1}$ as a catalyst. Let us show that this is impossible. Indeed for the input state we would have value $\mu_2$ equal to $k + \mu_2 \ket{QFT_n^1}$ and for the output state we would have $\mu_2 \ket{QFT_n^{-1}} + \mu_2 \ket{QFT_n^1}$. We know that $\mu_2$ is non-increasing when we apply Clifford unitaries and measurements with probability $1/2$, therefore, by Lemma~\ref{lem:fourrierstate}, $k \geq \mu_2 \ket{QFT_n^{-1}} = n - 3 +(1/2)^{n-2}$ which implies that $k \geq n-2$.
 \end{proof}
 
 \chapter{Conclusion}
@@ -1479,7 +1567,7 @@ In this thesis, following the work of \cite{beverland2019lower}, we studied lowe
 
 There are many avenues for future work on this topic. Ideally for any circuit or gate, we would want the same lower bounds and upper bounds for the resource of interest, along with a circuit to represent such a bound. This would mean that we have the best circuit in terms of using the least amount of the expensive resources of interest. This is the case for the $C^nZ$ gate, where the resource was the $CCZ$ gate (and measurements are restricted to have probability 1/2). It would be of great interest to have a construction matching the lower bound for other resources. It was recently shown in \cite{gidney2021cccz} that a $CCCZ$ gate can be implemented with less $T$ gates than presented here, though this new construction does not yet match the lower bound. Another noteworthy question is deciding whether we can achieve the tighter lower bounds afforded by the Dyadic monotone without the requirement of only using measurements with probability $1/2$.
 
-Instead of lowering the upper bounds by providing improved circuit constructions, one could also try to improve the lower bounds. A possibility for doing this is considering another monotone. Since not all circuits or gates considered here had the same lower and upper bounds, perhaps another monotone could result in tighter lower bounds so that we would know what the optimal number of required resources is. Of course, this is no trivial task, but one possible way to achieve this is might be to make a slight modification to the definition of one of the monotones presented here. An example of this can be seen in \cite{jiang2021lower}, where they defined the Stabilizer Nullity on unitaries rather than states, calling it the unitary Stabilizer Nullityyyyy. Other monotones that are already known could also be explored, for example the stabilizer extent, introduced in \cite{beverland2019lower}.
+Instead of lowering the upper bounds by providing improved circuit constructions, one could also try to improve the lower bounds. A possibility for doing this is considering another monotone. Since not all circuits or gates considered here had the same lower and upper bounds, perhaps another monotone could result in tighter lower bounds so that we would know what the optimal number of required resources is. Of course, this is no trivial task, but one possible way to achieve this is might be to make a slight modification to the definition of one of the monotones presented here. An example of this can be seen in \cite{jiang2021lower}, where they defined the Stabilizer Nullity on unitaries rather than states, calling it the unitary Stabilizer Nullity. Other monotones that are already known could also be explored, for example the stabilizer extent, introduced in \cite{beverland2019lower}.
 
 \bibliographystyle{plain}
 \bibliography{thesis}
