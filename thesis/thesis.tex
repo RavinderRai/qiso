@@ -5,9 +5,16 @@
 \usepackage{float}
 \usepackage{graphicx}
 
+
+
+
+
 \input{thesis.sty}
 
+
 \begin{document}
+
+
 
 \title{Lower Bounds for Quantum Circuits}
 \author{Ravi Rai}
@@ -47,19 +54,20 @@ Upper bounds are often obtained from explicit circuit constructions. In contrast
 
 The thesis focuses on two monotones, namely the Stabilizer Nullity and the Dyadic monotone. The resources considered are the previously mentioned $T$, $CS$, and $CCZ$ gates. These monotones are leveraged to provide lower bounds for important quantum operations: the multiply-controlled Pauli $Z$ gate and the modular adder. Two sets of lower bounds are provided, one derived from the Stabilizer Nullity and another derived from the Dyadic monotone. The Dyadic monotone gives tighter lower bounds, but with further restrictions. Some well-known upper bounds are provided for contrast as well. In some cases, the upper bounds match the lower bounds, showing that the circuit constructions are optimal. 
 
-The thesis is organized as follows: first we begin with a brief overview of the necessary background information needed in Chapter~\ref{foundations}. Then, In Chapter~\ref{chap Stab}, we introduce the stabilizer formalism, which is the backbone of our methods to realizing lower bounds for resources. The central concept in this chapter is the stabilizer of a state. In Chapter~\ref{monotones}, monotones are introduced in detail, along with some their important properties, leveraging the stabilizer defined in the previous chapter. Chapter \ref{monotones} is also where the aforementioned restriction of the Dyadic monotone first appears, as it is needed to prove some of its properties. In Chapter~\ref{Applications}, we use both monotones to derive lower bounds, considering the $T$, $CS$, and the $CCZ$ gates as resources. We calculate lower bounds for two circuits, namely the $C^nZ$ circuit and the modular adder circuit. Finally, the main takeaways of the thesis are briefly stated in Chapter~\ref{Conclusion}, along with open problems for further work.
+The thesis is organized as follows: in Chapter~\ref{foundations} we begin with a brief overview of the necessary background information needed. Then, In Chapter~\ref{chap Stab}, we introduce the stabilizer formalism, which is the backbone of our methods to realizing lower bounds for resources. The central concept in this chapter is the stabilizer of a state. In Chapter~\ref{monotones}, monotones are introduced in detail, along with some of their important properties, leveraging the stabilizer defined in the previous chapter. Chapter \ref{monotones} is also where the aforementioned restriction of the Dyadic monotone first appears, as it is needed to prove some of its properties. In Chapter~\ref{Applications}, we use both monotones to derive lower bounds, considering the $T$, $CS$, and the $CCZ$ gates as resources. We calculate lower bounds for two circuits, namely the $C^nZ$ circuit and the modular adder circuit. Finally, the main takeaways of the thesis are briefly stated in Chapter~\ref{Conclusion}, along with open problems for further work.
 
 \chapter{Foundational Quantum Computing}
 \label{foundations}
 
-In this chapter, we provide the necessary prerequisites to this paper. In particular, we introduce quantum states, unitary evolutions, measurements, and quantum circuits.
+
+In this chapter, we provide the necessary prerequisites to this thesis. In particular, we introduce quantum states, unitary evolutions, measurements, and quantum circuits.
 \section{Preliminaries}
 \subsection{Vectors and Matrices}
 Let $\mathbb{C}$ be the set of complex numbers. We write $\mathbb{C}^n$ to represent the space of $n$-dimensional column vectors, and we write $\mathbb{C}^{n \times m}$ for the space of matrices with $n$ rows and $m$ columns. Matrices can be multiplied in the usual way. 
 
-The \emph{complex conjugate} of a scalar $c \in \mathbb{C}$ is denoted $\bar{c}$, and the \emph{adjoint} of a matrix $M = (c_{ij}) \in \mathbb{C}^{n \times m}$ is $M^\dag = (\bar{c}_{ji}) \in \mathbb{C}^{m \times n}$. The \emph{trace} of a matrix $M$, denoted $tr(M)$, is the sum of its diagonal entries. Note that $tr(BA) = tr(BA)$. 
+The \emph{complex conjugate} of a scalar $c \in \mathbb{C}$ is denoted $\bar{c}$, and the \emph{adjoint} of a matrix $M = (c_{ij}) \in \mathbb{C}^{n \times m}$ is $M^\dag = (\bar{c}_{ji}) \in \mathbb{C}^{m \times n}$. The \emph{trace} of a matrix $M$, denoted $\texttt{Tr}(M)$, is the sum of its diagonal entries. Note that $\texttt{Tr}(BA) = \texttt{Tr}(BA)$. 
 
-For a vector $v \in \mathbb{C}^n$, the \textit{norm} of $v$ is $||v|| = \sqrt{v^\dag v}$. The vector $v$ is called a \textit{unit vector} if $||v|| = 1$. A matrix $U \in \mathbb{C}^{n \times n}$ is \emph{unitary} if $U^{-1} = U^\dag$ and \emph{hermitian} if  $A = A^\dag$.
+For a vector $v \in \mathbb{C}^n$, the \textit{norm} of $v$ is $||v|| = \sqrt{v^\dag v}$. The vector $v$ is called a \textit{unit vector} if $||v|| = 1$. A matrix $U \in \mathbb{C}^{n \times n}$ is \emph{unitary} if $U^{-1} = U^\dag$ and \emph{hermitian} if  $U = U^\dag$.
 
 \subsection{Tensor Products}
 \label{tensor products}
@@ -77,7 +85,7 @@ b_{21} & b_{22}
 =
 \begin{pmatrix}
 a_{11}b_{11} & a_{11}b_{12} & a_{12}b_{11} & a_{12}b_{12} \\
-a_{11}b_{21} & a_{12}b_{22} & a_{12}b_{21} & a_{12}b_{22} \\
+a_{11}b_{21} & a_{11}b_{22} & a_{12}b_{21} & a_{12}b_{22} \\
 a_{21}b_{11} & a_{21}b_{12} & a_{22}b_{11} & a_{22}b_{12} \\
 a_{21}b_{21} & a_{21}b_{22} & a_{22}b_{21} & a_{22}b_{22}
 \end{pmatrix}.
@@ -89,7 +97,7 @@ A basis for a tensor product of vector spaces can be obtained as the tensor prod
 \subsection{The Dirac Notation}
 In quantum computing, we make use of the \emph{Dirac notation} to represent vectors and operations. In Dirac notation, we write a column vector $v$ as a \emph{ket}, denoted by $\ket{v}$. The adjoint of a column vector $u$ is written as a \emph{bra}, denoted by $\bra{u}$. The inner product between two vectors $\ket{v}$ and $\ket{u}$ is then written as a \emph{braket}, denoted by $\braket{u|v}$. For example, the inner product of $\bra{0}$ and $\ket{1}$ is $\braket{0|1}$. The outer product between two vectors is written in the opposite manner, i.e. $\ket{v} \bra{u}$. Note this is simple matrix multiplication, where the inner product results in a scalar, and the outer product produces a matrix. In some sense the outer product scales a vector, since for a vector $\ket{w}$, we have $\ket{v}\bra{u} \ket{w} = \braket{u|w}\ket{v}$ where $\braket{u|w}$ is just a scalar.
 
-Consider the standard basis vectors $[1, 0]^{\dag}$ and $[0, 1]^{\dag}$. We denote them $\ket{0}$ and $\ket{1}$ respectively. In quantum computing, the basis of $\mathbb{C}^2$ formed by $\{ \ket{0} , \ket{1} \}$ is known as the \emph{computational basis}. As mentioned before, one can get a basis for higher dimensional vector spaces by taking tensor products of $\ket{0}$ and $\ket{1}$. For example, a basis for $\mathbb{C}^4$ is $\{ \ket{0} \otimes \ket{0}, \ket{0} \otimes \ket{1}, \ket{1} \otimes \ket{0}, \ket{1} \otimes \ket{1} \}$. For brevity, the symbol $\otimes$ is often omitted for elements of the higher dimensional computational bases. For example, $\ket{0} \otimes \ket{0}$ is written as $\ket{00}$ and $\ket{0} \otimes \ket{1}$ is written as $\ket{01}$. In this way, the $j-th$ basis vector of $\mathbb{C}^{2n}$ is denoted $\ket{b_1 b_2 \cdots b_n}$ where $b_1, b_2, \cdots , b_n \in \mathbb{Z}_2$ and $b_1 b_2 \cdots b_n$ is the binary expansion of $j$. Alternatively, we sometimes also write $j$ as an integer instead. For example, $\ket{3} = \ket{11} = \ket{1} \otimes \ket{1}$. These notations are all equivalent and interchangeable, thus we use whichever one is most convenient.
+Consider the standard basis vectors $[1, 0]^{\dag}$ and $[0, 1]^{\dag}$. We denote them $\ket{0}$ and $\ket{1}$ respectively. In quantum computing, the basis of $\mathbb{C}^2$ formed by $\{ \ket{0} , \ket{1} \}$ is known as the \emph{computational basis}. As mentioned before, one can get a basis for higher dimensional vector spaces by taking tensor products of $\ket{0}$ and $\ket{1}$. For example, a basis for $\mathbb{C}^4$ is $\{ \ket{0} \otimes \ket{0}, \ket{0} \otimes \ket{1}, \ket{1} \otimes \ket{0}, \ket{1} \otimes \ket{1} \}$. For brevity, the symbol $\otimes$ is often omitted for elements of the higher dimensional computational bases. For example, $\ket{0} \otimes \ket{0}$ is written as $\ket{00}$ and $\ket{0} \otimes \ket{1}$ is written as $\ket{01}$. In this way, the $j$-th basis vector of $\mathbb{C}^{2n}$ is denoted $\ket{b_1 b_2 \cdots b_n}$ where $b_1, b_2, \cdots , b_n \in \mathbb{Z}_2$ and $b_1 b_2 \cdots b_n$ is the binary expansion of $j$. Alternatively, we sometimes also write $j$ as an integer instead. For example, $\ket{3} = \ket{11} = \ket{1} \otimes \ket{1}$. These notations are all equivalent and interchangeable, thus we use whichever one is most convenient.
 
 \subsection{Quantum Bits}
 The fundamental unit of information in classical computing is the \emph{bit}. In quantum computing the basic unit of information is called a \emph{quantum bit} or \emph{qubit} for short. In classical computing the classical bit can be in the \emph{states} $0$ or $1$, but in quantum computing the state of a qubit is a unit vector in $\mathbb{C}^2$. Hence, the state of a qubit can be any complex linear combination $\alpha \ket{0} + \beta \ket{1}$, where $\alpha , \beta \in \mathbb{C}$ and satisfy $|\alpha | + |\beta | = 1$. The complex numbers $\alpha$ and $\beta$ are called the \emph{amplitudes} of the state. Note that $\ket{0}$ and $\ket{1}$ are valid states, corresponding to $\alpha = 1$ and $\beta = 0$, and to $\alpha = 0$ and $\beta = 1$ respectively. We sometimes call these states \emph{classical}. A state whose amplitudes are both nonzero is said to be a state in \emph{superposition}. For example, a qubit in the state \[ \frac{\ket{0} + \ket{1}}{\sqrt{2}} \] is in (equal) superposition.
@@ -107,7 +115,7 @@ Finally, if $\ket{\psi}$ is a state we write $\ket{\psi}^{\otimes n}$ for the $n
 \section{Quantum Operations}
 To compute with qubits, one can act on them using two types of operations: unitary evolutions and measurements.
 \subsection{Unitary Evolution}
-In this case, the state of a quantum system is transformed by applying a unitary transformation to it. For example, say a quantum system is described by the column vector $\ket{\psi}$ and $U$ is some unitary matrix. Then the state after having evolved under $U$ is given by $U \ket{\psi}$. Observe that unitary matrices are isometries since $||Uv|| = ||v||$ holds for all $v$ if and only if $U$ is unitary. A unitary transformation on an $n$ qubit system is also called an $n$-ary \emph{quantum gate}. The following are some notable single qubit gates that will be used extensively in this paper, and are as follows: the Pauli $X$, $Y$, and $Z$ gates, the Hadamard gate $H$, the phase gate $S$, and the $T$ gate. The Pauli matrices are 
+In this case, the state of a quantum system is transformed by applying a unitary transformation to it. For example, say a quantum system is described by the column vector $\ket{\psi}$ and $U$ is some unitary matrix. Then the state, after having evolved under $U$, is given by $U \ket{\psi}$. Observe that unitary matrices are isometries since $||Uv|| = ||v||$ holds for all $v$ if $U$ is unitary, and vice versa when $U$ is a square matrix. A unitary transformation on an $n$ qubit system is also called an $n$-ary \emph{quantum gate}. The following are some notable single qubit gates that will be used extensively in this thesis, and are as follows: the Pauli $X$, $Y$, and $Z$ gates, the Hadamard gate $H$, the phase gate $S$, and the $T$ gate. The Pauli matrices are 
 \begin{equation*}
   X = \begin{bmatrix}
     0 & 1 \\
@@ -126,7 +134,7 @@ and the others are
 \begin{equation*}
   H = \frac{1}{\sqrt{2}} \begin{bmatrix}
   1 & 1 \\
-  1 & 1
+  1 & -1
   \end{bmatrix}, \quad
   S = \begin{bmatrix}
   1 & 0 \\
@@ -169,13 +177,13 @@ and
 \end{equation*}
 
 \subsection{Measurement}
-Aside from unitary transformations, we can also act on a quantum state by \emph{measuring} it. Measurement is a probabilistic process, and we think of it as observing the state. A quantum state collapses due to a measurement, and if you were to measure it again this would yield the same result. Measurements can be performed on different bases of $\mathbb{C}^j$. In this thesis, an important basis is the computational basis. If a qubit is in the state $\ket{\psi} = \alpha \ket{0} + \beta \ket{1}$, and it is measured it in the computational basis, then the post-measurement state will be $\ket{0}$ with probability $|\alpha |^2$ or $\ket{1}$ with probability $|\beta |^2$. 
+Aside from unitary transformations, we can also act on a quantum state by \emph{measuring} it. Measurement is a probabilistic process, and we think of it as observing the state. A quantum state collapses due to a measurement, and if you were to measure it again this would yield the same result. Measurements can be performed with respect to different bases of $\mathbb{C}^j$. In this thesis, an important basis is the computational basis. If a qubit is in the state $\ket{\psi} = \alpha \ket{0} + \beta \ket{1}$, and it is measured in the computational basis, then the post-measurement state will be $\ket{0}$ with probability $|\alpha |^2$ or $\ket{1}$ with probability $|\beta |^2$. 
 
-More formally, quantum measurements are described by a collection of \emph{measurement operators} $\{ M_m \}$ \cite{nielsen00}. These operators are Hermitian, idempotent, and satisfy the completion rule: $\sum\limits_{m} M^{\dag}M = I$. The index $m$ refers to the corresponding measurement outcome. When measuring some state $\ket{\phi}$ the probability that the outcome $m$ occurs is $p(m) = \braket{\phi | M^{\dag}_m M_m | \phi}$ and in this case the post-measurement state is $\frac{M_m \ket{\phi}}{\sqrt{\braket{\phi | M^{\dag}_m M_m | \phi}}}$. Naturally, these probabilities sum to $1$, which can also be seen from the completeness equation: $1 = \sum\limits_{m} p(m) = \sum\limits_{m} \braket{\psi |M^{\dag}M| \psi}$. Moreover, in the computational basis for $\mathbb{C}^2$, we have $M_0 = \ket{0} \bra{0}$ and $M_1 = \ket{1} \bra{1}$. Measuring the state $\ket{\psi}$ above with these formal terms will give the same result as before. 
+More formally, quantum measurements are described by a collection of \emph{measurement operators} $\{ M_m \}$ \cite[p. 85]{nielsen00}. These operators are Hermitian, idempotent, and satisfy the completion rule: $\sum\limits_{m} M^{\dag}_mM_m = I$. The index $m$ refers to the corresponding measurement outcome. When measuring some state $\ket{\phi}$ the probability that the outcome $m$ occurs is $p(m) = \braket{\phi | M^{\dag}_m M_m | \phi}$ and in this case the post-measurement state is $\frac{M_m \ket{\phi}}{\sqrt{\braket{\phi | M^{\dag}_m M_m | \phi}}}$. Naturally, these probabilities sum to $1$, which can also be seen from the completeness equation: $1 = \sum\limits_{m} p(m) = \sum\limits_{m} \braket{\psi |M^{\dag}_mM_m| \psi}$. Moreover, in the computational basis for $\mathbb{C}^2$, we have $M_0 = \ket{0} \bra{0}$ and $M_1 = \ket{1} \bra{1}$. Measuring the state $\ket{\psi}$ above with these formal terms will give the same result as before. 
 
 Measurement is of course not restricted to just a single qubit. This formal method can describe measurement on multiple qubits. Consider an $n$-qubit system described by the state $\ket{\Psi}$. Then measuring in the computational basis, the probability of observing the outcome $j$ is still just $\braket{\Psi | M^{\dag}_j M_j | \Psi}$, where $M_j = \ket{j} \bra{j}$ and $j$ is taken to be in binary form. For example, on $3$ qubits one possible outcome is $\ket{001}$ as this is one of the computational basis states in $\mathbb{C}^4$. Then $M_{001} = \ket{001}\bra{001}$ is used to find the probability that the measurement outcome will be $\ket{001}$. One can also measure an $m$ qubit state in an $n$ qubit system for $m \leq n$, i.e. one can measure only part of a quantum system.
 
-A type of measurement that we will be especially interested in is \emph{Pauli measurement}. Recall that $X$, $Y$, and $Z$ are the Pauli matrices defined above. An $n$-qubit Pauli operator is obtained by taking a tensor product of $n$ elements of $\{ I, X, Y, Z \}$. An $n$-qubit Pauli can be decomposed as a sum of measurement operators. Let $P$ be a $n$-qubit Pauli and $\ket{\psi}$ an $n$-qubit state. Note that for any Pauli $P$, only two eigenvalues occur, namely the $-1$ eigenvalue and the $+1$ eigenvalue. Recall that by the spectral decomposition theorem, we have matrices $P_{\pm 1}$ which are projectors for their corresponding eigenspaces. These matrices satisfy the following equations: $P = (+1)P_{+1} + (-1)P_{-1}$, and $I = P_{+1} + P_{-1}$. Now for a Pauli measurement on $P$ the probability of a $+1$ outcome is $\braket{\psi | P_{+1} | \psi}$, with post measurement state $\ket{\phi} = \frac{P_{+1} \ket{\psi}}{\sqrt{\braket{\psi | P_{+1} | \psi}}}$. Finally, from the above equations we get that $P_{-1} = P_{+1}-P$ and $P_{-1} = I -P_{+1}$, so by subtracting these equations we eliminate $P_{-1}$ and get that $P_{+1} = \frac{I+P}{2}$. Hence, we now can write the post measurement state as $\ket{\phi} = \frac{(I+P) \ket{\psi}}{2 \sqrt{\braket{\psi | P_{+1} | \psi}}}$.
+A type of measurement that we will be especially interested in is the \emph{Pauli measurement}. Recall that $X$, $Y$, and $Z$ are the Pauli matrices defined above. An $n$-qubit Pauli operator is obtained by taking a tensor product of $n$ elements of $\{ I, X, Y, Z \}$. An $n$-qubit Pauli can be decomposed as a sum of measurement operators. Let $P$ be a $n$-qubit Pauli and $\ket{\psi}$ an $n$-qubit state. Note that for any Pauli $P$, only two eigenvalues occur, namely the $-1$ eigenvalue and the $+1$ eigenvalue. Recall that by the spectral decomposition theorem, we have matrices $P_{\pm 1}$ which are projectors for their corresponding eigenspaces. These matrices satisfy the following equations: $P = (+1)P_{+1} + (-1)P_{-1}$, and $I = P_{+1} + P_{-1}$. Now for a Pauli measurement on $P$ the probability of a $+1$ outcome is $\braket{\psi | P_{+1} | \psi}$, with post measurement state $\ket{\phi} = \frac{P_{+1} \ket{\psi}}{\sqrt{\braket{\psi | P_{+1} | \psi}}}$. Finally, from the above equations we get that $P_{-1} = P_{+1}-P$ and $P_{-1} = I -P_{+1}$, so by subtracting these equations we eliminate $P_{-1}$ and get that $P_{+1} = \frac{I+P}{2}$. Hence, we now can write the post measurement state as $\ket{\phi} = \frac{(I+P) \ket{\psi}}{2 \sqrt{\braket{\psi | P_{+1} | \psi}}}$.
 
 
 \section{Quantum Circuits}
@@ -197,7 +205,7 @@ The circuit representation for a multiply controlled gate is written in this fas
 
 
 Quantum circuits are read from left to right, and can be applied by tracking what the operations do to the input state. It is worth noting that if two circuits give the same output on a general input state then they are equivalent circuits. In fact, the following example is a circuit from \cite{Jones_2013} that acts exactly as a $CCZ$ gate on qubits $c_1$, $c_2$, and $c_3$, and will be used later on in Chapter~\ref{Applications}.
-\begin{equation*}
+\begin{equation}
 \label{CCZcircuit}
 \Qcircuit @C=0.5em @R=.7em {
    & \lstick{\ket{c_1}} & \ctrl{2} & \qw & \qw & \qw & \multigate{1}{CZ} & \qw \\
@@ -205,8 +213,8 @@ Quantum circuits are read from left to right, and can be applied by tracking wha
    & \lstick{\ket{0}} & \gate{X} & \ctrl{1} & \gate{H} & \meter & \ctrl{-1} \cw \cwx \\
    & \lstick{\ket{c_3}} & \qw & \targ & \qw & \qw & \qw & \qw
 }
-\end{equation*}
-The $\oplus$ symbol in the bottom wire denotes the $X$ gate, making this controlled gate a CNOT or CX gate. The final $CZ$ gate is a measurement gate, represented by the double line attached to it from the third qubit. Measurement gates work by only being applied to its qubits if the measurement outcome of the other qubit it is attached to is $\ket{1}$. Also, the third qubit is called an \emph{ancilla}. It is used as "scratch space" during the computation, and a circuit with no ancillas is said to be \emph{ancilla free}. Now, tracking from left to right starting with the input state, we get the following steps:
+\end{equation}
+The $\oplus$ symbol in the bottom wire denotes the $X$ gate, making this controlled gate a CNOT or CX gate. The gate with the meter symbol is a measurement gate and performs a measurement with respect to the computational basis. The final $CZ$ gate is a classically controlled gate, represented by the double line attached to it from the third qubit. Classically controlled gates work by only being applied to its qubits if the measurement outcome of the other qubit it is attached to is $\ket{1}$. Also, the third qubit is called an \emph{ancilla}. It is used as "scratch space" during the computation, and a circuit with no ancillas is said to be \emph{ancilla free}. Now, tracking from left to right starting with the input state, we get the following steps:
 \begin{itemize}
 \item[] $\ket{c_1}\ket{c_2}\ket{0}\ket{c_3}$
 \item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{c_1 \cdot c_2}\ket{c_3}$
@@ -256,6 +264,7 @@ Note that the $\pm 1$ and $\pm i$ factors in the elements of $\mathcal{P}(n)$ en
 
 
 \begin{proposition}
+\label{PauliCardinality}
 We have $|\mathcal{P}(n)|=4^{n+1}$.
 \end{proposition}
 
@@ -268,7 +277,7 @@ Recall the gates $H$, $S$, and CNOT defined in Chapter \ref{foundations}:
   \[
   H = \frac{1}{\sqrt{2}} \begin{bmatrix}
   1 & 1 \\
-  1 & 1
+  1 & -1
   \end{bmatrix}, \quad
   S = \begin{bmatrix}
   1 & 0 \\
@@ -293,6 +302,7 @@ The Clifford group on $n$ qubits $\mathcal{C}(n)$ consists of the matrices that 
 Clifford operators are sometimes referred to as \emph{Stabilizer} operators.
 
 \begin{proposition}
+\label{HS}
 $H$ and $S$ act on Paulis as follows:
 \begin{center}
 $HXH^{\dag} = Z$ and $HZH^{\dag} = X$, $SXS^{\dag} = Y$ and $SZS^{\dag} = Z$.
@@ -306,14 +316,16 @@ Note that we need not specify the action on $Y$ since $Y = iXZ$, so the action o
 If $P \in \mathcal{P}(n)$ and $C \in \mathcal{C}(n)$ then $CPC^{\dag} \in \mathcal{P}(n)$.
 \end{proposition}
 \begin{proof}
-By computation.
+It is sufficient to show that the generators of $\mathcal{C}(n)$ map the generators of Pauli matrices to Pauli matrices. The generators for $\mathcal{C}(n)$ are $H, S$ and $CNOT$, while the generators of $\mathcal{P}(n)$ are $iI, X$ and $Z$. Note that for Pauli matrices in $\mathcal{P}(n)$, we can write them as a tensor product of Pauli matrices in $\mathcal{P}(1)$. Moreover, we can also write a gate in $\mathcal{C}(n)$ as a tensor product of any combination of $H, S$ and $CNOT$. 
+
+Now recall that the $CNOT$ gate is a two qubit gate that either applies an $X$ gate or the identity $I$ to the target qubit. So when conjugating $CNOT$ with some Pauli $P \in \mathcal{P}(2)$, we apply $PP^\dagger = I$ to the first qubit, and either $PP^\dagger = I$ or $PXP^\dagger = Q$ to the target qubit, for some $Q \in \mathcal{P}(2)$. Finally, we can use this and Proposition~\ref{HS} to give us that, for a Pauli $P \in \mathcal{P}(n)$ and some $C \in \mathcal{C}(n)$ $CPC^\dagger \in \mathcal{P}(n)$. This follows by writing $P$ and $C$ as tensor products as explained above, and then using the distributive law of tensor products.
 \end{proof}
 
-The previous proposition shows that Cliffords map Paulis to Paulis under conjugation. We now show that, in fact, any unitary operator that maps Paulis to Paulis under conjugation is an element of the Clifford group (up to a scalar). Our proof follows from \cite{nielsen00}.
+The previous proposition shows that Cliffords map Paulis to Paulis under conjugation. We now show that, in fact, any unitary operator that maps Paulis to Paulis under conjugation is an element of the Clifford group (up to a scalar). Our proof follows \cite{nielsen00}.
 
 \begin{lemma}
 \label{ConjX}
-Let $P \in \{\pm X, \pm Y, \pm Z \}$. Then there exists a $C \in <H, S>$ such that $CXC^\dag = P$.
+Let $P \in \{\pm X, \pm Y, \pm Z \}$. Then there exists a $C \in \langle H, S \rangle$ such that $CXC^\dag = P$.
 \end{lemma}
 \begin{proof}
 To prove this we simply list all possible $C$ circuits required for each $P$:
@@ -329,7 +341,7 @@ To prove this we simply list all possible $C$ circuits required for each $P$:
 
 \begin{lemma}
 \label{ConjZ}
-Let $Q \in \{\pm Y, \pm Z \}$. Then there exists a $D \in <H, S>$ such that $DQD^\dag = Z$ and $DXD^\dag = X$.
+Let $Q \in \{\pm Y, \pm Z \}$. Then there exists a $D \in \langle H, S \rangle$ such that $DQD^\dag = Z$ and $DXD^\dag = X$.
 \end{lemma}
 \begin{proof}
 To prove this we simply list all possible $D$ circuits required for each $Q$:
@@ -349,23 +361,23 @@ Let $U$ be a unitary operator that maps Paulis to Paulis under conjugation. Then
 We proceed by induction on $n$, the number of qubits, following the method outlined in \cite{nielsen00}.
 For the base case, let $U$ be a single qubit unitary operator that maps $\mathcal{P}(1)$ to itself under conjugation. 
 
-Now, let $UXU^\dag = Q$ and $UZU^\dag = R$. Then let $F = V^\dag U$, where $V$ comes from Lemma \ref{ConjX} (so $VXV^\dag = Q$). Then $FXF^\dag = X$ and $FZF^\dag = V^\dag R V = R'$ for some $R' \in \mathcal{P}(1)$. Moreover, by Lemma \ref{ConjZ}, there exists a $G$ such that $GR'G^\dag = Z$ and $GXG^\dag = X$. So:
+Now, let $UXU^\dag = Q$ and $UZU^\dag = R$. By Lemma \ref{ConjX}, there exists some $V$ such that $VXV^\dag = Q$. Then let $F = V^\dag U$. Thus $FXF^\dag = X$ and $FZF^\dag = V^\dag R V = R'$ for some $R' \in \mathcal{P}(1)$. Note that since $F$ is an isometry, it is bijective which implies that $R' \in \{\pm Y, \pm Z \}$. So, by Lemma \ref{ConjZ}, there exists a $G$ such that $GR'G^\dag = Z$ and $GXG^\dag = X$. So:
 \[ 
 G FXF^\dag G^\dag = G XG^\dag = X  \quad \mbox{ and } \quad
 G FZF^\dag G^\dag = G R' G^\dag = Z.
 \]
-Note $\mathcal{P}(1)$ is generated by $X$, $Z$, and $i$, and neither $Q$, nor $R$ can be $i$ since $U$ is an automorphism. Thus we know how $U$ acts on the generators of $\mathcal{P}(1)$, so $U = VG^\dag$. From this $U$ is comprised of only $H$ and $S$ gates as desired.
+Note $\mathcal{P}(1)$ is generated by $X$, $Z$, and $iI_2$, and neither $Q$, nor $R$ can be $i$ since $U$ is an automorphism. Thus we know how $U$ acts on the generators of $\mathcal{P}(1)$, so $U = VG^\dag$. From this $U$ is comprised of only $H$ and $S$ gates as desired.
 
-Now, suppose $U$ is an $n+1$ qubit unitary that maps Paulis to Paulis under conjugation and suppose that $UZ_{(1)}U^{\dag} = X \otimes g$ and $UX_{(1)}U^{\dag} = Z \otimes g'$ for some $g, g' \in \mathcal{P}_n$. Here $Z_{(1)}$ is the gate $Z \otimes I_{2^n}$, meaning that $Z$ is applied to the first qubit and the identity is applied to the rest. The gate $X_{(1)}$ is defined similarly. Now, define a circuit $C$ as:
+Now, suppose $U$ is an $n+1$ qubit unitary that maps Paulis to Paulis under conjugation and suppose that $UZ_{1}U^{\dag} = X \otimes g$ and $UX_{1}U^{\dag} = Z \otimes g'$ for some $g, g' \in \mathcal{P}_n$. Here $Z_{1}$ is the gate $Z \otimes I_{2^n}$, meaning that $Z$ is applied to the first qubit and the identity is applied to the rest. The gate $X_{1}$ is defined similarly. Now, define a circuit $C$ as:
 \[
 \Qcircuit @C=0.5em @R=.7em {
    & \qw & \qw & \ctrl{1} & \qw & \gate{H} & \qw & \ctrl{1} & \qw  \\
    & {/} \qw & \qw & \gate{g'} & \qw & \qw & \qw & \gate{g} & \qw  
    }
 \]
-where the ``strike'' on the bottom wire indicates that $g$ and $g'$ act on multiple qubits. Now observe that $CZ_{(1)}C^{\dag} = X \otimes g$ as follows:
+where the ``strike'' on the bottom wire indicates that $g$ and $g'$ possibly act on multiple qubits. Now observe that $CZ_{1}C^{\dag} = X \otimes g$ as follows:
 \begin{align*}
-CZ_{(1)}C^\dag = \hspace{2mm} & \Qcircuit @C=0.5em @R=.7em {
+CZ_{1}C^\dag = \hspace{2mm} & \Qcircuit @C=0.5em @R=.7em {
    & \qw & \ctrl{1} & \qw & \gate{H} & \qw & \ctrl{1} & \qw & \gate{Z} & \qw & \ctrl{1} & \gate{H} & \ctrl{1} & \qw  \\
    & {/}\qw & \gate{g} & \qw & \qw & \qw & \gate{g'} & \qw & \qw & \qw & \gate{g'} & \qw & \gate{g} & \qw
    } \\ 
@@ -400,15 +412,19 @@ XZ \otimes gg' &= (X \otimes g)(Z \otimes g') \\
  &= -(ZX \otimes g'g) \\
  &= XZ \otimes g'g
 \end{align*}
-Then we have that $I \otimes gg' = I \otimes g'g$, so applying the inverse of $I \otimes gg'$ to both sides, we have:
-\[
-I_{2^{n+1}} = (I_2 \otimes g'g)(I_2 \otimes gg')^{-1}
- = (I_2 \otimes g'g)(I_2 \otimes g'^{-1}g^{-1}) 
- = I_2 \otimes g'gg'^{-1}g^{-1}
-\]
-where $I_{2^{n+1}}$ is the identity on $n+1$ qubits. This implies that $g'gg'^{-1}g^{-1} = I_{2^n}$, thus $g'g = gg'$. Now we make use of this commutation to show that $CX_1C^\dag = Z_1 \otimes g'$:
+Then we have that $I \otimes gg' = I \otimes g'g$, which implies that $gg' = g'g$. Now we make use of this commutation to show that $CX_1C^\dag = Z_1 \otimes g'$:
+
+%so applying the inverse of $I \otimes gg'$ to both sides, we have:
+%\[
+%I_{2^{n+1}} = (I_2 \otimes g'g)(I_2 \otimes gg')^{-1}
+% = (I_2 \otimes g'g)(I_2 \otimes g'^{-1}g^{-1}) 
+% = I_2 \otimes g'gg'^{-1}g^{-1}
+%\]
+%where $I_{2^{n+1}}$ is the identity on $n+1$ qubits. This implies that $g'gg'^{-1}g^{-1} = I_{2^n}$, thus $g'g = gg'$. 
+
+
 \begin{align*}
-CX_{(1)}C^\dag = \hspace{2mm} & \Qcircuit @C=0.5em @R=.7em {
+CX_{1}C^\dag = \hspace{2mm} & \Qcircuit @C=0.5em @R=.7em {
    & \qw & \ctrl{1} & \qw & \gate{H} & \qw & \ctrl{1} & \qw & \gate{X} & \qw & \ctrl{1} & \gate{H} & \ctrl{1} & \qw  \\
    & {/}\qw & \gate{g} & \qw & \qw & \qw & \gate{g'} & \qw & \qw & \qw & \gate{g'} & \qw & \gate{g} & \qw
    } \\ 
@@ -440,7 +456,7 @@ $U'X_1U'^\dag = C^\dag U X_1 U^\dag C = C^\dag (Z \otimes g') C = X_1$
 \begin{center}
 $U'Z_1U'^\dag = C^\dag U Z_1 U^\dag C = C^\dag (X \otimes g) C = Z_1$.
 \end{center}
-Hence $U'=I_2 \otimes U''$ with $U'' \in \mathcal{C}(n)$. Now note that $C$ is a circuit consisting of gates from $\{ H, S, CNOT \}$ and by the induction hypothesis, there is a circuit $D$ over the same gate set for $U''$. Hence
+Hence $U'=I_2 \otimes U''$ with $U'' \in \mathcal{C}(n)$. Now note that $C$ is a Clifford circuit since the controlled $g$ and $g'$ gates are controlled Pauli gates, which can be realized by conjugating the $CNOT$ gate with some combinations of $H$ and $S$ gates. Thus by the induction hypothesis, there is a circuit $D$ over the same gate set for $U''$. Hence
 \[
 I_{2^{n+1}}= (I_2\otimes D^\dagger ) (I_2 \otimes U'') = (I_2\otimes D^\dagger ) U'
 = (I_2\otimes D^\dagger ) C^\dagger U.
@@ -451,7 +467,7 @@ Therefore, $U= C(I_2\otimes D)$.
 The above theorem, together with Corollary \ref{CliffordPtoP}, shows that up to a scalar the Clifford group is the normalizer of the Pauli group.
 
 \section{Universal Extensions of the Clifford Gates}
-We can do many interesting things with Clifford circuits. In particular, we can create superpositions and entanglement of states. A superposition is a linear combination of single ket vectors, so simply applying $H$ to $\ket{0}$ would give $\ket{+}=(\ket{0}+\ket{1})/\sqrt{2}$. To achieve entanglement means to find some circuit that when applied to some un-entangled qubits the output state is an entangled state. As an example, consider the entangled state $\frac{\ket{00}+\ket{11}}{\sqrt{1}}$, then the following circuit with input $\ket{00}$ with output the entangled state.
+We can do many interesting things with Clifford circuits. In particular, we can create superpositions and entanglement of states. A superposition is a linear combination of single ket vectors, so simply applying $H$ to $\ket{0}$ would give $\ket{+}=(\ket{0}+\ket{1})/\sqrt{2}$. To achieve entanglement means to find some circuit that when applied to some un-entangled qubits the output state is an entangled state. As an example, consider the entangled state $\frac{\ket{00}+\ket{11}}{\sqrt{1}}$, then the following circuit with input $\ket{00}$ will output the entangled state.
 
 \begin{equation*}
 \Qcircuit @C=0.8em @R=.8em {
@@ -460,11 +476,11 @@ We can do many interesting things with Clifford circuits. In particular, we can 
    } 
 \end{equation*}
 
-Note that the Clifford group is finite. This comes from the fact that it maps Paulis to Paulis under conjugation, effectively meaning that Clifford circuits act as permutations of the Pauli group. Hence, since there are $4^{n+1}$ Paulis, there are at most $(4^{(n+1)^{(n+1)}}$ Cliffords. That is $|\mathcal{C}(n)| \leq 4^{(n+1)^{4^{n+1}}}$. In fact, the exact cardinality of the Clifford group is well known  and is $8 \cdot \prod\limits_{i=1}^n 2(4^i - 1)4^i$ \cite{Selinger_gen}. 
+Note that the Clifford group is finite. This comes from the fact that it maps Paulis to Paulis under conjugation, effectively meaning that Clifford circuits act as permutations of the Pauli group. Hence, since there are $4^{n+1}$ Paulis, there are at most $4^{(n+1)^{4^{n+1}}}$ Cliffords. That is $|\mathcal{C}(n)| \leq 4^{(n+1)^{4^{n+1}}}$. In fact, the exact cardinality of the Clifford group is well known  and is $8 \cdot \prod\limits_{i=1}^n 2(4^i - 1)4^i$ \cite{Selinger_gen}. 
 
 Moreover, the Gottesman-Knill theorem shows a relation in power between the quantum computer and classical computer.
 
-\begin{theorem}[Gottesman-Knill Theorem]
+\begin{theorem}[Gottesman-Knill Theorem \cite{nielsen00}]
 Suppose a quantum computation is performed which involves only the following elements: state preparations in the computational basis, Hadamard gates, phase gates, controlled-NOT gates, Pauli gates, and measurements of observables in the Pauli group, together with the possibility of classical control conditioned on the outcome of such measurements. Such a computation may be efficiently simulated on a classical computer.
 \end{theorem}
 
@@ -519,7 +535,7 @@ $VX_1V^{\dag} = X_1 \otimes \frac{I + Z_2 +X_3 -Z_2X_3}{2}$
 \end{center}
 where we let $U$ and $V$ be the $CS$ and Toffoli or $CCX$ gates respectively, where qubit $1$ is the control and qubit $2$ is the target for the $CS$ gate, and qubits $1$ and $2$ are controls and qubit $3$ is the target for the $CCX$ gate. 
 
-This naturally gives the sense that non-Clifford gates are a resource that enables full quantum computing, meaning that each non-Clifford gate is an expensive commodity that ideally is used as little as possible. This is also corroborated by the fact that in fault-tolerant quantum computing Clifford gates are typically cheap whereas non-Clifford gates are typically expensive. Thus this is the motivation behind attempting to limit the number of non-Clifford gates used. Finding lower bounds and upper bounds also gives an idea as to whether or not more or less of a certain non-Clifford gate can be used. If there is a circuit the uses the same number of non-Clifford gate as the calculated lower bound, then we know cannot do any better.
+This naturally gives the sense that non-Clifford gates are a resource that enables full quantum computing, meaning that each non-Clifford gate is an expensive commodity that ideally is used as little as possible. This is also corroborated by the fact that in fault-tolerant quantum computing Clifford gates are typically cheap whereas non-Clifford gates are typically expensive. Thus this is the motivation behind attempting to limit the number of non-Clifford gates used. Finding lower bounds and upper bounds also gives an idea as to whether or not more or less of a certain non-Clifford gate can be used. If there is a circuit that uses the same number of non-Clifford gates as the calculated lower bound, then we know we cannot do any better.
 
 \section{Computing With States}
 Instead of using non-Clifford gates to perform universal quantum computing, one can use a special kind of state to \emph{inject} the desired gate into a circuit. The useful states for this purpose are defined below.
@@ -608,37 +624,37 @@ A \emph{stabilizer state} is a state of the form $\ket{\phi} = C \ket{0}^{\otime
 
 
 \begin{definition}
-Let $\ket{\psi}$ be a non-zero $n$-qubit state and $U$ be an operator. Then we say that $\ket{\psi}$ is \emph{stabilized} by $U$ if $U\ket{\psi} = \ket{\psi}$. The \emph{stabilizer} of $\ket{\psi}$ is the subgroup $\mathcal{P}(n)$ consisting of the Paulis that stabilize $\ket{\psi}$. It is denoted by Stab$\ket{\psi}$. 
+Let $\ket{\psi}$ be an $n$-qubit state and $U$ be an operator. Then we say that $\ket{\psi}$ is \emph{stabilized} by $U$ if $U\ket{\psi} = \ket{\psi}$. The \emph{stabilizer} of $\ket{\psi}$ is the subgroup $\mathcal{P}(n)$ consisting of the Paulis that stabilize $\ket{\psi}$. It is denoted by Stab$\ket{\psi}$. 
 \end{definition}
 
-This means that Stab$\ket{\psi}$ = $\{P \in \mathcal{P}(n) \: P \ket{\psi} = \ket{\psi} \}$. States for which the stabilizer contains only the identity matrix are said to have a trivial stabilizer. 
+This means that Stab$\ket{\psi}$ = $\{P \in \mathcal{P}(n) \mid P \ket{\psi} = \ket{\psi} \}$. States for which the stabilizer contains only the identity matrix are said to have a trivial stabilizer. 
 
 The reason behind using this stabilizer formalism is that we can easily describe many quantum states by working with operators that stabilize them, rather than by explicitly working with the states themselves. Next are a few propositions regarding the stabilizer.
 
 \begin{proposition}
 \label{stabilizerfacts}
-Let $\ket{\psi}$ be a non-zero n qubit state. Then we have the following facts about Stab$\ket{\psi}$:
+Let $\ket{\psi}$ be an $n$-qubit state. Then we have the following facts about Stab$\ket{\psi}$:
 \begin{enumerate}
-\item Stab$\ket{\psi}$ does not contain -$I$.
+\item Stab$\ket{\psi}$ does not contain $-I$.
 \item All Pauli group elements contained in Stab$\ket{\psi}$ commute with each other and are Hermitian matrices.
-\item The size of the stabilizer is equal to some power of two.
-\item Given any Clifford Unitary $C$, the size of Stab$\ket{\psi}$ is always equal to the size of Stab$(C \ket{\psi})$.
-\item Finally, the size of the stabilizer is multiplicative for the tensor products of states, that is $| \text{Stab} (\ket{\psi} \ket{\phi})| = |\text{Stab}\ket{\psi}| \cdot |\text{Stab}\ket{\phi}|$. 
+\item The cardinality of the stabilizer is equal to some power of two.
+\item Given any Clifford Unitary $C$, the cardinality of Stab$\ket{\psi}$ is always equal to the cardinality of Stab$(C \ket{\psi})$.
+\item Finally, the cardinality of the stabilizer is multiplicative for the tensor products of states, that is $| \text{Stab} (\ket{\psi} \ket{\phi})| = |\text{Stab}\ket{\psi}| \cdot |\text{Stab}\ket{\phi}|$. 
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
 \hspace{20mm}
 \begin{enumerate}
-\item If $-I \in \text{Stab}\ket{\psi}$, then $-\ket{\psi} =-I\ket{\psi} = \ket{\psi}$, which of course is not true for non-zero states.
+\item If $-I \in \text{Stab}\ket{\psi}$, then $-\ket{\psi} =-I\ket{\psi} = \ket{\psi}$, which of course is not true for states (since unit vectors have at least one non-zero entry).
 
 \item First note that for any two Paulis $P, Q$, they either commute or anti-commute. Now suppose $P, Q \in \text{Stab}\ket{\psi}$ anti-commute. Then $\ket{\psi} = PQ\ket{\psi} = -QP\ket{\psi} = -\ket{\psi}$. This implies that $-I \in \text{Stab}\ket{\psi}$, which from above can't be true, so $P$ and $Q$ must commute.
 
-\item It is known that the cardinality of the Pauli group is a power of two, and since $\text{Stab}\ket{\psi}$ is a subgroup of the Pauli group, $|\text{Stab}\ket{\psi}|$ must divide a power of two, thus it must also be a power of two.
+\item By Proposition \ref{PauliCardinality} the cardinality of the Pauli group is a power of two, and since $\text{Stab}\ket{\psi}$ is a subgroup of the Pauli group, $|\text{Stab}\ket{\psi}|$ must divide a power of two, thus it must also be a power of two.
 
 \item Recall that Clifford unitaries normalize Pauli matrices. Now let $P \in \text{Stab}\ket{\psi}$ and let $C$ be some Clifford unitary. Then $CPC^{\dag}C\ket{\psi} = CP\ket{\psi} = C\ket{\psi}$, so $CPC^{\dag} \in \text{Stab}(C\ket{\psi})$. Now consider the map $\theta_C : \text{Stab}\ket{\psi} \rightarrow \text{Stab}(C\ket{\psi})$ which acts as $P \mapsto CPC^{\dag}$. This map has an inverse, $\theta_{C^\dag}: \text{Stab}(C\ket{\psi}) \longrightarrow \text{Stab}(C^{\dag}C\ket{\psi})$, which acts as $P' \mapsto C^{\dag}P'C$ (where we note that $\text{Stab}(C^{\dag}C\ket{\psi}) = \text{Stab}\ket{\psi}$). Thus $\theta_C$ is a bijection, and so we have that $|\text{Stab}\ket{\psi}| = |\text{Stab}(C\ket{\psi})|$.
 
-\item Let $\ket{\phi}$ be another non-zero state on $n$ qubits, and let $P \in \text{Stab}\ket{\psi}$ and $Q \in \text{Stab}\ket{\phi}$. Then $P \otimes Q \ket{\psi}\ket{\phi} = P\ket{\psi} \otimes Q\ket{\phi} = \ket{\psi}\ket{\phi}$. So $P \otimes Q \in \text{Stab}\ket{\psi}\ket{\phi}$. Now let $R \in \text{Stab}\ket{\psi}\ket{\phi}$. Then since $R$ is a Pauli, we can write $R = R_1 \otimes R_2$, and $R\ket{\psi}\ket{\phi} = \ket{\psi}\ket{\phi} = R_1 \otimes R_2 \ket{\psi}\ket{\phi} = R_1\ket{\psi} \otimes R_2\ket{\phi}$. Now let $\ket{\psi '} = R_1\ket{\psi}$ and $\ket{\phi '} = R_2\ket{\phi}$, and since $R_1$ and $R_2$ are both Clifford unitaries, fact 4 gives us that $|\text{Stab}\ket{\psi '}| = |\text{Stab}(R_1\ket{\psi})|$ and $|\text{Stab}\ket{\phi '}| = |\text{Stab}(R_2\ket{\phi})|$. We also have that $|\text{Stab}(R\ket{\psi}\ket{\phi})| = |\text{Stab}\ket{\psi '}\ket{\phi '}|$.
+\item Let $\ket{\phi}$ be another state on $m$ qubits, and let $P \in \text{Stab}\ket{\psi}$ and $Q \in \text{Stab}\ket{\phi}$. Then $P \otimes Q \ket{\psi}\ket{\phi} = P\ket{\psi} \otimes Q\ket{\phi} = \ket{\psi}\ket{\phi}$. So $P \otimes Q \in \text{Stab}\ket{\psi}\ket{\phi}$. Now let $R \in \text{Stab}\ket{\psi}\ket{\phi}$. Then since $R$ is a Pauli, we can write $R = R_1 \otimes R_2$, and $R\ket{\psi}\ket{\phi} = \ket{\psi}\ket{\phi} = R_1 \otimes R_2 \ket{\psi}\ket{\phi} = R_1\ket{\psi} \otimes R_2\ket{\phi}$. From this, either $R_1 \in \Stab \ket{\psi}$ and $R_2 \in \Stab \ket{\phi}$, or $-R_1 \in \Stab \ket{\psi}$ and $-R_2 \in \Stab \ket{\phi}$. Now let $ \ket{\psi '} = \pm R_1\ket{\psi}$ and $\ket{\phi '} = \pm R_2\ket{\phi}$, and since $R_1$ and $R_2$ are both Clifford unitaries, fact 4 gives us that $|\text{Stab}\ket{\psi '}| = |\text{Stab}(R_1\ket{\psi})|$ and $|\text{Stab}\ket{\phi '}| = |\text{Stab}(R_2\ket{\phi})|$. We also have that $|\text{Stab}(R\ket{\psi}\ket{\phi})| = |\text{Stab}\ket{\psi '}\ket{\phi '}|$.
 
  So every element in $\text{Stab}\ket{\psi}\ket{\phi}$ is of the form $R_1 \otimes R_2$ as above, thus 
  \[
@@ -650,17 +666,17 @@ Let $\ket{\psi}$ be a non-zero n qubit state. Then we have the following facts a
 \end{proof}
 
 \begin{theorem}
-Let $\ket{\psi}$ be a non-zero $n$-qubit state. Then $\ket{\psi}$ is a stabilizer state if and only if $|\Stab \ket{\psi}| = 2^n$. 
+Let $\ket{\psi}$ be an $n$-qubit state. Then $\ket{\psi}$ is a stabilizer state if and only if $|\Stab \ket{\psi}| = 2^n$. 
 \end{theorem}
 \begin{proof}
 For the left-to-right direction, we first prove that $\ket{00 \dots 0}$ is a stabilizer state by induction. The base case is the $\ket{0}$ state which we know is a stabilizer state since $|\text{Stab}\ket{0}| = 2^1$. Now assume that $\ket{00 \dots 0}$ is a stabilizer state on $n$-qubits with $|\text{Stab}\ket{00 \dots 0}| = 2^n$. Let $P \in \text{Stab}\ket{0}$ and $Q \in \text{Stab}\ket{00 \dots 0}$, then $(P \otimes Q)\ket{0}\ket{00 \dots 0} = P\ket{0} \otimes Q\ket{00 \dots 0} = \ket{0}\ket{00 \dots 0} = \ket{00 \dots 00}$ (n+1 qubits). So $P \otimes Q \in \text{Stab}\ket{00 \dots 00}$, and from above arguments we know that every element in $\text{Stab}\ket{00 \dots 00}$ is of this form, thus there are $2^{n+1}$ elements in $\text{Stab}\ket{00 \dots 00}$, making it a stabilizer state.
 
 Next, if $\ket{\psi}$ is an $n$-qubit basis state, then it differs from the $n$-qubit computational basis state $\ket{00 \ldots 0}$ by only a Clifford unitary, i.e. $C\ket{00 \ldots 0} = \ket{\psi}$ for some Clifford circuit C. Then by point $4$ in Proposition \ref{stabilizerfacts}, it follows that $\ket{\psi}$ is a stabilizer state.
 
-For the other direction we use methods in \cite{Aaronson_2004}. In this paper,  Theorem 8 states that every stabilizer state can be represented by a tableau, which can then be converted into a tableau that represents the $\ket{00 \dots 0}$ state using only Clifford operations. Applying these Clifford operators is equivalently applying Clifford operators to the appropriate qubits of $\ket{\psi}$, thus resulting in a Clifford circuit $C$ such that $C\ket{\psi} = \ket{00 \dots 0}$. 
+For the other direction we use methods in \cite{Aaronson_2004}. In this thesis,  Theorem 8 states that every stabilizer state can be represented by a tableau, which can then be converted into a tableau that represents the $\ket{00 \dots 0}$ state using only Clifford operations. Applying these Clifford operators is equivalent to applying Clifford operators to the appropriate qubits of $\ket{\psi}$, thus resulting in a Clifford circuit $C$ such that $C\ket{\psi} = \ket{00 \dots 0}$. 
 \end{proof}
 
-An example of a non-stabilizer state is $\ket{\psi} = \frac{1}{\sqrt{2}}(\ket{00} + \frac{i}{2} \ket{11})$, which through computation one can find that it has the following stabilizers: $I \otimes I$ and $Z \otimes Z$. Since there are only $2$ stabilizers, and $2 \neq 2^2$, $\ket{\psi}$ cannot be a stabilizer state.
+An example of a non-stabilizer state is $\ket{\psi} = (\frac{2}{\sqrt{5}}\ket{00} + \frac{i}{\sqrt{5}} \ket{11})$, where through computation one can find that it has the following stabilizers: $I \otimes I$ and $Z \otimes Z$. Since there are only $2$ stabilizers, and $2 \neq 2^2$, $\ket{\psi}$ cannot be a stabilizer state.
 
 \begin{theorem}
 If $\ket{\psi}$ is an $n$-qubit stabilizer state, then $\textit{Stab}\ket{\psi}$ uniquely determines $\ket{\psi}$.
@@ -674,33 +690,38 @@ First note that each $P \in \textit{Stab}\ket{\psi}$ imposes the linear constrai
 In this chapter, we introduce \emph{monotones}, which are real-valued functions of states. In the next chapter, we will use these monotones to derive lower bounds for quantum circuits.  
 
 \section{Abstract Monotones}
-Recall that S is the collection of all states. We say that a collection of states $I \subseteq S$ is \emph{closed under tensor products} if $\ket{\phi}, \ket{\psi} \in I$ implies $\ket{\phi} \otimes \ket{\psi} \in I$. Similarly, we say that I is \emph{closed under the action of stabilizers} if $\ket{\phi} \in I$ and $C \in \mathcal{C}(n)$ implies $C\ket{\phi} \in I$.
+Recall that $\mathcal{S}$ is the collection of all states. We say that a collection of states $\mathcal{I} \subseteq \mathcal{S}$ is \emph{closed under tensor products} if $\ket{\phi}, \ket{\psi} \in \mathcal{I}$ implies $\ket{\phi} \otimes \ket{\psi} \in \mathcal{I}$. Similarly, we say that $\mathcal{I}$ is \emph{closed under the action of stabilizers} if $\ket{\phi} \in \mathcal{I}$ and $C \in \mathcal{C}(n)$ implies $C\ket{\phi} \in \mathcal{I}$.
 
 \begin{definition}
-Let $\mathcal{J} \subseteq \mathcal{S}$ and suppose that $\mathcal{J}$ is closed under tensor products and the action of stabilizers. A \emph{monotone} for $\mathcal{J}$ is a function $M: \mathcal{J} \rightarrow \mathbb{R}^{\geq 0}$ such that $M(\ket{\phi}) = 0$ if $\ket{\phi}$ is a stabilizer state and if $C$ is a stabilizer operator then $M(C\ket{\phi}) \leq M(\ket{\phi})$ for all $\ket{\phi} \in \mathcal{J}$. Also, $M(\ket{\phi}) \geq 0$ and $M(\ket{\phi}) = 0 \Leftrightarrow \ket{\phi} \in Stab(\ket{\phi})$.
+Let $\mathcal{J} \subseteq \mathcal{S}$ and suppose that $\mathcal{J}$ is closed under tensor products and the action of stabilizers. A \emph{monotone} for $\mathcal{J}$ is a function $M: \mathcal{J} \rightarrow \mathbb{R}^{\geq 0}$ such that:
+\begin{itemize}
+\item $M(\ket{\phi}) = 0$ if and only if $\ket{\phi}$ is a stabilizer state
+\item if $C$ is a stabilizer operator then $M(C\ket{\phi}) \leq M(\ket{\phi})$ for all $\ket{\phi} \in \mathcal{J}$.
+\end{itemize} 
+%Also, $M(\ket{\phi}) \geq 0$ and $M(\ket{\phi}) = 0 \Leftrightarrow \ket{\phi} \in Stab(\ket{\phi})$.
 \end{definition}
 
-\begin{definition} 
-We have the following properties for monotones:
+\begin{proposition} 
+We may consider the following properties for monotones:
 \begin{itemize}
 \item $M(\ket{\phi} \otimes \ket{\psi}) = M(\ket{\phi}) + M(\ket{\psi})$ (additive) 
 \item $M(\ket{\phi} \otimes \ket{\psi}) = M(\ket{\phi}) \cdot M(\ket{\psi})$ (multiplicative)
-\item $M(C\ket{\phi}) \leq M(\ket{\phi})$ where C is a Pauli measurement (non-increasing under Pauli measurements)
+\item $M(C\ket{\phi}) \leq M(\ket{\phi})$ where $C$ is a Pauli measurement (non-increasing under Pauli measurements)
 \item $M(\ket{\phi}) = M(\ket{\phi}\ket{\psi})$ for all stabilizer states $\ket{\psi}$ (stable under stabilizer ancillas)
 \end{itemize}
-\end{definition}
+\end{proposition}
 
 \section{The Stabilizer Nullity}
 
 \begin{definition}[Stabilizer Nullity]
-Let $\ket{\psi}$ be a non-zero $n$-qubit state. The \emph{Stabilizer Nullity} of $\ket{\psi}$ is denoted by $\nu(\ket{\psi})$ and is defined as $\nu(\ket{\psi}) = n - \log_2 |\text{Stab}\ket{\psi}|$.
+Let $\ket{\psi}$ be an  $n$-qubit state. The \emph{Stabilizer Nullity} of $\ket{\psi}$ is denoted by $\nu(\ket{\psi})$ and is defined as $\nu(\ket{\psi}) = n - \log_2 |\text{Stab}\ket{\psi}|$.
 \end{definition}
 
 \begin{proposition}
 The Stabilizer Nullity is a monotone.
 \end{proposition}
 \begin{proof}
-First, by Proposition \ref{stabilizerfacts}, for any $n$-qubit state $\ket{\psi}$ we have $|\Stab \ket{\psi}| \leq 2^n$. Hence, $\nu (\ket{\psi})$ is always a positive integer and so $\nu$ is a (non-negative) real valued function. Again, by Proposition \ref{stabilizerfacts} recall that for a Clifford unitary $C$ and a state $\ket{\psi}$ we have that $|\Stab(C\ket{\psi})| = |\Stab\ket{\psi}|$. Thus $\nu(C\ket{\psi}) = n - \log_2|\Stab(C\ket{\psi})| = n - \log_2|\Stab\ket{\psi}| = \nu(\ket{\psi})$. Finally, if $\ket{\psi}$ is a stabilizer state, then $|\Stab\ket{\psi}| = 2^n$ by Proposition \ref{stabilizerfacts}, so $\nu(\ket{\psi}) = n - \log_2(\Stab\ket{\psi}) =  n - \log_2(2^n) = 0$. 
+First, by Proposition \ref{stabilizerfacts}, for any $n$-qubit state $\ket{\psi}$ we have $|\Stab \ket{\psi}| \leq 2^n$ and is a power of $2$. Hence, $\nu (\ket{\psi})$ is always a positive integer and so $\nu$ is a (non-negative) real valued function. Again, by Proposition \ref{stabilizerfacts} recall that for a Clifford unitary $C$ and a state $\ket{\psi}$ we have that $|\Stab(C\ket{\psi})| = |\Stab\ket{\psi}|$. Thus $\nu(C\ket{\psi}) = n - \log_2|\Stab(C\ket{\psi})| = n - \log_2|\Stab\ket{\psi}| = \nu(\ket{\psi})$. Next, if $\ket{\psi}$ is a stabilizer state, then $|\Stab\ket{\psi}| = 2^n$ by Proposition \ref{stabilizerfacts}, so $\nu(\ket{\psi}) = n - \log_2(|\Stab\ket{\psi}|) =  n - \log_2(2^n) = 0$. Conversely, if $\nu (\ket{\psi}) = 0$, then $n = \log_2(|\Stab\ket{\psi}|)$ which implies that $|\Stab\ket{\psi}| = 2^n$. By Proposition \ref{stabilizerfacts} it follows that $\ket{\psi}$ is a stabilizer state.
 \end{proof}
 
 \begin{proposition}
@@ -721,7 +742,7 @@ Now we want to show that $\nu$ is non-increasing under Pauli measurements, but b
 
 \begin{proposition}
 \label{ClifUnitary}
-If $P$ and $Q$ are Hermitian Pauli operators and $PQ = - QP$ then 
+If $P$ and $Q$ are Hermitian Pauli operators and $PQ = - QP$ then the operator
 \begin{equation*}
 C = \frac{I -PQ}{\sqrt{2}}
 \end{equation*}
@@ -732,7 +753,7 @@ Let $U$ be a Pauli. Then
 \begin{equation*}
 CUC^\dag = \frac{U-U(PQ)^\dag - (PQ)U + (PQ)U(PQ)^\dag}{2}.
 \end{equation*}
-We have two cases now, the first being if $PQU = UPQ$ (i.e. $PQ$ and $U$ commute). Then 
+We have two cases now, the first being $PQU = UPQ$ (i.e., $PQ$ and $U$ commute). Then 
 \begin{equation*}
 \begin{split}
 CUC^\dag & = \frac{2U - (U(PQ)^\dag + UPQ)}{2} \\
@@ -741,14 +762,14 @@ CUC^\dag & = \frac{2U - (U(PQ)^\dag + UPQ)}{2} \\
 & = U.
 \end{split}
 \end{equation*}
-Naturally the second case is when $PQU = -UPQ$ (i.e. $PQ$ anti-commutes with $U$). Then
+Naturally the second case is when $PQU = -UPQ$ (i.e., $PQ$ anti-commutes with $U$). Then
 \begin{equation*}
 \begin{split}
-CUC^\dag & = \frac{U - U(PQ)^\dag - UPQ - U)}{2} \\
+CUC^\dag & = \frac{U - U(PQ)^\dag - UPQ - U}{2} \\
 & = \frac{-UQP + UPQ}{2} \\
 & = \frac{-UQP - UQP}{2} \\
-& = \frac{-2UPQ}{2} \\
-& = -UPQ.
+& = \frac{-2UQP}{2} \\
+& = -UQP.
 \end{split}
 \end{equation*}
 In either case, $CUC^\dag$ is a Pauli, so $C$ is a Clifford by Proposition \ref{CliffordPtoP}.
@@ -756,13 +777,15 @@ In either case, $CUC^\dag$ is a Pauli, so $C$ is a Clifford by Proposition \ref{
 
 \begin{lemma}
 \label{nullity outcome}
-Let $\ket{\psi}$ be a non-zero $n$-qubit state and let $P$ be an $n$-qubit Pauli matrix. Assume that the probability of a $+1$ outcome when measuring $P$ on $\ket{\psi}$ is non-zero and let $\ket{\phi}$ be the state after measurement. Then $|\text{Stab}\ket{\phi}| = |\text{Stab}\ket{\psi}|$ or $|\text{Stab}\ket{\phi}| \geq |\text{Stab}\ket{\psi}|$.
+Let $\ket{\psi}$ be an $n$-qubit state and let $P$ be an $n$-qubit Pauli matrix. Assume that the probability of a $+1$ outcome when measuring $P$ on $\ket{\psi}$ is non-zero and let $\ket{\phi}$ be the state after measurement. Then $|\text{Stab}\ket{\phi}| \geq |\text{Stab}\ket{\psi}|$.
 \end{lemma}
 
+%$|\text{Stab}\ket{\phi}| = |\text{Stab}\ket{\psi}|$ or
+
 \begin{proof}
-Let $P$ be a $n$-qubit Pauli and $\ket{\psi}$ an $n$-qubit state. Recall that for a Pauli measurement on $P$ the probability of a $+1$ outcome is $\braket{\psi | P_{+1} | \psi}$, with post measurement state $\ket{\phi} = \frac{P_{+1} \ket{\psi}}{\sqrt{\braket{\psi | P_{+1} | \psi}}} =  \frac{(I+P) \ket{\psi}}{2 \sqrt{\braket{\psi | P_{+1} | \psi}}}$. With this, we have three different cases to consider. First is the simple case when $P$ is in $\Stab\ket{\psi}$. Here we have: 
+Let $P$ be an $n$-qubit Pauli and $\ket{\psi}$ an $n$-qubit state. Recall that for a Pauli measurement on $P$ the probability of a $+1$ outcome is $\braket{\psi | P_{+1} | \psi}$, with post measurement state $\ket{\phi} = \frac{P_{+1} \ket{\psi}}{\sqrt{\braket{\psi | P_{+1} | \psi}}} =  \frac{(I+P) \ket{\psi}}{2 \sqrt{\braket{\psi | P_{+1} | \psi}}}$. With this, we have three different cases to consider. First is the simple case when $P$ is in $\Stab\ket{\psi}$. Here we have: 
 \begin{equation*}
-\ket{\phi} = \frac{I+P \ket{\psi}}{2\braket{\psi | P_{+1} | \psi}} = \frac{\ket{\psi}}{2\braket{\psi |P_{+1}| \psi}}.
+\ket{\phi} = \frac{(I+P) \ket{\psi}}{2\braket{\psi | P_{+1} | \psi}} = \frac{\ket{\psi}}{2\braket{\psi |P_{+1}| \psi}}.
 \end{equation*}
 Since $\ket{\psi}$ and $\ket{\phi}$ differ by a phase, $|\Stab\ket{\phi}| = |\Stab\ket{\psi}|$.
 
@@ -776,18 +799,18 @@ Finally the second alternative is when there exists at least one $Q \in \Stab\ke
 \begin{equation*}
 \ket{\phi} = \frac{(I+P) \ket{\psi}}{2\braket{\psi | P_{+1} | \psi}} = \frac{(I+P)\ket{\psi}}{2\sqrt{1/2}} = \frac{(I+P)\ket{\psi}}{\sqrt{2}},
 \end{equation*}
-where we fixed the normalization condition such that $\braket{\phi | \phi} = \braket{\psi | \psi}$. Also, observe that we can write $\ket{\phi} = (I+PQ)/\sqrt{2}\ket{\psi}$ since $Q$ stabilizes $\ket{\phi}$. Since $(I+PQ)/\sqrt{2}$ is a Clifford unitary by Proposition \ref{ClifUnitary}, we see that $\ket{\phi}$ and $\ket{\psi}$ differ by a Clifford and therefore $\Stab\ket{\psi}| = |\Stab\ket{\phi}|$.
+where we fixed the normalization condition such that $\braket{\phi | \phi} = \braket{\psi | \psi}$. Also, observe that we can write $\ket{\phi} = (I+PQ)/\sqrt{2}\ket{\psi}$ since $Q$ stabilizes $\ket{\phi}$. Since $(I+PQ)/\sqrt{2}$ is a Clifford unitary by Proposition \ref{ClifUnitary}, we see that $\ket{\phi}$ and $\ket{\psi}$ differ by a Clifford and therefore $|\Stab\ket{\psi}| = |\Stab\ket{\phi}|$.
 \end{proof}
 
 \begin{corollary}
 The Stabilizer Nullity is non-increasing under Pauli measurements.
 \end{corollary}
 \begin{proof}
-Let $\ket{\psi}$ be a nonzero $n$-qubit state, let $P$ be an $n$-qubit Pauli operator, and let $\ket{\phi}$ be the state after measuring $P$ on $\ket{\psi}$. By Lemma \ref{nullity outcome}, we have $|\Stab\ket{\phi}| = |\Stab\ket{\psi}|$ or $|\Stab\ket{\phi}| \geq 2|\Stab\ket{\phi}|$. Either way, $|\Stab\ket{\phi}| \geq |\Stab\ket{\psi}|$ so that $\log_2|\Stab\ket{\phi}| \geq \log_2|\Stab\ket{\psi}|$. Hence 
+Let $\ket{\psi}$ be a nonzero $n$-qubit state, let $P$ be an $n$-qubit Pauli operator, and let $\ket{\phi}$ be the state after measuring $P$ on $\ket{\psi}$. By Lemma \ref{nullity outcome}, we have $|\Stab\ket{\phi}| = |\Stab\ket{\psi}|$ or $|\Stab\ket{\phi}| \geq |\Stab\ket{\psi}|$. Either way, $|\Stab\ket{\phi}| \geq |\Stab\ket{\psi}|$ so that $\log_2|\Stab\ket{\phi}| \geq \log_2|\Stab\ket{\psi}|$. Hence 
 \begin{equation*}
 \begin{split}
 \nu (\ket{\phi}) & = n - \log_2|\Stab\ket{\phi}| \\
-& \leq n - \log_2|\Stab|\ket{\psi}| \\
+& \leq n - \log_2|\Stab\ket{\psi}| \\
 & = \nu(\ket{\psi}).
 \end{split}
 \end{equation*} \qedhere
@@ -796,7 +819,7 @@ Let $\ket{\psi}$ be a nonzero $n$-qubit state, let $P$ be an $n$-qubit Pauli ope
 We finish this section with a notion that will be helpful in computing the Stabilizer Nullity of states. We write multisets using $\{|$ and $|\}$. Moreover, we sometimes indicate the multiplicity of an element in brackets. For example the multiset $\{| a, a, b |\}$ will sometimes be written as $\{| a (2), b (1) |\}$.
 
 \begin{definition}[Pauli Spectrum]
-Let $\ket{\psi}$ be a non-zero $n$-qubit state. The \emph{Pauli spectrum} of $\ket{\psi}$ is denoted by Spec$\ket{\psi}$ and is defined as:
+Let $\ket{\psi}$ be an $n$-qubit state. The \emph{Pauli spectrum} of $\ket{\psi}$ is denoted by Spec$\ket{\psi}$ and is defined as:
 \begin{equation*}
 \text{Spec}\ket{\psi} = \left\{ \bigg| \frac{|\bra{\psi}P\ket{\psi}|}{\braket{\psi|\psi}}, P \in \{I, X, Y, Z\}^{\otimes n} \bigg| \right\}.
 \end{equation*}
@@ -813,19 +836,19 @@ Let $\theta \in \mathbb{R}$ and consider the state $\ket{\theta} = (\ket{0} + e^
 \item $\bra{\theta}Y\ket{\theta} = (\bra{1}e^{-i\theta} + \bra{0})(i\ket{1} - ie^{i\theta}\ket{0})/2 = i(e^{-i\theta} - e^{i\theta})/2 = i(-2i\sin\theta)/2 = \sin\theta$
 \item $\bra{\theta}Z\ket{\theta} = (\bra{1}e^{-i\theta} + \bra{0})(\ket{0} - e^{i\theta}\ket{1})/2 = 1 - 1 = 0$
 \end{itemize} 
-Thus, the Pauli spectrum of is $\{1, \cos\theta, \sin\theta, 0\}$. Moreover, if $\theta = 2k\pi /2$ for some integer $k$, then $X \in \text{Stab}\ket{\theta}$, and if $\theta = (2k+1)\pi /2$, then $Y \in \text{Stab}\ket{\theta}$. Observe that $\forall \theta$, $I \in \text{Stab}\ket{\theta}$ and $Z \not\in \text{Stab}\ket{\theta}$, thus $|\text{Stab}\ket{\theta}| = 2$ if and only if either $X$ or $Y \in \text{Stab}\ket{\theta}$, or more generally if $\theta = m \pi /2$, for some integer $m$. The state $\ket{\theta}$ is therefore a stabilizer state only for $\theta = m \pi/2$ for some integer m.
+Thus, the Pauli spectrum of $\ket{\theta}$ is $\{1, \cos\theta, \sin\theta, 0\}$. Moreover, if $\theta = 2k\pi /2$ for some integer $k$, then $X \in \text{Stab}\ket{\theta}$, and if $\theta = (2k+1)\pi /2$, then $Y \in \text{Stab}\ket{\theta}$. Observe that for all $\theta$, $I \in \text{Stab}\ket{\theta}$ and $Z \not\in \text{Stab}\ket{\theta}$, thus $|\text{Stab}\ket{\theta}| = 2$ if and only if either $X$ or $Y \in \text{Stab}\ket{\theta}$, or more generally if $\theta = m \pi /2$, for some integer $m$. The state $\ket{\theta}$ is therefore a stabilizer state only for $\theta = m \pi/2$ for some integer m.
 \end{example}
 
 \section{The Dyadic Monotone}
-Consider quantum states the have entries in $\mathbb{Z}[i, 1/2] = \big\{\frac{a+ib}{2^k}: a, b, k, \in \mathbb{Z} \big\}$ when written in the computational basis. Indeed, $\ket{C^nZ}$ can be written as vectors with entries in the above set. We have a few note worthy facts to observe here:
+Consider quantum states that have entries in $\mathbb{Z}[i, 1/2] = \big\{\frac{a+ib}{2^k}: a, b, k, \in \mathbb{Z} \big\}$ when written in the computational basis. Indeed, $\ket{C^nZ}$ can be written as vectors with entries in the above set. We have a few noteworthy facts to observe here:
 \begin{itemize}
-\item The set $\mathbb{Z}[i, 1/2]$ is a ring since it is closed under addition, negation, multiplication and contains $0$ and $1$.
+\item The set $\mathbb{Z}[i, 1/2]$ is a ring since it is closed under addition, subtraction, multiplication and contains $0$ and $1$.
 \item If a state $\ket{\psi}$ has entries in $\mathbb{Z}[i, 1/2]$ then for any Hermitian multi-qubit Pauli operator $P$, the expectation $\braket{\psi | P | \psi}$ can be written as $a/2^k$ for integers $a, k$, and is in $\mathbb{Z}[i, 1/2]$ because the entries of all Pauli matrices are also, and $\mathbb{Z}[i, 1/2]$ is closed under complex conjugation.
 \item The expectation is also a real number and all the real numbers in $\mathbb{Z}[i, 1/2]$ are of the form $a/2^k$ for integers $a$ and $k$. 
 \item For stabilizer states Pauli expectations can only be $\pm 1$ and $0$.
 \end{itemize}
 
-First let us define a function $\bar{v}_2 :\mathbb{Q} \rightarrow \mathbb{Z} \cup \{ \infty \}$. Let $0 \neq q \in \mathbb{Q}$ so we can write $q = n/d$ with $n, d \in \mathbb{Z}$ and gcd$(n, d) = 1$ (so it is in reduced form). By the fundamental theorem of algebra we can write $n = 2^{r_2} \cdot p^{r_{p_1}}_1 \cdots p^{r_{p_m}}_m$ and $d = 2^{l_2} \cdot p^{l_{p_1}}_1 \cdots p^{l_{p_m}}_m$ for $k_i, l_i \in \mathbb{Z} \forall i \in [m]$. So $q = 2^{k} \cdot p^{k_{p_1}}_1 \cdots p^{k_{p_m}}_m$ where $k = r_2 - l_2$ and $k_j = r_{p_j} - l_{p_j}$. This map is unique so we define $\bar{v}_2(q) = k$ and $\bar{v}_2(0) = \infty$.
+Before defining the next monotone, we must first introduce a few functions that will be used in its definition. Let us define $\bar{v}_2 :\mathbb{Q} \rightarrow \mathbb{Z} \cup \{ \infty \}$. Let $0 \neq q \in \mathbb{Q}$ so we can write $q = n/d$ with $n, d \in \mathbb{Z}$ and gcd$(n, d) = 1$ (so it is in reduced form). By the fundamental theorem of arithmetic we can write $n = 2^{r_2} \cdot p^{r_{p_1}}_1 \cdots p^{r_{p_m}}_m$ and $d = 2^{l_2} \cdot p^{l_{p_1}}_1 \cdots p^{l_{p_m}}_m$ for $k_i, l_i \in \mathbb{Z}$ for all $i \in [m]$. So $q = 2^{k} \cdot p^{k_{p_1}}_1 \cdots p^{k_{p_m}}_m$ where $k = r_2 - l_2$ and $k_j = r_{p_j} - l_{p_j}$. This map is unique so we define $\bar{v}_2(q) = k$ and $\bar{v}_2(0) = \infty$.
 
 Remark: Let $q \in \mathbb{Q}$ be in reduced form as above. Then we have three different cases:
 \begin{enumerate}
@@ -842,25 +865,25 @@ Remark: Let $q \in \mathbb{Q}$ be in reduced form as above. Then we have three d
 \end{itemize}
 \end{proposition}
 
-Now, we wish to extend $\bar{v}_2$ to the real subsets of $\mathcal{R}_d = \mathbb{Z}[\zeta_{2^{d+1}}, 1/2]$, where $\zeta_{2^{d+1}}$ is the $d+1$ primitive root of unity. To do this, first recall that the Galois group of a field extension is a set of automorphisms that fixes the bases field, and forms a group under the operation of function composition. We denote the Galois group of a field extension $F$ over its' base field $E$ by $Gal(F/E)$, and elements in this group are commonly denoted by $\sigma$. Note we are only concerned with field extensions over the field $\mathbb{Q}$, which are called algebraic number fields. Next we need the field norm for an algebraic number field $F$. This is denoted as $N: F \longrightarrow \mathbb{Q}$ where
+Now, we wish to extend $\bar{v}_2$ to the real subsets of $\mathcal{R}_d = \mathbb{Z}[\zeta_{2^{d+1}}, 1/2]$, where $\zeta_{2^{d+1}}$ is the $2^{d+1}$ primitive root of unity. To do this, first recall that the Galois group of a field extension is a set of automorphisms that fixes the base field, and forms a group under the operation of function composition. We denote the Galois group of a field extension $F$ over its base field $E$ by $Gal(F/E)$, and elements in this group are commonly denoted by $\sigma$. Note we are only concerned with field extensions over the field $\mathbb{Q}$, which are called algebraic number fields. Next we need the field norm for an algebraic number field $F$. This is denoted as $N: F \longrightarrow \mathbb{Q}$ where
 \begin{equation*}
-N (\alpha) = \prod\limits_{\sigma \in Gal(F)/\mathbb{Q})} \sigma (\alpha). 
+N (\alpha) = \prod\limits_{\sigma \in Gal(F/\mathbb{Q})} \sigma (\alpha). 
 \end{equation*} 
 
 In fact, for a field extension $F$ and base field $E$, there is an alternative definition of the Galois group that comes from a polynomial $f \in E[x]$, which is typically called the minimal polynomial. Here $f$ factors as a product of linear polynomials in $F[x]$, and more importantly, all automorphisms $\sigma \in Gal(F/E)$ are defined by mapping a root to other roots. The roots in such a polynomial are called conjugates. 
 
-Recall a cyclotomic field extension of $\mathbb{Q}$ is the field $\mathbb{Q}$ adjoined with a primitive root of unity, which we denote as $\zeta_q$. Note in this paper we are only concerned with $\zeta_q$ when $q = 2^{d+1}$. Now, for a cyclotomic field the minimal polynomial is 
+Recall a cyclotomic field extension of $\mathbb{Q}$ is the field $\mathbb{Q}$ adjoined with a primitive root of unity, which we denote as $\zeta_q$. Note in this thesis we are only concerned with $\zeta_q$ when $q = 2^{d+1}$. Now, for a cyclotomic field the minimal polynomial is 
 \begin{equation}
 \label{cycpoly}
-\Phi_{2^{d+1}} = \prod\limits_{\substack{k = 0 \\ \gcd (k, 2^{d+1}) = 1}}^{2^{d+1}} (x-\zeta_{2^{d+1}}^k).
+\Phi_{2^{d+1}} = \prod\limits_{\substack{k = 1 \\ \gcd (k, 2^{d+1}) = 1}}^{2^{d+1}} (x-\zeta_{2^{d+1}}^k).
 \end{equation}
-Each $\sigma \in Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q})$ sends $\zeta_{2^{d+1}}$ to one of it's conjugates, and by Equation \ref{cycpoly} above these are just $\zeta_{2^{d+1}}^k$'s where $\gcd (k, 2^{d+1})$. This means that the $\sigma$'s are defined in the following way: $\sigma_k (\zeta_{2^{d+1}}) = \zeta_{2^{d+1}}^k$. The next few propositions provide some basic properties of $\sigma_k$.
+Each $\sigma \in Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q})$ sends $\zeta_{2^{d+1}}$ to one of its conjugates, and by Equation \ref{cycpoly} above these are just the numbers $\zeta_{2^{d+1}}^k$ where $\gcd (k, 2^{d+1})$. This means that the $\sigma$'s are defined in the following way: $\sigma_k (\zeta_{2^{d+1}}) = \zeta_{2^{d+1}}^k$. The next few propositions provide some basic properties of $\sigma_k$.
 
 \begin{proposition}
 For all $x \in \mathbb{Q}[\zeta_{2^{d+1}}]$, $\sigma_j(\sigma_k (x)) = \sigma_{k\cdot j}(x)$.
 \end{proposition}
 \begin{proof}
-This follows immediately from the fact the definition of $\sigma_k$ and it simply raising $\zeta_{2^{d+1}}$ to the power of $k$.
+This follows immediately from the definition of $\sigma_k$, and how it simply raises $\zeta_{2^{d+1}}$ to the power of $k$.
 \end{proof}
 
 \begin{proposition}
@@ -883,7 +906,7 @@ We prove the backwards direction as the forward direction follows immediately fr
 For all $x$ and $y \in \mathbb{Q}[\zeta_{2^{d+1}}]$, $\sigma_k (x\cdot y) = \sigma_k(x) \cdot \sigma_k (y)$ and $\sigma_k (x + y) = \sigma_k(x) + \sigma_k (y)$.
 \end{proposition}
 \begin{proof}
-Additivity comes directly from the definition of $\sigma_k$, so we focus on multiplicativity. First note that for rational $a$ and $x \in \mathbb{Q}[\zeta_{2^{d+1}}]$, $\sigma_k(a) = a$ comes from Proposition \ref{sigmaration} and $\sigma_k(a\cdot x) = a\cdot \sigma_k(x)$  follows easily from the definition. Now to show that $\sigma_k (x\cdot y) = \sigma_k (x) \cdot \sigma_k (y)$ for $x = \sum\limits_{j=0}^{2^d-1} a_j \zeta_{2^{d+1}}^j$ and $y = \sum\limits_{j=0}^{2^d-1} a_j \zeta_{2^{d+1}}^{j'}$, it is sufficient to show that $\sigma_k(a\zeta_{2^{d+1}}^{j} \cdot b\zeta_{2^{d+1}}^{j'})$ is multiplicative and then the result follows from additivity. Thus multiplicativity can be realized by the following:
+Additivity comes directly from the definition of $\sigma_k$, so we focus on multiplicativity. First note that for rational $a$ and $x \in \mathbb{Q}[\zeta_{2^{d+1}}]$, $\sigma_k(a) = a$ comes from Proposition \ref{sigmaration} and $\sigma_k(a\cdot x) = a\cdot \sigma_k(x)$  follows easily from the definition. Now to show that $\sigma_k (x\cdot y) = \sigma_k (x) \cdot \sigma_k (y)$ for $x = \sum\limits_{j=0}^{2^d-1} a_j \zeta_{2^{d+1}}^j$ and $y = \sum\limits_{j=0}^{2^d-1} b_j \zeta_{2^{d+1}}^{j'}$, it is sufficient to show that $\sigma_k(a\zeta_{2^{d+1}}^{j} \cdot b\zeta_{2^{d+1}}^{j'})$ is multiplicative and then the result follows from additivity. Thus multiplicativity can be realized by the following:
 \begin{equation}
 \begin{split}
 \sigma_k(a\zeta_{2^{d+1}}^{j} \cdot b\zeta_{2^{d+1}}^{j'}) & = \sigma_k(ab\zeta_{2^{d+1}}^{j+j'}) \\
@@ -895,13 +918,13 @@ Additivity comes directly from the definition of $\sigma_k$, so we focus on mult
 \end{equation}
 \end{proof}
 
-From the Fundamental Theorem of Galois one obtains the isomorphism 
+From the Fundamental Theorem of Galois Theory one obtains the isomorphism 
 \[
-Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q}) \cong (\mathbb{Z}/n\mathbb{Z})^x,
+Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q}) \cong (\mathbb{Z}/n\mathbb{Z})^\times,
 \]
 which means that elements in $Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q})$ are precisely the $\sigma_k$'s where 
 \[
-gcd(k, 2^{d+1}) = 1.
+\gcd(k, 2^{d+1}) = 1.
 \]
 Thus $k$ takes only odd values, so that:
 
@@ -909,7 +932,7 @@ Thus $k$ takes only odd values, so that:
 N_d(\alpha) = \prod_{k-odd} \sigma_k (\alpha) = \prod_{k=0}^{2^d - 1} \sigma_{2k+1} (\alpha)
 \end{equation}
 
-Remark if $d \leq d'$ then $\mathbb{Q}(e^{i\cdot \pi / 2^d}) \subseteq \mathbb{Q}(e^{i\cdot \pi / 2^{d'}})$. Note the following propositions about $N_d$.
+Remark: If $d \leq d'$ then $\mathbb{Q}(e^{i\cdot \pi / 2^d}) \subseteq \mathbb{Q}(e^{i\cdot \pi / 2^{d'}})$. Note the following propositions about $N_d$.
 
 \begin{proposition}
 $N_0$ is trivial, meaning $N_0(x) = x$.
@@ -947,7 +970,7 @@ The final equality comes from the fact that despite the different index variable
 Consider $N_{d+1}: \mathbb{Q}(e^{i\cdot \pi / 2^{d+1}}) \longrightarrow \mathbb{Q}$. Then when restricting $N_{d+1}$ to $\mathbb{Q}(e^{i\cdot \pi / 2^{d}})$ we have $N_{d+1} = N_d^2$.
 \end{proposition}
 \begin{proof}
-For $x \in \mathbb{Q}(e^{i\cdot \pi / 2^{d}})$, we have:
+For $\alpha \in \mathbb{Q}(e^{i\cdot \pi / 2^{d}})$, we have:
 \begin{equation*}
 \begin{split}
 N_{d+1}(\alpha) & = \prod_{k=0}^{2^{d+1} - 1} \sigma_{2k+1} (\alpha) \\
@@ -959,12 +982,14 @@ N_{d+1}(\alpha) & = \prod_{k=0}^{2^{d+1} - 1} \sigma_{2k+1} (\alpha) \\
 This follows from the fact that $\sigma_{2\cdot (2^d+i) + 1} = \sigma_{1+2i}$ for $i \in \{0, ..., 2^d - 1\}$, since $\zeta_{2^{d+1}}^{2\cdot (2^d+i) + 1} = \zeta_{2^{d+1}}^{1+2i}$.
 \end{proof}
 
+Recall that $\mathcal{R}_d = \mathbb{Z}[\zeta_{2^{d+1}}, 1/2]$.
+
 \begin{definition}
-The valuation function $v_2: \mathcal{R}_d \longrightarrow \mathbb{Q}$ is defined as 
+The valuation function $v_2: \bigcup\limits_d \mathcal{R}_d \longrightarrow \mathbb{Q}$ is defined as 
 \begin{equation}
 v_2 (x) = \frac{\bar{v}_2 (N_d (x))}{2^d}
 \end{equation}
-where $d = min\{ y; x \in \mathbb{Q} (e^{i \cdot \pi / 2^y })\}$.
+where $d = \min\{ y; x \in \mathbb{Q} (e^{i \cdot \pi / 2^y })\}$.
 \end{definition}
 
 Remark: In the above definition we could instead choose any $d$ for which $x \in \mathbb{Q} (e^{i \cdot \pi / 2^d})$ since if $d \leq d'$ and $x \in \mathbb{Q} (e^{i \cdot \pi / 2^d})$ then $x \in \mathbb{Q} (e^{i \cdot \pi / 2^{d'}})$.
@@ -1000,13 +1025,13 @@ The following propositions are required building blocks to be able to prove anot
 
 \begin{proposition}
 \label{N_d=2}
-$N_d(1- \zeta_{2^d+1}) = 2$
+$N_d(1- \zeta_{2^{d+1}}) = 2$
 \end{proposition}
 \begin{proof}
-We proceed by induction on $d$. For $d=0$ we have $N_0(x) = \sigma_1(x) = x$, so it is trivial, and thus $N_0(1-\zeta_{2^{0+1}}) = 1- \zeta_{2} = 1 - (-1) = 2$. Now suppose the statement is true for $d$, that is $N_d (1- \zeta_{2^{d+1}}) = 2$. Recall that $\sigma_k (\zeta_{2^{d+1}}) = \zeta_{2^{d+1}}^k$ so that $\sigma_{2j+1}(1-\zeta_{2^{d+1}}) = (1-\zeta_{2^{d+1}}^{2j+1})$. Also observe that $\zeta_{2^{d+1}}^{2^d} = -1$ and $\zeta_{2^{d+1}}^{2} = \zeta_{2^d}$. Now by making the appropriate pairings we finish by showing that $N_{d+1}((1-\zeta_{2^{d+2}}) = N_{d}(1-\zeta_{2^{d+1}})$ in the following way:
+We proceed by induction on $d$. For $d=0$ we have $N_0(x) = \sigma_1(x) = x$, so it is trivial, and thus $N_0(1-\zeta_{2^{0+1}}) = 1- \zeta_{2} = 1 - (-1) = 2$. Now suppose the statement is true for $d$, that is $N_d (1- \zeta_{2^{d+1}}) = 2$. Recall that $\sigma_k (\zeta_{2^{d+1}}) = \zeta_{2^{d+1}}^k$ so that $\sigma_{2j+1}(1-\zeta_{2^{d+1}}) = (1-\zeta_{2^{d+1}}^{2j+1})$. Also observe that $\zeta_{2^{d+1}}^{2^d} = -1$ and $\zeta_{2^{d+1}}^{2} = \zeta_{2^d}$. Now by making the appropriate pairings we finish by showing that $N_{d+1}(1-\zeta_{2^{d+2}}) = N_{d}(1-\zeta_{2^{d+1}})$ in the following way:
 \begin{equation*}
 \begin{split}
-N_{d+1}(1-\zeta_{2^{d+1}}) & = \prod_{j=0}^{2^{d+1}+1} (1-\zeta_{2^{d+2}}^{2j+1}) \\
+N_{d+1}(1-\zeta_{2^{d+2}}) & = \prod_{j=0}^{2^{d+1}+1} (1-\zeta_{2^{d+2}}^{2j+1}) \\
 & = \prod_{j=0}^{2^{d}-1} (1-\zeta_{2^{d+2}}^{2j+1})(1-\zeta_{2^{d+2}}^{2j+1 +2^{d}}) \\
 & = \prod_{j=0}^{2^{d}-1} (1-\zeta_{2^{d+2}}^{2j+1} - \zeta_{2^{d+2}}^{2j+1 + 2^{d+1}} + \zeta_{2^{d+2}}^{4j+2+2^{d+1}}) \\
 & = \prod_{j=0}^{2^{d}-1} \big( 1-\zeta_{2^{d+1}}^{2j+1} - (\zeta_{2^{d+2}}^{2j+1} - \zeta_{2^{d+2}}^{2j+1}) \big) \\
@@ -1021,12 +1046,12 @@ N_{d+1}(1-\zeta_{2^{d+1}}) & = \prod_{j=0}^{2^{d+1}+1} (1-\zeta_{2^{d+2}}^{2j+1}
 Let $x \in \mathbb{Z}[\zeta_{2^{d+1}}]$, then $N_d(x)$ is an integer. If $x'$ is an element of $\mathcal{R}_d$ then $N_d(x') = a/2^K$ for integers $a$ and $K$.
 \end{proposition}
 \begin{proof}
-The first statement of this proposition can be realized by applying the same arguments in Propositions \ref{sigmaration} and \ref{N_dRation} but for $x \in \mathbb{Z}[\zeta_{2^{d+1}}]$ instead.
+The first statement of this proposition can be realized by applying the same arguments as in Propositions \ref{sigmaration} and \ref{N_dRation} but for $x \in \mathbb{Z}[\zeta_{2^{d+1}}]$ instead.
 
 Now for $x' \in \mathcal{R}_d$, write it as $x' = x/2^k$ for some $x \in \mathbb{Z}[\zeta_{2^{d+1}}]$ and some integer $k$. Since $N_d(x)$ is multiplicative and $N_d(1/2^k) = (1/2^k)^{2^d}$, we have that $N_d(x') = N_d(x)/2^K$ for $K = 2^d\cdot k$. Since $N_d(x)$ is an integer, we can write $N_d(x') = a/2^K$ for some integer $a$.
 \end{proof}
 
-To complete the proof of the next proposition, recall the geometric formula:
+To complete the proof of the next proposition, recall the geometric sum formula:
 \begin{equation}
 \label{geoform}
 \frac{1-x^{n}}{1-x} = \sum\limits_{k=0}^{n-1} x^k.
@@ -1037,7 +1062,7 @@ To complete the proof of the next proposition, recall the geometric formula:
 $u_j = \big( 1 - \zeta_{2^{d+1}}^{2j - 1} \big)/ \big( 1 - \zeta_{2^{d+1}} \big)$ is a unit in $\mathbb{Z}[\zeta_{2^{d+1}}]$. 
 \end{proposition}
 \begin{proof}
-Recall that if $u_j$ is a unit then both $u_j$ and $u_j^{-1}$ are in $\mathbb{Z}[\zeta_{2^{d+1}}]$. Note that $1-x^{2j+1}$ is divisible by $(1-x)$, so the geometric formula in Equation \ref{geoform} then gives us that:
+Recall that if $u_j$ is a unit then both $u_j$ and $u_j^{-1}$ are in $\mathbb{Z}[\zeta_{2^{d+1}}]$. Note that $1-x^{2j-1}$ is divisible by $(1-x)$, so the geometric formula in Equation (\ref{geoform}) then gives us that:
 \begin{equation*}
 \frac{1-x^{2j-1}}{1-x} = \sum\limits_{k=0}^{2j-2} x^k.
 \end{equation*}
@@ -1064,7 +1089,7 @@ Let $x'$ be an element of $\mathbb{Z}[\zeta_{2^{d+1}}]$. Then $v_2(x') \geq 0$ a
 \begin{proof}
 Let $\alpha_d = 1-\zeta_{2^{d+1}}$ and choose $k$ to be the biggest power of $\alpha_d$ that divides $x'$. Then we can write $x' = \alpha_d^k x''$ such that $x''$ is from $\mathbb{Z}[\zeta_{2^{d+1}}]$ and $\alpha_d$ does not divide $x''$. Since $N_d(x'')$ is an integer by Proposition~\ref{N_dint}, if $2$ does not divide $N_d(x'')$ then this will imply that $v_2(x'') = 0$. 
 
-Let us now suppose that $2$ does indeed divide $N_d(x'')$, in an effort to find a contradiction. Then by Proposition~\ref{N_d=2}, together with the definition of $N_d$, $\alpha_d$ divides $2$ which implies that $\alpha_d$ divides $N_d(x'')$. Also, since $\alpha_d$ is prime by Proposition~\ref{alphaprime}, $\alpha_d$ must also divide $\sigma_{2k+1}(x'')$ for some $k$. Note there exists $j$ such that $(2j+1)(2k+1) \mod 2^{d+1} \equiv 1$ and $\sigma_{2j+1}(\sigma_{2k+1}(x')) = x'$. Then, applying $\sigma_{2j+1}$ to $\alpha_d$ and $\sigma_{2k+1}(x'')$ we get that $\sigma_{2j+1}(\alpha_d)$ divides $x''$. However, by Proposition \ref{unit} $\alpha_d$ divides $\sigma_{2j+1}(\alpha_d) = 1 - \zeta_{2^{d+1}}^{2j+1}$ and therefore it divides $x''$. This contradicts our initial description of $x'$, so $v_2(x'') = 0$. 
+Let us now suppose that $2$ does indeed divide $N_d(x'')$, in an effort to find a contradiction. Then by Proposition~\ref{N_d=2}, together with the definition of $N_d$, $\alpha_d$ divides $2$ which implies that $\alpha_d$ divides $N_d(x'')$. Also, since $\alpha_d$ is prime by Proposition~\ref{alphaprime}, $\alpha_d$ must also divide $\sigma_{2k+1}(x'')$ for some $k$. Note there exists $j$ such that $(2j+1)(2k+1) \equiv 1 \mod 2^{d+1}$ and $\sigma_{2j+1}(\sigma_{2k+1}(x')) = x'$. Then, applying $\sigma_{2j+1}$ to $\alpha_d$ and $\sigma_{2k+1}(x'')$ we get that $\sigma_{2j+1}(\alpha_d)$ divides $x''$. However, by Proposition \ref{unit} $\alpha_d$ divides $\sigma_{2j+1}(\alpha_d) = 1 - \zeta_{2^{d+1}}^{2j+1}$ and therefore it divides $x''$. This contradicts our initial description of $x'$, so $v_2(x'') = 0$. 
 
 Finally, we have that 
 \begin{align*}
@@ -1079,15 +1104,15 @@ Naturally we now have that $k = 2^d  v_2(x')$, as desired. \qedhere
 
 \begin{proposition}
 \label{v_2min}
-For $x$ and $y \in \mathbb{Q}[\zeta_{2^{d+1}}]$ the following inequality holds
+For $x$ and $y \in \mathbb{Q}[\zeta_{2^{d+1}}]$ the following inequality holds:
 \begin{center}
-$v_2 (x + y) \geq min(v_2 (x), v_2(y))$.
+$v_2 (x + y) \geq \min(v_2 (x), v_2(y))$.
 \end{center} 
 \end{proposition}
 \begin{proof}
-Note that for $x$ and $y \in \mathbb{Q}[\zeta_{2^{d+1}}]$ there always exists an integer $C$ such that $x' = Cx$ and $y' = Cy$ are both in $\mathbb{Z}[exp(i\pi / 2^d)]$. Then 
+Note that for $x$ and $y \in \mathbb{Q}[\zeta_{2^{d+1}}]$ there always exists an integer $c$ such that $x' = cx$ and $y' = cy$ are both in $\mathbb{Z}[\exp(i\pi / 2^d)]$. Then 
 \begin{equation*}
-v_2(x+y) = v_2((1/C)(x' + y')) = v_2(x' + y') + v_2(1/C).
+v_2(x+y) = v_2((1/c)(x' + y')) = v_2(x' + y') + v_2(1/c).
 \end{equation*}
 Now by Proposition \ref{propA.22}, we can write $x'$ as $x''(1-\zeta_{2^{d+1}})^{k_x}$ and $y'$ as $y''(1-\zeta_{2^{d+1}})^{k_y}$ for $k_x = 2^dv_2(x')$ and $k_y = 2^dv_2(y')$. Note this also means that $x''$ and $y''$ are in $\mathbb{Z}[\zeta_{2^{d+1}}]$ and $v_2(x'') = v_2(y'') = 0$. Moreover, let $k = \min(k_x, k_y)$. This way we can write:
 \begin{equation*}
@@ -1111,30 +1136,30 @@ v_2(1-\zeta_{2^{d+1}})^k & = \frac{\bar{v}_2 (N_d((1-\zeta_{2^{d+1}})^k))}{2^d} 
 & = \min (v_2(x'), v_2 (y')).
 \end{split}
 \end{equation*}
-Finally, putting it all together we arrive with:
+Finally, putting it all together we arrive at
 \begin{equation*}
 \begin{split}
-v_2 (x + y) & = v_2(x' + y') + v_2(1/C) \\
-& \geq v_2(1-\zeta_{2^{d+1}})^k + v_2(1/C) \\
-& = \min (v_2(x'), v_2 (y')) + v_2 (1/C) \\
-& = \min (v_2(x'/C), v_2 (y'/C)) \\
+v_2 (x + y) & = v_2(x' + y') + v_2(1/c) \\
+& \geq v_2(1-\zeta_{2^{d+1}})^k + v_2(1/c) \\
+& = \min (v_2(x'), v_2 (y')) + v_2 (1/c) \\
+& = \min (v_2(x'/c), v_2 (y'/c)) \\
 & = \min (v_2(x), v_2 (y)).
 \end{split}
 \end{equation*}
 \end{proof}
 
-The power of $2$ in the denominator of the Pauli expectation gives us a sense of how non-stabilizer the state is. The definition of the Dyadic monotone below gives us an intuition for this sort of measure. 
+The power of $2$ in the denominator of the Pauli expectation gives us a sense of how ``non-stabilizer" the state is. The definition of the Dyadic monotone below gives us an intuition for this sort of measure. 
 
 \begin{definition}
-Let $\ket{\psi}$ be an $n$-qubit state with entries in $\mathcal{R}_d$, the Dyadic monotone is 
+Let $\ket{\psi}$ be an $n$-qubit state with entries in $\mathcal{R}_d$ Then the Dyadic monotone is 
 \begin{center}
 $\mu_2 \ket{\psi} = \texttt{max} \big\{-v_2(\braket{\psi | P | \psi}): P \in \{I, X, Y, Z \}^{\otimes n} \big\}$.
 \end{center}
 \end{definition}
-The Dyadic monotone basically is the maximum power of two in the denominator over the Pauli spectrum. Now note that it is invariant under Clifford unitaries because they map the set of all multi-qubit Pauli matrices to the set of all of all Pauli matrices up to a sign and $v_2$ is insensitive to the sign of its argument. The next proposition shows a similarity between $\nu$ and $\mu_2$, namely the additive property under tensor products.
+The Dyadic monotone basically is the maximum power of $2$ in the denominator over the Pauli spectrum. Now note that it is invariant under Clifford unitaries because they map the set of all multi-qubit Pauli matrices to the set of all of all Pauli matrices up to a sign and $v_2$ is insensitive to the sign of its argument. The next proposition shows a similarity between $\nu$ and $\mu_2$, namely the additive property under tensor products.
 
 \begin{proposition}
-Let $\ket{\phi}$ and $\ket{\psi}$ be states with entries in $\mathcal{R}_d$, then 
+Let $\ket{\phi}$ and $\ket{\psi}$ be states with entries in $\mathcal{R}_d$; then 
 \begin{center}
 $\mu_2 (\ket{\phi} \otimes \ket{\psi}) = \mu_2 \ket{\phi} + \mu_2 \ket{\psi}$
 \end{center}
@@ -1156,18 +1181,18 @@ Next, we want to show that that the Dyadic monotone is minimal for stabilizer st
 Let $x$ be an element of $\mathcal{R}_d$ such that for all odd $k$, $|\sigma_k (x)| \leq 1$. Then $v_2(x) \leq 0$ and the equality is achieved if and only if $x = \pm 1$.
 \end{proposition}
 \begin{proof}
-The condition that $|\sigma_k (x)| \leq 1$ for all odd $k$ implies that $N_d(x) \leq 1$, since $N_d(x)$ is just the product of all these $\sigma$'s. Because $x \in \mathcal{R}_d$ we can write it as $z/2^k$ for $z \in \mathbb{Z}[\zeta_{2^{d+1}}]$. Then, since $N_d$ is multiplicative by Proposition~\ref{N_dMultiplicative}, $N_d (x) = N_d(z) \cdot N_d(2^k) = n/2^k$, where $N_d(z) = n$ is an integer by Proposition~\ref{N_dint}. This together with $|N_d(x)| \leq 1$ implies $\bar{v}_2 (n/2^k)$ is negative, which further implies that $v_2(x)$ is also. 
+The condition that $|\sigma_k (x)| \leq 1$ for all odd $k$ implies that $N_d(x) \leq 1$, since $N_d(x)$ is just the product of all these $\sigma$'s. Because $x \in \mathcal{R}_d$ we can write it as $z/2^k$ for $z \in \mathbb{Z}[\zeta_{2^{d+1}}]$. Then, since $N_d$ is multiplicative by Proposition~\ref{N_dMultiplicative}, $N_d (x) = N_d(z) \cdot N_d(2^k) = n/2^k$, where $N_d(z) = n$ is an integer by Proposition~\ref{N_dint}. This together with $|N_d(x)| \leq 1$ implies $\bar{v}_2 (n/2^k)$ is non-positive, which further implies that $v_2(x)$ is also. 
 
 Now, since $n$ is an integer and $|N_d(x)| \leq 1$, $v_2(x) = 0$ if and only if $N_d(x) = n/2^k = \pm 1$. Because $|\sigma_k (x)| \leq 1$ for all $k$, $N_d(x) = \pm 1$ only when $\sigma_k (x) = \pm 1$ for all $k$. Then by Proposition~\ref{sigmaration}, $x = \pm 1$.
 \end{proof}
 
 \begin{proposition}
-Let $\ket{\psi}$ be a state in $\mathcal{R}_d$, then $\mu_2\ket{\psi} \geq 0$ with equality achieved if and only if $\ket{\psi}$ is a stabilizer state. 
+Let $\ket{\psi}$ be a state in $\mathcal{R}_d$; then $\mu_2\ket{\psi} \geq 0$, with equality achieved if and only if $\ket{\psi}$ is a stabilizer state. 
 \end{proposition}
 \begin{proof}
-Consider a Pauli $P$ expectation $\alpha = \braket{\psi |P| \psi}$. Because $P$ has eigenvalues $\pm 1$, $|\braket{\psi |P| \psi}| \leq 1$. For odd $k$ consider $\sigma_k(\alpha)$ and recall that $\sigma_k$ respects addition, multiplication, and conjugation. Thus we can write $\alpha_k$ as the expectation $\braket{\psi_k |P_k| \psi_k}$ where $\ket{\psi_k}$ and $P_k$ are obtained by applying $\sigma_k$ to $\ket{\psi}$ and $P$ element-wise. It follows that $\alpha_k = \braket{\psi_k |P_k| \psi_k} = \sigma_k (\braket{\psi |P| \psi}) = \sigma_k (\alpha)$ and so $|\alpha_k| \leq 1$ since $\sigma_k$ takes rational numbers to rational numbers. Then by Proposition \ref{sigmak}, $v_2(\alpha) \leq 0$ which implies that $\mu_2$ is always non-negative. 
+Consider a Pauli $P$ expectation $\alpha = \braket{\psi |P| \psi}$. Because $P$ has eigenvalues $\pm 1$, $|\braket{\psi |P| \psi}| \leq 1$. For odd $k$ consider $\sigma_k(\alpha)$ and recall that $\sigma_k$ preserves addition, multiplication, and conjugation. Thus we can write $\alpha_k$ as the expectation $\braket{\psi_k |P_k| \psi_k}$ where $\ket{\psi_k}$ and $P_k$ are obtained by applying $\sigma_k$ to $\ket{\psi}$ and $P$ element-wise. It follows that $\alpha_k = \braket{\psi_k |P_k| \psi_k} = \sigma_k (\braket{\psi |P| \psi}) = \sigma_k (\alpha)$ and so $|\alpha_k| \leq 1$ since $\sigma_k$ takes rational numbers to rational numbers. Then by Proposition \ref{sigmak}, $v_2(\alpha) \leq 0$ which implies that $\mu_2$ is always non-negative. 
 
-Also, equality is achieved if and only if $\alpha = \pm 1$,  meaning if and only if all non-zero Pauli expectations of $\ket{\psi}$ are $\pm 1$. Since $|\braket{\psi |P| \psi}| \leq 1$, we must have that either $P$ or $-P$ is in $\Stab\ket{\psi}$. Note that the set $\{ I, X, Y, Z \}^{\otimes n}$, denoted by $T(n)$, is an orthogonal basis of the space of matrices with respect to the inner product $\langle A, B \rangle = \texttt{Tr} AB^{\dag}$. This means that we can write $\ket{\psi} \bra{\psi}$ as a linear combination of the basis elements, that is as $\sum\limits_{P\in T(n)} \alpha_PP $. It follows that $\texttt{Tr}(\ket{\psi}\bra{\psi}P) = \sum\limits_{Q\in T(n)} \alpha_Q \texttt{Tr}(QP) = \alpha_P \cdot 2^n$ since the trace of a Pauli is zero aside from $I$, in which case it is $2^n$. Noting also that $1 = \braket{\psi |\psi} = \texttt{Tr}(\ket{\psi}\bra{\psi})$, observe the following:
+Also, equality is achieved if and only if $\alpha = \pm 1$,  meaning if and only if all non-zero Pauli expectations of $\ket{\psi}$ are $\pm 1$. Since $|\braket{\psi |P| \psi}| \leq 1$, we must have that either $P$ or $-P$ is in $\Stab\ket{\psi}$. Note that the set $\{ I, X, Y, Z \}^{\otimes n}$, denoted by $T(n)$, is an orthogonal basis of the space of matrices with respect to the inner product $\langle A, B \rangle = \texttt{Tr} AB^{\dag}$. This means that we can write $\ket{\psi} \bra{\psi}$ as a linear combination of the basis elements, that is as $\sum\limits_{P\in T(n)} \alpha_PP $. It follows that $\texttt{Tr}(\ket{\psi}\bra{\psi}P) = \sum\limits_{Q\in T(n)} \alpha_Q \texttt{Tr}(QP) = \alpha_P \cdot 2^n$ since the trace of a Pauli operator is zero aside from $I$, in which case it is $2^n$. Noting also that $1 = \braket{\psi |\psi} = \texttt{Tr}(\ket{\psi}\bra{\psi})$, observe the following:
 \begin{equation}
 \begin{split}
 \texttt{Tr}(\ket{\psi}\bra{\psi}) & = \texttt{Tr}(\ket{\psi}\bra{\psi}\ket{\psi}\bra{\psi}) \\
@@ -1178,7 +1203,7 @@ Also, equality is achieved if and only if $\alpha = \pm 1$,  meaning if and only
 & = \frac{1}{2^n} \sum\limits_{P\in T(n)} \big( \texttt{Tr}(\ket{\psi}\bra{\psi}P) \big)^2
 \end{split}
 \end{equation}
-Since $P$ is either $0$ or $\pm 1$ we can write $|\Stab\ket{\psi}| = \sum\limits_{P\in T(n)} \braket|{\psi |P|\psi}|^2$. Also, since the trace is cyclic, $\texttt{Tr}(\ket{\psi}\bra{\psi}P) = \texttt{Tr}(\braket{\psi | P | \psi}) = \braket{\psi | P | \psi}$. Putting this together we arrive with $1 = \frac{1}{2^n} |\Stab\ket{\psi}|$, which means that the size of Stab$\ket{\psi}$ is $2^n$ and therefore $\ket{\psi}$ is a stabilizer state.
+Since $P$ is either $0$ or $\pm 1$ we can write $|\Stab\ket{\psi}| = \sum\limits_{P\in T(n)} |\braket{\psi |P|\psi}|^2$. Also, since the trace is cyclic, $\texttt{Tr}(\ket{\psi}\bra{\psi}P) = \texttt{Tr}(\braket{\psi | P | \psi}) = \braket{\psi | P | \psi}$. Putting this together we arrive at $1 = \frac{1}{2^n} |\Stab\ket{\psi}|$, which means that the size of Stab$\ket{\psi}$ is $2^n$ and therefore $\ket{\psi}$ is a stabilizer state.
 \end{proof}
 
 \begin{proposition}
@@ -1190,7 +1215,7 @@ We proceed by bounding the value of $v_2$ for some Pauli operator $Q$ evaluated 
 \[
 \ket{\psi_+} = \frac{(I+P) \ket{\psi}}{2 \sqrt{\braket{\psi | P_{+1} | \psi}}} = \frac{(I+P) \ket{\psi}}{2 \sqrt{1/2}} = \frac{I + P}{\sqrt{2}}\ket{\psi}.
 \]
-The expectation of $Q$ is therefore equal to:
+The expectation of $Q$ is therefore equal to
 \begin{equation*}
 \braket{\psi_+ | Q |\psi_+} = \frac{\braket{\psi | (I + P)Q(I + P) | \psi}}{2}.
 \end{equation*}
@@ -1208,7 +1233,7 @@ Thus the expectation does not contribute to the calculation of $\mu_2$. Similarl
 & = \frac{\braket{\psi | Q(2I+2P) | \psi}}{2} \\
 & = \braket{\psi | Q | \psi} + \braket{\psi |PQ |\psi}.
 \end{align*}
-Now we use the inequality from Proposition \ref{v_2min} to see that:
+Now we use the inequality from Proposition \ref{v_2min} to see that
 \begin{center}
 $v_2(\braket{\psi |Q| \psi} + \braket{\psi |PQ| \psi}) \geq \texttt{min}(\braket{\psi |Q|\psi}, \braket{\psi |PQ|\psi}) \geq -\mu_2\ket{\psi}$.
 \end{center}
@@ -1220,11 +1245,11 @@ Now recall that $v_2(\braket{\psi |Q| \psi} + \braket{\psi |PQ| \psi}) = v_2(\br
 
 \section{The \texorpdfstring{$C^nZ$}{CnZ} gate}
 
-The $C^n Z$ gate is a gate worth considering in detail since it is used in many important algorithms, like the Grover's search algorithm. We start by computing the Pauli spectrum of $\ket{\C^nZ}$. Lower bounds on the resources required for this gate follow after this proposition.
+The $C^n Z$ gate is a gate worth considering in detail since it is used in many important algorithms, like Grover's search algorithm. We start by computing the Pauli spectrum of $\ket{C^nZ}$. Lower bounds on the resources required for this gate follow after this proposition.
 
 \begin{proposition}
 \label{prop4.2}
-For all $n \geq 3$, the Pauli spectrum of the state $\ket{C^n Z}$ is: $\{ 1 \hspace{2mm} (1)$, $0 \hspace{2mm} (-1 +2^{n} + 2^{2n+1})$, $1-2^{1-n} \hspace{2mm} (2^n)$, $2^{1-n}  \hspace{2mm} (1-3 \cdot 2^{n} + 2^{2n+1}) \}$.
+For all $n \geq 3$, the Pauli spectrum of the state $\ket{C^n Z}$ is: $\{ | 1 \hspace{2mm} (1)$, $0 \hspace{2mm} (-1 +2^{n} + 2^{2n+1})$, $1-2^{1-n} \hspace{2mm} (2^{n+1} -1)$, $2^{1-n}  \hspace{2mm} (1-3 \cdot 2^{n} + 2^{2n+1}) | \}$.
 \end{proposition}
 
 \begin{proof}
@@ -1243,7 +1268,7 @@ We want to compute the Pauli expectation $\braket{C^n Z|X^xZ^z|C^n Z}$ where $x$
 \end{equation*}
 Note that we have the last line since $\braket{b'|b \oplus x} = 0$ when $b' \neq b \oplus x$, and so we can substitute $b'_i = b_i \oplus x_i$. 
 
-When $x$ is the all zero vector $\textbf{0}$, we get 
+When $x$ is the zero vector $\textbf{0}$, we get 
 \begin{center}
 $2^n\braket{C^n Z|X^xZ^z|C^n Z} = \sum\limits_{b \in \{0, 1\}^n} ((-1)^{b_1 \cdot b_2 \cdots b_n})^2  (-1)^{z \cdot b} = \sum\limits_{b \in \{0, 1\}^n} (-1)^{z \cdot b}$.
 \end{center} This is $2^n$ for $z = \textbf{0}$
@@ -1253,7 +1278,7 @@ Now consider the case when $x \neq \textbf{0}$. Denoting $\textbf{1}$ as the all
 \begin{center}
 $\sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{(b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_n + x_n)} (-1)^{z \cdot b} = \sum\limits_{b \in \{0, 1\}^n} (-1) (-1)^{z \cdot b}$.
 \end{center}
-For any other $b$ we have $b_1 \cdot b_2 \cdots b_n = 0 \mbox{ and } (b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_n + x_n) = 0$ giving us 
+For any other $b$ we have $b_1 \cdot b_2 \cdots b_n = 0 \mbox{ and } (b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_n + x_n) = 0$, giving us 
 \begin{center}
 $\sum\limits_{b \in \{0, 1\}^n} (-1)^{b_1 \cdot b_2 \cdots b_n} (-1)^{(b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_n + x_n)} (-1)^{z \cdot b} = \sum\limits_{b \in \{0, 1\}^n} (-1)^{z \cdot b}$.
 \end{center}
@@ -1265,7 +1290,7 @@ Thus the terms in the sum over $b$ differ from $\sum_{b \in \{0, 1\}^n} (-1)^{z 
 & = -2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot (1^n + x)} + \sum\limits_{b \in \{0, 1\}^n} (-1)^{z \cdot b}.
 \end{split}
 \end{equation*}
-When $z = 0^n$, this is simply $2^n - 4$. When $z \neq 0^n$, it is $-2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot (1^n + x)}$, and we have two more final cases. The first is when $x \cdot z$ is odd, where we get:
+When $z = \textbf{0}$, this is simply $2^n - 4$. When $z \neq \textbf{0}$, it is $-2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot (1^n + x)}$, and we have two more final cases. The first is when $x \cdot z$ is odd, where we get:
 \begin{equation*}
 \begin{split}
 -2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot (1^n + x)} & = -2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot 1^n} (-1)^{z \cdot x} \\
@@ -1274,18 +1299,18 @@ When $z = 0^n$, this is simply $2^n - 4$. When $z \neq 0^n$, it is $-2(-1)^{z \c
 & = 0
 \end{split}
 \end{equation*}
-and if $x \cdot z$ is even, then we have $-2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot 1^n} = -4(-1)^{z \cdot 1^n}$ instead, which simply becomes $4$ since the pauli spectrum requires we take the absolute value. We can now summarize:
+and if $x \cdot z$ is even, then we have $-2(-1)^{z \cdot 1^n} - 2(-1)^{z \cdot 1^n} = -4(-1)^{z \cdot 1^n}$ instead, which simply becomes $4$ since the Pauli spectrum requires we take the absolute value. We can now summarize:
 \begin{equation*}
 |\braket{C^n Z|X^xZ^z|C^n Z}| = \begin{cases}
-1 & \texttt{if } z = 0^n \texttt{ and } x = 0^n, \\
-1 - 2^{2-n} & \texttt{if } z = 0^n \texttt{ and } x \neq 0^n, \\
-0 & \texttt{if } z \neq 0^n \texttt{ and either } x = 0^n \texttt{ or } x \neq 0^n \\
+1 & \texttt{if } z = \textbf{0} \texttt{ and } x = \textbf{0}, \\
+1 - 2^{2-n} & \texttt{if } z = \textbf{0} \texttt{ and } x \neq \textbf{0}, \\
+0 & \texttt{if } z \neq \textbf{0} \texttt{ and either } x = \textbf{0} \texttt{ or } x \neq \textbf{0} \\
 & \texttt{ and }x \cdot z \texttt{ is odd} \\
-2^{2-n} & \texttt{if } z \neq 0^n \texttt{ and } x \neq 0^n
+2^{2-n} & \texttt{if } z \neq \textbf{0} \texttt{ and } x \neq \textbf{0}
  \texttt{ and } x \cdot z \texttt{ is even}
 \end{cases}
 \end{equation*}
-We can count the number of each subset of binary vectors $x$ and $z$ to find multiplicities. When, $x=0^n$ and $z = 0^n$, there is clearly one one possible choice for each $x$ and $z$, thus we have a multiplicity of $1$. When $z = 0^n$ and $x \neq 0^n$, we now have only $1$ possibility for $z$ and $2^n - 1$ possibilities for $x$, giving a multiplicity of $2^n - 1$ for this case. Similarly, when $x = 0^n$ and $z \neq 0^n$ we have $2^n - 1$ possibilities again. Also, observe that $x \cdot z$ takes an odd value for $(2^{2n}-2^{n})/2$ different possible combinations of $x$ and $z$ pairings. Adding these and simplifying gives the multiplicity of the third case: $2^{2n-1} - 2^{n+1} - 1$. Finally, there are overall $2^{2n}$ different combinations of $x$ and $z$ pairings, so we can simply subtract all the multiplicities above from this to get the multiplicity of the fourth case, which comes out to be $2^{2n-1} - 3 \cdot 2^{n-1} + 1$ as above.
+We can count the number of each subset of binary vectors $x$ and $z$ to find multiplicities. When, $x=\textbf{0}$ and $z = \textbf{0}$, there is clearly only one possible choice for each $x$ and $z$, thus we have a multiplicity of $1$. When $z = \textbf{0}$ and $x \neq \textbf{0}$, we now have only $1$ possibility for $z$ and $2^{n+1} - 1$ possibilities for $x$, giving a multiplicity of $2^{n+1} - 1$ for this case. Similarly, when $x = \textbf{0}$ and $z \neq \textbf{0}$ we have $2^{n+1} - 1$ possibilities again. Also, observe that $x \cdot z$ takes an odd value for $(2^{2n+2}-2^{n+1})/2$ different possible combinations of $x$ and $z$ pairings. Adding these and simplifying gives the multiplicity of the third case: $2^{2n+1} - 2^{n} - 1$. Finally, there are overall $2^{2(n+1)}$ different combinations of $x$ and $z$ pairings, so we can simply subtract all the multiplicities above from this to get the multiplicity of the fourth case, which comes out to be $2^{2n+1} - 3 \cdot 2^{n} + 1$ as desired.
 \end{proof}
 
 \begin{corollary}
@@ -1312,7 +1337,7 @@ For $n \geq 2$, the $C^n Z$ gate cannot be implemented with Clifford gates and m
 \end{proposition}
 
 \begin{proof}
-First note that proving that a bound holds for the state $\ket{C^n Z}$ implies that it holds for the gate $C^n Z$. Indeed, if we can perform a task with $k$ $T$ gates then we can also perform it with $k$ $\ket{T}$ states. Hence, any lower bound on the number of required states is a lower bound on the number of required gates. Now, $\nu (\ket{T}) = 1$ and $\nu (\ket{C^n Z}) = n+1$ by Corollary \ref{nu values}. Since $\nu$ is a monotone it is non-increasing under Clifford operations and measurements. This implies that at least $n+1$ $\ket{T}$ states are required to implement the $\ket{C^n Z}$ state and hence the $C^n Z$ gate. Similarly, since $\nu (\ket{CS}) = 2$ and $\nu (\ket{CCZ}) = 3$, we get that to implement the $C^n Z$ we need at least $(n+1)/2$ $\ket{CS}$ states or $(n+1)/3$ $\ket{CCZ}$ states.
+First note that proving that a bound holds for the state $\ket{C^n Z}$ implies that it holds for the gate $C^n Z$. Indeed, if we can perform a task with $k$ $T$ gates then we can also perform it with $k$ $\ket{T}$ states. Hence, any lower bound on the number of required states is a lower bound on the number of required gates. Now, $\nu (\ket{T}) = 1$ and $\nu (\ket{C^n Z}) = n+1$ by Corollary \ref{nu values}. Since $\nu$ is a monotone, it is non-increasing under Clifford operations and measurements. This implies that at least $n+1$ $\ket{T}$ states are required to implement the $\ket{C^n Z}$ state and hence the $C^n Z$ gate. Similarly, since $\nu (\ket{CS}) = 2$ and $\nu (\ket{CCZ}) = 3$, we get that to implement the $C^n Z$ gate, we need at least $(n+1)/2$ $\ket{CS}$ states or $(n+1)/3$ $\ket{CCZ}$ states.
 \end{proof}
 
 The above lower bound can be improved when measurements are restricted.
@@ -1322,26 +1347,25 @@ The above lower bound can be improved when measurements are restricted.
 We have the following Dyadic monotone values: $\mu_2 (\ket{T}) = 1/2$, $\mu_2 (\ket{CS}) = 1$, $\mu_2 (\ket{CCZ}) = 1$, and $\mu_2 (\ket{C^n(z)}) = n-1$.
 \end{corollary}
 \begin{proof}
-The first three follow from direct calculation. For the $\ket{C^nZ}$ state, Proposition \ref{prop4.2} gives us all of its possible values for the Pauli spectrum. Thus to get the Dyadic monotone, we simply take the $p$-adic valuation of these values, negate it and take the maximum, which gives $n-1$ as desired.
+The first three follow from direct calculation. For the $\ket{C^nZ}$ state, Proposition \ref{prop4.2} gives us all of its possible values for the Pauli spectrum. Thus to get the Dyadic monotone we simply input them into the valuation function to get a set of values, which we then negate, to finally take the maximum to get $n-1$ as desired.
 \end{proof}
 
 \begin{lemma}
 \label{CCZ lowerbound}
-For $n \geq 2$, the $C^n Z$ gate cannot be implemented with Clifford gates and measurements with probability one half using fewer than $2n-2$ $T$ gates, or $n-1$ $CS$ gates, or $n-1$ $CCZ$ gates.
+For $n \geq 2$, the $C^n Z$ gate cannot be implemented with Clifford gates and measurements with probability $1/2$ using fewer than $2n-2$ $T$ gates, or $n-1$ $CS$ gates, or $n-1$ $CCZ$ gates.
 \end{lemma}
 \begin{proof}
-We reason as in the proof of Proposition \ref{nullity(C^nZ) LB} but using the Dyadic monotone which is also non-increasing under Clifford operations, but with measurements of probability one half, as seen in \ref{dyadic is monotone}. This time the values in Corollary \ref{dyadic values} are used.
+We reason as in the proof of Proposition \ref{nullity(C^nZ) LB} but using the Dyadic monotone which is also non-increasing under Clifford operations, but with measurements of probability $1/2$, as seen in \ref{dyadic is monotone}. This time the values in Corollary \ref{dyadic values} are used.
 \end{proof}
 
 We now move on to upper bounds for the $C^nZ$ gate. The next proposition provides reasoning as to why we do not need more than $n-1$ $CCZ$ gates by showing a specific circuit construction.
 
 \begin{proposition}
 \label{CCZ upperbound}
-Let $n \in \mathbb{Z}^{\geq 2}$. The $C^n Z$ gate can be implemented using $n-1$ $CCZ$ gates along with Clifford gates and measurements with probability $1/2$.
+Let $n \in \mathbb{Z}_{\geq 2}$. The $C^n Z$ gate can be implemented using $n-1$ $CCZ$ gates along with Clifford gates and measurements with probability $1/2$.
 \end{proposition}
 \begin{proof}
-In the proof, we use the $CCZ$ and the $CCX$ gates interchangeably because they are equivalent under a simple conjugation by a Hadamard gate)
-We reason by induction on $n$. Consider the base case of $n=2$. Then $C^nZ$ is just the $CCZ$ gate, so the result holds in this case.
+In the proof, we use the $CCZ$ and the $CCX$ gates interchangeably because they are equivalent under a simple conjugation by a Hadamard gate. We reason by induction on $n$. Consider the base case of $n=2$. Then $C^nZ$ is just the $CCZ$ gate, so the result holds in this case.
 
 Now for $n \geq 3$ assume we have a circuit $D$ for $C^{n-1}Z$ which can be performed using $n-2$ $CCZ$ gates. Then consider the following circuit:
 
@@ -1371,7 +1395,7 @@ Starting with the input state and tracking the state of this system step by step
 \pm \ket{c_1}\ket{c_2}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \mbox{if measurement is } \ket{1} \end{cases}$
 \item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{c_3} \cdots \ket{c_{n-1}}\ket{t \oplus (c_1 \cdots c_{n-1})}$
 \end{itemize}
-Hence, this circuit acts as the $C^nZ$ gate. Note that the uncomputation of the added toffoli gate follows from the circuit in equation \ref{CCZcircuit}.
+Hence, this circuit acts as the $C^nZ$ gate. Note that the uncomputation of the added Toffoli gate follows from the circuit in equation (\ref{CCZcircuit}).
 \end{proof}
 
 
@@ -1443,19 +1467,19 @@ contained in the two input registers is stored in the second register. In order 
 so-called \emph{Fourier states}. First, recall the definition of the Quantum Fourier Transform.
 
 \begin{definition}
-  The \emph{quantum Fourier transform} is an operator that maps the state $\ket{a} = \sum\limits_{x=0}^{2^n-1} a_x \ket{x}$ to $\ket{a'} = \sum\limits_{y=0}^{2^n-1} a'_y \ket{y}$ where $a'_y = \frac{1}{\sqrt{2^n}}\sum\limits_{x=0}^{2^n-1}a_x\omega_{2^n}^{xy}$ and $\omega_{2^n} = exp(2\pi i/2^n)$.
+  The \emph{quantum Fourier transform} is an operator that maps the state $\ket{a} = \sum\limits_{x=0}^{2^n-1} a_x \ket{x}$ to $\ket{a'} = \sum\limits_{y=0}^{2^n-1} a'_y \ket{y}$ where $a'_y = \frac{1}{\sqrt{2^n}}\sum\limits_{x=0}^{2^n-1}a_x\omega_{2^n}^{xy}$ and $\omega_{2^n} = \exp (2\pi i/2^n)$.
 \end{definition}
 
 \begin{definition}
-The quantum \emph{Fourier state} is the quantum Fourier transform applied to a basis vector $\ket{a}$. This means that there is only one non-zero $a_x$, which we call $l$. Hence, $a_l = 1$ necessarily,  so that $\ket{a} = \ket{l}$. Thus we have the following:
+The quantum \emph{Fourier state} is the quantum Fourier transform applied to a basis vector $\ket{a}$. This means that there is only one non-zero $a_x$, which we call $a_\ell$. Hence, $a_\ell = 1$ necessarily,  so that $\ket{a} = \ket{\ell}$. Thus we have the following:
 \begin{equation}
 \label{QFTdef}
-\ket{QFT_n^l} = \frac{1}{\sqrt{2^n}} \sum\limits_{y=0}^{2^n-1} exp \Big[ \frac{i2 \pi l y}{2^n} \Big] \ket{y}
+\ket{QFT_n^\ell} = \frac{1}{\sqrt{2^n}} \sum\limits_{y=0}^{2^n-1} exp \Big[ \frac{i2 \pi \ell y}{2^n} \Big] \ket{y}
 \end{equation}
 \end{definition}
 In fact, as explained in \cite{nielsen00} we can rewrite this as: 
 \[
-\ket{QFT_n^l} = \otimes_{k=1}^n \frac{\ket{0} + e^{i2\pi l/2^k} \ket{1}}{\sqrt{2}},\] which will be useful for the next Lemma.
+\ket{QFT_n^\ell} = \otimes_{k=1}^n \frac{\ket{0} + e^{i2\pi \ell/2^k} \ket{1}}{\sqrt{2}},\] which will be useful for the next Lemma.
 
 \begin{lemma}
 \label{NullityQFT}
@@ -1467,7 +1491,7 @@ We make use of the Stabilizer Nullity's additive property. Utilizing the above e
 \nu (\ket{QFT_n^{-1}}) & = \nu \bigg( \otimes_{k=1}^n \frac{\ket{0} + e^{-2\pi i /2^k} \ket{1}}{2^n}\bigg) \\
 & = \sum\limits_{k=1}^n \nu \bigg(\frac{\ket{0} + e^{-2\pi i /2^k} \ket{1}}{2^n}\bigg) \\
 & = \nu \bigg(\frac{\ket{0} + e^{-\pi i} \ket{1}}{2^n}\bigg) + \nu \bigg(\frac{\ket{0} + e^{-2\pi i /4} \ket{1}}{2^n}\bigg) + \sum\limits_{k=3}^n \nu \bigg(\frac{\ket{0} + e^{-2\pi i /2^k} \ket{1}}{2^n}\bigg) \\
-& = \nu \bigg(\frac{\ket{0} + \ket{1}}{2^n}\bigg) + \nu \bigg(\frac{\ket{0} + -i\ket{1}}{2^n}\bigg) + \sum\limits_{k=3}^n \nu \bigg(\frac{\ket{0} + e^{-2\pi i /2^k} \ket{1}}{2^n}\bigg)
+& = \nu \bigg(\frac{\ket{0} + \ket{1}}{2^n}\bigg) + \nu \bigg(\frac{\ket{0} + (-i)\ket{1}}{2^n}\bigg) + \sum\limits_{k=3}^n \nu \bigg(\frac{\ket{0} + e^{-2\pi i /2^k} \ket{1}}{2^n}\bigg)
 \end{align*}
 Observe that both $I$ and $X$ stabilize $\frac{\ket{0} + \ket{1}}{2^n}$ and both $I$ and $-Y$ stabilize $\frac{\ket{0} - i\ket{1}}{2^n}$, so the Stabilizer Nullity of both of these two terms is $0$. Now consider $k \geq 3$. In this case, $e^{-2\pi i /2^k} \not\in \mathbb{Q}[i]$. Because all entries of the Pauli matrices are in $\mathbb{Q}[i]$, it follows that $\frac{\ket{0} + e^{-2\pi i /2^k} \ket{1}}{2^n}$ has a trivial stabilizer, giving a Stabilizer Nullity value of $1$. Thus $\nu \bigg(\frac{\ket{0} + e^{-2\pi i /2^k} \ket{1}}{2^n}\bigg) = 1$. Putting this all together we have $\nu (\ket{QFT_n^{-1}}) = \sum\limits_{k=3}^n 1 = n-2$.
 \end{proof}
@@ -1481,18 +1505,18 @@ gates, or $(n-2)/3 \ket{CCZ}$ gates.
 \end{proposition}
 
 \begin{proof}
-  As in the previous section, we reason with states rather than with gates. Note that letting $l=0$ in Definition \ref{QFTdef}, we get that $\ket{QFT_n^0} = \ket{+}^{\otimes n}$. Now consider applying the Adder circuit $A$ to $\ket{QFT_n^l} \ket{QFT_n^m}$:
+  As in the previous section, we reason with states rather than with gates. Note that letting $\ell=0$ in Definition \ref{QFTdef}, we get that $\ket{QFT_n^0} = \ket{+}^{\otimes n}$. Now consider applying the Adder circuit $A$ to $\ket{QFT_n^\ell} \ket{QFT_n^m}$:
 \begin{equation}
 \begin{split}
-A \big(\ket{QFT_n^l} \ket{QFT_n^m} \big) 
-& = A \Big( \sum\limits_{y=0}^{2^n-1} exp \Big[ \frac{2 \pi i (ly)}{2^n} \Big] \ket{y} \sum\limits_{z=0}^{2^n-1} exp \Big[ \frac{2 \pi i (mz)}{2^n} \Big] \ket{z}  \Big) \\
-& = \frac{1}{2^n} \sum\limits_{y=0}^{2^n-1} \sum\limits_{z=0}^{2^n-1} exp \Big[ \frac{2 \pi i (ly + mz)}{2^n} \Big] \ket{y}\ket{z+y} \\
-& = \frac{1}{2^n} \sum\limits_{y=0}^{2^n-1} \sum\limits_{x=0}^{2^n-1} exp \Big[ \frac{2 \pi i (ly + m(x-y))}{2^n} \Big] \ket{y}\ket{x} \\
-& = \frac{1}{2^n} \sum\limits_{y=0}^{2^n-1} \sum\limits_{x=0}^{2^n-1} exp \Big[ \frac{2 \pi i ((l-m)y + mx)}{2^n} \Big] \ket{y}\ket{x} \\
-& = \ket{QFT_n^{l-m}}\ket{QFT_n^m}
+A \big(\ket{QFT_n^\ell} \ket{QFT_n^m} \big) 
+& = A \Big( \sum\limits_{y=0}^{2^n-1} \exp \Big[ \frac{2 \pi i (\ell y)}{2^n} \Big] \ket{y} \sum\limits_{z=0}^{2^n-1} \exp \Big[ \frac{2 \pi i (mz)}{2^n} \Big] \ket{z}  \Big) \\
+& = \frac{1}{2^n} \sum\limits_{y=0}^{2^n-1} \sum\limits_{z=0}^{2^n-1} \exp \Big[ \frac{2 \pi i (\ell y + mz)}{2^n} \Big] \ket{y}\ket{z+y} \\
+& = \frac{1}{2^n} \sum\limits_{y=0}^{2^n-1} \sum\limits_{x=0}^{2^n-1} \exp \Big[ \frac{2 \pi i (\ell y + m(x-y))}{2^n} \Big] \ket{y}\ket{x} \\
+& = \frac{1}{2^n} \sum\limits_{y=0}^{2^n-1} \sum\limits_{x=0}^{2^n-1} \exp \Big[ \frac{2 \pi i ((\ell -m)y + mx)}{2^n} \Big] \ket{y}\ket{x} \\
+& = \ket{QFT_n^{\ell -m}}\ket{QFT_n^m}
 \end{split}
 \end{equation}
-By letting $l = 0$ we now have $A(\ket{+}^{\otimes n} \ket{QFT_n^m}) = \ket{QFT_n^{-m}}\ket{QFT_n^m}$. Now, suppose $A$ is implemented with just Clifford gates, Pauli measurements, and some resource state $\ket{\psi}$. Then we can write $A(\ket{+}^{\otimes n} \ket{QFT_n^m}) = \nu (\ket{\psi} \ket{QFT_n^m})$, which implies that $\nu (\ket{\psi} \ket{QFT_n^m}) \geq \nu(\ket{QFT_n^{-m}} \ket{QFT_n^m})$, and since the Stabilizer Nullity is additive over tensor products, we have that $\nu (\ket{\psi}) \geq \nu(\ket{QFT_n^{-m}})$. Now letting $m=1$ we can use Lemma \ref{NullityQFT} and Corollary~\ref{nu values} to get the lower bounds, reasoning as in Proposition~\ref{nullity(C^nZ) LB}. \qedhere
+By letting $\ell = 0$ we now have $A(\ket{+}^{\otimes n} \ket{QFT_n^m}) = \ket{QFT_n^{-m}}\ket{QFT_n^m}$. Now, suppose $A$ is implemented with just Clifford gates, Pauli measurements, and some resource state $\ket{\psi}$. Then we can write $\nu(A(\ket{+}^{\otimes n} \ket{QFT_n^m})) = \nu (\ket{\psi} \ket{QFT_n^m})$, which implies that $\nu (\ket{\psi} \ket{QFT_n^m}) \geq \nu(\ket{QFT_n^{-m}} \ket{QFT_n^m})$, and since the Stabilizer Nullity is additive over tensor products, we have that $\nu (\ket{\psi}) \geq \nu(\ket{QFT_n^{-m}})$. Now letting $m=1$ we can use Lemma \ref{NullityQFT} and Corollary~\ref{nu values} to get the lower bounds, reasoning as in Proposition~\ref{nullity(C^nZ) LB}. \qedhere
   
   
   
@@ -1522,28 +1546,28 @@ Let $a$ be an odd integer. Then $\mu_2\ket{QFT_n^a} = n-3 +(1/2)^{n-2}$.
 \begin{proof}
 Recall that from Example \ref{PauliSpecEx}, the Pauli expectations of $(\ket{0} + e^{i2\pi a/2^k}\ket{1})/\sqrt{2}$ are 
 \begin{center}
-$\{ 0, cos(2\pi a/2^k), sin(2\pi a/2^k), 1 \}$.
+$\{ 0, \cos(2\pi a/2^k), \sin(2\pi a/2^k), 1 \}$.
 \end{center}
-Observe that $-v_2(0) = -\inf$ and $-v_2(1) = 0$, so for $k \geq 2$ we have:
+Observe that $-v_2(0) = -\infty$ and $-v_2(1) = 0$, so for $k \geq 2$ we have:
 \begin{center}
-$\mu_2 \big( (\ket{0} + e^{i2\pi a/2^k} \ket{1}/\sqrt{2} \big) = -v_2 \big( sin(\pi a/2^{k-1}) \big)$
+$\mu_2 \big( (\ket{0} + e^{i2\pi a/2^k} \ket{1}/\sqrt{2} \big) = -v_2 \big( \sin(\pi a/2^{k-1}) \big)$
 \end{center}
 or
 \begin{center}
-$\mu_2 \big( (\ket{0} + e^{i2\pi a/2^k} \ket{1}/\sqrt{2} \big) = -v_2 \big(cos(\pi a/2^{k-1}) \big)$
+$\mu_2 \big( (\ket{0} + e^{i2\pi a/2^k} \ket{1}/\sqrt{2} \big) = -v_2 \big(\cos(\pi a/2^{k-1}) \big)$
 \end{center}
 
 Now, using the additive property of $v_2$, for odd $a$ we can write
 \begin{align*}
-v_2 \big( sin(\pi a/2^{k-1}) \big) & = v_2 \big( 2sin(\pi a/2^{k-1}) \big) + v_2(1/2) \\
-& = v_2 \big( exp(i\pi a/2^{k-1}) - exp(-i\pi a/2^{k-1}) \big) - 1 \\
-& = v_2 \big( 1 - exp(i\pi a/2^{k-2}) \big) - 1 \\
-& = \frac{\bar{v}_2 \big( N_{k-2}(1 - exp(i\pi a/2^{k-2})) \big)}{2^{k-2}} - 1 \\
+v_2 \big( \sin(\pi a/2^{k-1}) \big) & = v_2 \big( 2\sin(\pi a/2^{k-1}) \big) + v_2(1/2) \\
+& = v_2 \big( \exp(i\pi a/2^{k-1}) - \exp(-i\pi a/2^{k-1}) \big) - 1 \\
+& = v_2 \big( 1 - \exp(i\pi a/2^{k-2}) \big) - 1 \\
+& = \frac{\bar{v}_2 \big( N_{k-2}(1 - \exp(i\pi a/2^{k-2})) \big)}{2^{k-2}} - 1 \\
 & = \frac{\bar{v}_2 (2)}{2^{k-2}} - 1 \\
 & = 1/2^{k-2} - 1.
 \end{align*}
 
-Note we used the fact that $N_{k-2}(1 - exp(i\pi a/2^{k-2})) = 2$ which comes from Proposition~\ref{N_d=2}. Furthermore, a similar calculation gives the same result for cosine, thus, using the multiplicative property of $\mu_2$ we get:
+Note we used the fact that $N_{k-2}(1 - \exp(i\pi a/2^{k-2})) = 2$ which comes from Proposition~\ref{N_d=2}. Furthermore, a similar calculation gives the same result for cosine, thus, using the multiplicative property of $\mu_2$ we get:
 \[
 \mu_2 (\ket{QFT_n^a}) = \sum\limits_{k=2}^n \big( 1-1/2^{k-2}) = n-3 + 1/2^{n-2}.
 \]
@@ -1551,12 +1575,12 @@ Note we used the fact that $N_{k-2}(1 - exp(i\pi a/2^{k-2})) = 2$ which comes fr
 
 \begin{proposition}
 Let $n\geq 3$. The modular adder cannot be implemented with Clifford
-gates and measurements with probability one half using fewer than
+gates and measurements with probability $1/2$ using fewer than
 $(n-2) \ket{CCZ}$ gates.
 \end{proposition}
 
 \begin{proof}
-This proof follows similarly to the proof of Proposition~\ref{AdderNu}, but with the Dyadic monotone instead of the Stabilizer Nullity. Recall that if the Adder circuit is implemented with Clifford gates, Pauli measurements, and some resource state $\ket{\psi}$, then we can write $\mu_2 (\ket{\psi} \ket{QFT_n^m}) \geq \mu_2(\ket{QFT_n^{-m}} \ket{QFT_n^m})$. Letting $m=1$ and using the additive property of the Dyadic monotone, we get that $\mu_2 (\ket{\psi}) \geq \mu_2(\ket{QFT_n^{-1}})$. Then by Lemma~\ref{lem:fourrierstate} $\mu_2 (\ket{\psi}) \geq n - 3 + (1/2)^{n-2} \geq n-2$. Finally, reasoning as in Proposition~\ref{nullity(C^nZ) LB}, the result follows by using the Dyadic monotone value in Corollary~\ref{dyadic values}.
+This proof follows similarly to the proof of Proposition~\ref{AdderNu}, but with the Dyadic monotone instead of the Stabilizer Nullity. Recall that if the adder circuit is implemented with Clifford gates, Pauli measurements, and some resource state $\ket{\psi}$, then we can write $\mu_2 (\ket{\psi} \ket{QFT_n^m}) \geq \mu_2(\ket{QFT_n^{-m}} \ket{QFT_n^m})$. Letting $m=1$ and using the additive property of the Dyadic monotone, we get that $\mu_2 (\ket{\psi}) \geq \mu_2(\ket{QFT_n^{-1}})$. Then by Lemma~\ref{lem:fourrierstate} $\mu_2 (\ket{\psi}) \geq n - 3 + (1/2)^{n-2} \geq n-2$. Finally, reasoning as in Proposition~\ref{nullity(C^nZ) LB}, the result follows by using the Dyadic monotone value in Corollary~\ref{dyadic values}.
 
 %Recall that by applying a circuit for modular adder $\ket{+}^{\otimes n} \otimes \ket{QFT_n^1}$ we can create a state $\ket{QFT_n^{-1}} \otimes \ket{QFT_n^1}$. If there existed a circuit that used $k$ $CCZ$ gates for $k < n-2$, we would be able to prepare states $\ket{QFT_n^{-1}}$ starting from $k \ket{CCZ}$ and then using Clifford unitaries and Pauli observable measurements with probability half by using $\ket{QFT_n^1}$ as a catalyst. Let us show that this is impossible. Indeed for the input state we would have value $\mu_2$ equal to $k + \mu_2 \ket{QFT_n^1}$ and for the output state we would have $\mu_2 \ket{QFT_n^{-1}} + \mu_2 \ket{QFT_n^1}$. We know that $\mu_2$ is non-increasing when we apply Clifford unitaries and measurements with probability $1/2$, therefore, by Lemma~\ref{lem:fourrierstate}, $k \geq \mu_2 \ket{QFT_n^{-1}} = n - 3 +(1/2)^{n-2}$ which implies that $k \geq n-2$.
 \end{proof}
@@ -1567,7 +1591,7 @@ In this thesis, following the work of \cite{beverland2019lower}, we studied lowe
 
 There are many avenues for future work on this topic. Ideally for any circuit or gate, we would want the same lower bounds and upper bounds for the resource of interest, along with a circuit to represent such a bound. This would mean that we have the best circuit in terms of using the least amount of the expensive resources of interest. This is the case for the $C^nZ$ gate, where the resource was the $CCZ$ gate (and measurements are restricted to have probability 1/2). It would be of great interest to have a construction matching the lower bound for other resources. It was recently shown in \cite{gidney2021cccz} that a $CCCZ$ gate can be implemented with less $T$ gates than presented here, though this new construction does not yet match the lower bound. Another noteworthy question is deciding whether we can achieve the tighter lower bounds afforded by the Dyadic monotone without the requirement of only using measurements with probability $1/2$.
 
-Instead of lowering the upper bounds by providing improved circuit constructions, one could also try to improve the lower bounds. A possibility for doing this is considering another monotone. Since not all circuits or gates considered here had the same lower and upper bounds, perhaps another monotone could result in tighter lower bounds so that we would know what the optimal number of required resources is. Of course, this is no trivial task, but one possible way to achieve this is might be to make a slight modification to the definition of one of the monotones presented here. An example of this can be seen in \cite{jiang2021lower}, where they defined the Stabilizer Nullity on unitaries rather than states, calling it the unitary Stabilizer Nullity. Other monotones that are already known could also be explored, for example the stabilizer extent, introduced in \cite{beverland2019lower}.
+Instead of lowering the upper bounds by providing improved circuit constructions, one could also try to improve the lower bounds. A possibility for doing this is considering another monotone. Since not all circuits or gates considered here had the same lower and upper bounds, perhaps another monotone could result in tighter lower bounds so that we would know what the optimal number of required resources is. Of course, this is no trivial task, but one possible way to achieve this might be to make a slight modification to the definition of one of the monotones presented here. An example of this can be seen in \cite{jiang2021lower}, where the authors defined the Stabilizer Nullity on unitaries rather than states, calling it the unitary Stabilizer Nullity. Other monotones that are already known could also be explored, for example the stabilizer extent, introduced in \cite{beverland2019lower}.
 
 \bibliographystyle{plain}
 \bibliography{thesis}
