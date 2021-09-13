@@ -456,7 +456,7 @@ $U'X_1U'^\dag = C^\dag U X_1 U^\dag C = C^\dag (Z \otimes g') C = X_1$
 \begin{center}
 $U'Z_1U'^\dag = C^\dag U Z_1 U^\dag C = C^\dag (X \otimes g) C = Z_1$.
 \end{center}
-Since $U'$ and $I_2 \otimes U''$ act on $X$ and $Z$ in the same way, we can apply similar arguments as above to get that $U'=I_2 \otimes U''$, with $U'' \in \mathcal{C}(n)$. Now note that $C$ is a Clifford circuit since the controlled $g$ and $g'$ gates are controlled Pauli gates, which can be realized by conjugating the $CNOT$ gate with some combinations of $H$ and $S$ gates. Thus by the induction hypothesis, there is a circuit $D$ over the same gate set for $U''$. Hence
+Since $U'$ and $I_2 \otimes U''$ act on $X$ and $Z$ in the same way, we can apply similar arguments as above to get that $U'=I_2 \otimes U''$, with $U'' \in \mathcal{C}(n)$. Now note that $C$ is a Clifford circuit since the controlled $g$ and $g'$ gates are controlled Pauli gates, which can be realized by conjugating the $CNOT$ gate with some combinations of $H$ and $S$ gates. Thus by the induction hypothesis, there is a Clifford circuit $D$ over the same gate set for $U''$. Hence
 \[
 I_{2^{n+1}}= (I_2\otimes D^\dagger ) (I_2 \otimes U'') = (I_2\otimes D^\dagger ) U'
 = (I_2\otimes D^\dagger ) C^\dagger U.
@@ -631,13 +631,13 @@ The reason behind using this stabilizer formalism is that we can easily describe
 
 \begin{proposition}
 \label{stabilizerfacts}
-Let $\ket{\psi}$ be an $n$-qubit state. Then we have the following facts about Stab$\ket{\psi}$:
+Let $\ket{\psi}$ be an $n$-qubit state. Then we have the following facts about $\Stab\ket{\psi}$:
 \begin{enumerate}
-\item Stab$\ket{\psi}$ does not contain $-I$.
-\item All Pauli group elements contained in Stab$\ket{\psi}$ commute with each other and are Hermitian matrices.
+\item $\Stab\ket{\psi}$ does not contain $-I$.
+\item All Pauli group elements contained in $\Stab\ket{\psi}$ commute with each other and are Hermitian matrices.
 \item The cardinality of the stabilizer is equal to some power of two.
-\item Given any Clifford Unitary $C$, the cardinality of Stab$\ket{\psi}$ is always equal to the cardinality of Stab$(C \ket{\psi})$.
-\item Finally, the cardinality of the stabilizer is multiplicative for the tensor products of states, that is $| \text{Stab} (\ket{\psi} \ket{\phi})| = |\text{Stab}\ket{\psi}| \cdot |\text{Stab}\ket{\phi}|$. 
+\item Given any Clifford Unitary $C$, the cardinality of $\Stab\ket{\psi}$ is always equal to the cardinality of $\Stab(C \ket{\psi})$.
+\item Finally, the cardinality of the stabilizer is multiplicative for the tensor products of states, that is $| \Stab (\ket{\psi} \ket{\phi})| = |\Stab\ket{\psi}| \cdot |\Stab\ket{\phi}|$. 
 \end{enumerate}
 \end{proposition}
 
@@ -681,6 +681,8 @@ For the left-to-right direction, recall that $\ket{\psi} = C\ket{0}^{\otimes n}$
 %Next, if $\ket{\psi}$ is an $n$-qubit basis state, then it differs from the $n$-qubit computational basis state $\ket{00 \ldots 0}$ by only a Clifford unitary, i.e. $C\ket{00 \ldots 0} = \ket{\psi}$ for some Clifford circuit C. Then by point $4$ in Proposition \ref{stabilizerfacts}, it follows that $\ket{\psi}$ is a stabilizer state.
 
 For the other direction we use methods in \cite{Aaronson_2004}. In this thesis,  Theorem 8 states that every stabilizer state can be represented by a tableau, which can then be converted into a tableau that represents the $\ket{00 \dots 0}$ state using only Clifford operations. Applying these Clifford operators is equivalent to applying Clifford operators to the appropriate qubits of $\ket{\psi}$, thus resulting in a Clifford circuit $C$ such that $C\ket{\psi} = \ket{00 \dots 0}$. 
+
+\textbf{This is just an idea}: For the right to left direction, we have that $|\Stab\ket{\psi}| = 2^n$. Since $|\Stab\ket{0}^{\otimes n}| = 2^n$ also, we can consider a bijection, via some Clifford circuit $C$, that maps Paulis in $\Stab\ket{\psi}$ to Paulis in $\Stab\ket{0}$ via conjugation by $C$. Then by the arguments in Proposition \ref{Unique}, $\Stab\ket{\psi}$ must have $n$ generators, which uniquely determine $\ket{\psi}$. Thus, $\ket{\psi} = C\ket{0}$.
 \end{proof}
 
 An example of a non-stabilizer state is $\ket{\psi} = (\frac{2}{\sqrt{5}}\ket{00} + \frac{i}{\sqrt{5}} \ket{11})$, where through computation one can find that it has the following stabilizers: $I \otimes I$ and $Z \otimes Z$. Since there are only $2$ stabilizers, and $2 \neq 2^2$, $\ket{\psi}$ cannot be a stabilizer state.
@@ -694,10 +696,11 @@ Recall from the arguments in the proof of Theorem \ref{stabstate} that if $|\Sta
 \end{proof}
 
 \begin{theorem}
-If $\ket{\psi}$ is an $n$-qubit stabilizer state, then $\textit{Stab}\ket{\psi}$ uniquely determines $\ket{\psi}$.
+\label{Unique}
+If $\ket{\psi}$ is an $n$-qubit stabilizer state, then $\Stab\ket{\psi}$ uniquely determines $\ket{\psi}$.
 \end{theorem}
 \begin{proof}
-First note that each $P \in \textit{Stab}\ket{\psi}$ imposes the linear constraint that $P\ket{\psi} = \ket{\psi}$ on the $2^n$-dimensional vector space. The subspace of vectors that satisfy this constraint has half of this space, meaning that it has dimension $2^{n-1}$. Let gen($\ket{\psi}$) be the set of generators for $\textit{Stab}\ket{\psi}$, where we add independent generators to gen($\ket{\psi}$) one by one. This way we subsequently half the dimension of the vector subspace that satisfies all the linear constraints, and since $|\textit{gen}(\ket{\psi})| = n$, this dimension reduces to $1$. Thus there is only one possible vector and so $\ket{\psi}$ is uniquely determined.
+First note that each $P \in \Stab\ket{\psi}$ imposes the linear constraint that $P\ket{\psi} = \ket{\psi}$ on the $2^n$-dimensional vector space. The subspace of vectors that satisfy this constraint has half of this space, namely the $``+1"$ eigenspace, meaning that it has dimension $2^{n-1}$. Let gen($\ket{\psi}$) be the set of generators for $\Stab\ket{\psi}$, where we add independent generators to gen($\ket{\psi}$) one by one. Observe that since $\ket{\psi}$ is a stabilizer state, $|\textit{gen}(\ket{\psi})| = n$ since the generators of $\ket{0}^{\otimes n}$ are $Z_i$ for $1 \leq i \leq n$. The projector that corresponds to the $``+1"$ eigenspace is $\frac{I+g_i}{2}$, where $g_i \in \textit{gen}(\ket{\psi})$. Now when we apply these projectors to an arbitrary vector, we subsequently half the dimension of the vector subspace that satisfies all the linear constraints, and since $|\textit{gen}(\ket{\psi})| = n$, this dimension reduces to $1$. Thus there is only one possible vector up to a sign, and so after normalizing we find the vector is $\ket{\psi}$, and thus is uniquely determined by $\Stab \ket{\psi}$.
 \end{proof}
 
 \chapter{Monotones}
@@ -736,7 +739,7 @@ Let $\ket{\psi}$ be an  $n$-qubit state. The \emph{stabilizer nullity} of $\ket{
 The stabilizer nullity is a monotone.
 \end{proposition}
 \begin{proof}
-First, by Propositions \ref{stabilizerfacts} and \ref{StabSize}, for any $n$-qubit state $\ket{\psi}$ we have $|\Stab \ket{\psi}| \leq 2^n$ and is a power of $2$. Hence, $\nu (\ket{\psi})$ is always a positive integer and so $\nu$ is a (non-negative) real valued function. Again, by Proposition \ref{stabilizerfacts} recall that for a Clifford unitary $C$ and a state $\ket{\psi}$ we have that $|\Stab(C\ket{\psi})| = |\Stab\ket{\psi}|$. Thus $\nu(C\ket{\psi}) = n - \log_2|\Stab(C\ket{\psi})| = n - \log_2|\Stab\ket{\psi}| = \nu(\ket{\psi})$. Next, if $\ket{\psi}$ is a stabilizer state, then $|\Stab\ket{\psi}| = 2^n$ by Proposition \ref{stabilizerfacts}, so $\nu(\ket{\psi}) = n - \log_2(|\Stab\ket{\psi}|) =  n - \log_2(2^n) = 0$. Conversely, if $\nu (\ket{\psi}) = 0$, then $n = \log_2(|\Stab\ket{\psi}|)$ which implies that $|\Stab\ket{\psi}| = 2^n$. By Proposition \ref{stabilizerfacts} it follows that $\ket{\psi}$ is a stabilizer state.
+First, by Proposition \ref{stabilizerfacts} and Lemma , \ref{StabSize}, for any $n$-qubit state $\ket{\psi}$ we have $|\Stab \ket{\psi}| \leq 2^n$ and is a power of $2$. Hence, $\nu (\ket{\psi})$ is always a positive integer and so $\nu$ is a (non-negative) real valued function. Again, by Proposition \ref{stabilizerfacts} recall that for a Clifford unitary $C$ and a state $\ket{\psi}$ we have that $|\Stab(C\ket{\psi})| = |\Stab\ket{\psi}|$. Thus $\nu(C\ket{\psi}) = n - \log_2|\Stab(C\ket{\psi})| = n - \log_2|\Stab\ket{\psi}| = \nu(\ket{\psi})$. Next, if $\ket{\psi}$ is a stabilizer state, then $|\Stab\ket{\psi}| = 2^n$ by Proposition \ref{stabilizerfacts}, so $\nu(\ket{\psi}) = n - \log_2(|\Stab\ket{\psi}|) =  n - \log_2(2^n) = 0$. Conversely, if $\nu (\ket{\psi}) = 0$, then $n = \log_2(|\Stab\ket{\psi}|)$ which implies that $|\Stab\ket{\psi}| = 2^n$. By Proposition \ref{stabilizerfacts} it follows that $\ket{\psi}$ is a stabilizer state.
 \end{proof}
 
 \begin{proposition}
@@ -1218,7 +1221,11 @@ Also, equality is achieved if and only if $\alpha = \pm 1$,  meaning if and only
 & = \frac{1}{2^n} \sum\limits_{P\in T(n)} \big( \texttt{Tr}(\ket{\psi}\bra{\psi}P) \big)^2
 \end{split}
 \end{equation}
-Since $P$ is either $0$ or $\pm 1$ we can write $|\Stab\ket{\psi}| = \sum\limits_{P\in T(n)} |\braket{\psi |P|\psi}|^2$. Also, since the trace is cyclic, $\texttt{Tr}(\ket{\psi}\bra{\psi}P) = \texttt{Tr}(\braket{\psi | P | \psi}) = \braket{\psi | P | \psi}$. Putting this together we arrive at $1 = \frac{1}{2^n} |\Stab\ket{\psi}|$, which means that the size of Stab$\ket{\psi}$ is $2^n$ and therefore $\ket{\psi}$ is a stabilizer state.
+Since $\braket{\psi | P \psi}$ is either $0$ or $\pm 1$ we can write $|\Stab\ket{\psi}| = \sum\limits_{P\in T(n)} |\braket{\psi |P|\psi}|^2$. Also, since the trace is cyclic, $\texttt{Tr}(\ket{\psi}\bra{\psi}P) = \texttt{Tr}(\braket{\psi | P | \psi}) = \braket{\psi | P | \psi}$. Putting this together we arrive with:
+\[
+1 = \texttt{Tr}(\ket{\psi}\bra{\psi}) = \frac{1}{2^n} \sum\limits_{P\in T(n)} \big( \texttt{Tr}(\ket{\psi}\bra{\psi}P) \big)^2 = \frac{1}{2^n} \sum\limits_{P\in T(n)} |\braket{\psi |P|\psi}|^2 
+\]
+Thus $1 = \frac{1}{2^n} |\Stab\ket{\psi}|$, which means that the size of Stab$\ket{\psi}$ is $2^n$ and therefore $\ket{\psi}$ is a stabilizer state.
 \end{proof}
 
 \begin{proposition}
