@@ -214,20 +214,48 @@ Quantum circuits are read from left to right, and can be applied by tracking wha
    & \lstick{\ket{c_3}} & \qw & \targ & \qw & \qw & \qw & \qw
 }
 \end{equation}
-The $\oplus$ symbol in the bottom wire denotes the $X$ gate, making this controlled gate a CNOT or CX gate. The gate with the meter symbol is a measurement gate and performs a measurement with respect to the computational basis. The final $CZ$ gate is a classically controlled gate, represented by the double line attached to it from the third qubit. Classically controlled gates work by only being applied to its qubits if the measurement outcome of the other qubit it is attached to is $\ket{1}$. Also, the third qubit is called an \emph{ancilla}. It is used as "scratch space" during the computation, and a circuit with no ancillas is said to be \emph{ancilla free}. Now, tracking from left to right starting with the input state, we get the following steps:
-\begin{itemize}
-\item[] $\ket{c_1}\ket{c_2}\ket{0}\ket{c_3}$
-\item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{c_1 \cdot c_2}\ket{c_3}$
-\item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{c_1 \cdot c_2}\ket{c_3 \oplus c_1 \cdot c_2}$
-\item[$\mapsto$] $\begin{cases} \ket{c_1}\ket{c_2}\ket{+}\ket{c_3 \oplus c_1 \cdot c_2} & \mbox{if } c_1 \cdot c_2 = 0, \\
-\ket{c_1}\ket{c_2}\ket{-}\ket{c_3 \oplus c_1 \cdot c_2} & \mbox{if } c_1 \cdot c_2 = 1 \end{cases}$
-\item[$\mapsto$] $\begin{cases} \ket{c_1}\ket{c_2}\ket{c_3 \oplus c_1 \cdot c_2} & \mbox{if the measurement outcome is } \ket{0} , \\
-(-1)^{c_1 \cdot c_2} \ket{c_1}\ket{c_2}\ket{c_3 \oplus c_1 \cdot c_2} & \mbox{if the measurement outcome is } \ket{1} \end{cases}$
-\item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{c_3 \oplus c_1 \cdot c_2}$
-\end{itemize}
-The first few steps follow naturally by applying the gates one-by-one, while the rest are less trivial. In particular, the fourth step follows from the fact that $H\ket{0} = \ket{+}$ and $H\ket{1} = \ket{-}$, which can be verified by direct computation. The fifth step comes after we measure the third qubit, so if $c_1 \cdot c_2$ then we get $\ket{c_1}\ket{c_2}\ket{c_3 \oplus c_1 \cdot c_2}$ whether we observe $\ket{0}$ or $\ket{1}$. On the other hand, if $c_1 \cdot c_2 = 1$, then we get $\ket{c_1}\ket{c_2}\ket{c_3 \oplus c_1 \cdot c_2}$ if we observe $\ket{0}$ and $-\ket{c_1}\ket{c_2}\ket{c_3 \oplus c_1 \cdot c_2}$ if we observe $\ket{1}$. Thus we can then rewrite this case as $(-1)^{c_1 \cdot c_2} \ket{c_1}\ket{c_2}\ket{c_3 \oplus c_1 \cdot c_2}$. Finally, the last step comes from the fact that $CZ$ here is only applied when the measurement is $\ket{1}$, which then introduces another multiplicative factor of $(-1)^{c_1 \cdot c_2}$, cancelling the other one out and giving us the result.
+The $\oplus$ symbol in the bottom wire denotes the $X$ gate, making this controlled gate a CNOT or CX gate. The gate with the meter symbol is a measurement gate and performs a measurement with respect to the computational basis. The final $CZ$ gate is a classically controlled gate, represented by the double line attached to it from the third qubit. Classically controlled gates work by only being applied to its qubits if the measurement outcome of the other qubit it is attached to is $\ket{1}$. Also, the third qubit is called an \emph{ancilla}. It is used as "scratch space" during the computation, and a circuit with no ancillas is said to be \emph{ancilla free}. Tracking from left to right starting with the input state, we get the following steps:
 
-A circuit that does not contain any measurements can be straightforwardly interpreted as a matrix by interpreting the horizontal composition of gates as matrix multiplication and the vertical composition of gates as tensor products. 
+\begin{itemize}
+\item[] $\ket{c_1}\ket{c_2}\ket{0} \ket{c_3}$
+\item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{(c_1 \cdot c_2)} \ket{c_3}$
+\item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{(c_1 \cdot c_2)} \ket{c_3 \oplus (c_1 \cdot c_2)}$.
+\end{itemize}
+Now, write out the general states $\ket{c_1}$ and $\ket{c_2}$ as $\alpha_{c_1} \ket{0} + \beta_{c_1} \ket{1}$ and $\alpha_{c_2} \ket{0} + \beta_{c_2} \ket{1}$ respectively. Since the fourth qubit which is in the state $\ket{c_3 \oplus (c_1 \cdot c_2)}$ remains unchanged from here, we consider only the first three qubits next to get:
+\begin{itemize}
+\item[] $\ket{c_1}\ket{c_2}\ket{(c_1 \cdot c_2)}$
+\item[$=$] $\big(  \alpha_{c_1}\alpha_{c_2} \ket{000} + \beta_{c_1}\alpha_{c_2} \ket{100} + \alpha_{c_1}\beta_{c_2} \ket{010} + \beta_{c_1}\beta_{c_2} \ket{111} \big)$
+
+\item[$\mapsto$] $\frac{1}{\sqrt{2}} (\alpha_{c_1}\alpha_{c_2} \ket{000} + \beta_{c_1}\alpha_{c_2} \ket{100} + \alpha_{c_1}\beta_{c_2} \ket{010} + \beta_{c_1}\beta_{c_2} \ket{110}) +\frac{1}{\sqrt{2}} (\alpha_{c_1}\alpha_{c_2} \ket{001} + \beta_{c_1}\alpha_{c_2} \ket{101} + \alpha_{c_1}\beta_{c_2} \ket{011} - \beta_{c_1}\beta_{c_2} \ket{111})$
+
+
+%\item[$\mapsto$] $\begin{cases} \ket{c_1}\ket{c_2}\ket{+}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \mbox{if } c_1 \cdot c_2 = 0, \\
+%\ket{c_1}\ket{c_2}\ket{-}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \mbox{if } c_1 \cdot c_2 = 1 \end{cases}$
+
+\item[$\mapsto$] 
+$\begin{cases} \big( \alpha_{c_1}\alpha_{c_2} \ket{00} + \beta_{c_1}\alpha_{c_2} \ket{10} + \alpha_{c_1}\beta_{c_2} \ket{01} + \beta_{c_1}\beta_{c_2} \ket{11} \big) & \mbox{if measurement is } \ket{0} , \\
+\big( \alpha_{c_1}\alpha_{c_2} \ket{00} + \beta_{c_1}\alpha_{c_2} \ket{10} + \alpha_{c_1}\beta_{c_2} \ket{01} - \beta_{c_1}\beta_{c_2} \ket{11} \big) & \mbox{if measurement is } \ket{1} \end{cases}$
+
+\item[$\mapsto$] $\ket{c_1}\ket{c_2}$.
+\end{itemize}
+
+%Tracking from left to right starting with the input state, we get the following steps:
+%\begin{itemize}
+%\item[] $\ket{c_1}\ket{c_2}\ket{0}\ket{c_3}$
+%\item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{c_1 \cdot c_2}\ket{c_3}$
+%\item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{c_1 \cdot c_2}\ket{c_3 \oplus c_1 \cdot c_2}$
+%\item[$\mapsto$] $\begin{cases} \ket{c_1}\ket{c_2}\ket{+}\ket{c_3 \oplus c_1 \cdot c_2} & \mbox{if } c_1 \cdot c_2 = 0, \\
+%\ket{c_1}\ket{c_2}\ket{-}\ket{c_3 \oplus c_1 \cdot c_2} & \mbox{if } c_1 \cdot c_2 = 1 \end{cases}$
+%\item[$\mapsto$] $\begin{cases} \ket{c_1}\ket{c_2}\ket{c_3 \oplus c_1 \cdot c_2} & \mbox{if the measurement outcome is } \ket{0} , \\
+%(-1)^{c_1 \cdot c_2} \ket{c_1}\ket{c_2}\ket{c_3 \oplus c_1 \cdot c_2} & \mbox{if the measurement outcome is } \ket{1} \end{cases}$
+%\item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{c_3 \oplus c_1 \cdot c_2}$
+%\end{itemize}
+Finally, bringing the fourth qubit back into consideration we arrive with 
+\[
+\ket{c_1}\ket{c_2}\ket{c_3 \oplus (c_1c_2)}
+\] as the final state of the system, which is exactly the operation of a $CCZ$ gate on the first, second, and fourth qubits, as expected. The first few steps follow naturally by applying the gates one-by-one, while the rest are less trivial. In particular, the sixth step follows from the fact that $H\ket{0} = \ket{+}$ and $H\ket{1} = \ket{-}$, which can be verified by direct computation. The seventh step comes after we measure the third qubit, where we observe either the $\ket{0}$ or the $\ket{1}$ state, both with probability $1/2$. The only difference here between observing either of these states is that there is a negative sign attached to the $\beta_{c_1}\beta_{c_2} \ket{11}$ component. The final step fixes this issue by applying the $CZ$ gate to the first two qubits, provided the $\ket{1}$ state was observed. This results in having the same output state regardless of the measurement outcome, hence the final result.
+
+Note a circuit that does not contain any measurements can be straightforwardly interpreted as a matrix by interpreting the horizontal composition of gates as matrix multiplication and the vertical composition of gates as tensor products. 
  
 
 \chapter{The Clifford Group and Its Universal Extensions}
@@ -368,16 +396,16 @@ G FZF^\dag G^\dag = G R' G^\dag = Z.
 \]
 Note $\mathcal{P}(1)$ is generated by $X$, $Z$, and $iI_2$, and neither $Q$, nor $R$ can be $i$ since $U$ is an automorphism. Thus we know $U$ and $VG^\dagger$ both act on the generators of $\mathcal{P}(1)$ in an equivalent way. Now, following the arguments from \cite{Selinger_gen}, observe that every complex $2 \times 2$-matrix can be written in the form $aI + bX + cY + dZ$, for $a, b, c, d \in \mathbb{C}$. It follows that the set of Pauli operators spans the set $2^n \times 2^n$-operators as a vector space. Next, since $U^\dagger VG^\dagger P G V^\dagger U = P$ for all Pauli operators $P$, we get that $U^\dagger VG^\dagger M GV^\dagger U = M$ for all operators $M$. This implies that $U^\dagger VG^\dagger$ is a scalar, which means that $U = VG^\dagger$ up to a global phase. From this, up to a global phase, $U$ is comprised of only $H$ and $S$ gates as desired.
 
-Now, suppose $U$ is an $n+1$ qubit unitary that maps Paulis to Paulis under conjugation and suppose that $UZ_{1}U^{\dag} = X \otimes g$ and $UX_{1}U^{\dag} = Z \otimes g'$ for some $g, g' \in \mathcal{P}_n$. Here $Z_{1}$ is the gate $Z \otimes I_{2^n}$, meaning that $Z$ is applied to the first qubit and the identity is applied to the rest. The gate $X_{1}$ is defined similarly. Now, define a circuit $C$ as:
+Now, suppose $U$ is an $n+1$ qubit unitary that maps Paulis to Paulis under conjugation and suppose that $U(Z \otimes I_{2^n})U^{\dag} = X \otimes g$ and $U(X \otimes I_{2^n})U^{\dag} = Z \otimes g'$ for some $g, g' \in \mathcal{P}_n$. Now, define a circuit $C$ as:
 \[
 \Qcircuit @C=0.5em @R=.7em {
    & \qw & \qw & \ctrl{1} & \qw & \gate{H} & \qw & \ctrl{1} & \qw  \\
    & {/} \qw & \qw & \gate{g'} & \qw & \qw & \qw & \gate{g} & \qw  
    }
 \]
-where the ``strike'' on the bottom wire indicates that $g$ and $g'$ possibly act on multiple qubits. Now observe that $CZ_{1}C^{\dag} = X \otimes g$ as follows:
+where the ``strike'' on the bottom wire indicates that $g$ and $g'$ possibly act on multiple qubits. Now observe that $C(Z \otimes I_{2^n})C^{\dag} = X \otimes g$ as follows:
 \begin{align*}
-CZ_{1}C^\dag = \hspace{2mm} & \Qcircuit @C=0.5em @R=.7em {
+C(Z \otimes I_{2^n})C^\dag = \hspace{2mm} & \Qcircuit @C=0.5em @R=.7em {
    & \qw & \ctrl{1} & \qw & \gate{H} & \qw & \ctrl{1} & \qw & \gate{Z} & \qw & \ctrl{1} & \gate{H} & \ctrl{1} & \qw  \\
    & {/}\qw & \gate{g} & \qw & \qw & \qw & \gate{g'} & \qw & \qw & \qw & \gate{g'} & \qw & \gate{g} & \qw
    } \\ 
@@ -405,14 +433,14 @@ CZ_{1}C^\dag = \hspace{2mm} & \Qcircuit @C=0.5em @R=.7em {
 Note that $g$ and $g'$ commute, as can be seen below:
 \begin{align*}
 XZ \otimes gg' &= (X \otimes g)(Z \otimes g') \\
- &= UZ_1U^{\dag}UX_1U^{\dag} \\ 
- &= -UX_1Z_1U^\dag \\
- &= -UX_1U^\dag UZ_1U^\dag \\ 
+ &= U(Z \otimes I_{2^n})U^{\dag}U(X \otimes I_{2^n})U^{\dag} \\ 
+ &= -U(X \otimes I_{2^n})(Z \otimes I_{2^n})U^\dag \\
+ &= -U(X \otimes I_{2^n})U^\dag U(Z \otimes I_{2^n})U^\dag \\ 
  &= -(Z \otimes g')(X \otimes g) \\
  &= -(ZX \otimes g'g) \\
  &= XZ \otimes g'g
 \end{align*}
-Then we have that $I \otimes gg' = I \otimes g'g$, which implies that $gg' = g'g$. Now we make use of this commutation to show that $CX_1C^\dag = Z_1 \otimes g'$:
+Then we have that $I \otimes gg' = I \otimes g'g$, which implies that $gg' = g'g$. Now we make use of this commutation to show that $C(X \otimes I_{2^n})C^\dag = (Z \otimes I_{2^n}) \otimes g'$:
 
 %so applying the inverse of $I \otimes gg'$ to both sides, we have:
 %\[
@@ -424,7 +452,7 @@ Then we have that $I \otimes gg' = I \otimes g'g$, which implies that $gg' = g'g
 
 
 \begin{align*}
-CX_{1}C^\dag = \hspace{2mm} & \Qcircuit @C=0.5em @R=.7em {
+C(X \otimes I_{2^n})C^\dag = \hspace{2mm} & \Qcircuit @C=0.5em @R=.7em {
    & \qw & \ctrl{1} & \qw & \gate{H} & \qw & \ctrl{1} & \qw & \gate{X} & \qw & \ctrl{1} & \gate{H} & \ctrl{1} & \qw  \\
    & {/}\qw & \gate{g} & \qw & \qw & \qw & \gate{g'} & \qw & \qw & \qw & \gate{g'} & \qw & \gate{g} & \qw
    } \\ 
@@ -451,10 +479,10 @@ CX_{1}C^\dag = \hspace{2mm} & \Qcircuit @C=0.5em @R=.7em {
 \end{align*}
 Note here that $g$ and $g'$ are multiqubit gates, and the wire it is on is representing $n$ wires or $n$ qubits. Now, consider $U':= C^\dag U$. Then 
 \begin{center}
-$U'X_1U'^\dag = C^\dag U X_1 U^\dag C = C^\dag (Z \otimes g') C = X_1$
+$U'(X \otimes I_{2^n})U'^\dag = C^\dag U (X \otimes I_{2^n}) U^\dag C = C^\dag (Z \otimes g') C = (X \otimes I_{2^n})$
 \end{center} and 
 \begin{center}
-$U'Z_1U'^\dag = C^\dag U Z_1 U^\dag C = C^\dag (X \otimes g) C = Z_1$.
+$U'(Z \otimes I_{2^n})U'^\dag = C^\dag U (Z \otimes I_{2^n}) U^\dag C = C^\dag (X \otimes g) C = (Z \otimes I_{2^n})$.
 \end{center}
 Since $U'$ and $I_2 \otimes U''$ act on $X$ and $Z$ in the same way, we can apply similar arguments as above to get that $U'=I_2 \otimes U''$ up to a global phase, with $U'' \in \mathcal{C}(n)$. Now note that $C$ is a Clifford circuit since the controlled $g$ and $g'$ gates are controlled Pauli gates, which can be realized by conjugating the $CNOT$ gate with some combinations of $H$ and $S$ gates. Thus by the induction hypothesis, there is a Clifford circuit $D$ over the same gate set for $U''$. Hence
 \[
@@ -528,10 +556,10 @@ Note the $CCZ$ gate is used interchangeably with the Toffoli or $CCX$ gate as th
 $TXT^{\dag} = \frac{X+Y}{\sqrt{2}}$
 \end{center}
 \begin{center}
-$UX_1U^{\dag} = CNOT_{1,2}S_1S_2^{\dag}CNOT_{1, 2}X_1$
+$U(X \otimes I_{2^n})U^{\dag} = CNOT_{1,2}S_1S_2^{\dag}CNOT_{1, 2}(X \otimes I_{2^n})$
 \end{center}
 \begin{center}
-$VX_1V^{\dag} = X_1 \otimes \frac{I + Z_2 +X_3 -Z_2X_3}{2}$
+$V(X \otimes I_{2^n})V^{\dag} = (X \otimes I_{2^n}) \otimes \frac{I + Z_2 +X_3 -Z_2X_3}{2}$
 \end{center}
 where we let $U$ and $V$ be the $CS$ and Toffoli or $CCX$ gates respectively, where qubit $1$ is the control and qubit $2$ is the target for the $CS$ gate, and qubits $1$ and $2$ are controls and qubit $3$ is the target for the $CCX$ gate. 
 
@@ -652,19 +680,17 @@ Let $\ket{\psi}$ be an $n$-qubit state. Then we have the following facts about $
 
 \item Recall that Clifford unitaries normalize Pauli matrices. Now let $P \in \text{Stab}\ket{\psi}$ and let $C$ be some Clifford unitary. Then $CPC^{\dag}C\ket{\psi} = CP\ket{\psi} = C\ket{\psi}$, so $CPC^{\dag} \in \text{Stab}(C\ket{\psi})$. Now consider the map $\theta_C : \text{Stab}\ket{\psi} \rightarrow \text{Stab}(C\ket{\psi})$ which acts as $P \mapsto CPC^{\dag}$. This map has an inverse, $\theta_{C^\dag}: \text{Stab}(C\ket{\psi}) \longrightarrow \text{Stab}(C^{\dag}C\ket{\psi})$, which acts as $P' \mapsto C^{\dag}P'C$ (where we note that $\text{Stab}(C^{\dag}C\ket{\psi}) = \text{Stab}\ket{\psi}$). Thus $\theta_C$ is a bijection, and so we have that $|\text{Stab}\ket{\psi}| = |\text{Stab}(C\ket{\psi})|$.
 
-\item Let $\ket{\phi}$ be another state on $m$ qubits, and let $P \in \text{Stab}\ket{\psi}$ and $Q \in \text{Stab}\ket{\phi}$. Then $P \otimes Q \ket{\psi}\ket{\phi} = P\ket{\psi} \otimes Q\ket{\phi} = \ket{\psi}\ket{\phi}$. So $P \otimes Q \in \text{Stab}\ket{\psi}\ket{\phi}$. Now let $R \in \text{Stab}\ket{\psi}\ket{\phi}$. Then since $R$ is an $nm$-qubit Pauli, we can write $R = R_1 \otimes R_2$ where $R_1$ and an $n$-qubit Pauli and $R_2$ is an $m$-qubit Pauli, and $R\ket{\psi}\ket{\phi} = \ket{\psi}\ket{\phi} = R_1 \otimes R_2 \ket{\psi}\ket{\phi} = R_1\ket{\psi} \otimes R_2\ket{\phi}$. From this, either $R_1 \in \Stab \ket{\psi}$ and $R_2 \in \Stab \ket{\phi}$, or $-R_1 \in \Stab \ket{\psi}$ and $-R_2 \in \Stab \ket{\phi}$. So every element in $\text{Stab}\ket{\psi}\ket{\phi}$ can be written in the form $R_1 \otimes R_2$, thus 
+\item Let $\ket{\phi}$ be another state on $m$ qubits, and let $P \in \text{Stab}\ket{\psi}$ and $Q \in \text{Stab}\ket{\phi}$. Then $P \otimes Q \ket{\psi}\ket{\phi} = P\ket{\psi} \otimes Q\ket{\phi} = \ket{\psi}\ket{\phi}$. So $P \otimes Q \in \text{Stab}\ket{\psi}\ket{\phi}$. Now let $R \in \text{Stab}\ket{\psi}\ket{\phi}$. Then since $R$ is an $nm$-qubit Pauli, we can write $R = R_1 \otimes R_2$ where $R_1$ and an $n$-qubit Pauli and $R_2$ is an $m$-qubit Pauli, and $R\ket{\psi}\ket{\phi} = \ket{\psi}\ket{\phi} = R_1 \otimes R_2 \ket{\psi}\ket{\phi} = R_1\ket{\psi} \otimes R_2\ket{\phi}$. From this, either $R_1 \in \Stab \ket{\psi}$ and $R_2 \in \Stab \ket{\phi}$, or $-R_1 \in \Stab \ket{\psi}$ and $-R_2 \in \Stab \ket{\phi}$. So every element in $\text{Stab}\ket{\psi}\ket{\phi}$ can be written in the form $R_1 \otimes R_2$.
 %Now let $ \ket{\psi '} = \pm R_1\ket{\psi}$ and $\ket{\phi '} = \pm R_2\ket{\phi}$, and since $R_1$ and $R_2$ are both Clifford unitaries, fact 4 gives us that $|\text{Stab}\ket{\psi '}| = |\text{Stab}(R_1\ket{\psi})|$ and $|\text{Stab}\ket{\phi '}| = |\text{Stab}(R_2\ket{\phi})|$. We also have that $|\text{Stab}(R\ket{\psi}\ket{\phi})| = |\text{Stab}\ket{\psi '}\ket{\phi '}|$.
+
+Now consider the map from the direct product, $\Stab \ket{\psi} \times \Stab \ket{\phi}$, to elements in $\Stab \ket{\psi}\ket{\phi}$ written as tensor products of $R_1$ and $R_2$ as above:
 \[
- |\text{Stab}\ket{\psi}\ket{\phi}| = |\text{Stab}\ket{\psi} \otimes \text{Stab}\ket{\phi}|.
-\]
-Then, without loss of generality, consider the map from the direct product, $\Stab \ket{\psi} \times \Stab \ket{\phi}$, to positive $R_1$ and $R_2$:
-\[
-\theta:\text{Stab}\ket{\psi} \times \text{Stab}\ket{\phi} \longrightarrow  \text{Stab}\ket{\psi} \otimes \text{Stab}\ket{\phi}
+\theta:\text{Stab}\ket{\psi} \times \text{Stab}\ket{\phi} \longrightarrow  \text{Stab}\ket{\psi}\ket{\phi}
 \]
 \[
 (R_1, R_2) \longrightarrow R_1 \otimes R_2.
 \]
-Observe that if $\theta (R_1, R_2) = \theta (R_1', R_2')$ for $R_1, R_1' \in \Stab \ket{\psi}$ and $R_2, R_2' \in \Stab \ket{\phi}$, then $R_1 \otimes R_2 = R_1' \otimes R_2'$. Hence $R_1R_1' \otimes R_2R_2' = I_{2^n} \otimes I_{2^m}$ which implies that $R_1 = R_1'$ and $R_2 = R_2'$. Thus, $\theta$ is injective. $\theta$ is also surjective, since if $R_1 \otimes R_2 \in \Stab \ket{\psi} \otimes \Stab \ket{\phi}$, then $R_1 \in \Stab \ket{\psi}$ and $R_2 \in \Stab \ket{\phi}$. Then obviously $(R_1, R_2) \in \Stab \ket{\psi} \times \Stab \ket{\phi}$ which implies that $\theta (R_1, R_2) = R_1 \otimes R_2$. It follows that $\theta$ is bijective which gives us $|\text{Stab}\ket{\psi}\ket{\phi}| = |\text{Stab}\ket{\psi} \otimes \text{Stab}\ket{\phi}| = |\text{Stab}\ket{\psi}| \cdot |\text{Stab}\ket{\phi}|$.
+Observe that if $\theta (R_1, R_2) = \theta (R_1', R_2')$ for $R_1, R_1' \in \Stab \ket{\psi}$ and $R_2, R_2' \in \Stab \ket{\phi}$, then $R_1 \otimes R_2 = R_1' \otimes R_2'$. Hence $R_1R_1' \otimes R_2R_2' = I_{2^n} \otimes I_{2^m}$ which implies that $R_1 = R_1'$ and $R_2 = R_2'$. Thus, $\theta$ is injective. $\theta$ is also surjective, since if $R_1 \otimes R_2 \in \Stab \ket{\psi}\ket{\phi}$, then $R_1 \in \Stab \ket{\psi}$ and $R_2 \in \Stab \ket{\phi}$. Then obviously $(R_1, R_2) \in \Stab \ket{\psi} \times \Stab \ket{\phi}$ which implies that $\theta (R_1, R_2) = R_1 \otimes R_2$. Thus $\theta$ is bijective, which gives us $|\text{Stab}\ket{\psi}\ket{\phi}| = |\text{Stab}\ket{\psi} \times \text{Stab}\ket{\phi}| = |\text{Stab}\ket{\psi}| \cdot |\text{Stab}\ket{\phi}|$.
  \qedhere
 \end{enumerate}
 \end{proof}
@@ -1298,11 +1324,11 @@ This is $2^m$ for $z = \textbf{0}$. For any other $z$ half of the terms in the s
 
 Now consider the case when $x \neq \textbf{0}$. Denoting $\textbf{1}$ as the all one vector, if $b = \textbf{1}$ then $b_1 \cdot b_2 \cdots b_m = 1 \mbox{ and } (b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_m + x_m) = 0$. Similarly, if $b = \textbf{1} + x$, then $b_1 \cdot b_2 \cdots b_m = 0 \mbox{ and } (b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_m + x_m) = 1$, and in either case we get: 
 \begin{center}
-$\sum\limits_{b \in \{0, 1\}^m} (-1)^{b_1 \cdot b_2 \cdots b_m} (-1)^{(b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_m + x_m)} (-1)^{z \cdot b} = \sum\limits_{b \in \{0, 1\}^m} (-1) (-1)^{z \cdot b}$.
+$ (-1)^{b_1 \cdot b_2 \cdots b_m} (-1)^{(b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_m + x_m)} (-1)^{z \cdot b} = (-1) (-1)^{z \cdot b}$.
 \end{center}
 For any other $b$ we have $b_1 \cdot b_2 \cdots b_m = 0 \mbox{ and } (b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_m + x_m) = 0$, giving us 
 \begin{center}
-$\sum\limits_{b \in \{0, 1\}^m} (-1)^{b_1 \cdot b_2 \cdots b_m} (-1)^{(b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_m + x_m)} (-1)^{z \cdot b} = \sum\limits_{b \in \{0, 1\}^m} (-1)^{z \cdot b}$.
+$ (-1)^{b_1 \cdot b_2 \cdots b_m} (-1)^{(b_1 + x_1) \cdot (b_2 + x_2) \cdots (b_m + x_m)} (-1)^{z \cdot b} = (-1)^{z \cdot b}$.
 \end{center}
 Thus the terms in the sum over $b$ differ from $\sum_{b \in \{0, 1\}^m} (-1)^{z \cdot b}$ only for $b = \textbf{1}$ and $b = \textbf{1} + x$. Therefore, 
 \begin{equation*}
@@ -1410,14 +1436,29 @@ Starting with the input state and tracking the state of this system step by step
 \item[] $\ket{c_1}\ket{c_2}\ket{0}\ket{c_3} \cdots \ket{c_{n-1}}\ket{t}$
 \item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{(c_1 \cdot c_2)}\ket{c_3} \cdots \ket{c_{n-1}}\ket{t}$
 \item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{(c_1 \cdot c_2)}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus ((c_1 \cdot c_2) \cdot c_3 \cdots c_{n-1})}$
-\item[$=$] $\ket{c_1}\ket{c_2}\ket{(c_1 \cdot c_2)}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})}$
-\item[$\mapsto$] $\begin{cases} \ket{c_1}\ket{c_2}\ket{+}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \mbox{if } c_1 \cdot c_2 = 0, \\
-\ket{c_1}\ket{c_2}\ket{-}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \mbox{if } c_1 \cdot c_2 = 1 \end{cases}$
-\item[$\mapsto$] $\begin{cases} \ket{c_1}\ket{c_2}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \mbox{if measurement is } \ket{0} , \\
-\pm \ket{c_1}\ket{c_2}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \mbox{if measurement is } \ket{1} \end{cases}$
-\item[$\mapsto$] $\ket{c_1}\ket{c_2}\ket{c_3} \cdots \ket{c_{n-1}}\ket{t \oplus (c_1 \cdots c_{n-1})}$
+\item[$=$] $\ket{c_1}\ket{c_2}\ket{(c_1 \cdot c_2)}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})}$.
 \end{itemize}
-Hence, this circuit acts as the $C^nZ$ gate. Note that the uncomputation of the added Toffoli gate follows from the circuit in equation (\ref{CCZcircuit}).
+Now, before applying the Hadamard gate, write out the general states $\ket{c_1}$ and $\ket{c_2}$ as $\alpha_{c_1} \ket{0} + \beta_{c_1} \ket{1}$ and $\alpha_{c_2} \ket{0} + \beta_{c_2} \ket{1}$ respectively. Since we have already applied the $D$ circuit, the only qubits left to consider are the first three, so we now ignore $\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})}$ since it will remain unchanged. Thus, we now have:
+\begin{itemize}
+\item[] $\ket{c_1}\ket{c_2}\ket{(c_1 \cdot c_2)} $
+\item[$=$] $\alpha_{c_1}\alpha_{c_2} \ket{000} + \beta_{c_1}\alpha_{c_2} \ket{100} + \alpha_{c_2} + \alpha_{c_1}\beta_{c_2} \ket{010} + \beta_{c_1}\beta_{c_2} \ket{111}$
+
+\item[$\mapsto$] $ \frac{1}{\sqrt{2}} (\alpha_{c_1}\alpha_{c_2} \ket{000} + \beta_{c_1}\alpha_{c_2} \ket{100} + \alpha_{c_1}\beta_{c_2} \ket{010} + \beta_{c_1}\beta_{c_2} \ket{110})
++ \frac{1}{\sqrt{2}} (\alpha_{c_1}\alpha_{c_2} \ket{001} + \beta_{c_1}\alpha_{c_2} \ket{101} + \alpha_{c_1}\beta_{c_2} \ket{011} - \beta_{c_1}\beta_{c_2} \ket{111}) $
+
+%\item[$\mapsto$] $\begin{cases} \ket{c_1}\ket{c_2}\ket{+}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \mbox{if } c_1 \cdot c_2 = 0, \\
+%\ket{c_1}\ket{c_2}\ket{-}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})} & \mbox{if } c_1 \cdot c_2 = 1 \end{cases}$
+
+\item[$\mapsto$] 
+$\begin{cases} \big( \alpha_{c_1}\alpha_{c_2} \ket{00} + \beta_{c_1}\alpha_{c_2} \ket{10} + \alpha_{c_1}\beta_{c_2} \ket{01} + \beta_{c_1}\beta_{c_2} \ket{11} \big) & \mbox{if measurement is } \ket{0} , \\
+\big( \alpha_{c_1}\alpha_{c_2} \ket{00} + \beta_{c_1}\alpha_{c_2} \ket{10} + \alpha_{c_1}\beta_{c_2} \ket{01} - \beta_{c_1}\beta_{c_2} \ket{11} \big) & \mbox{if measurement is } \ket{1} \end{cases}$
+
+\item[$\mapsto$] $\ket{c_1}\ket{c_2}$.
+\end{itemize}
+Considering the rest of the qubits again, this gives us the output state of the system: 
+\[
+\ket{c_1}\ket{c_2}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})}.
+\] Hence, this circuit acts as the $C^nZ$ gate. Note that the uncomputation of the added Toffoli gate follows from the circuit in equation (\ref{CCZcircuit}).
 \end{proof}
 
 
