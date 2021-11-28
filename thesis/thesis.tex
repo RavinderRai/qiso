@@ -38,9 +38,7 @@ In this thesis, following recent work by Beverland and others, we study lower bo
 We first provide a detailed presentation of two recently introduced monotones: the stabilizer nullity and the dyadic monotone. We then discuss how these monotones can be used to give lower bounds for the non-Clifford resources for two important quantum operations: the multiply-controlled Pauli $Z$ gate and the modular adder.
 \end{abstract}
 
-\begin{acknowledgements}
-\ldots
-\end{acknowledgements}
+
 
 \mainmatter
 
@@ -214,7 +212,7 @@ Quantum circuits are read from left to right, and can be applied by tracking wha
    & \lstick{\ket{c_3}} & \qw & \targ & \qw & \qw & \qw & \qw
 }
 \end{equation}
-The $\oplus$ symbol in the bottom wire denotes the $X$ gate, making this controlled gate a CNOT or CX gate. The gate with the meter symbol is a measurement gate and performs a measurement with respect to the computational basis. The final $CZ$ gate is a classically controlled gate, represented by the double line attached to it from the third qubit. Classically controlled gates work by only being applied to its qubits if the measurement outcome of the other qubit it is attached to is $\ket{1}$. Also, the third qubit is called an \emph{ancilla}. It is used as "scratch space" during the computation, and a circuit with no ancillas is said to be \emph{ancilla free}. Tracking from left to right starting with the input state, we get the following steps:
+The $\oplus$ symbol in the bottom wire denotes the $X$ gate, making this controlled gate a CNOT or CX gate. The gate with the meter symbol is a measurement gate and performs a measurement with respect to the computational basis. The final $CZ$ gate is a classically controlled gate, represented by the double line attached to it from the third qubit. Classically controlled gates work by only being applied to its qubits if the measurement outcome of the other qubit it is attached to is $\ket{1}$. Also, the third qubit is called an \emph{ancilla}. It is used as ``scratch space" during the computation, and a circuit with no ancillas is said to be \emph{ancilla free}. Tracking from left to right starting with the input state, we get the following steps:
 
 \begin{itemize}
 \item[] $\ket{c_1}\ket{c_2}\ket{0} \ket{c_3}$
@@ -335,7 +333,7 @@ For $CNOT$, we write its action on Paulis in circuit notation. For $X$ we have t
 \[
 \Qcircuit @C=0.5em @R=.7em {
    & \qw & \ctrl{1} & \qw & \gate{X} & \qw & \ctrl{1} & \qw & & & \qw & \gate{X} & \qw & \push{\rule{.6em}{0em}\rule{.6em}{0em}} & & \qw & \qw & \ctrl{1} & \qw & \qw & \qw & \ctrl{1} & \qw & & & \qw & \qw & \qw \\
-   & \qw & \targ & \qw & \qw & \qw & \targ & \qw & \raisebox{1.7em}{=} & & \qw & \gate{X} & \qw & & & \qw & \qw & \targ & \qw & \gate{X} & \qw & \targ & \qw & \raisebox{1.7em}{=} & & \qw & \gate{X} & \qw
+   & \qw & \targ & \qw & \qw & \qw & \targ & \qw & \raisebox{1.7em}{$=$} & & \qw & \gate{X} & \qw & & & \qw & \qw & \targ & \qw & \gate{X} & \qw & \targ & \qw & \raisebox{1.7em}{$=$} & & \qw & \gate{X} & \qw
    }
 \]
 
@@ -344,7 +342,7 @@ And for $Z$ we have:
 \[
 \Qcircuit @C=0.5em @R=.7em {
    & \qw & \ctrl{1} & \qw & \gate{Z} & \qw & \ctrl{1} & \qw & & & \qw & \gate{Z} & \qw & \push{\rule{.6em}{0em}\rule{.6em}{0em}} & & \qw & \qw & \ctrl{1} & \qw & \qw & \qw & \ctrl{1} & \qw & & & \qw & \gate{Z} & \qw \\
-   & \qw & \targ & \qw & \qw & \qw & \targ & \qw & \raisebox{1.7em}{=} & & \qw & \qw & \qw & & & \qw & \qw & \targ & \qw & \gate{Z} & \qw & \targ & \qw & \raisebox{1.7em}{=} & & \qw & \gate{Z} & \qw
+   & \qw & \targ & \qw & \qw & \qw & \targ & \qw & \raisebox{1.7em}{$=$} & & \qw & \qw & \qw & & & \qw & \qw & \targ & \qw & \gate{Z} & \qw & \targ & \qw & \raisebox{1.7em}{$=$} & & \qw & \gate{Z} & \qw
    }
 \]
 
