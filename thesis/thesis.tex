@@ -5,10 +5,6 @@
 \usepackage{float}
 \usepackage{graphicx}
 
-
-
-
-
 \input{thesis.sty}
 
 
@@ -576,6 +572,8 @@ where $X_3$ means $X$ applied to the $3^{rd}$ qubit, i.e. $X_3 = I \otimes I \ot
 This naturally gives the sense that non-Clifford gates are a resource that enables full quantum computing, meaning that each non-Clifford gate is an expensive commodity that ideally is used as little as possible. This is also corroborated by the fact that in fault-tolerant quantum computing Clifford gates are typically cheap whereas non-Clifford gates are typically expensive. Thus this is the motivation behind attempting to limit the number of non-Clifford gates used. Finding lower bounds and upper bounds also gives an idea as to whether or not more or less of a certain non-Clifford gate can be used. If there is a circuit that uses the same number of non-Clifford gates as the calculated lower bound, then we know we cannot do any better.
 
 \section{Computing With States}
+\label{sec:compwstates}
+
 Instead of using non-Clifford gates to perform universal quantum computing, one can use a special kind of state to \emph{inject} the desired gate into a circuit. The useful states for this purpose are defined below.
 \begin{definition}
 We define the following resource states:
@@ -813,7 +811,7 @@ If $P$ and $Q$ are Hermitian Pauli operators and $PQ = - QP$ then the operator
 \begin{equation*}
 C = \frac{I -PQ}{\sqrt{2}}
 \end{equation*}
-is a Clifford.
+is a Clifford operator.
 \end{proposition}
 \begin{proof}
 Let $U$ be a Pauli. Then 
@@ -944,7 +942,7 @@ Recall a cyclotomic field extension of $\mathbb{Q}$ is the field $\mathbb{Q}$ ad
 \label{cycpoly}
 \Phi_{2^{d+1}} = \prod\limits_{\substack{k = 1 \\ \gcd (k, 2^{d+1}) = 1}}^{2^{d+1}} (x-\zeta_{2^{d+1}}^k).
 \end{equation}
-Each $\sigma \in Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q})$ sends $\zeta_{2^{d+1}}$ to one of its conjugates, and by Equation \ref{cycpoly} above these are just the numbers $\zeta_{2^{d+1}}^k$ where $\gcd (k, 2^{d+1})$. This means that the $\sigma$'s are defined in the following way: $\sigma_k (\zeta_{2^{d+1}}) = \zeta_{2^{d+1}}^k$. The next few propositions provide some basic properties of $\sigma_k$.
+Each $\sigma \in Gal(\mathbb{Q}(\zeta_{2^{d+1}})/\mathbb{Q})$ sends $\zeta_{2^{d+1}}$ to one of its conjugates, and by Equation~(\ref{cycpoly}) above these are just the numbers $\zeta_{2^{d+1}}^k$ where $\gcd (k, 2^{d+1})$. This means that the $\sigma$'s are defined in the following way: $\sigma_k (\zeta_{2^{d+1}}) = \zeta_{2^{d+1}}^k$. The next few propositions provide some basic properties of $\sigma_k$.
 
 \begin{proposition}
 For all $x \in \mathbb{Q}[\zeta_{2^{d+1}}]$, $\sigma_j(\sigma_k (x)) = \sigma_{k\cdot j}(x)$.
@@ -1151,7 +1149,7 @@ Recall from number theory that elements of the ring of integers of a number fiel
 
 \begin{proposition}
 \label{propA.22}
-Let $x'$ be an element of $\mathbb{Z}[\zeta_{2^{d+1}}]$. Then $v_2(x') \geq 0$ and for $k=2^d v_2(x)$, $x'$ can be written as $x''(1-\zeta_{2^{d+1}})^k$ for $x''$ in $\mathbb{Z}[\zeta_{2^{d+1}}]$ such that $v_2(x'') = 0$.
+Let $x'$ be an element of $\mathbb{Z}[\zeta_{2^{d+1}}]$. Then $v_2(x') \geq 0$ and for $k=2^d v_2(x')$, $x'$ can be written as $x''(1-\zeta_{2^{d+1}})^k$ for $x''$ in $\mathbb{Z}[\zeta_{2^{d+1}}]$ such that $v_2(x'') = 0$.
 \end{proposition}
 \begin{proof}
 Let $\alpha_d = 1-\zeta_{2^{d+1}}$ and choose $k$ to be the biggest power of $\alpha_d$ that divides $x'$. Then we can write $x' = \alpha_d^k x''$ such that $x''$ is from $\mathbb{Z}[\zeta_{2^{d+1}}]$ and $\alpha_d$ does not divide $x''$. Since $N_d(x'')$ is an integer by Proposition~\ref{N_dint}, if $2$ does not divide $N_d(x'')$ then this will imply that $v_2(x'') = 0$. 
@@ -1218,7 +1216,7 @@ v_2 (x + y) & = v_2(x' + y') + v_2(1/c) \\
 The power of $2$ in the denominator of the Pauli expectation gives us a sense of how ``non-stabilizer" the state is. The definition of the dyadic monotone below gives us an intuition for this sort of measure. 
 
 \begin{definition}
-Let $\ket{\psi}$ be an $n$-qubit state with entries in $\mathcal{R}_d$ Then the dyadic monotone is 
+Let $\ket{\psi}$ be an $n$-qubit state with entries in $\mathcal{R}_d$. Then the dyadic monotone is 
 \begin{center}
 $\mu_2 \ket{\psi} = \texttt{max} \big\{-v_2(\braket{\psi | P | \psi}): P \in \{I, X, Y, Z \}^{\otimes n} \big\}$.
 \end{center}
@@ -1259,7 +1257,27 @@ Let $\ket{\psi}$ be a state in $\mathcal{R}_d$; then $\mu_2\ket{\psi} \geq 0$, w
 \begin{proof}
 Consider a Pauli $P$ expectation $\alpha = \braket{\psi |P| \psi}$. Because $P$ has eigenvalues $\pm 1$, by the spectral decomposition theorem it follows that $P= P_{+1} - P_{-1}$, where $P_{+1}$ and $P_{-1}$ are projectors that correspond to the eigenspaces $+1$ and $-1$ respectively. Since $\braket{\psi |P_{+1}| \psi}$ and $\braket{\psi |P_{-1}| \psi}$ are the probabilities of observing the $+ 1$ or $-1$ outcomes respectively, which by definition are at most $1$, we have that $|\braket{\psi |P| \psi}| = |\braket{\psi |P_{+1}| \psi} - \braket{\psi |P_{-1}| \psi}| \leq 1$. For odd $k$ consider $\sigma_k(\alpha)$ and recall that $\sigma_k$ preserves addition, multiplication, and conjugation. Thus we can write $\alpha_k$ as the expectation $\braket{\psi_k |P_k| \psi_k}$ where $\ket{\psi_k}$ and $P_k$ are obtained by applying $\sigma_k$ to $\ket{\psi}$ and $P$ element-wise. It follows that $\alpha_k = \braket{\psi_k |P_k| \psi_k} = \sigma_k (\braket{\psi |P| \psi}) = \sigma_k (\alpha)$ and so $|\alpha_k| \leq 1$ since $\sigma_k$ takes rational numbers to rational numbers. Then by Proposition \ref{sigmak}, $v_2(\alpha) \leq 0$ which implies that $\mu_2$ is always non-negative. 
 
-Also, equality is achieved if and only if $\alpha = \pm 1$,  meaning if and only if all non-zero Pauli expectations of $\ket{\psi}$ are $\pm 1$. Since $|\braket{\psi |P| \psi}| \leq 1$, we must have that either $P$ or $-P$ is in $\Stab\ket{\psi}$. Note that the set $\{ I, X, Y, Z \}^{\otimes n}$, denoted by $T(n)$, is an orthogonal basis of the space of matrices with respect to the inner product $\langle A, B \rangle = \texttt{Tr} AB^{\dag}$. This means that we can write $\ket{\psi} \bra{\psi}$ as a linear combination of the basis elements, that is as $\sum\limits_{P\in T(n)} \alpha_PP $. It follows that $\texttt{Tr}(\ket{\psi}\bra{\psi}P) = \sum\limits_{Q\in T(n)} \alpha_Q \texttt{Tr}(QP) = \alpha_P \cdot 2^n$ since the trace of a Pauli operator is zero aside from $I$, in which case it is $2^n$. Noting also that $1 = \braket{\psi |\psi} = \texttt{Tr}(\ket{\psi}\bra{\psi})$, observe the following:
+We now show that $\mu_2\ket{\psi}=0$ if and only if $\ket{\psi}$ is a
+stabilizer state. If $\ket{\psi}$ is a stabilizer state, then
+$\ket{\psi}=C\ket{0}^{\otimes n}$ for some Clifford circuit $C$. But
+$\mu_2$ is invariant under Clifford operations, so we actually have
+$\mu_2(\ket{\psi})= \mu_2(\ket{0}^{\otimes n})$. Hence, since
+$\mu_2(\ket{0}^{\otimes n})=0$, we have $\mu_2(\ket{\psi})=0$. We now
+show the converse implication: if $\mu_2(\ket{\psi})=0$, then
+$\ket{\psi}$ is a stabilizer state.
+
+Suppose that $\mu_2(\ket{\psi})=0$. Then all non-zero Pauli
+expectations of $\ket{\psi}$ are $\pm 1$. The set $\{ I, X, Y, Z \}^{\otimes n}$,
+denoted by $T(n)$, is an orthogonal basis of the space of matrices
+with respect to the inner product $\langle A, B \rangle = \texttt{Tr}
+AB^{\dag}$. This means that we can write $\ket{\psi} \bra{\psi}$ as a
+linear combination of the basis elements, that is, as
+$\sum\limits_{Q\in T(n)} \alpha_QQ $. It follows that
+$\texttt{Tr}(\ket{\psi}\bra{\psi}P) = \sum\limits_{Q\in T(n)} \alpha_Q
+\texttt{Tr}(QP) = \alpha_P \cdot 2^n$ since the trace of a Pauli
+operator is zero aside from $I$, in which case it is $2^n$. Noting
+also that $1 = \braket{\psi |\psi} =
+\texttt{Tr}(\ket{\psi}\bra{\psi})$, observe the following:
 \begin{equation}
 \begin{split}
 \texttt{Tr}(\ket{\psi}\bra{\psi}) & = \texttt{Tr}(\ket{\psi}\bra{\psi}\ket{\psi}\bra{\psi}) \\
@@ -1270,11 +1288,12 @@ Also, equality is achieved if and only if $\alpha = \pm 1$,  meaning if and only
 & = \frac{1}{2^n} \sum\limits_{P\in T(n)} \big( \texttt{Tr}(\ket{\psi}\bra{\psi}P) \big)^2
 \end{split}
 \end{equation}
-Since $\braket{\psi | P \psi}$ is either $0$ or $\pm 1$ we can write $|\Stab\ket{\psi}| = \sum\limits_{P\in T(n)} |\braket{\psi |P|\psi}|^2$. Also, since the trace is cyclic, $\texttt{Tr}(\ket{\psi}\bra{\psi}P) = \texttt{Tr}(\braket{\psi | P | \psi}) = \braket{\psi | P | \psi}$. Putting this together we arrive with:
+Since $\braket{\psi | P| \psi}$ is either $0$ or $\pm 1$ we can write $|\Stab\ket{\psi}| = \sum\limits_{P\in T(n)} |\braket{\psi |P|\psi}|^2$. Now, since the trace is cyclic, $\texttt{Tr}(\ket{\psi}\bra{\psi}P) = \texttt{Tr}(\braket{\psi | P | \psi}) = \braket{\psi | P | \psi}$ and therefore
 \[
-1 = \texttt{Tr}(\ket{\psi}\bra{\psi}) = \frac{1}{2^n} \sum\limits_{P\in T(n)} \big( \texttt{Tr}(\ket{\psi}\bra{\psi}P) \big)^2 = \frac{1}{2^n} \sum\limits_{P\in T(n)} |\braket{\psi |P|\psi}|^2 
+1 = \texttt{Tr}(\ket{\psi}\bra{\psi}) = \frac{1}{2^n} \sum\limits_{P\in T(n)} \big( \texttt{Tr}(\ket{\psi}\bra{\psi}P) \big)^2 = \frac{1}{2^n} \sum\limits_{P\in T(n)} |\braket{\psi |P|\psi}|^2  =
+\frac{1}{2^n} |\Stab\ket{\psi}| .
 \]
-Thus $1 = \frac{1}{2^n} |\Stab\ket{\psi}|$, which means that the size of Stab$\ket{\psi}$ is $2^n$ and therefore $\ket{\psi}$ is a stabilizer state.
+Hence, $|\Stab\ket{\psi}|=2^n$ and $\ket{\psi}$ is a stabilizer state.
 \end{proof}
 
 \begin{proposition}
@@ -1326,7 +1345,7 @@ For all $n \geq 3$, the Pauli spectrum of the state $\ket{C^n Z}$ is: $\{ | 1 \h
 \begin{proof}
 We have 
 \begin{center}
-$\ket{C^n Z} = \C^n Z \ket{+}^{\otimes n} = \frac{1}{\sqrt{2^m}} \sum\limits_{b \in \{0, 1\}^m} (-1)^{b_1 \cdot b_2 \cdots b_m} \ket{b}$,
+$\ket{C^n Z} = C^n Z \ket{+}^{\otimes n} = \frac{1}{\sqrt{2^m}} \sum\limits_{b \in \{0, 1\}^m} (-1)^{b_1 \cdot b_2 \cdots b_m} \ket{b}$,
 \end{center}
 where $\ket{C^nZ}$ is an $m = n+1$ qubit gate. We want to compute the Pauli expectation $\braket{C^n Z|X^xZ^z|C^n Z}$ where $x$ and $z$ are bit strings. Note that we need not consider the Pauli matrix $Y$ since $Y = iXZ$, and the phase will vanish once we take the absolute value as in the definition of the Pauli spectrum. For one-bit bit strings $i$ and $j$, observe that $Z^i \ket{j} = \ket{j}$ if $i=j=0$ or $i \neq j$, and $Z^i \ket{j} = -\ket{j}$ if $i=j=1$. So in general $Z^z \ket{b} = (-1)^{z \cdot b}\ket{b}$. Furthermore, $X^i \ket{j} = \ket{i \oplus j}$, where $\oplus$ is addition modulo 2, so for arbitrary bit strings it follows that $X^x\ket{b} = \ket{b \oplus x}$, where $b \oplus x$ is extended component-wise. We can now directly calculate as follows:
 \begin{equation*}
@@ -1408,7 +1427,7 @@ For $n \geq 2$, the $C^n Z$ gate cannot be implemented with Clifford gates and m
 \end{proposition}
 
 \begin{proof}
-First note that proving that a bound holds for the state $\ket{C^n Z}$ implies that it holds for the gate $C^n Z$. Indeed, if we can perform a task with $k$ $T$ gates then we can also perform it with $k$ $\ket{T}$ states. Hence, any lower bound on the number of required states is a lower bound on the number of required gates. Now, $\nu (\ket{T}) = 1$ and $\nu (\ket{C^n Z}) = n+1$ by Corollary \ref{nu values}. Since $\nu$ is a monotone, it is non-increasing under Clifford operations and measurements. This implies that at least $n+1$ $\ket{T}$ states are required to implement the $\ket{C^n Z}$ state and hence the $C^n Z$ gate. Similarly, since $\nu (\ket{CS}) = 2$ and $\nu (\ket{CCZ}) = 3$, we get that to implement the $C^n Z$ gate, we need at least $(n+1)/2$ $\ket{CS}$ states or $(n+1)/3$ $\ket{CCZ}$ states.
+First note that proving that a bound holds for the state $\ket{C^n Z}$ implies that it holds for the gate $C^n Z$. Indeed, if we can perform a task with $k$ $C^nZ$ gates then we can also perform it with $k$ $\ket{C^nZ}$ states using the circuits from Section~\ref{sec:compwstates}. Hence, any lower bound on the number of required states is a lower bound on the number of required gates. Now, $\nu (\ket{T}) = 1$ and $\nu (\ket{C^n Z}) = n+1$ by Corollary \ref{nu values}. Since $\nu$ is a monotone, it is non-increasing under Clifford operations and measurements. This implies that at least $n+1$ $\ket{T}$ states are required to implement the $\ket{C^n Z}$ state and hence the $C^n Z$ gate. Similarly, since $\nu (\ket{CS}) = 2$ and $\nu (\ket{CCZ}) = 3$, we get that to implement the $C^n Z$ gate, we need at least $(n+1)/2$ $\ket{CS}$ states or $(n+1)/3$ $\ket{CCZ}$ states.
 \end{proof}
 
 The above lower bound can be improved when measurements are restricted.
@@ -1481,7 +1500,7 @@ $\begin{cases} \big( \alpha_{c_1}\alpha_{c_2} \ket{00} + \beta_{c_1}\alpha_{c_2}
 Considering the rest of the qubits again, this gives us the output state of the system: 
 \[
 \ket{c_1}\ket{c_2}\ket{c_3} \cdots \ket{c_{n-1}} \ket{t \oplus (c_1 \cdots c_{n-1})}.
-\] Hence, this circuit acts as the $C^nZ$ gate. Note that the uncomputation of the added Toffoli gate follows from the circuit in equation (\ref{CCZcircuit}).
+\] Hence, this circuit acts as the $C^nZ$ gate. Note that the uncomputation of the added Toffoli gate follows from the circuit in Equation~(\ref{CCZcircuit}).
 \end{proof}
 
 
@@ -1553,8 +1572,11 @@ contained in the two input registers is stored in the second register. In order 
 so-called \emph{Fourier states}. First, recall the definition of the Quantum Fourier Transform.
 
 \begin{definition}
+  \label{def:qft}
   The \emph{quantum Fourier transform} is an operator that maps the state $\ket{a} = \sum\limits_{x=0}^{2^n-1} a_x \ket{x}$ to $\ket{a'} = \sum\limits_{y=0}^{2^n-1} a'_y \ket{y}$ where $a'_y = \frac{1}{\sqrt{2^n}}\sum\limits_{x=0}^{2^n-1}a_x\omega_{2^n}^{xy}$ and $\omega_{2^n} = \exp (2\pi i/2^n)$.
 \end{definition}
+
+Note that in Definition~\ref{def:qft}, we used $\omega_{2^n}$ for $\zeta_{2^n}$, as is common in the quantum computing literature.
 
 \begin{definition}
 The quantum \emph{Fourier state} is the quantum Fourier transform applied to a basis vector $\ket{a}$. This means that there is only one non-zero $a_x$, which we call $a_\ell$. Hence, $a_\ell = 1$ necessarily,  so that $\ket{a} = \ket{\ell}$. Thus we have the following:
