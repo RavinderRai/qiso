@@ -5,6 +5,9 @@
 \usepackage{float}
 \usepackage{graphicx}
 
+\usepackage[a-1b]{pdfx}
+\usepackage{hyperref}
+
 \input{thesis.sty}
 
 
@@ -352,7 +355,7 @@ Note that we need not specify the action on $Y$ since $Y = iXZ$, so the action o
 If $P \in \mathcal{P}(n)$ and $C \in \mathcal{C}(n)$ then $CPC^{\dag} \in \mathcal{P}(n)$.
 \end{proposition}
 \begin{proof}
-It is sufficient to show that the generators of $\mathcal{C}(n)$ map the generators of Pauli matrices to Pauli matrices. The Clifford generators are $H, S$ in $\mathcal{P}(1)$ and $CNOT$ in $\mathcal{P}(2)$, while the generators of $\mathcal{P}(1)$ are $iI, X$ and $Z$. Note that for Pauli matrices in $\mathcal{P}(n)$, we can write them as a tensor product of Pauli matrices in $\mathcal{P}(1)$. Moreover, we can also write a gate in $\mathcal{C}(n)$ as a tensor product of any combination of $H, S$ and $CNOT$. 
+It is sufficient to show that the generators of $\mathcal{C}(n)$ map the generators of Pauli matrices to Pauli matrices. The Clifford generators are $H, S$ in $\mathcal{C}(1)$ and $CNOT$ in $\mathcal{C}(2)$, while the generators of $\mathcal{P}(1)$ are $iI, X$ and $Z$. Note that for Pauli matrices in $\mathcal{P}(n)$, we can write them as a tensor product of Pauli matrices in $\mathcal{P}(1)$. Moreover, we can also write a gate in $\mathcal{C}(n)$ as a tensor product of any combination of $H, S$ and $CNOT$. 
 
 We can use this and Proposition~\ref{HS} to give us that, for a Pauli $P \in \mathcal{P}(n)$ and some $C \in \mathcal{C}(n)$ $CPC^\dagger \in \mathcal{P}(n)$. This follows by writing $P$ and $C$ as tensor products as explained above, and then using the distributive law of tensor products.
 \end{proof}
